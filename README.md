@@ -71,5 +71,12 @@ which with `consume`.
 
 - A repo: add a line to `repos.txt`. Public repos only.
 - A command: add it to `commands/`.
-- A build: add a `build_<target>` function to `setup.sh`, and the target to
-  `TARGETS` and `target_src`.
+- A build: add a `build_<target>` function and a `TARGETS` entry in
+  `bootstrap.py`.
+
+`setup.sh` only installs uv and hands over to `bootstrap.py`, which uv runs
+with its own Python. The tests need no network:
+
+    uv run pytest
+    uv run ruff check
+    uv run mypy
