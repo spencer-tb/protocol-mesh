@@ -30,6 +30,7 @@ every client, so it takes a while.
 |---|---|
 | `./setup.sh` | everything above |
 | `./setup.sh geth besu` | the same, building only those targets |
+| `./setup.sh --profile review` | only the repos a reviewer reads (`profiles/review.txt`), no toolchains or builds |
 | `./setup.sh --reuse ~/code` | new clones borrow objects from your clones in `~/code`, so they download less but stay separate |
 | `./setup.sh --check` | only print the status |
 | `./setup.sh --update` | show what changed in this repo upstream, apply only after you say yes |

@@ -10,6 +10,9 @@ execution clients, on macOS or Linux. Run it again any time.
                            toolchains and build every client binary whose
                            code changed
   ./setup.sh geth besu     the same, building only the targets named
+  ./setup.sh --profile review
+                           only the repos profiles/review.txt lists, with
+                           no toolchains or builds
   ./setup.sh --reuse DIR   let new clones borrow objects from clones you
                            already have in DIR, so they download less but
                            stay separate from yours
@@ -41,6 +44,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 MANIFEST = HERE / "repos.txt"
+PROFILES = HERE / "profiles"
 
 # repos.txt may only point at these GitHub owners, over https.
 TRUSTED_OWNERS = frozenset(
@@ -482,6 +486,25 @@ class Repo:
     shallow: bool = False
 
 
+def read_profile(
+    name: str, repos: list[Repo], folder: Path = PROFILES
+) -> list[Repo]:
+    """Return the repos that profile `name` lists, in repos.txt order."""
+    path = folder / f"{name}.txt"
+    if not path.is_file():
+        raise SystemExit(f"setup: no profile {name} in {folder.name}/")
+    wanted = {
+        line.split("#", 1)[0].strip() for line in path.read_text().splitlines()
+    } - {""}
+    unknown = wanted - {repo.dir for repo in repos}
+    if unknown:
+        raise SystemExit(
+            f"setup: profile {name} lists {' '.join(sorted(unknown))}, "
+            "which repos.txt does not have"
+        )
+    return [repo for repo in repos if repo.dir in wanted]
+
+
 def github_repo(url: str) -> str | None:
     """Return the lowercase owner/name of a GitHub url, or None."""
     match = GITHUB_REPO.search(url)
@@ -866,6 +889,16 @@ def missing_packages(ws: Workspace) -> list[str]:
     return commands
 
 
+def check_repos(ws: Workspace, repos: list[Repo]) -> None:
+    """Print which of `repos` are missing."""
+    print(f"repos in {ws.root}")
+    missing = [r.dir for r in repos if not (ws.root / r.dir / ".git").exists()]
+    if missing:
+        print(f"  missing {' '.join(missing)}")
+    else:
+        print(f"  all {len(repos)} cloned")
+
+
 def check(ws: Workspace) -> None:
     """Print which tools, repos, builds and system packages are in place."""
     print("tools")
@@ -874,13 +907,7 @@ def check(ws: Workspace) -> None:
     if have("docker") and capture(["docker", "info"], timeout=30).returncode:
         print("  docker is installed but not running, hive needs it")
 
-    print(f"repos in {ws.root}")
-    repos = read_manifest()
-    missing = [r.dir for r in repos if not (ws.root / r.dir / ".git").exists()]
-    if missing:
-        print(f"  missing {' '.join(missing)}")
-    else:
-        print(f"  all {len(repos)} cloned")
+    check_repos(ws, read_manifest())
 
     print(f"builds in {ws.bin}")
     for name in TARGETS:
@@ -906,6 +933,12 @@ def main(argv: Sequence[str] | None = None) -> int:
         "--check", action="store_true", help="only print the status"
     )
     parser.add_argument(
+        "--profile",
+        metavar="NAME",
+        help="only clone the repos profiles/NAME.txt lists, without "
+        "toolchains or builds",
+    )
+    parser.add_argument(
         "--reuse",
         action="append",
         default=[],
@@ -923,20 +956,31 @@ def main(argv: Sequence[str] | None = None) -> int:
     for name in args.targets:
         if name not in TARGETS:
             parser.error(f"unknown target {name}, see --help")
+    if args.profile and args.targets:
+        parser.error("a profile builds nothing, so it takes no targets")
 
     ws = Workspace.from_env()
     # Builds run their own uv projects and must never wait on a prompt.
     os.environ.pop("VIRTUAL_ENV", None)
     os.environ["GIT_TERMINAL_PROMPT"] = "0"
     use_toolchains(ws)
+    repos = read_manifest()
+    if args.profile:
+        repos = read_profile(args.profile, repos)
     if args.check:
-        check(ws)
+        if args.profile:
+            check_repos(ws, repos)
+        else:
+            check(ws)
         return 0
 
     for tool in ("git", "curl", "tar"):
         if not have(tool):
             raise SystemExit(f"setup: install {tool} first")
-    sync_repos(ws, read_manifest(), find_clones(args.reuse))
+    sync_repos(ws, repos, find_clones(args.reuse))
+    if args.profile:
+        check_repos(ws, repos)
+        return 0
     try:
         install_tools(ws)
     except subprocess.CalledProcessError as error:

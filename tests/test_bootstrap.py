@@ -377,3 +377,27 @@ def test_an_unknown_target_is_rejected(
     with pytest.raises(SystemExit):
         bootstrap.main(["nope"])
     assert "unknown target nope" in capsys.readouterr().err
+
+
+def test_profile_picks_its_repos_in_manifest_order(tmp_path: Path) -> None:
+    repos = [Repo("a", f"{GH}/ethereum/a"), Repo("b", f"{GH}/ethereum/b")]
+    (tmp_path / "small.txt").write_text("# comment\nb\n\na  # note\n")
+    picked = bootstrap.read_profile("small", repos, tmp_path)
+    assert [repo.dir for repo in picked] == ["a", "b"]
+
+
+def test_profile_rejects_repos_the_manifest_lacks(tmp_path: Path) -> None:
+    (tmp_path / "small.txt").write_text("ghost\n")
+    with pytest.raises(SystemExit, match="ghost"):
+        bootstrap.read_profile("small", [], tmp_path)
+
+
+def test_a_missing_profile_is_rejected(tmp_path: Path) -> None:
+    with pytest.raises(SystemExit, match="no profile"):
+        bootstrap.read_profile("nope", [], tmp_path)
+
+
+def test_the_review_profile_matches_repos_txt() -> None:
+    picked = bootstrap.read_profile("review", bootstrap.read_manifest())
+    assert "execution-specs" in [repo.dir for repo in picked]
+    assert not any(repo.dir.startswith("clients/") for repo in picked)

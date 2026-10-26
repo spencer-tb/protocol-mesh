@@ -1,0 +1,10 @@
+# What a PR reviewer reads: the spec and its tests, the EIPs, the engine
+# API, hive and the call notes and decisions. No toolchains, no builds.
+execution-specs
+EIPs
+execution-apis
+hive
+hive-tests
+hive-ui
+forkcast
+ethereum-pm
