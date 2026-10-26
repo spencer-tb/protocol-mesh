@@ -41,7 +41,7 @@ docker for hive, and log in to `gh`, `claude` and `codex`.
 |---|---|---|
 | `eels` | `execution-specs` | `uv sync` |
 | `hive` | `hive` | `hive/hive` |
-| `clive` | `clive` | `~/.local/bin/clive` |
+| `clive` | `clive` | `~/.local/bin/clive`, `~/.local/bin/hapi` |
 | `geth` | `clients/go-ethereum` | `bin/geth/evm` |
 | `erigon` | `clients/erigon` | `bin/erigon/evm` |
 | `besu` | `clients/besu` | `bin/besu/evmtool` |

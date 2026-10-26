@@ -67,10 +67,12 @@ def test_manifest_skips_comments_and_reads_branches(tmp_path: Path) -> None:
         "# heading\n\n"
         "specs  https://x/specs.git\n"
         "clients/geth  https://x/geth.git  devnet  # note\n"
+        "archive  https://x/archive.git  shallow\n"
     )
     assert bootstrap.read_manifest(manifest) == [
         Repo("specs", "https://x/specs.git"),
         Repo("clients/geth", "https://x/geth.git", "devnet"),
+        Repo("archive", "https://x/archive.git", shallow=True),
     ]
 
 
@@ -174,6 +176,34 @@ def test_sync_reports_a_failed_clone(tmp_path: Path, git_env: None) -> None:
     missing = Repo("repo", (tmp_path / "missing").as_uri())
     result = bootstrap.sync_repo(tmp_path / "repo", missing)
     assert result.startswith("clone failed")
+
+
+def test_shallow_sync_keeps_only_the_newest_commit(
+    upstream: Path, tmp_path: Path
+) -> None:
+    commit(upstream, "second")
+    checkout = tmp_path / "archive"
+    repo = Repo("archive", upstream.as_uri(), shallow=True)
+    assert bootstrap.sync_repo(checkout, repo) == "cloned"
+    assert git(checkout, "rev-list", "--count", "HEAD") == "1"
+    assert bootstrap.sync_repo(checkout, repo) == "up to date"
+    commit(upstream, "third")
+    assert bootstrap.sync_repo(checkout, repo) == "updated"
+    assert (checkout / "third").exists()
+    assert (checkout / ".git" / "shallow").exists()
+
+
+def test_shallow_sync_keeps_local_commits(
+    upstream: Path, tmp_path: Path
+) -> None:
+    checkout = tmp_path / "archive"
+    repo = Repo("archive", upstream.as_uri(), shallow=True)
+    bootstrap.sync_repo(checkout, repo)
+    commit(checkout, "mine")
+    commit(upstream, "theirs")
+    result = bootstrap.sync_repo(checkout, repo)
+    assert result == "has local commits, fetched only"
+    assert (checkout / "mine").exists()
 
 
 def test_installers_leave_new_enough_tools_alone(

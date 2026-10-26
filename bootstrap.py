@@ -94,9 +94,14 @@ def run(
 
 
 def capture(
-    args: Command, timeout: float | None = None
+    args: Command,
+    timeout: float | None = None,
+    env: dict[str, str] | None = None,
 ) -> subprocess.CompletedProcess[str]:
-    """Run a command quietly and return what happened, never raising."""
+    """
+    Run a command quietly and return what happened, never raising. `env`
+    adds to the current environment.
+    """
     argv = [str(arg) for arg in args]
     try:
         return subprocess.run(
@@ -105,14 +110,17 @@ def capture(
             text=True,
             stdin=subprocess.DEVNULL,
             timeout=timeout,
+            env={**os.environ, **env} if env else None,
         )
     except (OSError, subprocess.TimeoutExpired) as error:
         return subprocess.CompletedProcess(argv, 1, "", str(error))
 
 
-def git(path: Path, *args: str) -> subprocess.CompletedProcess[str]:
+def git(
+    path: Path, *args: str, env: dict[str, str] | None = None
+) -> subprocess.CompletedProcess[str]:
     """Run git in `path` quietly."""
-    return capture(["git", "-C", path, *args])
+    return capture(["git", "-C", path, *args], env=env)
 
 
 def last_line(text: str) -> str:
@@ -458,6 +466,7 @@ class Repo:
     dir: str
     url: str
     branch: str | None = None
+    shallow: bool = False
 
 
 def read_manifest(path: Path = MANIFEST) -> list[Repo]:
@@ -467,13 +476,26 @@ def read_manifest(path: Path = MANIFEST) -> list[Repo]:
         fields = line.split("#", 1)[0].split()
         if not fields:
             continue
-        if len(fields) not in (2, 3):
+        options = fields[2:]
+        branches = [option for option in options if option != "shallow"]
+        if len(fields) < 2 or len(branches) > 1:
             raise SystemExit(
                 f"setup: {path.name} line {number} needs a dir, a url "
-                "and optionally a branch"
+                "and optionally a branch and `shallow`"
             )
-        repos.append(Repo(*fields))
+        repos.append(
+            Repo(
+                dir=fields[0],
+                url=fields[1],
+                branch=branches[0] if branches else None,
+                shallow="shallow" in options,
+            )
+        )
     return repos
+
+
+# Shallow repos are archives: only the newest commit, no LFS attachments.
+SKIP_LFS = {"GIT_LFS_SKIP_SMUDGE": "1"}
 
 
 def sync_repo(path: Path, repo: Repo) -> str:
@@ -484,16 +506,19 @@ def sync_repo(path: Path, repo: Repo) -> str:
     upstream branch, or diverged from it is fetched but left as it is,
     since it may hold someone's work.
     """
+    env = SKIP_LFS if repo.shallow else None
     if not (path / ".git").exists():
         branch = ["--branch", repo.branch] if repo.branch else []
+        copy = ["--depth", "1"] if repo.shallow else ["--filter=blob:none"]
         result = capture(
-            ["git", "clone", "-q", "--filter=blob:none", *branch]
-            + [repo.url, path]
+            ["git", "clone", "-q", *copy, *branch, repo.url, path], env=env
         )
         if result.returncode:
             return f"clone failed: {last_line(result.stderr)}"
         return "cloned"
-    result = git(path, "fetch", "-q", "--all", "--prune")
+    fetched = git(path, "rev-parse", "-q", "--verify", "@{u}").stdout
+    depth = ["--depth", "1"] if repo.shallow else []
+    result = git(path, "fetch", "-q", "--all", "--prune", *depth, env=env)
     if result.returncode:
         return f"fetch failed: {last_line(result.stderr)}"
     if git(path, "status", "--porcelain", "--untracked-files=no").stdout:
@@ -501,7 +526,15 @@ def sync_repo(path: Path, repo: Repo) -> str:
     if git(path, "rev-parse", "-q", "--verify", "@{u}").returncode:
         return "no upstream branch, fetched only"
     before = git(path, "rev-parse", "HEAD").stdout
-    if git(path, "merge", "-q", "--ff-only", "@{u}").returncode:
+    if repo.shallow:
+        # There is no history to merge, so jump to the newest commit,
+        # unless someone committed on top of the last one fetched.
+        if before != fetched:
+            return "has local commits, fetched only"
+        moved = git(path, "reset", "-q", "--hard", "@{u}", env=env)
+    else:
+        moved = git(path, "merge", "-q", "--ff-only", "@{u}")
+    if moved.returncode:
         return "diverged, fetched only"
     if git(path, "rev-parse", "HEAD").stdout != before:
         return "updated"
@@ -550,9 +583,10 @@ def build_hive(ws: Workspace, src: Path) -> None:
 
 
 def build_clive(ws: Workspace, src: Path) -> None:
-    """Build clive, the hive results CLI, into ~/.local/bin."""
-    binary = ws.local / "bin" / "clive"
-    run(["go", "build", "-o", binary, "./cmd/hive-cli"], cwd=src)
+    """Build clive, the hive results CLI, and hapi, the API it queries."""
+    bin_dir = ws.local / "bin"
+    run(["go", "build", "-o", bin_dir / "clive", "./cmd/hive-cli"], cwd=src)
+    run(["go", "build", "-o", bin_dir / "hapi", "."], cwd=src)
 
 
 def build_geth(ws: Workspace, src: Path) -> None:
@@ -700,6 +734,7 @@ STATUS_TOOLS: tuple[tuple[str, tuple[str, ...], str | None], ...] = (
     ("node", ("node", "--version"), NODE_MAJOR),
     ("dotnet", ("dotnet", "--version"), DOTNET_MIN),
     ("java", ("java", "-version"), JDK_MAJOR),
+    ("kurtosis", ("kurtosis", "version"), None),
 ) + tuple(
     (name, (name, "--version"), None)
     for name in (

@@ -1,13 +1,18 @@
-# Repos that `mesh sync` keeps under ~/ethereum (or $WS_ROOT).
-# One per line: <dir> <clone url> [branch]. Public repos only.
+# Repos that setup.sh keeps under ~/ethereum (or $WS_ROOT).
+# One per line: <dir> <clone url> [branch] [shallow]. Public repos only.
+# `shallow` keeps only the newest commit, for large read-only archives.
 
-# Specs and process
+# Specs
 execution-specs              https://github.com/ethereum/execution-specs.git
 EIPs                         https://github.com/ethereum/EIPs.git
 execution-apis               https://github.com/ethereum/execution-apis.git
 ethereum-types               https://github.com/ethereum/ethereum-types.git
+
+# Calls, transcripts and discussion
 ethereum-pm                  https://github.com/ethereum/pm.git
 pm                           https://github.com/ethspecs/pm.git
+forkcast                     https://github.com/ethereum/forkcast.git
+eth-rnd-archive              https://github.com/ethereum/eth-rnd-archive.git  shallow
 
 # Hive
 hive                         https://github.com/ethereum/hive.git
@@ -28,5 +33,8 @@ clients/nimbus-eth1          https://github.com/status-im/nimbus-eth1.git
 clients/ethereumjs-monorepo  https://github.com/ethereumjs/ethereumjs-monorepo.git
 clients/evmone               https://github.com/ipsilon/evmone.git
 
-# Devnets
+# Devnets: the kurtosis package and the live forks' devnet configs
 ethereum-package             https://github.com/ethpandaops/ethereum-package.git
+glamsterdam-devnets          https://github.com/ethpandaops/glamsterdam-devnets.git
+heze-devnets                 https://github.com/ethpandaops/heze-devnets.git
+bogota-devnets               https://github.com/ethpandaops/bogota-devnets.git
