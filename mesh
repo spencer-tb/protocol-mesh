@@ -1,0 +1,557 @@
+#!/usr/bin/env bash
+# Set up and keep current everything an agent needs to work on EIPs: the
+# spec, test and client repos, the toolchains, the client binaries and the
+# shared commands. Every command is safe to run again.
+#
+#   mesh                   same as `mesh up`
+#   mesh up                all of the below, rebuilding only what changed
+#   mesh sync [dir...]     clone missing repos and fetch the rest
+#   mesh tools             install the toolchains in ~/.local, no sudo (Linux)
+#   mesh build <t...|all>  rebuild targets now, changed or not
+#   mesh skills            link the shared commands and skills
+#   mesh heavy <cmd...>    run a fill, consume or hive run under the lock
+#   mesh env [sh|fish]     print the PATH setup
+#   mesh doctor            show what is installed, missing or too old
+set -euo pipefail
+
+MESH=$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)
+WS_ROOT=${WS_ROOT:-$HOME/ethereum}
+WS_BIN=${WS_BIN:-$WS_ROOT/bin}
+AGENTS=${AGENTS:-$HOME/agents}
+LOCAL=$HOME/.local
+STATE=$HOME/.config/protocol-mesh
+LOCK=$HOME/.cache/protocol-mesh/heavy.lock
+JOBS=$(nproc 2>/dev/null || sysctl -n hw.ncpu)
+
+GO_VERSION=1.25.7
+RUST_MIN=1.93
+DOTNET_MIN=10.0
+JDK_MAJOR=21
+UV_MIN=0.13.4
+NODE_MIN=20
+JQ_VERSION=1.7.1
+
+# Debian packages that need sudo, so devops installs them once.
+APT_PACKAGES=(clang libclang-dev libsnappy-dev librocksdb-dev)
+
+TARGETS=(eels hive clive geth erigon besu nethermind evmone ethrex nimbus
+  ethereumjs)
+
+# Toolchain directories, in lookup order.
+PATHS=("$LOCAL/bin" "$LOCAL/go/bin" "$HOME/go/bin" "$HOME/.cargo/bin"
+  "$HOME/.dotnet" "$LOCAL/jdk/bin")
+
+say() { printf '%s\n' "$*" >&2; }
+die() { say "mesh: $*"; exit 1; }
+have() { command -v "$1" >/dev/null 2>&1; }
+linux() { [ "$(uname -s)" = Linux ]; }
+
+# True when version $1 is at least $2.
+version_ge() {
+  [ "$(printf '%s\n%s\n' "$2" "$1" | sort -V | head -n1)" = "$2" ]
+}
+
+# Print the first version number a command reports.
+version_of() {
+  "$@" 2>&1 | grep -oE '[0-9]+(\.[0-9]+)+' | head -n1 || true
+}
+
+# Print the toolchain environment for sh, fish or systemd.
+env_lines() {
+  local joined
+  joined=$(IFS=:; echo "${PATHS[*]}")
+  case ${1:-sh} in
+    sh)
+      echo "export PATH=\"$joined:\$PATH\""
+      if [ -d "$HOME/.dotnet" ]; then echo "export DOTNET_ROOT=\"$HOME/.dotnet\""; fi
+      if [ -d "$LOCAL/jdk" ]; then echo "export JAVA_HOME=\"$LOCAL/jdk\""; fi
+      ;;
+    fish)
+      echo "set -gx PATH ${PATHS[*]} \$PATH"
+      if [ -d "$HOME/.dotnet" ]; then echo "set -gx DOTNET_ROOT $HOME/.dotnet"; fi
+      if [ -d "$LOCAL/jdk" ]; then echo "set -gx JAVA_HOME $LOCAL/jdk"; fi
+      ;;
+    systemd)
+      echo "PATH=$joined:\${PATH}"
+      if [ -d "$HOME/.dotnet" ]; then echo "DOTNET_ROOT=$HOME/.dotnet"; fi
+      if [ -d "$LOCAL/jdk" ]; then echo "JAVA_HOME=$LOCAL/jdk"; fi
+      ;;
+    *) die "unknown shell $1, use sh or fish" ;;
+  esac
+}
+
+# Hold the one-heavy-job-per-machine lock until this process exits. With
+# --no-wait, return 1 instead of waiting when another job holds it.
+take_lock() {
+  if [ -n "${MESH_LOCKED:-}" ] || ! have flock; then return 0; fi
+  mkdir -p "$(dirname "$LOCK")"
+  exec 9>"$LOCK"
+  if ! flock -n 9; then
+    if [ "${1:-}" = --no-wait ]; then return 1; fi
+    say "waiting for another heavy job to finish"
+    flock 9
+  fi
+  export MESH_LOCKED=1
+}
+
+# Pull this repo when it is clean, then rerun the new version once.
+self_update() {
+  if [ -n "${MESH_UPDATED:-}" ] ||
+    ! git -C "$MESH" rev-parse --git-dir >/dev/null 2>&1 ||
+    [ -n "$(git -C "$MESH" status --porcelain)" ] ||
+    ! git -C "$MESH" rev-parse -q --verify '@{u}' >/dev/null; then
+    return 0
+  fi
+  local before
+  before=$(git -C "$MESH" rev-parse HEAD)
+  git -C "$MESH" pull -q --ff-only || return 0
+  if [ "$(git -C "$MESH" rev-parse HEAD)" != "$before" ]; then
+    export MESH_UPDATED=1
+    exec "$MESH/mesh" "$@"
+  fi
+}
+
+# Print "dir url branch" for every entry in repos.txt, or the dirs named.
+manifest() {
+  local dir url branch
+  while read -r dir url branch; do
+    case $dir in '' | '#'*) continue ;; esac
+    if [ $# -eq 0 ] || printf '%s\n' "$@" | grep -qxF "$dir"; then
+      echo "$dir $url ${branch:-}"
+    fi
+  done <"$MESH/repos.txt"
+}
+
+# shellcheck disable=SC2120 # main also calls it with arguments
+cmd_sync() {
+  # The hourly timer skips a run while a fill or build is going.
+  if [ "${1:-}" = --if-idle ]; then
+    shift
+    take_lock --no-wait || { say "busy, skipped"; return 0; }
+  fi
+  local dir url branch path
+  manifest "$@" | while read -r dir url branch; do
+    path=$WS_ROOT/$dir
+    if [ ! -d "$path/.git" ]; then
+      say "clone $dir"
+      git clone -q --filter=blob:none ${branch:+--branch "$branch"} \
+        "$url" "$path" </dev/null || say "clone failed: $dir"
+      continue
+    fi
+    if ! git -C "$path" fetch -q --all --prune </dev/null; then
+      say "fetch failed: $dir"
+      continue
+    fi
+    # Only fast-forward a clean branch, anything else may be someone's work.
+    if [ -n "$(git -C "$path" status --porcelain --untracked-files=no)" ]; then
+      say "local changes, fetched only: $dir"
+    elif git -C "$path" rev-parse -q --verify '@{u}' >/dev/null; then
+      git -C "$path" merge -q --ff-only '@{u}' 2>/dev/null ||
+        say "diverged, fetched only: $dir"
+    fi
+  done
+}
+
+install_uv() {
+  if have uv && version_ge "$(version_of uv --version)" "$UV_MIN"; then
+    return
+  fi
+  say "install uv"
+  curl -LsSf https://astral.sh/uv/install.sh | env UV_NO_MODIFY_PATH=1 sh
+}
+
+install_rust() {
+  if have rustup; then
+    rustup update stable >/dev/null
+  else
+    say "install rust"
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs |
+      sh -s -- -y --no-modify-path --profile minimal
+  fi
+}
+
+install_go() {
+  local go=$LOCAL/go/bin/go
+  if [ -x "$go" ] &&
+    version_ge "$(version_of "$go" env GOVERSION)" "$GO_VERSION"; then
+    return
+  fi
+  say "install go $GO_VERSION"
+  rm -rf "$LOCAL/go"
+  curl -fsSL "https://go.dev/dl/go$GO_VERSION.linux-$1.tar.gz" |
+    tar -xz -C "$LOCAL"
+}
+
+# Install the SDK nethermind's global.json asks for, or the latest 10.0.
+install_dotnet() {
+  local version=(--channel "$DOTNET_MIN")
+  local json=$WS_ROOT/clients/nethermind/global.json
+  if [ -f "$json" ]; then version=(--jsonfile "$json"); fi
+  curl -fsSL https://dot.net/v1/dotnet-install.sh |
+    bash -s -- --install-dir "$HOME/.dotnet" --no-path "${version[@]}" \
+      >/dev/null
+}
+
+install_jdk() {
+  local java=$LOCAL/jdk/bin/java arch=x64
+  if [ "$1" = arm64 ]; then arch=aarch64; fi
+  if [ -x "$java" ] &&
+    [[ "$("$java" -version 2>&1)" == *"\"$JDK_MAJOR."* ]]; then
+    return
+  fi
+  say "install temurin jdk $JDK_MAJOR"
+  rm -rf "$LOCAL/jdk"
+  mkdir -p "$LOCAL/jdk"
+  curl -fsSL "https://api.adoptium.net/v3/binary/latest/$JDK_MAJOR/ga/linux/$arch/jdk/hotspot/normal/eclipse" |
+    tar -xz -C "$LOCAL/jdk" --strip-components=1
+}
+
+install_jq() {
+  if have jq; then return; fi
+  say "install jq"
+  curl -fsSL -o "$LOCAL/bin/jq" \
+    "https://github.com/jqlang/jq/releases/download/jq-$JQ_VERSION/jq-linux-$1"
+  chmod +x "$LOCAL/bin/jq"
+}
+
+install_rg() {
+  if have rg; then return; fi
+  say "install ripgrep"
+  cargo install -q --locked ripgrep
+}
+
+install_codex() {
+  if have codex; then return; fi
+  if ! have npm; then
+    say "skip codex, npm is missing"
+    return
+  fi
+  say "install codex"
+  npm install -g -s --prefix "$LOCAL" @openai/codex
+}
+
+# Put the toolchains on PATH for login shells, fish and systemd services.
+install_env() {
+  mkdir -p "$STATE"
+  env_lines sh >"$STATE/env.sh"
+  env_lines fish >"$STATE/env.fish"
+  local rc
+  for rc in "$HOME/.bashrc" "$HOME/.profile"; do
+    if ! grep -qF "$STATE/env.sh" "$rc" 2>/dev/null; then
+      printf '\n. "%s"\n' "$STATE/env.sh" >>"$rc"
+    fi
+  done
+  if [ -d "$HOME/.config/fish" ]; then
+    mkdir -p "$HOME/.config/fish/conf.d"
+    ln -sf "$STATE/env.fish" "$HOME/.config/fish/conf.d/protocol-mesh.fish"
+  fi
+  if systemctl --user show-environment >/dev/null 2>&1; then
+    mkdir -p "$HOME/.config/environment.d"
+    env_lines systemd >"$HOME/.config/environment.d/protocol-mesh.conf"
+    eval "$(env_lines sh)"
+    systemctl --user import-environment PATH DOTNET_ROOT JAVA_HOME \
+      2>/dev/null || true
+  fi
+}
+
+cmd_tools() {
+  if ! linux; then
+    say "mesh tools installs Linux toolchains, on macOS use brew"
+    return
+  fi
+  local arch
+  case $(uname -m) in
+    x86_64) arch=amd64 ;;
+    aarch64) arch=arm64 ;;
+    *) die "unsupported CPU $(uname -m)" ;;
+  esac
+  mkdir -p "$LOCAL/bin"
+  install_uv
+  install_rust
+  install_go "$arch"
+  install_dotnet
+  install_jdk "$arch"
+  install_jq "$arch"
+  install_rg
+  install_codex
+  install_env
+}
+
+# Point $2 at $1, leaving any real file or directory there alone.
+link() {
+  mkdir -p "$(dirname "$2")"
+  if [ -e "$2" ] && [ ! -L "$2" ]; then
+    say "kept, not a link: $2"
+  else
+    ln -sfn "$1" "$2"
+  fi
+}
+
+cmd_skills() {
+  local f
+  for f in "$MESH"/commands/*.md "$AGENTS"/commands/*.md; do
+    if [ ! -f "$f" ]; then continue; fi
+    link "$f" "$HOME/.claude/commands/${f##*/}"
+    link "$f" "$HOME/.codex/prompts/${f##*/}"
+  done
+  if [ -d "$AGENTS/recneps" ]; then
+    link "$AGENTS/recneps" "$HOME/.claude/skills/recneps"
+    link "$AGENTS/recneps" "$HOME/.codex/skills/recneps"
+  fi
+  # Every Claude session learns where things are and how to build them.
+  local import="@$MESH/AGENTS.md"
+  if ! grep -qxF "$import" "$HOME/.claude/CLAUDE.md" 2>/dev/null; then
+    mkdir -p "$HOME/.claude"
+    printf '\n%s\n' "$import" >>"$HOME/.claude/CLAUDE.md"
+  fi
+}
+
+# Source checkout of each build target, under $WS_ROOT.
+target_src() {
+  case $1 in
+    eels) echo execution-specs ;;
+    hive) echo hive ;;
+    clive) echo clive ;;
+    geth) echo clients/go-ethereum ;;
+    erigon) echo clients/erigon ;;
+    besu) echo clients/besu ;;
+    nethermind) echo clients/nethermind ;;
+    evmone) echo clients/evmone ;;
+    ethrex) echo clients/ethrex ;;
+    nimbus) echo clients/nimbus-eth1 ;;
+    ethereumjs) echo clients/ethereumjs-monorepo ;;
+    *) return 1 ;;
+  esac
+}
+
+# Make and print the directory a target's binaries go in.
+out() {
+  mkdir -p "$WS_BIN/$1"
+  echo "$WS_BIN/$1"
+}
+
+# Each build runs in its checkout.
+build_eels() { uv sync -q; }
+build_hive() { go build -o hive .; }
+build_clive() { go build -o "$LOCAL/bin/clive" ./cmd/hive-cli; }
+build_geth() { go build -o "$(out geth)/evm" ./cmd/evm; }
+
+build_erigon() {
+  make evm.cmd
+  ln -sf "$PWD/build/bin/evm" "$(out erigon)/evm"
+}
+
+build_besu() {
+  ./gradlew --no-daemon -q :ethereum:evmtool:installDist
+  ln -sf "$PWD/ethereum/evmtool/build/install/evmtool/bin/evmtool" \
+    "$(out besu)/evmtool"
+}
+
+build_nethermind() {
+  dotnet publish src/Nethermind/Nethermind.Test.Runner -c Release \
+    --nologo -v q -o "$(out nethermind)"
+}
+
+build_evmone() {
+  git submodule update -q --init --recursive
+  cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DEVMONE_TESTING=ON \
+    >/dev/null
+  cmake --build build --parallel "$JOBS"
+  local tool
+  for tool in evmone evmone-t8n evmone-statetest evmone-blockchaintest; do
+    if [ -x "build/bin/$tool" ]; then
+      ln -sf "$PWD/build/bin/$tool" "$(out evmone)/$tool"
+    fi
+  done
+}
+
+build_ethrex() {
+  cargo build -q --release --manifest-path tooling/Cargo.toml -p ethrex-evm
+  ln -sf "$PWD/tooling/target/release/ethrex-evm" "$(out ethrex)/ethrex-evm"
+}
+
+build_nimbus() {
+  make -j"$JOBS" update
+  make -j"$JOBS" t8n
+  ln -sf "$PWD/tools/t8n/t8n" "$(out nimbus)/t8n"
+}
+
+build_ethereumjs() {
+  npm ci -s --no-audit --no-fund
+  # The script finds tsx and its sources from inside the checkout.
+  printf '#!/bin/sh\ncd "%s" && exec ./packages/vm/test/t8n/ethereumjs-t8ntool.sh "$@"\n' \
+    "$PWD" >"$(out ethereumjs)/ethereumjs-t8ntool.sh"
+  chmod +x "$WS_BIN/ethereumjs/ethereumjs-t8ntool.sh"
+}
+
+# Build one target. With MESH_FORCE=0, skip it when its checkout is still
+# at the commit it was last built from.
+cmd__build() {
+  local t=$1 dir head stamp
+  dir=$(target_src "$t") || die "unknown target $t, targets: ${TARGETS[*]}"
+  [ -d "$WS_ROOT/$dir/.git" ] || die "$dir is not cloned, run: mesh sync $dir"
+  cd "$WS_ROOT/$dir"
+  head=$(git rev-parse HEAD)
+  stamp=$STATE/built/$t
+  if [ "${MESH_FORCE:-1}" = 0 ] && [ "$(cat "$stamp" 2>/dev/null)" = "$head" ]; then
+    return
+  fi
+  say "build $t at ${head:0:10}"
+  "build_$t"
+  mkdir -p "$STATE/built"
+  echo "$head" >"$stamp"
+}
+
+cmd_build() {
+  local force=1 t failed=()
+  if [ "${1:-}" = --if-changed ]; then
+    force=0
+    shift
+  fi
+  if [ $# -eq 0 ]; then
+    die "usage: mesh build <target...|all>, targets: ${TARGETS[*]}"
+  fi
+  if [ "$1" = all ]; then set -- "${TARGETS[@]}"; fi
+  take_lock
+  # Each target builds in its own process, so one failure stops only it.
+  for t in "$@"; do
+    if ! MESH_FORCE=$force "$MESH/mesh" _build "$t"; then failed+=("$t"); fi
+  done
+  if [ ${#failed[@]} -gt 0 ]; then
+    say "failed: ${failed[*]}"
+    return 1
+  fi
+}
+
+cmd_heavy() {
+  if [ $# -eq 0 ]; then die "usage: mesh heavy <command...>"; fi
+  take_lock
+  exec "$@"
+}
+
+cmd_env() { env_lines "${1:-sh}"; }
+
+# Fetch the repos every hour through a systemd user timer.
+install_timer() {
+  if ! linux || ! systemctl --user show-environment >/dev/null 2>&1; then
+    return 0
+  fi
+  local units=$HOME/.config/systemd/user
+  mkdir -p "$units"
+  cat >"$units/protocol-mesh-sync.service" <<EOF
+[Unit]
+Description=Fetch the protocol-mesh repos
+
+[Service]
+Type=oneshot
+ExecStart=$MESH/mesh sync --if-idle
+EOF
+  cat >"$units/protocol-mesh-sync.timer" <<EOF
+[Unit]
+Description=Fetch the protocol-mesh repos every hour
+
+[Timer]
+OnCalendar=hourly
+RandomizedDelaySec=10m
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+EOF
+  systemctl --user daemon-reload
+  systemctl --user enable -q --now protocol-mesh-sync.timer
+}
+
+# Print one doctor row, flagging a tool that is missing or older than $3.
+row() {
+  local state=ok
+  if [ -z "$2" ]; then
+    state=MISSING
+  elif [ -n "${3:-}" ] && ! version_ge "$2" "$3"; then
+    state=OLD
+  fi
+  printf '  %-12s %-8s %-14s %s\n' "$1" "$state" "${2:--}" "${3:+need $3}"
+}
+
+# Print a tool's version, or nothing when it is not installed.
+tool_version() {
+  if have "$1"; then version_of "$@"; fi
+}
+
+cmd_doctor() {
+  echo "tools"
+  row uv "$(tool_version uv --version)" "$UV_MIN"
+  row go "$(tool_version go version)" "$GO_VERSION"
+  row rustc "$(tool_version rustc --version)" "$RUST_MIN"
+  row dotnet "$(tool_version dotnet --version)" "$DOTNET_MIN"
+  row java "$(tool_version java -version)" "$JDK_MAJOR"
+  row node "$(tool_version node --version)" "$NODE_MIN"
+  local t
+  for t in git docker cmake gcc just jq rg gh claude codex; do
+    row "$t" "$(tool_version "$t" --version)"
+  done
+  if have docker && ! docker info >/dev/null 2>&1; then
+    echo "  docker is installed but the daemon is not reachable"
+  fi
+  if have codex && [ ! -f "$HOME/.codex/auth.json" ]; then
+    echo "  codex is not logged in, run: codex login"
+  fi
+
+  echo "repos in $WS_ROOT"
+  local dir url branch missing=()
+  while read -r dir url branch; do
+    if [ ! -d "$WS_ROOT/$dir/.git" ]; then missing+=("$dir"); fi
+  done < <(manifest)
+  if [ ${#missing[@]} -eq 0 ]; then
+    echo "  all $(manifest | wc -l | tr -d ' ') cloned"
+  else
+    echo "  missing ${missing[*]}, run: mesh sync"
+  fi
+
+  echo "builds in $WS_BIN"
+  local built
+  for t in "${TARGETS[@]}"; do
+    built=$(head -c 10 "$STATE/built/$t" 2>/dev/null || true)
+    printf '  %-12s %s\n' "$t" "${built:-not built}"
+  done
+
+  if have dpkg-query; then
+    local pkg need=()
+    for pkg in "${APT_PACKAGES[@]}"; do
+      if [[ "$(dpkg-query -W -f='${Status}' "$pkg" 2>/dev/null)" != *"ok installed"* ]]; then
+        need+=("$pkg")
+      fi
+    done
+    if [ ${#need[@]} -gt 0 ]; then
+      echo "system packages: ask devops to run"
+      echo "  sudo apt-get install -y ${need[*]}"
+    fi
+  fi
+}
+
+cmd_up() {
+  link "$MESH/mesh" "$LOCAL/bin/mesh"
+  cmd_sync
+  cmd_tools
+  cmd_skills
+  cmd_build --if-changed all || true
+  install_timer
+  cmd_doctor
+}
+
+main() {
+  local cmd=${1:-up}
+  if [ $# -gt 0 ]; then shift; fi
+  case $cmd in
+    up | sync) self_update "$cmd" "$@" ;;
+  esac
+  case $cmd in
+    up | sync | tools | build | skills | heavy | env | doctor) "cmd_$cmd" "$@" ;;
+    _build) cmd__build "$@" ;;
+    help | -h | --help) sed -n '2,/^set -e/p' "$MESH/mesh" | sed '$d; s/^# \{0,1\}//' ;;
+    *) die "unknown command $cmd, see: mesh help" ;;
+  esac
+}
+
+eval "$(env_lines sh)"
+main "$@"

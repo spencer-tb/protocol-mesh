@@ -1,0 +1,32 @@
+# Repos that `mesh sync` keeps under ~/ethereum (or $WS_ROOT).
+# One per line: <dir> <clone url> [branch]. Public repos only.
+
+# Specs and process
+execution-specs              https://github.com/ethereum/execution-specs.git
+EIPs                         https://github.com/ethereum/EIPs.git
+execution-apis               https://github.com/ethereum/execution-apis.git
+ethereum-types               https://github.com/ethereum/ethereum-types.git
+ethereum-pm                  https://github.com/ethereum/pm.git
+pm                           https://github.com/ethspecs/pm.git
+
+# Hive
+hive                         https://github.com/ethereum/hive.git
+hive-tests                   https://github.com/ethpandaops/hive-tests.git
+hive-ui                      https://github.com/ethpandaops/hive-ui.git
+clive                        https://github.com/spencer-tb/clive.git
+
+# Execution clients and EVMs
+clients/go-ethereum          https://github.com/ethereum/go-ethereum.git
+clients/reth                 https://github.com/paradigmxyz/reth.git
+clients/revm                 https://github.com/bluealloy/revm.git
+clients/alloy-evm            https://github.com/alloy-rs/evm.git
+clients/nethermind           https://github.com/NethermindEth/nethermind.git
+clients/besu                 https://github.com/besu-eth/besu.git
+clients/erigon               https://github.com/erigontech/erigon.git
+clients/ethrex               https://github.com/lambdaclass/ethrex.git
+clients/nimbus-eth1          https://github.com/status-im/nimbus-eth1.git
+clients/ethereumjs-monorepo  https://github.com/ethereumjs/ethereumjs-monorepo.git
+clients/evmone               https://github.com/ipsilon/evmone.git
+
+# Devnets
+ethereum-package             https://github.com/ethpandaops/ethereum-package.git
