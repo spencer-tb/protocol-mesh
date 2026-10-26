@@ -10,6 +10,8 @@ import pytest
 import bootstrap
 from bootstrap import Repo, Target, Workspace
 
+GH = "https://github.com"
+
 
 @pytest.fixture
 def ws(tmp_path: Path) -> Workspace:
@@ -65,14 +67,14 @@ def test_manifest_skips_comments_and_reads_branches(tmp_path: Path) -> None:
     manifest = tmp_path / "repos.txt"
     manifest.write_text(
         "# heading\n\n"
-        "specs  https://x/specs.git\n"
-        "clients/geth  https://x/geth.git  devnet  # note\n"
-        "archive  https://x/archive.git  shallow\n"
+        f"specs  {GH}/ethereum/execution-specs.git\n"
+        f"clients/geth  {GH}/ethereum/go-ethereum  devnet  # note\n"
+        f"archive  {GH}/ethereum/eth-rnd-archive.git  shallow\n"
     )
     assert bootstrap.read_manifest(manifest) == [
-        Repo("specs", "https://x/specs.git"),
-        Repo("clients/geth", "https://x/geth.git", "devnet"),
-        Repo("archive", "https://x/archive.git", shallow=True),
+        Repo("specs", f"{GH}/ethereum/execution-specs.git"),
+        Repo("clients/geth", f"{GH}/ethereum/go-ethereum", "devnet"),
+        Repo("archive", f"{GH}/ethereum/eth-rnd-archive.git", shallow=True),
     ]
 
 
@@ -80,6 +82,23 @@ def test_manifest_rejects_a_line_without_a_url(tmp_path: Path) -> None:
     manifest = tmp_path / "repos.txt"
     manifest.write_text("specs\n")
     with pytest.raises(SystemExit, match="line 1"):
+        bootstrap.read_manifest(manifest)
+
+
+@pytest.mark.parametrize(
+    "url",
+    [
+        f"{GH}/etherium/go-ethereum.git",
+        "git@github.com:ethereum/go-ethereum.git",
+        "http://github.com/ethereum/go-ethereum.git",
+        "https://gitlab.com/ethereum/go-ethereum.git",
+        "ext::sh%20-c%20id",
+    ],
+)
+def test_manifest_rejects_untrusted_urls(tmp_path: Path, url: str) -> None:
+    manifest = tmp_path / "repos.txt"
+    manifest.write_text(f"geth {url}\n")
+    with pytest.raises(SystemExit, match="trusted owner"):
         bootstrap.read_manifest(manifest)
 
 
@@ -281,20 +300,34 @@ def test_install_env_adds_one_line_per_shell(
     assert (ws.home / ".bashrc").read_text().startswith("# mine")
 
 
-def test_link_commands_keeps_real_files_and_imports_once(
-    ws: Workspace,
+def test_find_clones_matches_forks_by_name(
+    upstream: Path, tmp_path: Path
 ) -> None:
-    own = ws.home / ".claude" / "commands" / "review-eip.md"
-    own.parent.mkdir(parents=True)
-    own.write_text("mine")
-    bootstrap.link_commands(ws)
-    bootstrap.link_commands(ws)
-    assert own.read_text() == "mine"
-    assert not own.is_symlink()
-    assert (ws.home / ".claude" / "commands" / "review-tests.md").is_symlink()
-    assert (ws.home / ".codex" / "prompts" / "review-eip.md").is_symlink()
-    claude_md = (ws.home / ".claude" / "CLAUDE.md").read_text()
-    assert claude_md.count("AGENTS.md") == 1
+    mine = tmp_path / "code" / "geth"
+    git(upstream, "clone", "-q", str(upstream), str(mine))
+    git(mine, "remote", "set-url", "origin", f"{GH}/someone/go-ethereum.git")
+    clones = bootstrap.find_clones([tmp_path / "code"])
+    assert clones["someone/go-ethereum"] == mine
+    assert clones["go-ethereum"] == mine
+
+
+def test_reuse_clones_a_separate_copy(upstream: Path, tmp_path: Path) -> None:
+    mine = tmp_path / "mine"
+    git(upstream, "clone", "-q", str(upstream), str(mine))
+    checkout = tmp_path / "repos" / "repo"
+    repo = Repo("repo", upstream.as_uri())
+    assert bootstrap.sync_repo(checkout, repo, reference=mine) == "cloned"
+    assert not (checkout / ".git" / "objects" / "info" / "alternates").exists()
+    assert (checkout / "first").exists()
+
+
+def test_reuse_falls_back_when_the_reference_is_unusable(
+    upstream: Path, tmp_path: Path
+) -> None:
+    checkout = tmp_path / "repos" / "repo"
+    repo = Repo("repo", upstream.as_uri())
+    missing = tmp_path / "missing"
+    assert bootstrap.sync_repo(checkout, repo, reference=missing) == "cloned"
 
 
 def test_needs_build_after_a_new_commit_or_local_changes(
@@ -329,8 +362,8 @@ def test_a_failed_build_does_not_stop_the_others(
     )
     assert bootstrap.build_targets(ws, ["a", "b"]) == ["a"]
     assert built == ["src"]
-    assert (ws.state / "built" / "b").exists()
-    assert not (ws.state / "built" / "a").exists()
+    assert (ws.stamps / "b").exists()
+    assert not (ws.stamps / "a").exists()
 
 
 def test_link_binary_fails_when_nothing_was_built(tmp_path: Path) -> None:

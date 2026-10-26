@@ -3,3 +3,8 @@ __pycache__/
 .mypy_cache/
 .pytest_cache/
 .ruff_cache/
+
+# Workspace
+/repos/
+/bin/
+/work/

@@ -5,13 +5,13 @@ description: Run hive locally against one or more clients, including EELS consum
 
 # Hive
 
-Hive is built by `setup.sh hive` at `~/ethereum/hive/hive`. It needs
+Hive is built by `./setup.sh hive` at `repos/hive/hive`. It needs
 docker running. A run builds client and simulator images and starts many
 containers, so ask the user before starting one, and run one at a time.
 
 ## Run
 
-From `~/ethereum/hive`:
+From `repos/hive`:
 
 ```
 ./hive --sim ethereum/eels/consume-engine --client go-ethereum,reth \
@@ -23,7 +23,7 @@ From `~/ethereum/hive`:
 - Fixtures: `--sim.buildarg fixtures=<release>`. The default is
   `stable@latest`. Devnet releases are listed by the `devnet` skill.
 - Clients from devnet branches: `--client-file
-  ~/ethereum/hive-tests/.github/configs/hive/<file>.yaml`. Files that use
+  ../hive-tests/.github/configs/hive/<file>.yaml`. Files that use
   `${DEVNET}` need it filled in first, for example with
   `sed 's/${DEVNET}/heze-devnet-3/g' <file> > /tmp/clients.yaml`.
 - `--docker.output` shows container output while debugging.

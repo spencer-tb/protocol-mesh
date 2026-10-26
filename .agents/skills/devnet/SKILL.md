@@ -5,7 +5,7 @@ description: Get the context for a devnet such as heze-devnet-3 or glamsterdam-d
 
 # Devnets
 
-Repos are under `~/ethereum` (or `$WS_ROOT`). A devnet is named
+Paths are relative to the protocol-mesh directory. A devnet is named
 `<fork>-devnet-<n>`.
 
 ## Branches and images
@@ -27,11 +27,11 @@ done
 
 ## Configs
 
-- Network config (genesis, chain config): `~/ethereum/<fork>-devnets/network-configs/devnet-<n>/`.
+- Network config (genesis, chain config): `repos/<fork>-devnets/network-configs/devnet-<n>/`.
 - Kurtosis configs, where the repo has them:
-  `~/ethereum/<fork>-devnets/kurtosis/devnet-<n>-*.yaml`. Run them with the
+  `repos/<fork>-devnets/kurtosis/devnet-<n>-*.yaml`. Run them with the
   `kurtosis` skill.
-- Hive client files: `~/ethereum/hive-tests/.github/configs/hive/`, either
+- Hive client files: `repos/hive-tests/.github/configs/hive/`, either
   `<devnet>.yaml` or `<fork>-git.yaml`, which builds each client from its
   devnet branch.
 

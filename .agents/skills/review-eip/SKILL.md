@@ -1,3 +1,8 @@
+---
+name: review-eip
+description: Review the current PR for EIP implementation correctness against the EIP text. Use when asked to review a spec PR that implements an EIP.
+---
+
 Review the current PR for EIP implementation correctness.
 
 ## Steps

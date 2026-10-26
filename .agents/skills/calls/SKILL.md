@@ -5,7 +5,7 @@ description: Find what was said or decided on AllCoreDevs and breakout calls, us
 
 # Calls
 
-Repos are under `~/ethereum` (or `$WS_ROOT`).
+Paths are relative to the protocol-mesh directory.
 
 Prefer summaries and decisions over transcripts. Transcripts are people
 thinking out loud, so quote them only as "said on the call", with the call
@@ -35,14 +35,14 @@ folder.
 
 | Folder | Files |
 |---|---|
-| `~/ethereum/forkcast/public/artifacts/<series>/<date>_<n>/` | `tldr.json`, `notes.json`, `key_decisions.json`, `eip_mentions.json`, `transcript_corrected.vtt` |
-| `~/ethereum/ethereum-pm/.github/ACDbot/artifacts/<series>/<date>_<n>/` | `chat.txt` (Zoom chat), `tldr.json`, `transcript.vtt`, `transcript_corrected.vtt` |
+| `repos/forkcast/public/artifacts/<series>/<date>_<n>/` | `tldr.json`, `notes.json`, `key_decisions.json`, `eip_mentions.json`, `transcript_corrected.vtt` |
+| `repos/ethereum-pm/.github/ACDbot/artifacts/<series>/<date>_<n>/` | `chat.txt` (Zoom chat), `tldr.json`, `transcript.vtt`, `transcript_corrected.vtt` |
 
 `key_decisions.json` holds `.key_decisions[]` with `original_text`,
 `timestamp`, `type` and `eips` (numbers):
 
 ```
-cd ~/ethereum/forkcast/public/artifacts
+cd repos/forkcast/public/artifacts
 for f in */*/key_decisions.json; do
   jq -r --arg f "$f" '.key_decisions[] | select(.eips | index(8037))
     | "\($f) \(.timestamp) \(.original_text)"' "$f"
@@ -52,8 +52,8 @@ rg -i "frame transaction" */*/transcript_corrected.vtt
 
 ## Notes, agendas and what is next
 
-- Written notes: `~/ethereum/ethereum-pm/AllCoreDevs-EL-Meetings/`,
+- Written notes: `repos/ethereum-pm/AllCoreDevs-EL-Meetings/`,
   `AllCoreDevs-CL-Meetings/`, `Breakout-Room-Meetings/`.
 - Agendas are issues: `gh issue list -R ethereum/pm --search "ACDE" --state all`.
 - Upcoming agenda suggestions, deferred decisions and open action items:
-  `~/ethereum/forkcast/public/artifacts/<series>/plan/`.
+  `repos/forkcast/public/artifacts/<series>/plan/`.

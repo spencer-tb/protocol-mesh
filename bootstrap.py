@@ -4,16 +4,21 @@
 # ///
 """
 Set up everything needed to work on EIPs across the spec, the tests and the
-execution clients, on macOS or Linux. Run it again any time to update.
+execution clients, on macOS or Linux. Run it again any time.
 
-  ./setup.sh             clone or update the repos, install any missing
-                         toolchains, link the shared commands and build
-                         every client binary whose code changed
-  ./setup.sh geth besu   the same, building only the targets named
-  ./setup.sh --check     only show what is installed, missing or too old
+  ./setup.sh               clone or fetch the repos, install any missing
+                           toolchains and build every client binary whose
+                           code changed
+  ./setup.sh geth besu     the same, building only the targets named
+  ./setup.sh --reuse DIR   let new clones borrow objects from clones you
+                           already have in DIR, so they download less but
+                           stay separate from yours
+  ./setup.sh --check       only show what is installed, missing or too old
+  ./setup.sh --update      show what changed in this repo upstream and
+                           apply it only after you say yes
 
-Repos go in ~/ethereum and binaries in ~/ethereum/bin, unless WS_ROOT or
-WS_BIN say otherwise.
+Repos go in repos/ and binaries in bin/ inside this checkout, unless WS_ROOT
+or WS_BIN say otherwise.
 """
 
 from __future__ import annotations
@@ -36,6 +41,28 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 MANIFEST = HERE / "repos.txt"
+
+# repos.txt may only point at these GitHub owners, over https.
+TRUSTED_OWNERS = frozenset(
+    owner.lower()
+    for owner in (
+        "alloy-rs",
+        "besu-eth",
+        "bluealloy",
+        "erigontech",
+        "ethereum",
+        "ethereumjs",
+        "ethpandaops",
+        "ethspecs",
+        "ipsilon",
+        "lambdaclass",
+        "NethermindEth",
+        "paradigmxyz",
+        "spencer-tb",
+        "status-im",
+    )
+)
+GITHUB_REPO = re.compile(r"github\.com[:/]([\w.-]+)/([\w.-]+?)(?:\.git)?/?$")
 
 GO_VERSION = "1.25.7"
 RUST_MIN = "1.93"
@@ -174,12 +201,10 @@ class Workspace:
                 f"setup: unsupported platform {platform.system()} "
                 f"{platform.machine()}"
             )
-        home = Path.home()
-        root = Path(os.environ.get("WS_ROOT", home / "ethereum"))
         return cls(
-            root=root,
-            bin=Path(os.environ.get("WS_BIN", root / "bin")),
-            home=home,
+            root=Path(os.environ.get("WS_ROOT", HERE / "repos")),
+            bin=Path(os.environ.get("WS_BIN", HERE / "bin")),
+            home=Path.home(),
             system=system,
             arch=arch,
         )
@@ -191,8 +216,13 @@ class Workspace:
 
     @property
     def state(self) -> Path:
-        """Return where the setup keeps its own files."""
+        """Return where the shell setup files live, shared by checkouts."""
         return self.home / ".config" / "protocol-mesh"
+
+    @property
+    def stamps(self) -> Path:
+        """Return where each target's last built commit is recorded."""
+        return self.bin / ".built"
 
     def tool_dirs(self) -> list[Path]:
         """Return the toolchain directories, in lookup order."""
@@ -442,23 +472,6 @@ def link_file(target: Path, link: Path) -> None:
     link.symlink_to(target)
 
 
-def link_commands(ws: Workspace) -> None:
-    """Link the shared commands and point Claude Code at AGENTS.md."""
-    for command in sorted((HERE / "commands").glob("*.md")):
-        for folder in (
-            ws.home / ".claude" / "commands",
-            ws.home / ".codex" / "prompts",
-        ):
-            link_file(command, folder / command.name)
-    claude_md = ws.home / ".claude" / "CLAUDE.md"
-    line = f"@{HERE / 'AGENTS.md'}"
-    text = claude_md.read_text() if claude_md.exists() else ""
-    if line not in text.splitlines():
-        claude_md.parent.mkdir(parents=True, exist_ok=True)
-        with claude_md.open("a") as out:
-            out.write(f"\n{line}\n")
-
-
 @dataclass(frozen=True)
 class Repo:
     """One line of repos.txt."""
@@ -467,6 +480,24 @@ class Repo:
     url: str
     branch: str | None = None
     shallow: bool = False
+
+
+def github_repo(url: str) -> str | None:
+    """Return the lowercase owner/name of a GitHub url, or None."""
+    match = GITHUB_REPO.search(url)
+    if match is None:
+        return None
+    return f"{match[1]}/{match[2]}".lower()
+
+
+def trusted(url: str) -> bool:
+    """Return whether `url` is an https GitHub repo of a trusted owner."""
+    repo = github_repo(url)
+    return (
+        url.startswith("https://github.com/")
+        and repo is not None
+        and repo.split("/")[0] in TRUSTED_OWNERS
+    )
 
 
 def read_manifest(path: Path = MANIFEST) -> list[Repo]:
@@ -483,6 +514,11 @@ def read_manifest(path: Path = MANIFEST) -> list[Repo]:
                 f"setup: {path.name} line {number} needs a dir, a url "
                 "and optionally a branch and `shallow`"
             )
+        if not trusted(fields[1]):
+            raise SystemExit(
+                f"setup: {path.name} line {number}: {fields[1]} is not "
+                "an https GitHub repo of a trusted owner"
+            )
         repos.append(
             Repo(
                 dir=fields[0],
@@ -498,7 +534,28 @@ def read_manifest(path: Path = MANIFEST) -> list[Repo]:
 SKIP_LFS = {"GIT_LFS_SKIP_SMUDGE": "1"}
 
 
-def sync_repo(path: Path, repo: Repo) -> str:
+def clone(path: Path, repo: Repo, reference: Path | None) -> str:
+    """Clone `repo` to `path`, borrowing objects from `reference`."""
+    env = SKIP_LFS if repo.shallow else None
+    branch = ["--branch", repo.branch] if repo.branch else []
+    if repo.shallow:
+        copy = ["--depth", "1"]
+    elif reference is not None:
+        # Copy what the existing clone has, then cut the link to it.
+        copy = ["--reference", str(reference), "--dissociate"]
+    else:
+        copy = ["--filter=blob:none"]
+    result = capture(
+        ["git", "clone", "-q", *copy, *branch, repo.url, path], env=env
+    )
+    if result.returncode and reference is not None and not repo.shallow:
+        return clone(path, repo, None)
+    if result.returncode:
+        return f"clone failed: {last_line(result.stderr)}"
+    return "cloned"
+
+
+def sync_repo(path: Path, repo: Repo, reference: Path | None = None) -> str:
     """
     Clone `repo` to `path`, or fetch it and fast-forward a clean branch.
 
@@ -506,16 +563,9 @@ def sync_repo(path: Path, repo: Repo) -> str:
     upstream branch, or diverged from it is fetched but left as it is,
     since it may hold someone's work.
     """
-    env = SKIP_LFS if repo.shallow else None
     if not (path / ".git").exists():
-        branch = ["--branch", repo.branch] if repo.branch else []
-        copy = ["--depth", "1"] if repo.shallow else ["--filter=blob:none"]
-        result = capture(
-            ["git", "clone", "-q", *copy, *branch, repo.url, path], env=env
-        )
-        if result.returncode:
-            return f"clone failed: {last_line(result.stderr)}"
-        return "cloned"
+        return clone(path, repo, reference)
+    env = SKIP_LFS if repo.shallow else None
     fetched = git(path, "rev-parse", "-q", "--verify", "@{u}").stdout
     depth = ["--depth", "1"] if repo.shallow else []
     result = git(path, "fetch", "-q", "--all", "--prune", *depth, env=env)
@@ -541,11 +591,33 @@ def sync_repo(path: Path, repo: Repo) -> str:
     return "up to date"
 
 
-def sync_repos(ws: Workspace, repos: list[Repo]) -> None:
+def find_clones(dirs: Sequence[Path]) -> dict[str, Path]:
+    """
+    Map the GitHub repos cloned in `dirs`, up to two levels down, to their
+    paths, by owner/name and by name alone, so a fork matches too.
+    """
+    found: dict[str, Path] = {}
+    for top in dirs:
+        for path in [top, *top.glob("*"), *top.glob("*/*")]:
+            if not (path / ".git").exists():
+                continue
+            for word in git(path, "remote", "-v").stdout.split():
+                repo = github_repo(word)
+                if repo is not None:
+                    found.setdefault(repo, path)
+                    found.setdefault(repo.split("/")[1], path)
+    return found
+
+
+def sync_repos(
+    ws: Workspace, repos: list[Repo], clones: dict[str, Path]
+) -> None:
     """Clone or update every repo, several at a time."""
 
     def sync(repo: Repo) -> tuple[Repo, str]:
-        return repo, sync_repo(ws.root / repo.dir, repo)
+        name = github_repo(repo.url) or ""
+        reference = clones.get(name) or clones.get(name.split("/")[-1])
+        return repo, sync_repo(ws.root / repo.dir, repo, reference)
 
     current = 0
     with ThreadPoolExecutor(max_workers=6) as pool:
@@ -688,7 +760,7 @@ TARGETS = {
 
 def needs_build(ws: Workspace, name: str, checkout: Path) -> bool:
     """Return whether `name` has a new commit or local changes."""
-    stamp = ws.state / "built" / name
+    stamp = ws.stamps / name
     head = git(checkout, "rev-parse", "HEAD").stdout.strip()
     dirty = git(checkout, "status", "--porcelain", "--untracked-files=no")
     if dirty.stdout or not stamp.exists():
@@ -698,7 +770,7 @@ def needs_build(ws: Workspace, name: str, checkout: Path) -> bool:
 
 def record_build(ws: Workspace, name: str, checkout: Path) -> None:
     """Remember the commit `name` was just built from."""
-    stamp = ws.state / "built" / name
+    stamp = ws.stamps / name
     stamp.parent.mkdir(parents=True, exist_ok=True)
     stamp.write_text(git(checkout, "rev-parse", "HEAD").stdout)
 
@@ -812,7 +884,7 @@ def check(ws: Workspace) -> None:
 
     print(f"builds in {ws.bin}")
     for name in TARGETS:
-        stamp = ws.state / "built" / name
+        stamp = ws.stamps / name
         built = stamp.read_text()[:10] if stamp.exists() else "not built"
         print(f"  {name:<12} {built}")
 
@@ -832,6 +904,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
     parser.add_argument(
         "--check", action="store_true", help="only print the status"
+    )
+    parser.add_argument(
+        "--reuse",
+        action="append",
+        default=[],
+        type=Path,
+        metavar="DIR",
+        help="borrow objects from clones in DIR, may be repeated",
     )
     parser.add_argument(
         "targets",
@@ -856,13 +936,12 @@ def main(argv: Sequence[str] | None = None) -> int:
     for tool in ("git", "curl", "tar"):
         if not have(tool):
             raise SystemExit(f"setup: install {tool} first")
-    sync_repos(ws, read_manifest())
+    sync_repos(ws, read_manifest(), find_clones(args.reuse))
     try:
         install_tools(ws)
     except subprocess.CalledProcessError as error:
         command = " ".join(map(str, error.cmd))
         raise SystemExit(f"setup: {command} failed") from error
-    link_commands(ws)
     failed = build_targets(ws, args.targets or list(TARGETS))
     check(ws)
     if failed:

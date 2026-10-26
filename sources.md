@@ -2,7 +2,7 @@
 
 Where the context for EIP work lives. Repos are cloned by `setup.sh` (see
 `repos.txt`), sites are fetched when needed. Each has a skill in
-`.claude/skills/` with the exact commands.
+`.agents/skills/` with the exact commands.
 
 ## Cloned
 

@@ -1,3 +1,8 @@
+---
+name: review-tests
+description: Review the current PR for test quality and coverage, and list the concrete test cases that are missing. Use when asked to review a PR that adds or changes tests.
+---
+
 Review the current PR for test quality and coverage.
 
 ## Steps

@@ -5,11 +5,11 @@ description: Look up an EIP fast, its spec text, fork inclusion status, recent c
 
 # EIP lookup
 
-Repos are under `~/ethereum` (or `$WS_ROOT`). Replace `N` with the number.
+Paths are relative to the protocol-mesh directory. Replace `N` with the number.
 
 ## Spec text
 
-`~/ethereum/EIPs/EIPS/eip-N.md`. The front matter has `status`, `requires`
+`repos/EIPs/EIPS/eip-N.md`. The front matter has `status`, `requires`
 and `discussions-to`. If the file is missing or stale, the EIP is newer
 than the checkout: read https://eips.ethereum.org/EIPS/eip-N or
 https://forkcast.org/eips/N.md.
@@ -33,7 +33,7 @@ What moved lately across all EIPs:
 ## Changes and open PRs
 
 ```
-git -C ~/ethereum/EIPs log --oneline -10 -- EIPS/eip-N.md
+git -C repos/EIPs log --oneline -10 -- EIPS/eip-N.md
 gh search prs "EIP-N" --repo ethereum/EIPs --state open
 ```
 
@@ -45,8 +45,8 @@ mentions are in the `calls` skill, Discord channels in the `discord` skill.
 ## Implementation and tests
 
 ```
-rg -l "EIP-N" ~/ethereum/execution-specs/src
-ls -d ~/ethereum/execution-specs/tests/*/eipN_*
-rg -il "eip-?N" ~/ethereum/clients/<client>
+rg -l "EIP-N" repos/execution-specs/src
+ls -d repos/execution-specs/tests/*/eipN_*
+rg -il "eip-?N" repos/clients/<client>
 gh search prs "EIP-N" --repo ethereum/execution-specs --state open
 ```
