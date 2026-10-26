@@ -15,6 +15,22 @@ machine has.
   client's branch, rebuild it with `setup.sh <client>`.
 - The EELS skills load when you work inside `~/ethereum/execution-specs`.
 
+## Priorities
+
+1. Mainnet, the live fork.
+2. The next fork (n+1), then the one after it (n+2).
+3. Headliners first, always.
+4. The current aim is post-quantum resistance. Between otherwise equal
+   pieces of work, pick the one that moves it forward.
+
+On 2026-10-26 mainnet is Fusaka, n+1 is Glamsterdam (headliners EIP-7732
+ePBS and EIP-7928 block-level access lists) and n+2 is Hegotá (headliners
+EIP-7805 FOCIL and EIP-8141 frame transactions). Check the current state:
+
+    curl -s https://forkcast.org/api/upgrades.json | jq -r '.upgrades[] | "\(.name) \(.status)"'
+    curl -s https://forkcast.org/api/eips.json | jq -r '.eips[] | . as $e
+      | .forkRelationships[] | select(.isHeadliner) | "\(.forkName) EIP-\($e.id) \($e.title)"'
+
 ## Context
 
 Use the skill for the source before searching by hand. `sources.md` lists
