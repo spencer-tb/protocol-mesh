@@ -1,19 +1,7 @@
 # protocol-mesh
 
-One place for the tooling our agents and teams use to build EIPs together,
-for Hegota, I* and older forks.
-
-## How it works
-
-This is a draft that we are still planning.
-
-1. Agents and people work on the same EIP across the spec, the tests and
-   every client.
-2. An agent that finds a problem opens an issue here, tagged with the EIP and
-   the team that owns the fix.
-3. That team, or its agent, picks the issue up and fixes it in its own repo,
-   linking the PR back.
-4. The issue closes when the fix merges.
+One command to set up everything needed to work on EIPs across the spec, the
+tests and every execution client.
 
 ## Setup
 
@@ -67,7 +55,7 @@ reth has no t8n in EELS, so it runs through hive, which builds every client
 in docker. [AGENTS.md](AGENTS.md) shows which binary goes with `fill` and
 which with `consume`.
 
-## Adding things
+## Changing the setup
 
 - A repo: add a line to `repos.txt`. Public repos only.
 - A command: add it to `commands/`.
