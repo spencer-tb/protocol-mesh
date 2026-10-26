@@ -15,44 +15,37 @@ This is a draft that we are still planning.
    linking the PR back.
 4. The issue closes when the fix merges.
 
-## Set up a machine
+## Setup
 
-    gh repo clone spencer-tb/protocol-mesh ~/protocol-mesh
-    ~/protocol-mesh/mesh
+On macOS or Linux:
+
+    git clone https://github.com/spencer-tb/protocol-mesh
+    ./protocol-mesh/setup.sh
 
 That one command:
 
 - clones every repo in `repos.txt` into `~/ethereum`
-- installs uv, Rust, Go, .NET, JDK 21, jq, ripgrep and Codex in `~/.local`,
-  with no sudo
+- installs any missing toolchain (uv, cmake, Rust, Go, Node, .NET, JDK 21,
+  jq, ripgrep, Codex) into `~/.local`, with no sudo, leaving tools you
+  already have alone
+- puts them on PATH for new bash, zsh and fish shells
+- links the shared commands for Claude Code and Codex
 - builds the client binaries into `~/ethereum/bin`
-- links the shared commands and skills for Claude Code and Codex
-- puts the toolchains on PATH for bash, fish and systemd user services
-- adds an hourly timer that keeps the repos fetched
+- prints what is installed, missing or too old
 
-Run it again whenever you like. It pulls this repo first and rebuilds only
-the clients whose checkout moved. The first run builds every client, so it
-takes a while. `mesh doctor` shows what is missing.
-
-Once per machine, outside the script:
-
-- devops installs the system packages `mesh doctor` lists
-  (`clang libclang-dev libsnappy-dev librocksdb-dev`) and adds you to the
-  docker group
-- you log in to `gh`, `claude` and `codex`
-
-## Commands
+Run it again any time. It pulls this repo first, fast-forwards clean
+checkouts and rebuilds only the clients whose code changed. The first run
+builds every client, so it takes a while.
 
 | Command | What it does |
 |---|---|
-| `mesh` or `mesh up` | everything above |
-| `mesh sync [dir...]` | clone missing repos, fetch the rest, fast-forward clean checkouts |
-| `mesh tools` | install or update the toolchains (Linux) |
-| `mesh build <target...>` | rebuild now, for example after switching a client branch |
-| `mesh skills` | link the shared commands and skills |
-| `mesh heavy <cmd...>` | run a fill, consume or hive run, one heavy job at a time |
-| `mesh env [sh\|fish]` | print the PATH setup |
-| `mesh doctor` | show what is installed, missing or too old |
+| `./setup.sh` | everything above |
+| `./setup.sh geth besu` | the same, building only those targets |
+| `./setup.sh --check` | only print the status |
+
+Once per machine, install what `--check` lists under system packages
+(a C compiler, clang, snappy and rocksdb, through apt or brew), start
+docker for hive, and log in to `gh`, `claude` and `codex`.
 
 ## Build targets
 
@@ -76,7 +69,7 @@ which with `consume`.
 
 ## Adding things
 
-- A repo: add a line to `repos.txt`, then run `mesh sync`. Public repos only.
-- A command or skill: add it to `commands/`, then run `mesh skills`.
-- A build: add a `build_<target>` function to `mesh` and the target to
+- A repo: add a line to `repos.txt`. Public repos only.
+- A command: add it to `commands/`.
+- A build: add a `build_<target>` function to `setup.sh`, and the target to
   `TARGETS` and `target_src`.
