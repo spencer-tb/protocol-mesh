@@ -401,3 +401,43 @@ def test_the_review_profile_matches_repos_txt() -> None:
     picked = bootstrap.read_profile("review", bootstrap.read_manifest())
     assert "execution-specs" in [repo.dir for repo in picked]
     assert not any(repo.dir.startswith("clients/") for repo in picked)
+
+
+def test_every_team_names_real_repos_and_targets() -> None:
+    manifest = bootstrap.read_manifest()
+    for team in bootstrap.read_teams().values():
+        repos, builds = bootstrap.team_plan(team, manifest)
+        dirs = {repo.dir for repo in repos}
+        assert set(team.owns) <= dirs
+        assert set(builds) <= set(bootstrap.TARGETS)
+
+
+def test_a_client_team_gets_its_client_and_only_its_toolchains() -> None:
+    team = bootstrap.read_teams()["geth"]
+    repos, builds = bootstrap.team_plan(team, bootstrap.read_manifest())
+    dirs = [repo.dir for repo in repos]
+    assert "clients/go-ethereum" in dirs and "EIPs" in dirs
+    assert "clients/reth" not in dirs
+    assert bootstrap.installers_for(builds) == [
+        bootstrap.install_uv,
+        bootstrap.install_jq,
+        bootstrap.install_go,
+    ]
+
+
+def test_me_round_trips(tmp_path: Path) -> None:
+    path = tmp_path / ".mesh" / "me.toml"
+    bootstrap.write_me(path, "someone", "geth", [8141, 7805])
+    assert bootstrap.read_me(path) == {
+        "login": "someone",
+        "team": "geth",
+        "eips": [8141, 7805],
+    }
+
+
+def test_team_answers_by_number_or_name() -> None:
+    teams = bootstrap.read_teams()
+    assert bootstrap.pick_team("1", teams) == next(iter(teams))
+    assert bootstrap.pick_team(" Geth ", teams) == "geth"
+    assert bootstrap.pick_team("99", teams) is None
+    assert bootstrap.parse_eips("8141, EIP-7805") == [8141, 7805]

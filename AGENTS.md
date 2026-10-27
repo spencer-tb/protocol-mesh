@@ -4,6 +4,15 @@ Shared workspace for agents working on EIPs across the spec, the tests and
 the execution clients. Work from this directory. `./setup.sh --check` shows
 what this machine has.
 
+## Who you work for
+
+Read `.mesh/me.toml` first. It names your user, their team and the EIPs they
+focus on. `teams.toml` lists the repos that team owns. Change code only in
+those repos, in worktrees under `work/` on your user's fork. A problem in
+any other repo gets written up for the team that owns it, with a
+reproduction, and your user decides where it goes. If `.mesh/me.toml` is
+missing, ask your user to run `./setup.sh`.
+
 ## Where things are
 
 Paths are relative to this directory.

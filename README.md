@@ -42,11 +42,13 @@ On macOS or Linux:
 
 That one command:
 
-- clones every repo in `repos.txt` into `repos/`, inside this checkout and
-  ignored by git, so agents never touch your own clones
-- installs any missing toolchain (uv, cmake, Rust, Go, Node, .NET, JDK 21,
-  jq, ripgrep, Codex) into `~/.local`, with no sudo, leaving tools you
-  already have alone
+- clones your team's repos from `repos.txt` into `repos/`, inside this
+  checkout and ignored by git, so agents never touch your own clones
+- asks once which team you are on (`teams.toml`) and saves it in
+  `.mesh/me.toml`, which git ignores, so you get your team's repos and builds
+- installs only the toolchains those builds need (uv, jq, and Go, Rust, Node,
+  .NET, JDK 21 or cmake as needed) into `~/.local`, with no sudo, leaving
+  tools you already have alone
 - puts them on PATH for new bash, zsh and fish shells
 - builds the client binaries into `bin/`
 - prints what is installed, missing or too old
@@ -58,6 +60,7 @@ every client, so it takes a while.
 | Command | What it does |
 |---|---|
 | `./setup.sh` | everything above |
+| `./setup.sh --team geth` | set or change your team |
 | `./setup.sh geth besu` | the same, building only those targets |
 | `./setup.sh --profile review` | only the repos a reviewer reads (`profiles/review.txt`), no toolchains or builds |
 | `./setup.sh --reuse ~/code` | new clones borrow objects from your clones in `~/code`, so they download less but stay separate |
@@ -66,7 +69,8 @@ every client, so it takes a while.
 
 Once per machine, install what `--check` lists under system packages
 (a C compiler, clang, snappy and rocksdb, through apt or brew), start
-docker for hive, and log in to `gh` and your agents.
+docker for hive, log in to `gh`, and bring your own agent (Claude Code,
+Codex or another).
 
 ## Updates
 
