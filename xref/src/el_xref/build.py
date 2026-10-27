@@ -15,6 +15,7 @@ Results go to `data/tree.json`. `render_tsv` writes them to `map/` as one
 file per client, for agents to grep.
 """
 
+import fnmatch
 import json
 import subprocess
 import time
@@ -31,6 +32,23 @@ TREE = "tree.json"
 MAX_CANDIDATES = 30
 # Built first, and its answers seed and hint the other clients.
 REFERENCE = "geth"
+
+# Functions in the fork that are not protocol behaviour, so the map skips
+# them: exception messages, arithmetic on a gas type, and hex helpers for
+# tooling.
+NOT_SPEC = (
+    "exceptions.*.__init__",
+    "vm.exceptions.*.__init__",
+    "fork_types.StateGasPerByte.*",
+    "utils.hexadecimal.*",
+)
+
+
+def is_spec(symbol: Symbol) -> bool:
+    """Return whether `symbol` is protocol behaviour worth mapping."""
+    return not any(fnmatch.fnmatch(symbol.id, p) for p in NOT_SPEC)
+
+
 MAX_BODY = 4000
 
 # Calls too generic to follow.
@@ -662,7 +680,7 @@ def build(
     without a search.
     """
     every = load(index_path(config, config.spec.repo))
-    specs = select_specs(every, modules, only)
+    specs = [s for s in select_specs(every, modules, only) if is_spec(s)]
     by_name: dict[str, list[Symbol]] = defaultdict(list)
     for symbol in every:
         by_name[symbol.name].append(symbol)
