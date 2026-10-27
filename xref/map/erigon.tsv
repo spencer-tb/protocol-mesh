@@ -1,0 +1,132 @@
+# eels	steps	role	votes	location	function
+block_access_lists._build_from_builder	0,2,3	part	2/2	repos/clients/erigon/execution/types/block_access_list.go:432-463	AccountChanges.Normalize
+block_access_lists._build_from_builder	1,4,5	missing	-	-	-
+block_access_lists._get_pre_tx_account	0	missing	-	-	-
+block_access_lists._get_pre_tx_storage	0,1,2	missing	-	-	-
+block_access_lists._index_start_account	0,1	missing	-	-	-
+block_access_lists._index_start_storage	0,1	missing	-	-	-
+block_access_lists.add_balance_change	1	part	2/2	repos/clients/erigon/execution/types/block_access_list.go:669-682	dedupByIndex
+block_access_lists.add_balance_change	0,2	missing	-	-	-
+block_access_lists.add_code_change	1	inlined	2/2	repos/clients/erigon/execution/types/block_access_list.go:432-463	AccountChanges.Normalize
+block_access_lists.add_code_change	0,2	missing	-	-	-
+block_access_lists.add_nonce_change	1	inlined	2/2	repos/clients/erigon/execution/types/block_access_list.go:432-463	AccountChanges.Normalize
+block_access_lists.add_nonce_change	1	part	1/2	repos/clients/erigon/execution/types/block_access_list.go:669-682	dedupByIndex
+block_access_lists.add_nonce_change	0,2	missing	-	-	-
+block_access_lists.add_storage_read	0,1	missing	-	-	-
+block_access_lists.add_storage_write	0,1,3	missing	-	-	-
+block_access_lists.add_touched_account	0	missing	-	-	-
+block_access_lists.build_block_access_list	0,1,2	entry	2/2	repos/clients/erigon/execution/bal/process.go:34-44	Create
+block_access_lists.ensure_account	0	missing	-	-	-
+block_access_lists.hash_block_access_list	0	entry	2/2	repos/clients/erigon/execution/types/block_access_list.go:966-971	BlockAccessList.Hash
+block_access_lists.hash_block_access_list	0	part	1/2	repos/clients/erigon/execution/types/block_access_list.go:316-327	encodeSlotChanges
+block_access_lists.hash_block_access_list	0	part	1/2	repos/clients/erigon/execution/types/block_access_list.go:344-375	AccountChanges.EncodeRLP
+block_access_lists.hash_block_access_list	0	part	1/2	repos/clients/erigon/execution/types/block_access_list.go:726-744	encodeBlockAccessList
+block_access_lists.hash_block_access_list	0	part	1/2	repos/clients/erigon/execution/types/block_access_list.go:746-760	encodeHashList
+block_access_lists.hash_block_access_list	0	part	1/2	repos/clients/erigon/execution/types/block_access_list.go:846-861	encodeAccountChanges
+block_access_lists.remove_balance_change	0,1	missing	-	-	-
+block_access_lists.remove_code_change	0,1	missing	-	-	-
+block_access_lists.remove_nonce_change	0,1	missing	-	-	-
+block_access_lists.remove_storage_write	0,1,2	missing	-	-	-
+block_access_lists.update_builder_from_tx	0,1,2,3,4,5	missing	-	-	-
+block_access_lists.validate_block_access_list_gas_limit	0,1,2	entry	2/2	repos/clients/erigon/execution/types/block_access_list.go:1044-1056	BlockAccessList.ValidateMaxItems
+fork.apply_body	1	entry	2/2	repos/clients/erigon/execution/protocol/block_exec.go:75-199	ExecuteBlockEphemerally
+fork.apply_body	0	part	2/2	repos/clients/erigon/execution/protocol/misc/eip4788.go:27-42	ApplyBeaconRootEip4788
+fork.apply_body	5	part	2/2	repos/clients/erigon/execution/bal/process.go:67-115	Process
+fork.apply_body	3,4	part	2/2	repos/clients/erigon/execution/protocol/rules/merge/merge.go:157-280	Merge.Finalize
+fork.apply_body	0	part	2/2	repos/clients/erigon/execution/protocol/rules/merge/merge.go:438-492	Merge.Initialize
+fork.apply_body	-	delegated	2/2	-> fork.process_unchecked_system_transaction	sysCallContract
+fork.apply_body	-	delegated	2/2	-> fork.process_transaction	ApplyTransaction
+fork.apply_body	-	delegated	2/2	-> fork.process_general_purpose_requests	ParseDepositLogs
+fork.apply_body	-	delegated	2/2	-> block_access_lists.build_block_access_list	Create
+fork.apply_body	-	delegated	2/2	-> block_access_lists.validate_block_access_list_gas_limit	BlockAccessList.ValidateMaxItems
+fork.apply_body	2	missing	-	-	-
+fork.calculate_base_fee_per_gas	0,2,3,4	entry	2/2	repos/clients/erigon/execution/protocol/misc/eip1559.go:90-128	CalcBaseFee
+fork.calculate_base_fee_per_gas	1	part	1/2	repos/clients/erigon/execution/protocol/misc/gaslimit.go:50-56	VerifyParentGasLimit
+fork.calculate_base_fee_per_gas	-	delegated	2/2	-> fork.check_gas_limit	VerifyGaslimit
+fork.check_transaction	1,2,3	entry	2/2	repos/clients/erigon/execution/protocol/txn_executor.go:249-423	TxnExecutor.preCheck
+fork.check_transaction	0,2,5	part	2/2	repos/clients/erigon/execution/types/blob_tx.go:94-127	BlobTx.AsMessage
+fork.check_transaction	5	part	2/2	repos/clients/erigon/execution/protocol/evm.go:105-111	NewEVMTxContext
+fork.check_transaction	0,2,5	part	2/2	repos/clients/erigon/execution/types/set_code_tx.go:118-160	SetCodeTransaction.AsMessage
+fork.check_transaction	0,2	part	2/2	repos/clients/erigon/execution/types/dynamic_fee_tx.go:278-315	DynamicFeeTransaction.AsMessage
+fork.check_transaction	-	delegated	1/2	-> transactions.validate_transaction	TxnExecutor.calcIntrinsicGas
+fork.check_transaction	-	delegated	2/2	-> transactions.validate_transaction	CalcIntrinsicGas
+fork.check_transaction	-	delegated	2/2	-> vm.gas.allocate_evm_gas	SplitTxnGasLimit
+fork.check_transaction	-	delegated	2/2	-> vm.gas.check_block_gas_capacity	CheckBlockGasInclusion
+fork.check_transaction	-	delegated	2/2	-> vm.gas.check_block_gas_capacity	InclusionContributions
+fork.check_transaction	-	delegated	2/2	-> transactions.calculate_effective_gas_price	CheckEip1559TxGasFeeCap
+fork.check_transaction	4	missing	-	-	-
+fork.execute_block	2,3	entry	2/2	repos/clients/erigon/execution/protocol/block_exec.go:75-199	ExecuteBlockEphemerally
+fork.execute_block	4,5	part	2/2	repos/clients/erigon/execution/bal/process.go:67-115	Process
+fork.execute_block	1	part	2/2	repos/clients/erigon/execution/protocol/rules/merge/merge.go:124-132	Merge.VerifyUncles
+fork.execute_block	4,5	part	2/2	repos/clients/erigon/execution/protocol/rules/rules.go:206-248	DefaultBlockPostValidation
+fork.execute_block	4,5	part	2/2	repos/clients/erigon/execution/types/block.go:659-683	Body.MatchesHeader
+fork.execute_block	0	part	2/2	repos/clients/erigon/execution/types/block.go:787-807	RawBlock.ValidateMaxRlpSize
+fork.execute_block	-	delegated	2/2	-> fork.validate_header	Merge.VerifyHeader
+fork.execute_block	-	delegated	2/2	-> fork.validate_header	Merge.verifyHeader
+fork.execute_block	-	delegated	2/2	-> fork.apply_body	InitializeBlockExecution
+fork.execute_block	-	delegated	2/2	-> fork.apply_body	FinalizeBlockExecution
+fork.execute_block	-	delegated	2/2	-> block_access_lists.hash_block_access_list	BlockAccessList.Hash
+fork.make_receipt	0	entry	2/2	repos/clients/erigon/execution/protocol/state_processor.go:154-189	MakeReceipt
+fork.make_receipt	-	delegated	2/2	-> blocks.encode_receipt	Receipt.MarshalBinary
+fork.make_receipt	-	delegated	2/2	-> blocks.encode_receipt	Receipt.encodeTyped
+fork.make_receipt	-	delegated	2/2	-> blocks.encode_receipt	Receipt.EncodeRLP
+fork.make_receipt	-	delegated	2/2	-> blocks.encode_receipt	Receipts.EncodeIndex
+fork.make_receipt	-	delegated	2/2	-> bloom.logs_bloom	CreateBloom
+fork.make_receipt	-	delegated	1/2	-> blocks.encode_receipt	hasStandardReceiptPayload
+fork.make_receipt	-	delegated	2/2	-> blocks.encode_receipt	Receipt.statusEncoding
+fork.make_receipt	-	delegated	1/2	-> bloom.logs_bloom	Bloom.add
+fork.make_receipt	1	missing	-	-	-
+fork.process_general_purpose_requests	0,1,2,3,4	entry	2/2	repos/clients/erigon/execution/protocol/rules/merge/merge.go:157-280	Merge.Finalize
+fork.process_general_purpose_requests	1	part	2/2	repos/clients/erigon/execution/protocol/misc/eip7002.go:30-48	DequeueWithdrawalRequests7002
+fork.process_general_purpose_requests	2	part	2/2	repos/clients/erigon/execution/protocol/misc/eip7251.go:30-48	DequeueConsolidationRequests7251
+fork.process_general_purpose_requests	3	part	2/2	repos/clients/erigon/execution/protocol/misc/eip8282.go:46-64	DequeueBuilderDepositRequests
+fork.process_general_purpose_requests	4	part	2/2	repos/clients/erigon/execution/protocol/misc/eip8282.go:67-85	DequeueBuilderExitRequests
+fork.process_general_purpose_requests	-	delegated	2/2	-> requests.parse_deposit_requests	ParseDepositLogs
+fork.process_general_purpose_requests	-	delegated	2/2	-> requests.parse_deposit_requests	unpackDepositLog
+fork.process_unchecked_system_transaction	1,2	entry	2/2	repos/clients/erigon/execution/protocol/block_exec.go:223-266	sysCallContract
+fork.process_unchecked_system_transaction	-	delegated	2/2	-> vm.interpreter.process_top_level	EVM.Call
+fork.process_unchecked_system_transaction	0	missing	-	-	-
+fork.state_transition	2	part	2/2	repos/clients/erigon/execution/protocol/block_exec.go:303-342	FinalizeBlockExecution
+fork.state_transition	-	delegated	1/2	-> fork.execute_block	ExecuteBlockEphemerally
+fork.state_transition	-	delegated	2/2	-> fork.get_last_256_block_hashes	GetHashFn
+fork.state_transition	0,1,3	missing	-	-	-
+state_tracker.copy_tx_state	0,1	missing	-	-	-
+state_tracker.get_pre_state_account	0	missing	-	-	-
+state_tracker.incorporate_tx_into_block	0,1,2,4,5	inlined	2/2	repos/clients/erigon/execution/bal/rederive.go:46-153	RederiveBlockAccessList
+state_tracker.incorporate_tx_into_block	3	missing	-	-	-
+state_tracker.modify_state	0,1	missing	-	-	-
+state_tracker.restore_tx_state	0	missing	-	-	-
+transactions.calculate_effective_gas_price	1	inlined	1/2	repos/clients/erigon/execution/protocol/aa/aa_gas.go:18-58	chargeGas
+transactions.calculate_effective_gas_price	1	part	2/2	repos/clients/erigon/execution/types/transaction.go:129-144	CalcEffectiveGasTip
+transactions.calculate_effective_gas_price	0,2	part	2/2	repos/clients/erigon/execution/protocol/txn_executor.go:236-244	CheckEip1559TxGasFeeCap
+transactions.calculate_effective_gas_price	1	inlined	2/2	repos/clients/erigon/execution/types/dynamic_fee_tx.go:278-315	DynamicFeeTransaction.AsMessage
+transactions.check_nonce	0	inlined	2/2	repos/clients/erigon/execution/protocol/txn_executor.go:249-423	TxnExecutor.preCheck
+transactions.decode_transaction	1,2,3	entry	2/2	repos/clients/erigon/execution/types/transaction.go:218-233	DecodeTransaction
+transactions.decode_transaction	3	part	2/2	repos/clients/erigon/execution/types/transaction.go:157-199	DecodeRLPTransaction
+transactions.decode_transaction	2	part	1/2	repos/clients/erigon/execution/types/dynamic_fee_tx.go:230-275	DynamicFeeTransaction.DecodeRLP
+transactions.decode_transaction	2,4	part	2/2	repos/clients/erigon/execution/types/transaction.go:236-276	UnmarshalTransactionFromBinary
+transactions.decode_transaction	2	part	1/2	repos/clients/erigon/execution/types/set_code_tx.go:239-300	SetCodeTransaction.DecodeRLP
+transactions.decode_transaction	3	part	1/2	repos/clients/erigon/execution/types/legacy_tx.go:273-309	LegacyTx.DecodeRLP
+transactions.decode_transaction	2	part	1/2	repos/clients/erigon/execution/types/access_list_tx.go:358-403	AccessListTx.DecodeRLP
+transactions.decode_transaction	2	part	1/2	repos/clients/erigon/execution/types/blob_tx.go:360-425	BlobTx.DecodeRLP
+transactions.decode_transaction	0	missing	-	-	-
+transactions.has_access_list	0	missing	-	-	-
+transactions.signing_hash_155	0	entry	2/2	repos/clients/erigon/execution/types/legacy_tx.go:376-398	LegacyTx.SigningHash
+transactions.signing_hash_2930	0	entry	2/2	repos/clients/erigon/execution/types/access_list_tx.go:475-489	AccessListTx.SigningHash
+transactions.signing_hash_2930	0	part	1/2	repos/clients/erigon/execution/types/hashing.go:199-207	prefixedRlpHash
+transactions.signing_hash_7702	0	entry	2/2	repos/clients/erigon/execution/types/set_code_tx.go:200-216	SetCodeTransaction.SigningHash
+vm.eoa_delegation.calculate_delegation_cost	0,3,4	inlined	2/2	repos/clients/erigon/execution/vm/operations_acl.go:323-425	makeCallVariantGasCallEIP7702
+vm.eoa_delegation.calculate_delegation_cost	1,2	part	2/2	repos/clients/erigon/execution/types/set_code_tx.go:371-378	ParseDelegation
+vm.eoa_delegation.is_valid_delegation	0	entry	2/2	repos/clients/erigon/execution/types/set_code_tx.go:371-378	ParseDelegation
+vm.eoa_delegation.resolve_delegated_code_address	0,1,2,3	inlined	2/2	repos/clients/erigon/execution/vm/operations_acl.go:323-425	makeCallVariantGasCallEIP7702
+vm.gas.charge_gas_from_meter	0,1	entry	2/2	repos/clients/erigon/execution/protocol/mdgas/md_gas.go:92-115	Consume
+vm.gas.charge_gas_from_meter	1	part	2/2	repos/clients/erigon/execution/vm/interpreter.go:256-264	CallContext.useMdGas
+vm.gas.charge_state_gas_from_meter	0,1,2	entry	2/2	repos/clients/erigon/execution/protocol/mdgas/md_gas.go:92-115	Consume
+vm.gas.charge_state_gas_from_meter	1	part	2/2	repos/clients/erigon/execution/vm/interpreter.go:256-264	CallContext.useMdGas
+vm.gas.credit_state_gas_refund	0,1	entry	2/2	repos/clients/erigon/execution/vm/interpreter.go:286-301	CallContext.refillStateGas
+vm.gas.credit_state_gas_refund	0,1	part	2/2	repos/clients/erigon/execution/protocol/mdgas/md_gas.go:118-132	Refill
+vm.gas.repay_state_gas_spill	0,1,2	entry	2/2	repos/clients/erigon/execution/vm/interpreter.go:268-284	CallContext.mergeChildStateGas
+vm.gas.repay_state_gas_spill	1,2	part	2/2	repos/clients/erigon/execution/protocol/mdgas/md_gas.go:118-132	Refill
+vm.gas.repay_state_gas_spill	1,2	part	2/2	repos/clients/erigon/execution/vm/interpreter.go:286-301	CallContext.refillStateGas
+vm.gas.repay_state_gas_spill	3	missing	-	-	-
+vm.gas.restore_state_gas	0,1,2	entry	2/2	repos/clients/erigon/execution/vm/evm.go:191-218	EVM.handleFrameRevert

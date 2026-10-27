@@ -1,224 +1,278 @@
-# eels	steps	role	location	function
-fork.apply_body	0,1,2,3,4,5	entry	repos/clients/go-ethereum/core/state_processor.go:68-165	StateProcessor.Process
-fork.apply_body	0,1,2	part	repos/clients/go-ethereum/core/state_processor_parallel.go:133-335	StateProcessor.processParallel
-fork.apply_body	0	part	repos/clients/go-ethereum/core/state_processor.go:168-185	PreExecution
-fork.apply_body	3,4	part	repos/clients/go-ethereum/core/state_processor.go:190-230	PostExecution
-fork.apply_body	-	delegated	-> block_access_lists.validate_block_access_list_gas_limit	BlockAccessList.ValidateSize
-fork.apply_body	-	delegated	-> fork.process_withdrawals	ProcessWithdrawals
-fork.apply_body	-	delegated	-> fork.process_transaction	applyTransactionWithEVM
-fork.apply_body	-	delegated	-> fork.process_transaction	TransactionToMessage
-fork.apply_body	-	delegated	-> fork.process_unchecked_system_transaction	ProcessBeaconBlockRoot
-fork.apply_body	-	delegated	-> fork.process_unchecked_system_transaction	ProcessParentBlockHash
-fork.apply_body	-	delegated	-> block_access_lists.build_block_access_list	ConstructionBlockAccessList.ToEncodingObj
-fork.apply_body	-	delegated	-> fork.process_general_purpose_requests	processRequestsSystemCall
-fork.apply_body	-	delegated	-> fork.process_general_purpose_requests	ParseDepositLogs
-fork.calculate_base_fee_per_gas	0,2,3,4	entry	repos/clients/go-ethereum/consensus/misc/eip1559/eip1559.go:60-102	CalcBaseFee
-fork.calculate_base_fee_per_gas	1	part	repos/clients/go-ethereum/consensus/misc/eip1559/eip1559.go:33-57	VerifyEIP1559Header
-fork.calculate_base_fee_per_gas	-	delegated	-> fork.check_gas_limit	VerifyGaslimit
-fork.check_transaction	2,3	entry	repos/clients/go-ethereum/core/state_transition.go:573-703	stateTransition.preCheck
-fork.check_transaction	5	part	repos/clients/go-ethereum/core/evm.go:88-95	NewEVMTxContext
-fork.check_transaction	0,2	part	repos/clients/go-ethereum/core/state_transition.go:330-387	TransactionToMessage
-fork.check_transaction	3	part	repos/clients/go-ethereum/core/state_transition.go:464-519	stateTransition.buyGas
-fork.check_transaction	0	inlined	repos/clients/go-ethereum/core/state_transition.go:716-831	stateTransition.execute
-fork.check_transaction	-	delegated	-> vm.eoa_delegation.is_valid_delegation	ParseDelegation
-fork.check_transaction	-	delegated	-> vm.gas.check_block_gas_capacity	GasPool.CheckGasAmsterdam
-fork.check_transaction	-	delegated	-> transactions.validate_transaction	IntrinsicGas
-fork.check_transaction	-	delegated	-> transactions.validate_transaction	FloorDataGas
-fork.check_transaction	-	delegated	-> vm.gas.allocate_evm_gas	stateTransition.initRuntimeGasBudget
-fork.check_transaction	-	delegated	-> vm.gas.calculate_total_blob_gas	stateTransition.blobGasUsed
-fork.check_transaction	-	delegated	-> state_tracker.get_code	StateDB.GetCode
-fork.check_transaction	-	delegated	-> transactions.validate_transaction	CheckMaxInitCodeSize
-fork.check_transaction	-	delegated	-> transactions.validate_transaction	intrinsicBaseGasEIP2780
-fork.check_transaction	1,4	missing	-	-
-fork.execute_block	2,3,5	entry	repos/clients/go-ethereum/core/blockchain.go:2320-2501	BlockChain.ProcessBlock
-fork.execute_block	2	part	repos/clients/go-ethereum/core/evm.go:42-85	NewEVMBlockContext
-fork.execute_block	0,1,5	part	repos/clients/go-ethereum/core/block_validator.go:51-144	BlockValidator.ValidateBody
-fork.execute_block	5	part	repos/clients/go-ethereum/core/gaspool.go:141-151	GasPool.Used
-fork.execute_block	4,5	part	repos/clients/go-ethereum/core/block_validator.go:148-204	BlockValidator.ValidateState
-fork.execute_block	4	part	repos/clients/go-ethereum/core/digest_pipeline.go:170-175	ProcessResult.receiptRoot
-fork.execute_block	2	part	repos/clients/go-ethereum/core/blockchain.go:2221-2303	BlockChain.setupExecutionState
-fork.execute_block	-	delegated	-> fork.validate_header	VerifyEIP1559Header
-fork.execute_block	-	delegated	-> fork.apply_body	StateProcessor.Process
-fork.execute_block	-	delegated	-> fork.apply_body	StateProcessor.processParallel
-fork.execute_block	-	delegated	-> bloom.logs_bloom	ProcessResult.blockBloom
-fork.execute_block	-	delegated	-> fork.apply_body	PreExecution
-fork.execute_block	-	delegated	-> fork.apply_body	PostExecution
-fork.execute_block	-	delegated	-> requests.compute_requests_hash	CalcRequestsHash
-fork.make_receipt	0	entry	repos/clients/go-ethereum/core/state_processor.go:303-307	MakeReceipt
-fork.make_receipt	0	part	repos/clients/go-ethereum/core/state_processor.go:311-345	makeReceipt
-fork.make_receipt	-	delegated	-> bloom.logs_bloom	Bloom.AddWithBuffer
-fork.make_receipt	-	delegated	-> bloom.logs_bloom	CreateBloom
-fork.make_receipt	-	delegated	-> blocks.encode_receipt	Receipt.EncodeRLP
-fork.make_receipt	-	delegated	-> blocks.encode_receipt	Receipt.encodeTyped
-fork.make_receipt	-	delegated	-> bloom.logs_bloom	bloomValues
-fork.make_receipt	-	delegated	-> blocks.encode_receipt	Receipt.MarshalBinary
-fork.make_receipt	-	delegated	-> blocks.encode_receipt	Receipt.statusEncoding
-fork.make_receipt	-	delegated	-> blocks.encode_receipt	Receipts.EncodeIndex
-fork.make_receipt	1	missing	-	-
-fork.process_general_purpose_requests	0,1,2,3,4	entry	repos/clients/go-ethereum/core/state_processor.go:190-230	PostExecution
-fork.process_general_purpose_requests	1	part	repos/clients/go-ethereum/core/state_processor.go:447-449	ProcessWithdrawalQueue
-fork.process_general_purpose_requests	2	part	repos/clients/go-ethereum/core/state_processor.go:453-455	ProcessConsolidationQueue
-fork.process_general_purpose_requests	3	part	repos/clients/go-ethereum/core/state_processor.go:459-461	ProcessBuilderDepositQueue
-fork.process_general_purpose_requests	4	part	repos/clients/go-ethereum/core/state_processor.go:465-467	ProcessBuilderExitQueue
-fork.process_general_purpose_requests	1,2,3,4	part	repos/clients/go-ethereum/core/state_processor.go:469-512	processRequestsSystemCall
-fork.process_general_purpose_requests	0	part	repos/clients/go-ethereum/core/state_processor.go:518-533	ParseDepositLogs
-fork.process_general_purpose_requests	-	delegated	-> requests.parse_deposit_requests	DepositLogToRequest
-fork.process_unchecked_system_transaction	0,1,2,3	entry	repos/clients/go-ethereum/core/state_processor.go:377-408	ProcessBeaconBlockRoot
-fork.process_unchecked_system_transaction	1	part	repos/clients/go-ethereum/core/state_processor.go:361-373	systemCallGasBudget
-fork.process_unchecked_system_transaction	0,1,2,3	part	repos/clients/go-ethereum/core/state_processor.go:412-443	ProcessParentBlockHash
-fork.process_unchecked_system_transaction	-	delegated	-> state_tracker.incorporate_tx_into_block	ConstructionBlockAccessList.Merge
-fork.process_unchecked_system_transaction	-	delegated	-> vm.interpreter.process_top_level	EVM.Call
-fork.process_unchecked_system_transaction	-	delegated	-> state_tracker.incorporate_tx_into_block	StateDB.Finalise
-fork.state_transition	1	entry	repos/clients/go-ethereum/core/blockchain.go:2320-2501	BlockChain.ProcessBlock
-fork.state_transition	0	part	repos/clients/go-ethereum/core/evm.go:42-85	NewEVMBlockContext
-fork.state_transition	3	part	repos/clients/go-ethereum/core/blockchain.go:1368-1391	BlockChain.writeHeadBlock
-fork.state_transition	2,3	part	repos/clients/go-ethereum/core/blockchain.go:1723-1834	BlockChain.writeBlockWithState
-fork.state_transition	-	delegated	-> fork.execute_block	StateProcessor.Process
-fork.state_transition	-	delegated	-> fork.get_last_256_block_hashes	GetHashFn
-transactions.calculate_effective_gas_price	1,2	entry	repos/clients/go-ethereum/core/state_transition.go:330-387	TransactionToMessage
-transactions.calculate_effective_gas_price	0,1	part	repos/clients/go-ethereum/core/types/transaction.go:398-420	Transaction.calcEffectiveGasTip
-transactions.calculate_effective_gas_price	0,2	inlined	repos/clients/go-ethereum/core/state_transition.go:573-703	stateTransition.preCheck
-transactions.calculate_intrinsic_cost	0,1,2,3,5	entry	repos/clients/go-ethereum/core/state_transition.go:72-160	IntrinsicGas
-transactions.calculate_intrinsic_cost	1	part	repos/clients/go-ethereum/core/state_transition.go:163-194	intrinsicBaseGasEIP2780
-transactions.calculate_intrinsic_cost	4	part	repos/clients/go-ethereum/core/state_transition.go:197-256	FloorDataGas
-transactions.calculate_max_gas_fee	0	inlined	repos/clients/go-ethereum/core/state_transition.go:464-519	stateTransition.buyGas
-transactions.check_nonce	0	inlined	repos/clients/go-ethereum/core/state_transition.go:573-703	stateTransition.preCheck
-transactions.decode_transaction	3	entry	repos/clients/go-ethereum/core/types/transaction.go:184-204	Transaction.UnmarshalBinary
-transactions.decode_transaction	0,3	part	repos/clients/go-ethereum/core/types/transaction.go:144-180	Transaction.DecodeRLP
-transactions.decode_transaction	1,2,4	part	repos/clients/go-ethereum/core/types/transaction.go:207-231	Transaction.decodeTyped
-transactions.has_access_list	0	part	repos/clients/go-ethereum/core/types/tx_dynamic_fee.go:90-90	DynamicFeeTx.accessList
-transactions.has_access_list	0	part	repos/clients/go-ethereum/core/types/tx_legacy.go:97-97	LegacyTx.accessList
-transactions.has_access_list	0	part	repos/clients/go-ethereum/core/types/tx_access_list.go:101-101	AccessListTx.accessList
-transactions.has_access_list	0	part	repos/clients/go-ethereum/core/types/tx_setcode.go:214-214	SetCodeTx.accessList
-transactions.has_access_list	0	part	repos/clients/go-ethereum/core/types/tx_blob.go:297-297	BlobTx.accessList
-transactions.signing_hash_155	0	entry	repos/clients/go-ethereum/core/types/tx_legacy.go:128-138	LegacyTx.sigHash
-transactions.signing_hash_2930	0	entry	repos/clients/go-ethereum/core/types/tx_access_list.go:131-144	AccessListTx.sigHash
-transactions.signing_hash_2930	0	part	repos/clients/go-ethereum/core/types/hashing.go:68-76	prefixedRlpHash
-transactions.signing_hash_7702	0	entry	repos/clients/go-ethereum/core/types/tx_setcode.go:254-269	SetCodeTx.sigHash
-vm.eoa_delegation.calculate_delegation_cost	1,2	part	repos/clients/go-ethereum/core/types/tx_setcode.go:37-42	ParseDelegation
-vm.eoa_delegation.calculate_delegation_cost	0,1,2,3,4	inlined	repos/clients/go-ethereum/core/vm/operations_acl.go:471-558	makeCallVariantGasCallEIP8037
-vm.eoa_delegation.calculate_delegation_cost	-	delegated	-> state_tracker.get_code	StateDB.GetCode
-vm.eoa_delegation.calculate_delegation_cost	-	delegated	-> state_tracker.get_account	StateDB.getStateObject
-vm.eoa_delegation.is_valid_delegation	0	entry	repos/clients/go-ethereum/core/types/tx_setcode.go:37-42	ParseDelegation
-vm.eoa_delegation.resolve_delegated_code_address	0,1,2	inlined	repos/clients/go-ethereum/core/vm/operations_acl.go:471-558	makeCallVariantGasCallEIP8037
-vm.eoa_delegation.resolve_delegated_code_address	0,1,3	part	repos/clients/go-ethereum/core/vm/evm.go:724-734	EVM.resolveCode
-vm.eoa_delegation.resolve_delegated_code_address	0,1	part	repos/clients/go-ethereum/core/vm/evm.go:740-749	EVM.resolveCodeHash
-vm.eoa_delegation.resolve_delegated_code_address	-	delegated	-> vm.eoa_delegation.get_delegated_code_address	ParseDelegation
-vm.eoa_delegation.resolve_delegated_code_address	-	delegated	-> vm.gas.charge_gas_from_meter	Contract.chargeExecution
-vm.eoa_delegation.resolve_delegated_code_address	-	delegated	-> state_tracker.get_code	StateDB.GetCode
-vm.eoa_delegation.resolve_delegated_code_address	-	delegated	-> state_tracker.get_account	StateDB.getStateObject
-vm.gas.allocate_evm_gas	0,1,2	entry	repos/clients/go-ethereum/core/state_transition.go:531-543	stateTransition.initRuntimeGasBudget
-vm.gas.calculate_data_fee	0	inlined	repos/clients/go-ethereum/core/state_transition.go:464-519	stateTransition.buyGas
-vm.gas.calculate_data_fee	-	delegated	-> vm.gas.calculate_total_blob_gas	stateTransition.blobGasUsed
-vm.gas.calculate_gas_extend_memory	0,1,3,4,5	entry	repos/clients/go-ethereum/core/vm/gas_table.go:29-56	memoryGasCost
-vm.gas.calculate_gas_extend_memory	1	part	repos/clients/go-ethereum/core/vm/common.go:68-81	calcMemSize64WithUint
-vm.gas.calculate_gas_extend_memory	2	missing	-	-
-vm.gas.calculate_total_blob_gas	0	entry	repos/clients/go-ethereum/core/types/transaction.go:475-480	Transaction.BlobGas
-vm.gas.calculate_total_blob_gas	0	part	repos/clients/go-ethereum/core/types/tx_blob.go:306-306	BlobTx.blobGas
-vm.gas.charge_gas_from_meter	0,1	entry	repos/clients/go-ethereum/core/vm/gascosts.go:89-96	GasBudget.ChargeExecutionOnly
-vm.gas.charge_gas_from_meter	0,1	part	repos/clients/go-ethereum/core/vm/gascosts.go:112-137	GasBudget.charge
-vm.gas.charge_state_gas_from_meter	0,1,2	entry	repos/clients/go-ethereum/core/vm/gascosts.go:112-137	GasBudget.charge
-vm.gas.check_max_fee_per_blob_gas	1	inlined	repos/clients/go-ethereum/core/evm.go:42-85	NewEVMBlockContext
-vm.gas.check_max_fee_per_blob_gas	0,2	inlined	repos/clients/go-ethereum/core/state_transition.go:573-703	stateTransition.preCheck
-vm.gas.check_max_fee_per_blob_gas	0	part	repos/clients/go-ethereum/core/state_transition.go:1251-1253	stateTransition.blobGasUsed
-vm.gas.check_max_fee_per_blob_gas	-	delegated	-> vm.gas.calculate_blob_gas_price	BlobConfig.blobBaseFee
-vm.gas.check_max_fee_per_blob_gas	-	delegated	-> vm.gas.calculate_blob_gas_price	CalcBlobFee
-vm.gas.check_max_fee_per_blob_gas	-	delegated	-> vm.gas.calculate_blob_gas_price	fakeExponential
-vm.gas.credit_state_gas_refund	0,1	entry	repos/clients/go-ethereum/core/vm/gascosts.go:160-166	GasBudget.RefundState
-vm.gas.forfeit_remaining_gas	1	entry	repos/clients/go-ethereum/core/vm/gascosts.go:235-250	GasBudget.ExitHalt
-vm.gas.forfeit_remaining_gas	0	missing	-	-
-vm.gas.repay_state_gas_spill	0,1,2	inlined	repos/clients/go-ethereum/core/vm/gascosts.go:273-303	GasBudget.Absorb
-vm.gas.repay_state_gas_spill	3	missing	-	-
-vm.gas.restore_state_gas	0,1	entry	repos/clients/go-ethereum/core/vm/gascosts.go:212-227	GasBudget.ExitRevert
-vm.gas.restore_state_gas	0,1	part	repos/clients/go-ethereum/core/vm/gascosts.go:235-250	GasBudget.ExitHalt
-vm.gas.restore_state_gas	2	part	repos/clients/go-ethereum/core/state/journal.go:604-606	refundChange.revert
-vm.gas.settle_transaction_gas	0,1,2,4,5	entry	repos/clients/go-ethereum/core/state_transition.go:1046-1109	stateTransition.settleGas
-vm.gas.settle_transaction_gas	1	part	repos/clients/go-ethereum/core/state_transition.go:1238-1248	stateTransition.calcRefund
-vm.gas.settle_transaction_gas	3	missing	-	-
-vm.instructions.storage.sload	0,2	entry	repos/clients/go-ethereum/core/vm/instructions.go:491-497	opSload
-vm.instructions.storage.sload	1	part	repos/clients/go-ethereum/core/state/access_list.go:41-53	accessList.Contains
-vm.instructions.storage.sload	1	part	repos/clients/go-ethereum/core/state/access_list.go:89-107	accessList.AddSlot
-vm.instructions.storage.sload	1	part	repos/clients/go-ethereum/core/vm/operations_acl.go:113-121	gasSLoad8038
-vm.instructions.storage.sload	1	part	repos/clients/go-ethereum/core/state/statedb.go:1538-1550	StateDB.AddSlotToAccessList
-vm.instructions.storage.sload	-	delegated	-> vm.gas.charge_gas	GasBudget.ChargeExecutionOnly
-vm.instructions.storage.sload	-	delegated	-> state_tracker.get_storage	StateDB.GetState
-vm.instructions.storage.sload	3	missing	-	-
-vm.instructions.storage.tload	0,2	entry	repos/clients/go-ethereum/core/vm/eips.go:203-209	opTload
-vm.instructions.storage.tload	1	part	repos/clients/go-ethereum/core/vm/eips.go:186-200	enable1153
-vm.instructions.storage.tload	-	delegated	-> state_tracker.get_transient_storage	transientStorage.Get
-vm.instructions.storage.tload	-	delegated	-> state_tracker.get_transient_storage	StateDB.GetTransientState
-vm.instructions.storage.tload	-	delegated	-> vm.gas.charge_gas	GasBudget.ChargeExecutionOnly
-vm.instructions.storage.tload	3	missing	-	-
-vm.instructions.system.call	0,4,5	entry	repos/clients/go-ethereum/core/vm/instructions.go:736-780	opCall
-vm.instructions.system.call	2	part	repos/clients/go-ethereum/core/vm/operations_acl.go:329-333	recordDelegationAccess
-vm.instructions.system.call	0	part	repos/clients/go-ethereum/core/vm/operations_acl.go:363-369	gasCall8038
-vm.instructions.system.call	1,2,3,4	part	repos/clients/go-ethereum/core/vm/operations_acl.go:471-558	makeCallVariantGasCallEIP8037
-vm.instructions.system.call	1	part	repos/clients/go-ethereum/core/vm/gas_table.go:601-622	executionGasCall8038
-vm.instructions.system.call	3	part	repos/clients/go-ethereum/core/vm/gas_table.go:628-644	stateGasCall8037
-vm.instructions.system.call	-	delegated	-> vm.gas.calculate_message_call_gas	callGas
-vm.instructions.system.call	-	delegated	-> vm.gas.calculate_gas_extend_memory	memoryCall
-vm.instructions.system.call	-	delegated	-> vm.stack.pop	Stack.pop
-vm.instructions.system.call	-	delegated	-> vm.gas.charge_state_gas	Contract.chargeState
-vm.instructions.system.call	-	delegated	-> vm.instructions.system.generic_call	EVM.Call
-vm.instructions.system.create	1,4,5	entry	repos/clients/go-ethereum/core/vm/instructions.go:635-687	opCreate
-vm.instructions.system.create	3	part	repos/clients/go-ethereum/core/vm/common.go:29-40	CheckMaxInitCodeSize
-vm.instructions.system.create	0,2,3	part	repos/clients/go-ethereum/core/vm/gas_table.go:544-567	gasCreateEip8037
-vm.instructions.system.create	2	part	repos/clients/go-ethereum/core/vm/eips.go:590-614	enable8037And8038
-vm.instructions.system.create	-	delegated	-> vm.gas.calculate_gas_extend_memory	memoryGasCost
-vm.instructions.system.create	-	delegated	-> vm.stack.pop	Stack.pop
-vm.instructions.system.create	-	delegated	-> state_tracker.get_account	StateDB.GetNonce
-vm.instructions.system.create	-	delegated	-> vm.instructions.system.generic_create	EVM.chargeAccountCreation
-vm.instructions.system.create	-	delegated	-> vm.instructions.system.generic_create	EVM.create
-vm.instructions.system.delegatecall	0,4,5	entry	repos/clients/go-ethereum/core/vm/instructions.go:818-848	opDelegateCall
-vm.instructions.system.delegatecall	1	part	repos/clients/go-ethereum/core/vm/memory_table.go:82-95	memoryDelegateCall
-vm.instructions.system.delegatecall	3	part	repos/clients/go-ethereum/core/vm/operations_acl.go:329-333	recordDelegationAccess
-vm.instructions.system.delegatecall	1,2,4	part	repos/clients/go-ethereum/core/vm/operations_acl.go:371-465	makeCallVariantGasCallEIP7702
-vm.instructions.system.delegatecall	1	part	repos/clients/go-ethereum/core/vm/gas_table.go:503-509	gasDelegateCallIntrinsic
-vm.instructions.system.delegatecall	3	part	repos/clients/go-ethereum/core/vm/evm.go:724-734	EVM.resolveCode
-vm.instructions.system.delegatecall	-	delegated	-> vm.gas.calculate_gas_extend_memory	memoryGasCost
-vm.instructions.system.delegatecall	-	delegated	-> vm.gas.calculate_message_call_gas	callGas
-vm.instructions.system.delegatecall	-	delegated	-> vm.stack.pop	Stack.pop
-vm.instructions.system.delegatecall	-	delegated	-> vm.gas.charge_gas	Contract.chargeExecution
-vm.instructions.system.delegatecall	-	delegated	-> vm.instructions.system.generic_call	EVM.DelegateCall
-vm.instructions.system.generic_create	0,1,2,3,4,5	entry	repos/clients/go-ethereum/core/vm/instructions.go:635-687	opCreate
-vm.instructions.system.generic_create	1	part	repos/clients/go-ethereum/core/evm.go:138-140	CanTransfer
-vm.instructions.system.generic_create	1	part	repos/clients/go-ethereum/core/vm/evm.go:506-518	EVM.createFramePreCheck
-vm.instructions.system.generic_create	1,2	part	repos/clients/go-ethereum/core/vm/evm.go:530-547	EVM.chargeAccountCreation
-vm.instructions.system.generic_create	2,3,4	part	repos/clients/go-ethereum/core/vm/evm.go:550-652	EVM.create
-vm.instructions.system.generic_create	0,1,2,3,4,5	part	repos/clients/go-ethereum/core/vm/instructions.go:689-734	opCreate2
-vm.instructions.system.generic_create	-	delegated	-> vm.memory.memory_read_bytes	Memory.GetCopy
-vm.instructions.system.generic_create	-	delegated	-> vm.gas.charge_state_gas	Contract.chargeState
-vm.instructions.system.generic_create	-	delegated	-> vm.gas.credit_state_gas_refund	Contract.refundState
-vm.instructions.system.generic_create	-	delegated	-> vm.incorporate_child	Contract.refundGas
-vm.instructions.system.generic_create	-	delegated	-> vm.gas.withhold_create_gas	Contract.forwardGas
-vm.instructions.system.generic_create	-	delegated	-> vm.interpreter.process_create	EVM.initNewContract
-vm.instructions.system.generic_create	-	delegated	-> vm.stack.push	Stack.push
-vm.instructions.system.generic_create	-	delegated	-> vm.gas.charge_state_gas	GasBudget.ChargeState
-vm.instructions.system.generic_create	-	delegated	-> vm.gas.credit_state_gas_refund	GasBudget.RefundState
-vm.instructions.system.revert	0,2,3	entry	repos/clients/go-ethereum/core/vm/instructions.go:890-896	opRevert
-vm.instructions.system.revert	2	part	repos/clients/go-ethereum/core/vm/memory.go:81-89	Memory.Resize
-vm.instructions.system.revert	1	part	repos/clients/go-ethereum/core/vm/memory_table.go:116-118	memoryRevert
-vm.instructions.system.revert	-	delegated	-> vm.gas.calculate_gas_extend_memory	memoryGasCost
-vm.instructions.system.revert	-	delegated	-> vm.gas.charge_gas	GasBudget.ChargeExecutionOnly
-vm.instructions.system.revert	-	delegated	-> vm.memory.memory_read_bytes	Memory.GetCopy
-vm.instructions.system.revert	-	delegated	-> vm.stack.pop	Stack.pop2
-vm.instructions.system.revert	-	delegated	-> vm.gas.calculate_gas_extend_memory	calcMemSize64
-vm.instructions.system.revert	-	delegated	-> vm.gas.calculate_gas_extend_memory	calcMemSize64WithUint
-vm.instructions.system.revert	-	delegated	-> vm.gas.calculate_gas_extend_memory	computeMemorySize
-vm.instructions.system.revert	-	delegated	-> vm.gas.charge_gas	Contract.chargeDynamicGas
-vm.interpreter.charge_value_transfer_to_non_alive_account	0	entry	repos/clients/go-ethereum/core/vm/gas_table.go:628-644	stateGasCall8037
-vm.interpreter.charge_value_transfer_to_non_alive_account	0	inlined	repos/clients/go-ethereum/core/state_transition.go:1009-1036	stateTransition.chargeCallRecipientEIP2780
-vm.interpreter.charge_value_transfer_to_non_alive_account	-	delegated	-> vm.gas.charge_state_gas_from_meter	stateTransition.chargeRuntimeGas
-vm.interpreter.process_call	0,1,2,3,4,5	entry	repos/clients/go-ethereum/core/vm/evm.go:283-356	EVM.Call
-vm.interpreter.process_call	3	part	repos/clients/go-ethereum/core/vm/interpreter_gen.go:18-852	EVM.execUntraced
-vm.interpreter.process_call	3	part	repos/clients/go-ethereum/core/vm/interpreter.go:96-138	EVM.Run
-vm.interpreter.process_call	3	part	repos/clients/go-ethereum/core/vm/interpreter.go:147-258	EVM.execTraced
-vm.interpreter.process_call	4	part	repos/clients/go-ethereum/core/vm/gascosts.go:258-267	GasBudget.Exit
-vm.interpreter.process_call	3	part	repos/clients/go-ethereum/core/vm/contracts.go:272-304	RunPrecompiledContract
-vm.interpreter.process_call	0,1,3,5	part	repos/clients/go-ethereum/core/vm/evm.go:365-402	EVM.CallCode
-vm.interpreter.process_call	0,1,3,5	part	repos/clients/go-ethereum/core/vm/evm.go:409-441	EVM.DelegateCall
-vm.interpreter.process_call	0,1,3,5	part	repos/clients/go-ethereum/core/vm/evm.go:447-488	EVM.StaticCall
-vm.interpreter.process_call	-	delegated	-> state_tracker.move_ether	Transfer
-vm.interpreter.process_call	-	delegated	-> vm.gas.restore_state_gas	GasBudget.ExitRevert
-vm.interpreter.process_call	-	delegated	-> vm.gas.forfeit_remaining_gas	GasBudget.ExitHalt
-vm.interpreter.process_call	-	delegated	-> state_tracker.restore_tx_state	StateDB.RevertToSnapshot
+# eels	steps	role	votes	location	function
+block_access_lists._build_from_builder	4,5	entry	2/2	repos/clients/go-ethereum/core/types/bal/bal_encoding.go:460-472	ConstructionBlockAccessList.ToEncodingObj
+block_access_lists._build_from_builder	1	inlined	2/2	repos/clients/go-ethereum/core/types/bal/bal.go:88-96	ConstructionBlockAccessList.StorageRead
+block_access_lists._build_from_builder	1	inlined	2/2	repos/clients/go-ethereum/core/types/bal/bal.go:100-110	ConstructionBlockAccessList.StorageWrite
+block_access_lists._build_from_builder	0,2,3,4	part	2/2	repos/clients/go-ethereum/core/types/bal/bal_encoding.go:382-456	ConstructionAccountAccess.toEncodingObj
+block_access_lists._get_pre_tx_account	0	entry	2/2	repos/clients/go-ethereum/core/state/statedb.go:602-640	StateDB.getStateObject
+block_access_lists._get_pre_tx_storage	0,1,2	entry	2/2	repos/clients/go-ethereum/core/state/state_object.go:185-225	stateObject.GetCommittedState
+block_access_lists._index_start_account	0	part	2/2	repos/clients/go-ethereum/core/state/journal.go:142-150	journal.stashBalance
+block_access_lists._index_start_account	0	part	2/2	repos/clients/go-ethereum/core/state/journal.go:153-160	journal.stashNonce
+block_access_lists._index_start_account	0	part	2/2	repos/clients/go-ethereum/core/state/journal.go:163-172	journal.stashCode
+block_access_lists._index_start_storage	0,1	entry	1/2	repos/clients/go-ethereum/core/state/state_object.go:185-225	stateObject.GetCommittedState
+block_access_lists.add_balance_change	0,1,2	entry	2/2	repos/clients/go-ethereum/core/types/bal/bal.go:132-137	ConstructionBlockAccessList.BalanceChange
+block_access_lists.add_code_change	0,1,2	entry	2/2	repos/clients/go-ethereum/core/types/bal/bal.go:113-119	ConstructionBlockAccessList.CodeChange
+block_access_lists.add_nonce_change	0,1,2	entry	2/2	repos/clients/go-ethereum/core/types/bal/bal.go:123-128	ConstructionBlockAccessList.NonceChange
+block_access_lists.add_storage_read	0,1	entry	2/2	repos/clients/go-ethereum/core/types/bal/bal.go:88-96	ConstructionBlockAccessList.StorageRead
+block_access_lists.add_storage_read	0	part	1/2	repos/clients/go-ethereum/core/types/bal/bal.go:57-65	NewConstructionAccountAccess
+block_access_lists.add_storage_write	0,1,2,3	entry	2/2	repos/clients/go-ethereum/core/types/bal/bal.go:100-110	ConstructionBlockAccessList.StorageWrite
+block_access_lists.add_storage_write	-	delegated	1/2	-> block_access_lists.ensure_account	NewConstructionAccountAccess
+block_access_lists.add_touched_account	0	entry	2/2	repos/clients/go-ethereum/core/types/bal/bal.go:81-85	ConstructionBlockAccessList.AccountRead
+block_access_lists.add_touched_account	0	part	1/2	repos/clients/go-ethereum/core/types/bal/bal.go:57-65	NewConstructionAccountAccess
+block_access_lists.build_block_access_list	0	inlined	2/2	repos/clients/go-ethereum/core/state/state_object.go:185-225	stateObject.GetCommittedState
+block_access_lists.build_block_access_list	1	inlined	2/2	repos/clients/go-ethereum/core/state/statedb.go:602-640	StateDB.getStateObject
+block_access_lists.build_block_access_list	-	delegated	2/2	-> block_access_lists._build_from_builder	ConstructionBlockAccessList.ToEncodingObj
+block_access_lists.build_block_access_list	-	delegated	2/2	-> block_access_lists._build_from_builder	ConstructionAccountAccess.toEncodingObj
+block_access_lists.build_block_access_list	-	delegated	2/2	-> block_access_lists.add_storage_read	ConstructionBlockAccessList.StorageRead
+block_access_lists.build_block_access_list	-	delegated	2/2	-> block_access_lists.add_touched_account	ConstructionBlockAccessList.AccountRead
+block_access_lists.build_block_access_list	2	missing	-	-	-
+block_access_lists.ensure_account	0	entry	2/2	repos/clients/go-ethereum/core/types/bal/bal.go:81-85	ConstructionBlockAccessList.AccountRead
+block_access_lists.ensure_account	0	part	2/2	repos/clients/go-ethereum/core/types/bal/bal.go:57-65	NewConstructionAccountAccess
+block_access_lists.hash_block_access_list	0	entry	2/2	repos/clients/go-ethereum/core/types/bal/bal_encoding.go:123-132	BlockAccessList.Hash
+block_access_lists.hash_block_access_list	0	part	1/2	repos/clients/go-ethereum/core/types/bal/bal_encoding.go:47-57	BlockAccessList.EncodeRLP
+block_access_lists.remove_balance_change	0	missing	-	-	-
+block_access_lists.remove_code_change	0,1	missing	-	-	-
+block_access_lists.remove_nonce_change	0	missing	-	-	-
+block_access_lists.remove_storage_write	1,2	part	2/2	repos/clients/go-ethereum/core/state/state_object.go:244-251	stateObject.setState
+block_access_lists.remove_storage_write	0	missing	-	-	-
+block_access_lists.update_builder_from_tx	0,2,3,4	entry	2/2	repos/clients/go-ethereum/core/state/statedb.go:825-854	StateDB.recordAccessListChanges
+block_access_lists.update_builder_from_tx	5	inlined	2/2	repos/clients/go-ethereum/core/state/state_object.go:255-298	stateObject.finalise
+block_access_lists.update_builder_from_tx	1	inlined	2/2	repos/clients/go-ethereum/core/state/statedb.go:857-924	StateDB.finaliseAmsterdam
+block_access_lists.update_builder_from_tx	-	delegated	2/2	-> block_access_lists.add_balance_change	ConstructionBlockAccessList.BalanceChange
+block_access_lists.update_builder_from_tx	-	delegated	2/2	-> block_access_lists.add_nonce_change	ConstructionBlockAccessList.NonceChange
+block_access_lists.update_builder_from_tx	-	delegated	2/2	-> block_access_lists.add_code_change	ConstructionBlockAccessList.CodeChange
+block_access_lists.update_builder_from_tx	-	delegated	2/2	-> block_access_lists.add_storage_write	ConstructionBlockAccessList.StorageWrite
+block_access_lists.validate_block_access_list_gas_limit	2	entry	2/2	repos/clients/go-ethereum/core/types/bal/bal_encoding.go:112-120	BlockAccessList.ValidateSize
+block_access_lists.validate_block_access_list_gas_limit	0,1	part	2/2	repos/clients/go-ethereum/core/types/bal/bal_encoding.go:100-106	BlockAccessList.itemCount
+fork.apply_body	0,1	entry	2/2	repos/clients/go-ethereum/core/state_processor.go:68-165	StateProcessor.Process
+fork.apply_body	2	part	2/2	repos/clients/go-ethereum/core/state_processor_parallel.go:133-335	StateProcessor.processParallel
+fork.apply_body	5	inlined	1/2	repos/clients/go-ethereum/core/block_validator.go:148-204	BlockValidator.ValidateState
+fork.apply_body	0	part	2/2	repos/clients/go-ethereum/core/state_processor.go:168-185	PreExecution
+fork.apply_body	3,4	part	2/2	repos/clients/go-ethereum/core/state_processor.go:190-230	PostExecution
+fork.apply_body	-	delegated	2/2	-> fork.process_unchecked_system_transaction	ProcessBeaconBlockRoot
+fork.apply_body	-	delegated	2/2	-> fork.process_unchecked_system_transaction	ProcessParentBlockHash
+fork.apply_body	-	delegated	2/2	-> fork.process_transaction	applyTransactionWithEVM
+fork.apply_body	-	delegated	2/2	-> fork.process_withdrawals	ProcessWithdrawals
+fork.apply_body	-	delegated	2/2	-> fork.process_general_purpose_requests	ParseDepositLogs
+fork.apply_body	-	delegated	2/2	-> fork.process_general_purpose_requests	ProcessWithdrawalQueue
+fork.apply_body	-	delegated	2/2	-> fork.process_general_purpose_requests	ProcessConsolidationQueue
+fork.apply_body	-	delegated	2/2	-> fork.process_general_purpose_requests	processRequestsSystemCall
+fork.apply_body	-	delegated	2/2	-> block_access_lists.validate_block_access_list_gas_limit	BlockAccessList.ValidateSize
+fork.calculate_base_fee_per_gas	0,2,3,4	entry	2/2	repos/clients/go-ethereum/consensus/misc/eip1559/eip1559.go:60-102	CalcBaseFee
+fork.calculate_base_fee_per_gas	1	part	2/2	repos/clients/go-ethereum/consensus/misc/eip1559/eip1559.go:33-57	VerifyEIP1559Header
+fork.calculate_base_fee_per_gas	-	delegated	2/2	-> fork.check_gas_limit	VerifyGaslimit
+fork.check_transaction	0,3,4	entry	2/2	repos/clients/go-ethereum/core/state_transition.go:716-831	stateTransition.execute
+fork.check_transaction	5	part	2/2	repos/clients/go-ethereum/core/evm.go:88-95	NewEVMTxContext
+fork.check_transaction	0,2	part	2/2	repos/clients/go-ethereum/core/state_transition.go:330-387	TransactionToMessage
+fork.check_transaction	2,3	part	2/2	repos/clients/go-ethereum/core/state_transition.go:464-519	stateTransition.buyGas
+fork.check_transaction	0,2,3	part	2/2	repos/clients/go-ethereum/core/state_transition.go:573-703	stateTransition.preCheck
+fork.check_transaction	5	part	2/2	repos/clients/go-ethereum/core/state/statedb.go:1495-1528	StateDB.Prepare
+fork.check_transaction	-	delegated	2/2	-> transactions.validate_transaction	IntrinsicGas
+fork.check_transaction	-	delegated	2/2	-> vm.gas.allocate_evm_gas	stateTransition.initRuntimeGasBudget
+fork.check_transaction	-	delegated	2/2	-> vm.gas.calculate_total_blob_gas	stateTransition.blobGasUsed
+fork.check_transaction	-	delegated	2/2	-> vm.gas.check_block_gas_capacity	GasPool.CheckGasAmsterdam
+fork.check_transaction	-	delegated	1/2	-> vm.gas.check_block_gas_capacity	GasPool.CheckGasLegacy
+fork.check_transaction	-	delegated	2/2	-> transactions.recover_sender	Sender
+fork.check_transaction	-	delegated	1/2	-> transactions.validate_transaction	intrinsicBaseGasEIP2780
+fork.check_transaction	-	delegated	2/2	-> transactions.validate_transaction	FloorDataGas
+fork.check_transaction	1	missing	-	-	-
+fork.execute_block	2	entry	2/2	repos/clients/go-ethereum/core/blockchain.go:2320-2501	BlockChain.ProcessBlock
+fork.execute_block	0,1,4,5	part	2/2	repos/clients/go-ethereum/core/block_validator.go:51-144	BlockValidator.ValidateBody
+fork.execute_block	4,5	part	2/2	repos/clients/go-ethereum/core/block_validator.go:148-204	BlockValidator.ValidateState
+fork.execute_block	4	part	2/2	repos/clients/go-ethereum/core/digest_pipeline.go:170-175	ProcessResult.receiptRoot
+fork.execute_block	-	delegated	1/2	-> fork.validate_header	VerifyEIP1559Header
+fork.execute_block	-	delegated	1/2	-> fork.validate_header	VerifyGaslimit
+fork.execute_block	-	delegated	2/2	-> fork.apply_body	StateProcessor.Process
+fork.execute_block	-	delegated	2/2	-> bloom.logs_bloom	ProcessResult.blockBloom
+fork.execute_block	-	delegated	2/2	-> fork.apply_body	StateProcessor.processParallel
+fork.execute_block	3	missing	-	-	-
+fork.make_receipt	0	entry	2/2	repos/clients/go-ethereum/core/state_processor.go:303-307	MakeReceipt
+fork.make_receipt	0	part	1/2	repos/clients/go-ethereum/core/state_transition.go:51-51	ExecutionResult.Failed
+fork.make_receipt	0	part	2/2	repos/clients/go-ethereum/core/state_processor.go:311-345	makeReceipt
+fork.make_receipt	-	delegated	2/2	-> bloom.logs_bloom	CreateBloom
+fork.make_receipt	-	delegated	2/2	-> bloom.logs_bloom	Bloom.AddWithBuffer
+fork.make_receipt	-	delegated	2/2	-> blocks.encode_receipt	Receipt.MarshalBinary
+fork.make_receipt	-	delegated	2/2	-> blocks.encode_receipt	Receipt.EncodeRLP
+fork.make_receipt	-	delegated	2/2	-> blocks.encode_receipt	Receipt.encodeTyped
+fork.make_receipt	-	delegated	2/2	-> blocks.encode_receipt	Receipt.statusEncoding
+fork.make_receipt	-	delegated	2/2	-> blocks.encode_receipt	Receipts.EncodeIndex
+fork.make_receipt	-	delegated	2/2	-> bloom.logs_bloom	bloomValues
+fork.make_receipt	1	missing	-	-	-
+fork.process_general_purpose_requests	0,1,2,3,4	entry	2/2	repos/clients/go-ethereum/core/state_processor.go:190-230	PostExecution
+fork.process_general_purpose_requests	1	part	1/2	repos/clients/go-ethereum/core/state_processor.go:447-449	ProcessWithdrawalQueue
+fork.process_general_purpose_requests	2	part	1/2	repos/clients/go-ethereum/core/state_processor.go:453-455	ProcessConsolidationQueue
+fork.process_general_purpose_requests	3	part	1/2	repos/clients/go-ethereum/core/state_processor.go:459-461	ProcessBuilderDepositQueue
+fork.process_general_purpose_requests	4	part	1/2	repos/clients/go-ethereum/core/state_processor.go:465-467	ProcessBuilderExitQueue
+fork.process_general_purpose_requests	1,2,3,4	part	2/2	repos/clients/go-ethereum/core/state_processor.go:469-512	processRequestsSystemCall
+fork.process_general_purpose_requests	0	part	2/2	repos/clients/go-ethereum/core/state_processor.go:518-533	ParseDepositLogs
+fork.process_general_purpose_requests	-	delegated	2/2	-> requests.parse_deposit_requests	DepositLogToRequest
+fork.process_general_purpose_requests	-	delegated	1/2	-> fork.process_checked_system_transaction	systemCallGasBudget
+fork.process_unchecked_system_transaction	0,1,2,3	entry	2/2	repos/clients/go-ethereum/core/state_processor.go:377-408	ProcessBeaconBlockRoot
+fork.process_unchecked_system_transaction	1	part	2/2	repos/clients/go-ethereum/core/state_processor.go:361-373	systemCallGasBudget
+fork.process_unchecked_system_transaction	0,1,2,3	part	2/2	repos/clients/go-ethereum/core/state_processor.go:412-443	ProcessParentBlockHash
+fork.process_unchecked_system_transaction	-	delegated	2/2	-> vm.interpreter.process_top_level	EVM.Call
+fork.state_transition	1,2,3	entry	1/2	repos/clients/go-ethereum/core/blockchain.go:1917-2146	BlockChain.insertChain
+fork.state_transition	0	part	2/2	repos/clients/go-ethereum/core/evm.go:42-85	NewEVMBlockContext
+fork.state_transition	2,3	part	2/2	repos/clients/go-ethereum/core/blockchain.go:1723-1834	BlockChain.writeBlockWithState
+fork.state_transition	3	part	2/2	repos/clients/go-ethereum/core/blockchain.go:1838-1872	BlockChain.writeBlockAndSetHead
+fork.state_transition	-	delegated	1/2	-> fork.execute_block	BlockChain.ProcessBlock
+fork.state_transition	-	delegated	2/2	-> fork.execute_block	StateProcessor.Process
+fork.state_transition	-	delegated	2/2	-> fork.get_last_256_block_hashes	GetHashFn
+state_tracker.copy_tx_state	0	entry	2/2	repos/clients/go-ethereum/core/state/journal.go:214-219	journal.snapshot
+state_tracker.copy_tx_state	1	missing	-	-	-
+state_tracker.get_pre_state_account	-	delegated	1/2	-> state_tracker.get_pre_state_account_optional	StateDB.getStateObject
+state_tracker.incorporate_tx_into_block	2,3,5	entry	2/2	repos/clients/go-ethereum/core/state/statedb.go:857-924	StateDB.finaliseAmsterdam
+state_tracker.incorporate_tx_into_block	0,1	part	2/2	repos/clients/go-ethereum/core/types/bal/bal.go:158-195	ConstructionBlockAccessList.Merge
+state_tracker.incorporate_tx_into_block	0,4	part	2/2	repos/clients/go-ethereum/core/state/state_object.go:255-298	stateObject.finalise
+state_tracker.incorporate_tx_into_block	5	part	2/2	repos/clients/go-ethereum/core/state/statedb.go:1142-1153	StateDB.clearInternal
+state_tracker.incorporate_tx_into_block	-	delegated	1/2	-> block_access_lists.update_builder_from_tx	StateDB.recordAccessListChanges
+state_tracker.modify_state	0	part	2/2	repos/clients/go-ethereum/core/state/statedb.go:460-466	StateDB.AddBalance
+state_tracker.modify_state	0	part	2/2	repos/clients/go-ethereum/core/state/statedb.go:469-478	StateDB.SubBalance
+state_tracker.modify_state	0	part	2/2	repos/clients/go-ethereum/core/state/statedb.go:480-485	StateDB.SetBalance
+state_tracker.modify_state	0	part	2/2	repos/clients/go-ethereum/core/state/statedb.go:487-492	StateDB.SetNonce
+state_tracker.modify_state	0	part	2/2	repos/clients/go-ethereum/core/state/statedb.go:494-500	StateDB.SetCode
+state_tracker.modify_state	1	inlined	2/2	repos/clients/go-ethereum/core/state/statedb.go:857-924	StateDB.finaliseAmsterdam
+state_tracker.modify_state	-	delegated	2/2	-> state_tracker.account_exists_and_is_empty	stateObject.empty
+state_tracker.restore_tx_state	0	entry	2/2	repos/clients/go-ethereum/core/state/journal.go:222-235	journal.revertToSnapshot
+state_tracker.restore_tx_state	0	part	2/2	repos/clients/go-ethereum/core/state/journal.go:252-269	journal.revert
+state_tracker.restore_tx_state	0	part	2/2	repos/clients/go-ethereum/core/state/journal.go:466-468	createObjectChange.revert
+state_tracker.restore_tx_state	0	part	2/2	repos/clients/go-ethereum/core/state/journal.go:526-528	balanceChange.revert
+state_tracker.restore_tx_state	0	part	2/2	repos/clients/go-ethereum/core/state/journal.go:541-543	nonceChange.revert
+state_tracker.restore_tx_state	0	part	2/2	repos/clients/go-ethereum/core/state/journal.go:556-558	codeChange.revert
+state_tracker.restore_tx_state	0	part	2/2	repos/clients/go-ethereum/core/state/journal.go:571-573	storageChange.revert
+state_tracker.restore_tx_state	0	part	2/2	repos/clients/go-ethereum/core/state/journal.go:588-590	transientStorageChange.revert
+transactions.calculate_effective_gas_price	1	part	2/2	repos/clients/go-ethereum/core/types/tx_dynamic_fee.go:100-109	DynamicFeeTx.effectiveGasPrice
+transactions.calculate_effective_gas_price	2	part	2/2	repos/clients/go-ethereum/core/types/tx_legacy.go:107-109	LegacyTx.effectiveGasPrice
+transactions.calculate_effective_gas_price	1	inlined	2/2	repos/clients/go-ethereum/core/state_transition.go:330-387	TransactionToMessage
+transactions.calculate_effective_gas_price	0,1	part	2/2	repos/clients/go-ethereum/core/types/transaction.go:398-420	Transaction.calcEffectiveGasTip
+transactions.calculate_effective_gas_price	0,2	inlined	2/2	repos/clients/go-ethereum/core/state_transition.go:573-703	stateTransition.preCheck
+transactions.calculate_intrinsic_cost	0,1,2,3,5	entry	2/2	repos/clients/go-ethereum/core/state_transition.go:72-160	IntrinsicGas
+transactions.calculate_intrinsic_cost	1	part	2/2	repos/clients/go-ethereum/core/state_transition.go:163-194	intrinsicBaseGasEIP2780
+transactions.calculate_intrinsic_cost	4	part	2/2	repos/clients/go-ethereum/core/state_transition.go:197-256	FloorDataGas
+transactions.calculate_max_gas_fee	0	inlined	2/2	repos/clients/go-ethereum/core/state_transition.go:464-519	stateTransition.buyGas
+transactions.check_nonce	0	inlined	2/2	repos/clients/go-ethereum/core/state_transition.go:573-703	stateTransition.preCheck
+transactions.decode_transaction	3	entry	2/2	repos/clients/go-ethereum/core/types/transaction.go:184-204	Transaction.UnmarshalBinary
+transactions.decode_transaction	2	part	2/2	repos/clients/go-ethereum/core/types/tx_dynamic_fee.go:123-125	DynamicFeeTx.decode
+transactions.decode_transaction	2	part	2/2	repos/clients/go-ethereum/core/types/tx_access_list.go:127-129	AccessListTx.decode
+transactions.decode_transaction	0,1	part	2/2	repos/clients/go-ethereum/core/types/transaction.go:144-180	Transaction.DecodeRLP
+transactions.decode_transaction	1,2,4	part	2/2	repos/clients/go-ethereum/core/types/transaction.go:207-231	Transaction.decodeTyped
+transactions.decode_transaction	2	part	2/2	repos/clients/go-ethereum/core/types/tx_setcode.go:250-252	SetCodeTx.decode
+transactions.decode_transaction	2	part	2/2	repos/clients/go-ethereum/core/types/tx_blob.go:369-436	BlobTx.decode
+transactions.has_access_list	0	inlined	1/2	repos/clients/go-ethereum/core/state_transition.go:573-703	stateTransition.preCheck
+transactions.signing_hash_155	0	entry	2/2	repos/clients/go-ethereum/core/types/tx_legacy.go:128-138	LegacyTx.sigHash
+transactions.signing_hash_2930	0	entry	2/2	repos/clients/go-ethereum/core/types/tx_access_list.go:131-144	AccessListTx.sigHash
+transactions.signing_hash_2930	0	part	1/2	repos/clients/go-ethereum/core/types/hashing.go:68-76	prefixedRlpHash
+transactions.signing_hash_7702	0	entry	2/2	repos/clients/go-ethereum/core/types/tx_setcode.go:254-269	SetCodeTx.sigHash
+vm.eoa_delegation.calculate_delegation_cost	1,2	part	2/2	repos/clients/go-ethereum/core/types/tx_setcode.go:37-42	ParseDelegation
+vm.eoa_delegation.calculate_delegation_cost	0,1,2,3,4	inlined	2/2	repos/clients/go-ethereum/core/vm/operations_acl.go:371-465	makeCallVariantGasCallEIP7702
+vm.eoa_delegation.calculate_delegation_cost	0,1,2,3,4	inlined	2/2	repos/clients/go-ethereum/core/vm/operations_acl.go:471-558	makeCallVariantGasCallEIP8037
+vm.eoa_delegation.calculate_delegation_cost	-	delegated	2/2	-> state_tracker.get_code	StateDB.GetCode
+vm.eoa_delegation.is_valid_delegation	0	entry	2/2	repos/clients/go-ethereum/core/types/tx_setcode.go:37-42	ParseDelegation
+vm.eoa_delegation.resolve_delegated_code_address	0,1,2	inlined	2/2	repos/clients/go-ethereum/core/vm/operations_acl.go:371-465	makeCallVariantGasCallEIP7702
+vm.eoa_delegation.resolve_delegated_code_address	0,1,2	inlined	2/2	repos/clients/go-ethereum/core/vm/operations_acl.go:471-558	makeCallVariantGasCallEIP8037
+vm.eoa_delegation.resolve_delegated_code_address	0,1,3	part	2/2	repos/clients/go-ethereum/core/vm/evm.go:724-734	EVM.resolveCode
+vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> vm.eoa_delegation.get_delegated_code_address	ParseDelegation
+vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> vm.gas.charge_gas_from_meter	Contract.chargeExecution
+vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> state_tracker.get_code	StateDB.GetCode
+vm.gas.allocate_evm_gas	0,1,2	entry	2/2	repos/clients/go-ethereum/core/state_transition.go:531-543	stateTransition.initRuntimeGasBudget
+vm.gas.calculate_data_fee	0	inlined	2/2	repos/clients/go-ethereum/core/state_transition.go:464-519	stateTransition.buyGas
+vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_total_blob_gas	stateTransition.blobGasUsed
+vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	CalcBlobFee
+vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	BlobConfig.blobBaseFee
+vm.gas.calculate_gas_extend_memory	1,3,4,5	entry	2/2	repos/clients/go-ethereum/core/vm/gas_table.go:29-56	memoryGasCost
+vm.gas.calculate_gas_extend_memory	1	part	2/2	repos/clients/go-ethereum/core/vm/common.go:68-81	calcMemSize64WithUint
+vm.gas.calculate_gas_extend_memory	1	part	2/2	repos/clients/go-ethereum/core/vm/interpreter.go:263-274	computeMemorySize
+vm.gas.calculate_gas_extend_memory	0,2	missing	-	-	-
+vm.gas.calculate_total_blob_gas	0	entry	2/2	repos/clients/go-ethereum/core/types/transaction.go:475-480	Transaction.BlobGas
+vm.gas.calculate_total_blob_gas	0	part	2/2	repos/clients/go-ethereum/core/types/tx_blob.go:306-306	BlobTx.blobGas
+vm.gas.calculate_total_blob_gas	0	part	2/2	repos/clients/go-ethereum/core/state_transition.go:1251-1253	stateTransition.blobGasUsed
+vm.gas.charge_gas_from_meter	0,1	entry	2/2	repos/clients/go-ethereum/core/vm/gascosts.go:89-96	GasBudget.ChargeExecutionOnly
+vm.gas.charge_gas_from_meter	0,1	part	2/2	repos/clients/go-ethereum/core/vm/gascosts.go:112-137	GasBudget.charge
+vm.gas.charge_state_gas_from_meter	0,1,2	entry	2/2	repos/clients/go-ethereum/core/vm/gascosts.go:112-137	GasBudget.charge
+vm.gas.check_max_fee_per_blob_gas	1	inlined	2/2	repos/clients/go-ethereum/core/evm.go:42-85	NewEVMBlockContext
+vm.gas.check_max_fee_per_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	CalcBlobFee
+vm.gas.check_max_fee_per_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	BlobConfig.blobBaseFee
+vm.gas.check_max_fee_per_blob_gas	-	delegated	1/2	-> vm.gas.calculate_blob_gas_price	fakeExponential
+vm.gas.credit_state_gas_refund	0,1	entry	2/2	repos/clients/go-ethereum/core/vm/gascosts.go:160-166	GasBudget.RefundState
+vm.gas.forfeit_remaining_gas	1	entry	2/2	repos/clients/go-ethereum/core/vm/gascosts.go:169-172	GasBudget.DrainExecution
+vm.gas.forfeit_remaining_gas	1	inlined	2/2	repos/clients/go-ethereum/core/vm/gascosts.go:235-250	GasBudget.ExitHalt
+vm.gas.forfeit_remaining_gas	0	missing	-	-	-
+vm.gas.repay_state_gas_spill	0,1,2	inlined	2/2	repos/clients/go-ethereum/core/vm/gascosts.go:273-303	GasBudget.Absorb
+vm.gas.repay_state_gas_spill	3	missing	-	-	-
+vm.gas.restore_state_gas	0,1	entry	2/2	repos/clients/go-ethereum/core/vm/gascosts.go:212-227	GasBudget.ExitRevert
+vm.gas.restore_state_gas	0,1	part	2/2	repos/clients/go-ethereum/core/vm/gascosts.go:235-250	GasBudget.ExitHalt
+vm.gas.restore_state_gas	2	part	2/2	repos/clients/go-ethereum/core/state/journal.go:604-606	refundChange.revert
+vm.gas.settle_transaction_gas	0,1,2,3,4,5	entry	2/2	repos/clients/go-ethereum/core/state_transition.go:1046-1109	stateTransition.settleGas
+vm.gas.settle_transaction_gas	1	part	2/2	repos/clients/go-ethereum/core/state_transition.go:1238-1248	stateTransition.calcRefund
+vm.instructions.storage.sload	0,2	entry	2/2	repos/clients/go-ethereum/core/vm/instructions.go:491-497	opSload
+vm.instructions.storage.sload	1	part	2/2	repos/clients/go-ethereum/core/vm/operations_acl.go:113-121	gasSLoad8038
+vm.instructions.storage.sload	3	missing	-	-	-
+vm.instructions.storage.tload	0,2	entry	2/2	repos/clients/go-ethereum/core/vm/eips.go:203-209	opTload
+vm.instructions.storage.tload	1	part	2/2	repos/clients/go-ethereum/core/vm/eips.go:186-200	enable1153
+vm.instructions.storage.tload	-	delegated	2/2	-> state_tracker.get_transient_storage	StateDB.GetTransientState
+vm.instructions.storage.tload	-	delegated	2/2	-> state_tracker.get_transient_storage	transientStorage.Get
+vm.instructions.system.call	0,4,5	entry	2/2	repos/clients/go-ethereum/core/vm/instructions.go:736-780	opCall
+vm.instructions.system.call	1	part	2/2	repos/clients/go-ethereum/core/vm/memory_table.go:67-80	memoryCall
+vm.instructions.system.call	2	part	2/2	repos/clients/go-ethereum/core/vm/operations_acl.go:329-333	recordDelegationAccess
+vm.instructions.system.call	0	part	2/2	repos/clients/go-ethereum/core/vm/operations_acl.go:363-369	gasCall8038
+vm.instructions.system.call	1,2,3,4	part	2/2	repos/clients/go-ethereum/core/vm/operations_acl.go:471-558	makeCallVariantGasCallEIP8037
+vm.instructions.system.call	0,1	part	2/2	repos/clients/go-ethereum/core/vm/gas_table.go:601-622	executionGasCall8038
+vm.instructions.system.call	3	part	2/2	repos/clients/go-ethereum/core/vm/gas_table.go:628-644	stateGasCall8037
+vm.instructions.system.call	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	memoryGasCost
+vm.instructions.system.call	-	delegated	2/2	-> vm.gas.calculate_message_call_gas	callGas
+vm.instructions.system.call	-	delegated	2/2	-> vm.gas.charge_gas	Contract.chargeExecution
+vm.instructions.system.call	-	delegated	2/2	-> vm.gas.charge_state_gas	Contract.chargeState
+vm.instructions.system.call	-	delegated	2/2	-> vm.instructions.system.generic_call	EVM.Call
+vm.instructions.system.call	-	delegated	2/2	-> vm.stack.pop	Stack.pop
+vm.instructions.system.create	1,4,5	entry	2/2	repos/clients/go-ethereum/core/vm/instructions.go:635-687	opCreate
+vm.instructions.system.create	3	part	2/2	repos/clients/go-ethereum/core/vm/common.go:29-40	CheckMaxInitCodeSize
+vm.instructions.system.create	2	part	2/2	repos/clients/go-ethereum/core/vm/memory_table.go:59-61	memoryCreate
+vm.instructions.system.create	0,2,3	part	2/2	repos/clients/go-ethereum/core/vm/gas_table.go:544-567	gasCreateEip8037
+vm.instructions.system.create	-	delegated	2/2	-> vm.instructions.system.generic_create	EVM.create
+vm.instructions.system.create	-	delegated	2/2	-> vm.instructions.system.generic_create	EVM.chargeAccountCreation
+vm.instructions.system.create	-	delegated	2/2	-> vm.stack.pop	Stack.pop
+vm.instructions.system.create	-	delegated	2/2	-> state_tracker.get_account	StateDB.GetNonce
+vm.instructions.system.delegatecall	0,4,5	entry	2/2	repos/clients/go-ethereum/core/vm/instructions.go:818-848	opDelegateCall
+vm.instructions.system.delegatecall	1	part	2/2	repos/clients/go-ethereum/core/vm/memory_table.go:82-95	memoryDelegateCall
+vm.instructions.system.delegatecall	1,2,4	part	2/2	repos/clients/go-ethereum/core/vm/operations_acl.go:371-465	makeCallVariantGasCallEIP7702
+vm.instructions.system.delegatecall	1	part	2/2	repos/clients/go-ethereum/core/vm/gas_table.go:503-509	gasDelegateCallIntrinsic
+vm.instructions.system.delegatecall	3	part	2/2	repos/clients/go-ethereum/core/vm/evm.go:724-734	EVM.resolveCode
+vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.calculate_message_call_gas	callGas
+vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.instructions.system.generic_call	EVM.DelegateCall
+vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.stack.pop	Stack.pop
+vm.instructions.system.generic_create	0,1,2,3,4,5	entry	2/2	repos/clients/go-ethereum/core/vm/instructions.go:635-687	opCreate
+vm.instructions.system.generic_create	1	part	2/2	repos/clients/go-ethereum/core/vm/evm.go:506-518	EVM.createFramePreCheck
+vm.instructions.system.generic_create	1,2	part	2/2	repos/clients/go-ethereum/core/vm/evm.go:530-547	EVM.chargeAccountCreation
+vm.instructions.system.generic_create	2,3,4	part	2/2	repos/clients/go-ethereum/core/vm/evm.go:550-652	EVM.create
+vm.instructions.system.generic_create	0,1,2,3,4,5	part	2/2	repos/clients/go-ethereum/core/vm/instructions.go:689-734	opCreate2
+vm.instructions.system.generic_create	-	delegated	2/2	-> vm.gas.withhold_create_gas	Contract.forwardGas
+vm.instructions.system.generic_create	-	delegated	2/2	-> vm.incorporate_child	Contract.refundGas
+vm.instructions.system.generic_create	-	delegated	2/2	-> vm.gas.charge_state_gas	Contract.chargeState
+vm.instructions.system.generic_create	-	delegated	2/2	-> vm.gas.credit_state_gas_refund	Contract.refundState
+vm.instructions.system.generic_create	-	delegated	2/2	-> vm.memory.memory_read_bytes	Memory.GetCopy
+vm.instructions.system.revert	0,2,3	entry	2/2	repos/clients/go-ethereum/core/vm/instructions.go:890-896	opRevert
+vm.instructions.system.revert	2	part	2/2	repos/clients/go-ethereum/core/vm/memory.go:81-89	Memory.Resize
+vm.instructions.system.revert	1	part	2/2	repos/clients/go-ethereum/core/vm/memory_table.go:116-118	memoryRevert
+vm.instructions.system.revert	-	delegated	1/2	-> vm.gas.calculate_gas_extend_memory	calcMemSize64
+vm.instructions.system.revert	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	pureMemoryGascost
+vm.instructions.system.revert	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	memoryGasCost
+vm.instructions.system.revert	-	delegated	1/2	-> vm.gas.calculate_gas_extend_memory	computeMemorySize
+vm.instructions.system.revert	-	delegated	2/2	-> vm.memory.memory_read_bytes	Memory.GetCopy
+vm.instructions.system.revert	-	delegated	2/2	-> vm.stack.pop	Stack.pop2
+vm.instructions.system.revert	-	delegated	1/2	-> vm.gas.calculate_gas_extend_memory	calcMemSize64WithUint
+vm.instructions.system.revert	-	delegated	1/2	-> vm.gas.calculate_gas_extend_memory	toWordSize
+vm.instructions.system.revert	-	delegated	2/2	-> vm.gas.charge_gas	Contract.chargeDynamicGas
+vm.interpreter.charge_value_transfer_to_non_alive_account	0	entry	2/2	repos/clients/go-ethereum/core/vm/gas_table.go:628-644	stateGasCall8037
+vm.interpreter.charge_value_transfer_to_non_alive_account	0	part	2/2	repos/clients/go-ethereum/core/vm/operations_acl.go:471-558	makeCallVariantGasCallEIP8037
+vm.interpreter.charge_value_transfer_to_non_alive_account	-	delegated	2/2	-> vm.gas.charge_state_gas_from_meter	Contract.chargeState
+vm.interpreter.process_call	0,1,2,3,4,5	entry	2/2	repos/clients/go-ethereum/core/vm/evm.go:283-356	EVM.Call
+vm.interpreter.process_call	3	part	2/2	repos/clients/go-ethereum/core/vm/interpreter.go:96-138	EVM.Run
+vm.interpreter.process_call	4	part	2/2	repos/clients/go-ethereum/core/vm/gascosts.go:258-267	GasBudget.Exit
+vm.interpreter.process_call	3	part	2/2	repos/clients/go-ethereum/core/vm/contracts.go:272-304	RunPrecompiledContract
+vm.interpreter.process_call	0,1,3,4,5	part	2/2	repos/clients/go-ethereum/core/vm/evm.go:365-402	EVM.CallCode
+vm.interpreter.process_call	0,1,3,4,5	part	2/2	repos/clients/go-ethereum/core/vm/evm.go:409-441	EVM.DelegateCall
+vm.interpreter.process_call	0,1,3,4,5	part	2/2	repos/clients/go-ethereum/core/vm/evm.go:447-488	EVM.StaticCall
+vm.interpreter.process_call	-	delegated	1/2	-> state_tracker.move_ether	Transfer
+vm.interpreter.process_call	-	delegated	1/2	-> vm.gas.forfeit_remaining_gas	GasBudget.ExitHalt
+vm.interpreter.process_call	-	delegated	1/2	-> vm.gas.restore_state_gas	GasBudget.ExitRevert
+vm.interpreter.process_call	-	delegated	2/2	-> state_tracker.copy_tx_state	StateDB.Snapshot
+vm.interpreter.process_call	-	delegated	2/2	-> state_tracker.restore_tx_state	StateDB.RevertToSnapshot

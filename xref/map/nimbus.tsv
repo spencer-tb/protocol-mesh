@@ -1,0 +1,165 @@
+# eels	steps	role	votes	location	function
+block_access_lists._build_from_builder	0,2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_builder.nim:333-383	buildBlockAccessList
+block_access_lists._build_from_builder	5	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_builder.nim:258-264	sortByAddress
+block_access_lists._build_from_builder	3	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_builder.nim:266-272	slotCmp
+block_access_lists._build_from_builder	3	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_builder.nim:293-297	sortBySlot
+block_access_lists._build_from_builder	1	missing	-	-	-
+block_access_lists._get_pre_tx_account	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_overlay.nim:74-97	getAccount
+block_access_lists._get_pre_tx_account	0	part	1/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_overlay.nim:48-53	findAccount
+block_access_lists._get_pre_tx_account	0	part	1/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_utils.nim:89-105	findLastWriteBefore
+block_access_lists._get_pre_tx_storage	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_overlay.nim:99-118	getStorage
+block_access_lists._get_pre_tx_storage	0	part	1/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_utils.nim:89-105	findLastWriteBefore
+block_access_lists._get_pre_tx_storage	2	part	1/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:306-310	capturePreStorage
+block_access_lists._get_pre_tx_storage	1	missing	-	-	-
+block_access_lists._index_start_account	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:301-304	capturePreCode
+block_access_lists._index_start_storage	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:306-310	capturePreStorage
+block_access_lists._index_start_storage	1	missing	-	-	-
+block_access_lists.add_balance_change	2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_builder.nim:135-142	addBalanceChange
+block_access_lists.add_balance_change	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_builder.nim:318-331	collapseByIndex
+block_access_lists.add_balance_change	-	delegated	2/2	-> block_access_lists.ensure_account	addAccount
+block_access_lists.add_balance_change	-	delegated	1/2	-> block_access_lists.ensure_account	idOf
+block_access_lists.add_balance_change	0	missing	-	-	-
+block_access_lists.add_code_change	2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_builder.nim:153-162	addCodeChange
+block_access_lists.add_code_change	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_builder.nim:318-331	collapseByIndex
+block_access_lists.add_code_change	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:449-464	trackCodeChange
+block_access_lists.add_code_change	-	delegated	1/2	-> block_access_lists.ensure_account	accountEntry
+block_access_lists.add_code_change	-	delegated	2/2	-> block_access_lists.ensure_account	addAccount
+block_access_lists.add_code_change	0	missing	-	-	-
+block_access_lists.add_nonce_change	2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_builder.nim:144-151	addNonceChange
+block_access_lists.add_nonce_change	-	delegated	1/2	-> block_access_lists.ensure_account	accountEntry
+block_access_lists.add_nonce_change	-	delegated	2/2	-> block_access_lists.ensure_account	addAccount
+block_access_lists.add_nonce_change	0	missing	-	-	-
+block_access_lists.add_storage_read	0,1	entry	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:320-325	trackStorageRead
+block_access_lists.add_storage_read	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_builder.nim:126-133	addStorageRead
+block_access_lists.add_storage_read	0,1	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:230-241	storageEntry
+block_access_lists.add_storage_read	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:511-533	recordTransaction
+block_access_lists.add_storage_read	-	delegated	2/2	-> block_access_lists.ensure_account	accountEntry
+block_access_lists.add_storage_read	-	delegated	2/2	-> block_access_lists.ensure_account	addAccount
+block_access_lists.add_storage_write	3	entry	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_builder.nim:116-124	addStorageWrite
+block_access_lists.add_storage_write	2	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_builder.nim:318-331	collapseByIndex
+block_access_lists.add_storage_write	2	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:340-360	trackStorageWrite
+block_access_lists.add_storage_write	-	delegated	2/2	-> block_access_lists.ensure_account	addAccount
+block_access_lists.add_storage_write	1	missing	-	-	-
+block_access_lists.add_touched_account	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:316-318	trackAddressAccess
+block_access_lists.add_touched_account	-	delegated	2/2	-> block_access_lists.ensure_account	accountEntry
+block_access_lists.build_block_access_list	2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:588-590	getBlockAccessList
+block_access_lists.build_block_access_list	0,1	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:511-533	recordTransaction
+block_access_lists.build_block_access_list	-	delegated	2/2	-> block_access_lists._build_from_builder	buildBlockAccessList
+block_access_lists.build_block_access_list	-	delegated	2/2	-> block_access_lists.add_storage_read	addStorageRead
+block_access_lists.build_block_access_list	-	delegated	2/2	-> block_access_lists.add_touched_account	addAccount
+block_access_lists.ensure_account	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:222-228	accountEntry
+block_access_lists.ensure_account	0	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_builder.nim:102-108	addAccount
+block_access_lists.ensure_account	0	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:181-209	getOrAdd
+block_access_lists.hash_block_access_list	0	missing	-	-	-
+block_access_lists.remove_balance_change	1	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:481-509	normalizeChanges
+block_access_lists.remove_balance_change	0	missing	-	-	-
+block_access_lists.remove_code_change	1	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:481-509	normalizeChanges
+block_access_lists.remove_code_change	0	missing	-	-	-
+block_access_lists.remove_nonce_change	1	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:481-509	normalizeChanges
+block_access_lists.remove_nonce_change	0	missing	-	-	-
+block_access_lists.remove_storage_write	1	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:481-509	normalizeChanges
+block_access_lists.remove_storage_write	0,2	missing	-	-	-
+block_access_lists.update_builder_from_tx	0,1,2,3,4,5	entry	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:511-533	recordTransaction
+block_access_lists.update_builder_from_tx	2,3,4,5	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:481-509	normalizeChanges
+block_access_lists.update_builder_from_tx	-	delegated	2/2	-> block_access_lists._index_start_account	capturePreCode
+block_access_lists.update_builder_from_tx	-	delegated	2/2	-> block_access_lists._index_start_storage	capturePreStorage
+block_access_lists.update_builder_from_tx	-	delegated	2/2	-> block_access_lists.add_balance_change	addBalanceChange
+block_access_lists.update_builder_from_tx	-	delegated	2/2	-> block_access_lists.add_nonce_change	addNonceChange
+block_access_lists.update_builder_from_tx	-	delegated	2/2	-> block_access_lists.add_code_change	addCodeChange
+block_access_lists.update_builder_from_tx	-	delegated	2/2	-> block_access_lists.add_storage_write	addStorageWrite
+block_access_lists.validate_block_access_list_gas_limit	0,1,2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_validation.nim:47-64	checkBalSize
+fork.apply_body	0,1,2,3	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_block.nim:103-225	procBlkPreamble
+fork.apply_body	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_block.nim:61-101	processTransactions
+fork.apply_body	4,5	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_block.nim:227-298	procBlkEpilogue
+fork.apply_body	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_block_parallel.nim:411-512	processTransactionsParallel
+fork.apply_body	-	delegated	2/2	-> fork.process_unchecked_system_transaction	processBeaconBlockRoot
+fork.apply_body	-	delegated	2/2	-> fork.process_unchecked_system_transaction	processParentBlockHash
+fork.apply_body	-	delegated	2/2	-> fork.process_transaction	processTransaction
+fork.apply_body	-	delegated	2/2	-> fork.process_general_purpose_requests	processDequeueWithdrawalRequests
+fork.apply_body	-	delegated	2/2	-> fork.process_general_purpose_requests	processDequeueConsolidationRequests
+fork.apply_body	-	delegated	2/2	-> fork.process_general_purpose_requests	processBuilderDepositRequests
+fork.apply_body	-	delegated	2/2	-> fork.process_general_purpose_requests	processBuilderExitRequests
+fork.apply_body	-	delegated	2/2	-> fork.process_general_purpose_requests	parseDepositLogs
+fork.apply_body	-	delegated	2/2	-> block_access_lists.build_block_access_list	getBlockAccessList
+fork.apply_body	-	delegated	2/2	-> block_access_lists.validate_block_access_list_gas_limit	validate
+fork.calculate_base_fee_per_gas	-	entry	1/2	repos/clients/nimbus-eth1/execution_chain/core/gaslimit.nim:45-53	calcEip1599BaseFee
+fork.calculate_base_fee_per_gas	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/gaslimit.nim:56-80	verifyEip1559Header
+fork.calculate_base_fee_per_gas	-	delegated	2/2	-> fork.check_gas_limit	validateGasLimit
+fork.calculate_base_fee_per_gas	0,2,3,4	missing	-	-	-
+fork.check_transaction	0,1,3	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_transaction.nim:118-137	validateForInclusion
+fork.check_transaction	2,5	part	2/2	repos/clients/nimbus-eth1/execution_chain/transaction/call_evm.nim:22-35	callParams
+fork.check_transaction	2	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/validate.nim:236-242	gasCost
+fork.check_transaction	2,3	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/validate.nim:357-426	validateTransaction
+fork.check_transaction	-	delegated	2/2	-> vm.gas.check_block_gas_capacity	checkBlockGasCapacity
+fork.check_transaction	-	delegated	2/2	-> transactions.validate_transaction	validateTxBasic
+fork.check_transaction	-	delegated	1/2	-> transactions.validate_transaction	intrinsicGas
+fork.check_transaction	4	missing	-	-	-
+fork.execute_block	2	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/chain/forked_chain/chain_private.nim:60-99	getVmState
+fork.execute_block	1,2	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/chain/forked_chain/chain_private.nim:101-203	processBlock
+fork.execute_block	0,2,3,5	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_block.nim:103-225	procBlkPreamble
+fork.execute_block	4,5	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_block.nim:227-298	procBlkEpilogue
+fork.execute_block	-	delegated	2/2	-> fork.apply_body	processTransactions
+fork.execute_block	-	delegated	1/2	-> fork.validate_header	validateHeaderAndKinship
+fork.execute_block	-	delegated	2/2	-> fork.validate_header	validateHeader
+fork.execute_block	-	delegated	1/2	-> fork.apply_body	processParentBlockHash
+fork.execute_block	-	delegated	1/2	-> fork.apply_body	processBeaconBlockRoot
+fork.make_receipt	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/executor/executor_helpers.nim:42-55	makeReceipt
+fork.make_receipt	1	missing	-	-	-
+fork.process_general_purpose_requests	1,2,3,4	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_block.nim:227-298	procBlkEpilogue
+fork.process_general_purpose_requests	1	part	1/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_transaction.nim:233-247	processDequeueWithdrawalRequests
+fork.process_general_purpose_requests	2	part	1/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_transaction.nim:249-263	processDequeueConsolidationRequests
+fork.process_general_purpose_requests	3	part	1/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_transaction.nim:265-279	processBuilderDepositRequests
+fork.process_general_purpose_requests	4	part	1/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_transaction.nim:281-295	processBuilderExitRequests
+fork.process_general_purpose_requests	0,1,2,3,4	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/core/tx_pool/tx_packer.nim:295-342	vmExecCommit
+fork.process_general_purpose_requests	0,1,2,3,4	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/tx_pool/tx_packer.nim:435-451	executionRequests
+fork.process_general_purpose_requests	-	delegated	2/2	-> requests.parse_deposit_requests	parseDepositLogs
+fork.process_general_purpose_requests	-	delegated	1/2	-> fork.process_checked_system_transaction	systemCall
+fork.process_general_purpose_requests	-	delegated	1/2	-> requests.parse_deposit_requests	addDepositLogs
+fork.process_unchecked_system_transaction	2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/transaction/system_call.nim:97-97	systemCall
+fork.process_unchecked_system_transaction	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/transaction/system_call.nim:30-45	setupComputation
+fork.state_transition	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/chain/forked_chain.nim:523-568	validateBlock
+fork.state_transition	0	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/chain/forked_chain/chain_private.nim:60-99	getVmState
+fork.state_transition	3	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/chain/forked_chain.nim:85-114	appendBlock
+fork.state_transition	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/chain/forked_chain/chain_private.nim:101-203	processBlock
+fork.state_transition	2,3	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/chain/forked_chain.nim:330-425	updateBase
+fork.state_transition	-	delegated	2/2	-> fork.get_last_256_block_hashes	branchBlockHashFn
+fork.state_transition	-	delegated	2/2	-> fork.execute_block	processBlock
+state_tracker.copy_tx_state	0	entry	1/2	repos/clients/nimbus-eth1/execution_chain/evm/computation.nim:184-187	beginSavePoint
+state_tracker.copy_tx_state	0	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:291-295	beginCallFrame
+state_tracker.copy_tx_state	1	missing	-	-	-
+state_tracker.get_pre_state_account	0	missing	-	-	-
+state_tracker.incorporate_tx_into_block	0,5	entry	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:535-545	commitCallFrame
+state_tracker.incorporate_tx_into_block	5	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:243-250	clearTransaction
+state_tracker.incorporate_tx_into_block	-	delegated	2/2	-> block_access_lists.update_builder_from_tx	normalizeChanges
+state_tracker.incorporate_tx_into_block	-	delegated	2/2	-> block_access_lists.update_builder_from_tx	recordTransaction
+state_tracker.incorporate_tx_into_block	1,2,3,4	missing	-	-	-
+state_tracker.modify_state	0,1	missing	-	-	-
+state_tracker.restore_tx_state	0	entry	1/2	repos/clients/nimbus-eth1/execution_chain/evm/computation.nim:207-211	rollback
+state_tracker.restore_tx_state	0	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:547-573	undoJournal
+state_tracker.restore_tx_state	0	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:575-586	rollbackCallFrame
+transactions.calculate_effective_gas_price	0,2	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/core/validate.nim:357-426	validateTransaction
+transactions.calculate_effective_gas_price	1	missing	-	-	-
+transactions.calculate_max_gas_fee	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/validate.nim:236-242	gasCost
+transactions.check_nonce	0	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/core/validate.nim:357-426	validateTransaction
+transactions.decode_transaction	2,3	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/pooled_txs_rlp.nim:76-80	read
+transactions.decode_transaction	0,1,4	missing	-	-	-
+transactions.has_access_list	0	missing	-	-	-
+transactions.signing_hash_155	0	missing	-	-	-
+transactions.signing_hash_2930	0	missing	-	-	-
+transactions.signing_hash_7702	0	missing	-	-	-
+vm.eoa_delegation.calculate_delegation_cost	0,1,2,3,4	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_call.nim:102-130	gasCallDelegate
+vm.eoa_delegation.calculate_delegation_cost	1,2	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/eip7702.nim:66-70	parseDelegationAddress
+vm.eoa_delegation.calculate_delegation_cost	3	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_helpers.nim:77-86	delegateResolutionCost
+vm.eoa_delegation.calculate_delegation_cost	-	delegated	2/2	-> state_tracker.get_code	getCode
+vm.eoa_delegation.calculate_delegation_cost	-	delegated	2/2	-> vm.eoa_delegation.is_valid_delegation	isDelegation
+vm.eoa_delegation.is_valid_delegation	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/eip7702.nim:50-57	isDelegation
+vm.eoa_delegation.resolve_delegated_code_address	0,1,2,3	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_call.nim:102-130	gasCallDelegate
+vm.eoa_delegation.resolve_delegated_code_address	2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_helpers.nim:77-86	delegateResolutionCost
+vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> vm.eoa_delegation.get_delegated_code_address	parseDelegationAddress
+vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> state_tracker.get_code	getCode
+vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> vm.eoa_delegation.get_delegated_code_address	isDelegation
+vm.gas.charge_gas_from_meter	0,1	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_meter.nim:27-38	consumeGas
+vm.gas.charge_state_gas_from_meter	0,1,2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_meter.nim:55-67	chargeStateGas
+vm.gas.credit_state_gas_refund	0,1	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_meter.nim:107-112	creditStateGasRefund
+vm.gas.repay_state_gas_spill	0,1,2,3	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_meter.nim:119-128	repayStateGasSpill
+vm.gas.restore_state_gas	0,1	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_meter.nim:102-105	refillFrameStateGas
