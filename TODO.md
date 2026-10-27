@@ -39,6 +39,24 @@ updated, and round again. Nothing waits for an EELS release.
   `consume-engine`, `enginex` and `rlp` with `--sim.buildarg
   fixtures=/fixtures`, with clients built from their worktrees.
 
+## Cross-client map (xref)
+
+- [ ] Benchmark: 40 spec functions x geth and reth, grep agent vs `xref find`
+  vs the judged map, answer key pooled and labelled by a separate verifier
+  (`xref/bench/`). Spot-check the labels.
+- [ ] Better candidates before the judge: gas constants and their values,
+  opcode numbers, precompile addresses, EIP numbers, then the call graph.
+- [ ] Execution-based mapping: run the EELS tests that hit a spec function
+  through each client's runner with coverage, and diff against tests that
+  do not. Use it to confirm rows for EIPs under active work.
+- [ ] Teams confirm their own client's rows, with a verified flag per row.
+- [ ] Differential fuzzing of pure functions (gas formulas, fees, intrinsic
+  cost, memory expansion, blob gas): the EELS function and the paired
+  client function on thousands of edge and random inputs, one harness per
+  client. Start with 5 geth gas functions.
+- [ ] Prove equal for all inputs, with an SMT solver, the few formulas that
+  matter most, such as `fake_exponential` and intrinsic gas.
+
 ## Next
 
 - [ ] Release lookup in the `devnet` skill: the latest `tests@` and
