@@ -21,12 +21,13 @@ from .config import Config, Repo
 from .tokens import eips
 
 EXTENSIONS = {
-    "go": ".go",
-    "rust": ".rs",
-    "csharp": ".cs",
-    "java": ".java",
-    "nim": ".nim",
-    "python": ".py",
+    "go": (".go",),
+    "rust": (".rs",),
+    "csharp": (".cs",),
+    "java": (".java",),
+    "nim": (".nim",),
+    "cpp": (".cpp", ".hpp"),
+    "python": (".py",),
 }
 
 FUNCTIONS = {
@@ -40,6 +41,7 @@ FUNCTIONS = {
     },
     "java": {"method_declaration", "constructor_declaration"},
     "nim": {"routine"},
+    "cpp": {"function_definition"},
 }
 
 CONTAINERS = {
@@ -56,6 +58,7 @@ CONTAINERS = {
         "enum_declaration",
         "record_declaration",
     },
+    "cpp": {"class_specifier", "struct_specifier"},
 }
 
 CALL = re.compile(
@@ -110,13 +113,13 @@ def calls_in(text: str) -> list[str]:
 
 def source_files(root: Path, repo: Repo) -> Iterator[tuple[Path, str]]:
     """Yield files of `repo.lang` under the sparse paths, minus excludes."""
-    suffix = EXTENSIONS[repo.lang]
+    suffixes = EXTENSIONS[repo.lang]
     for top in repo.paths:
         base = root / top
-        files = [base] if base.is_file() else sorted(base.rglob(f"*{suffix}"))
+        files = [base] if base.is_file() else sorted(base.rglob("*"))
         for path in files:
             rel = path.relative_to(root).as_posix()
-            if path.suffix != suffix:
+            if path.suffix not in suffixes or not path.is_file():
                 continue
             if any(fnmatch(rel, pattern) for pattern in repo.exclude):
                 continue
@@ -246,8 +249,21 @@ def walk_python(
 # Clients
 
 
+def cpp_declared(node: Node) -> str:
+    """Return a C++ function definition's name, `Type::name` when qualified."""
+    declarator = node.child_by_field_name("declarator")
+    while declarator is not None and declarator.type != "function_declarator":
+        declarator = declarator.child_by_field_name("declarator")
+    if declarator is None:
+        return ""
+    name = declarator.child_by_field_name("declarator")
+    return text_of(name) if name else ""
+
+
 def node_name(node: Node, lang: str) -> str:
     """Return the declared name of a function or container node."""
+    if lang == "cpp" and node.type == "function_definition":
+        return cpp_declared(node).split("::")[-1]
     if lang == "nim":
         for child in node.named_children:
             if child.type == "symbol":
@@ -335,6 +351,9 @@ def parse_source(
             continue
         if lang == "go" and node.type == "method_declaration":
             owners = (go_receiver(node),)
+        if lang == "cpp" and "::" in cpp_declared(node):
+            # A method defined outside its class, such as `Host::call`.
+            owners = owners + tuple(cpp_declared(node).split("::")[:-1])
         qualname = ".".join(o for o in (*owners, name) if o)
         body = text_of(node)
         doc = leading_comments(node)

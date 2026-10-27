@@ -1,6 +1,6 @@
 ---
 name: xref
-description: Find where each execution client (geth, reth and revm, nethermind, besu, erigon, ethrex, nimbus) implements an EELS spec function, which spec function a client function implements, or which client code a spec change lands on. Use before grepping client repos for cross-client questions, audits and scoping EIP changes.
+description: Find where each execution client (geth, reth with evm2, nethermind, besu, erigon, ethrex, nimbus, and the evmone EVM) implements an EELS spec function, which spec function a client function implements, or which client code a spec change lands on. Use before grepping client repos for cross-client questions, audits and scoping EIP changes.
 ---
 
 # xref

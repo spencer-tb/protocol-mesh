@@ -4,13 +4,14 @@
 # forces the cache.
 [checkouts]
 go-ethereum = "../repos/clients/go-ethereum"
-revm = "../repos/clients/revm"
+evm2 = "../repos/clients/evm2"
 reth = "../repos/clients/reth"
 nethermind = "../repos/clients/nethermind"
 besu = "../repos/clients/besu"
 erigon = "../repos/clients/erigon"
 ethrex = "../repos/clients/ethrex"
 nimbus-eth1 = "../repos/clients/nimbus-eth1"
+evmone = "../repos/clients/evmone"
 
 # Which spec fork anchors the map, and where each client keeps the code
 # that implements it. `paths` are sparse-checkout cone directories,
@@ -42,25 +43,13 @@ exclude = [
 
 [clients.reth]
 lang = "rust"
+# reth moved off revm and alloy-evm onto evm2 in October 2026.
 [[clients.reth.repos]]
-name = "revm"
-url = "https://github.com/bluealloy/revm"
+name = "evm2"
+url = "https://github.com/alloy-rs/evm2"
 ref = "main"
-paths = [
-    "crates/interpreter",
-    "crates/handler",
-    "crates/precompile",
-    "crates/context",
-    "crates/primitives",
-    "crates/state",
-]
-exclude = ["**/tests/**", "**/benches/**", "**/bench/**"]
-[[clients.reth.repos]]
-name = "alloy-evm"
-url = "https://github.com/alloy-rs/evm"
-ref = "main"
-paths = ["crates/evm"]
-exclude = ["**/tests/**"]
+paths = ["crates/evm2"]
+exclude = ["**/tests/**", "**/benches/**", "**/examples/**"]
 [[clients.reth.repos]]
 name = "reth"
 url = "https://github.com/paradigmxyz/reth"
@@ -152,3 +141,12 @@ paths = [
     "execution_chain/block_access_list",
     "execution_chain/common",
 ]
+
+[clients.evmone]
+lang = "cpp"
+[[clients.evmone.repos]]
+name = "evmone"
+url = "https://github.com/ipsilon/evmone"
+ref = "master"
+paths = ["lib/evmone", "lib/evmone_precompiles", "test/state"]
+exclude = ["**/*_test.cpp"]

@@ -23,8 +23,7 @@ clive                        https://github.com/spencer-tb/clive.git
 # Execution clients and EVMs
 clients/go-ethereum          https://github.com/ethereum/go-ethereum.git
 clients/reth                 https://github.com/paradigmxyz/reth.git
-clients/revm                 https://github.com/bluealloy/revm.git
-clients/alloy-evm            https://github.com/alloy-rs/evm.git
+clients/evm2                 https://github.com/alloy-rs/evm2.git
 clients/nethermind           https://github.com/NethermindEth/nethermind.git
 clients/besu                 https://github.com/besu-eth/besu.git
 clients/erigon               https://github.com/erigontech/erigon.git
