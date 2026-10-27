@@ -136,6 +136,76 @@ def spec_steps(
     return steps, cost
 
 
+# EIP tags: which EIPs a spec function implements, for functions whose
+# code never names the EIP. Merged with the tags the index reads from text.
+
+EIPS_SCHEMA = {
+    "type": "object",
+    "properties": {"eips": {"type": "array", "items": {"type": "integer"}}},
+    "required": ["eips"],
+}
+
+EIPS_PROMPT = """\
+Which EIPs does this function from the Ethereum execution specs, the \
+{fork} fork, implement? List only EIPs whose rules its own code carries \
+out, as numbers. Return an empty list for generic plumbing.
+
+{spec_id} ({path}):
+
+```python
+{body}
+```
+"""
+
+
+def spec_eips(
+    config: Config, spec: Symbol, cache: Json
+) -> tuple[list[int], float]:
+    """Return the EIPs `spec` implements, cached while its code holds."""
+    cached = cache.get(spec.id)
+    if cached and cached["hash"] == spec.hash:
+        return list(cached["eips"]), 0.0
+    out, cost = claude(
+        EIPS_PROMPT.format(
+            fork=config.spec.fork,
+            spec_id=spec.id,
+            path=spec.path,
+            body=read_body(config, spec),
+        ),
+        EIPS_SCHEMA,
+        effort="low",
+    )
+    eips = sorted(set(out["eips"]))
+    cache[spec.id] = {"hash": spec.hash, "eips": eips}
+    return eips, cost
+
+
+def tag(
+    config: Config, only: list[str], modules: list[str], workers: int
+) -> None:
+    """Tag spec functions with EIPs, by default every function in the map."""
+    path = tree_path(config)
+    data: Json = json.loads(path.read_text()) if path.exists() else {}
+    every = load(index_path(config, config.spec.repo))
+    specs = select_specs(every, modules, only)
+    if not (only or modules):
+        built = set(data.get("entries", {}))
+        specs = [s for s in specs if s.id in built]
+    cache = data.setdefault("eips", {})
+
+    def one(spec: Symbol) -> tuple[Symbol, list[int], float]:
+        eips, cost = spec_eips(config, spec, cache)
+        return spec, eips, cost
+
+    total = 0.0
+    with ThreadPoolExecutor(workers) as pool:
+        for spec, eips, cost in pool.map(one, specs):
+            total += cost
+            print(f"{spec.id} {', '.join(map(str, eips)) or '-'}")
+    path.write_text(json.dumps(data, indent=1))
+    print(f"{len(specs)} functions, ${total:.2f}")
+
+
 # 2. Agent search.
 
 SEARCH_SCHEMA = {
@@ -656,10 +726,12 @@ def render_tsv(config: Config, target: Path) -> None:
     target.mkdir(parents=True, exist_ok=True)
     # The EIPs each EELS function's code and docstrings name, so a grep for
     # an EIP finds its functions.
-    eips = {
-        s.id: ",".join(s.eips) or "-"
-        for s in load(index_path(config, config.spec.repo))
-    }
+    tagged = data.get("eips", {})
+    eips = {}
+    for symbol in load(index_path(config, config.spec.repo)):
+        numbers = {int(e.removeprefix("eip")) for e in symbol.eips}
+        numbers |= set(tagged.get(symbol.id, {}).get("eips", []))
+        eips[symbol.id] = ",".join(f"eip{n}" for n in sorted(numbers)) or "-"
     spec_rows = ["# eels\tstep\teips\twhat it does"]
     client_rows: dict[str, list[str]] = defaultdict(
         lambda: ["# eels\tsteps\trole\tlocation\tfunction"]

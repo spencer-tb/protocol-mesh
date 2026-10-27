@@ -7,6 +7,7 @@ from . import config as config_module
 from . import index
 from .build import build as build_tree
 from .build import render_tsv, tsv_target
+from .build import tag as tag_eips
 from .evaluate import evaluate
 from .link import Settings, link
 from .lookup import diff, find
@@ -104,6 +105,12 @@ def main() -> None:
         help="judge existing tables again from their matches, no search",
     )
     commands.add_parser("tsv", help="write map/ from data/tree.json")
+    tagger = commands.add_parser(
+        "tag", help="tag spec functions with the EIPs they implement"
+    )
+    tagger.add_argument("--only", default="", help="spec ids, comma separated")
+    tagger.add_argument("--modules", default="", help="spec module prefixes")
+    tagger.add_argument("--workers", type=int, default=8)
 
     args = parser.parse_args()
     config = config_module.load(args.config)
@@ -161,6 +168,8 @@ def main() -> None:
         )
     elif args.command == "tsv":
         render_tsv(config, tsv_target(config))
+    elif args.command == "tag":
+        tag_eips(config, split(args.only), split(args.modules), args.workers)
 
 
 def split(value: str) -> list[str]:
