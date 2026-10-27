@@ -705,9 +705,20 @@ def build(
     data["repos"] = {r.name: head(config, r.name) for r in config.all_repos()}
     tables = {n: Client(config, n) for n in names}
 
-    for spec in specs:
-        steps, _ = spec_steps(config, spec, steps_cache)
-        entries.setdefault(spec.id, {})["steps"] = steps
+    def steps_of(spec: Symbol) -> list[Json] | None:
+        try:
+            return spec_steps(config, spec, steps_cache)[0]
+        except RuntimeError as error:
+            print(f"no steps for {spec.id}: {str(error)[:200]}")
+            return None
+
+    # A function whose steps failed is left for the next run.
+    with ThreadPoolExecutor(workers) as pool:
+        found = list(zip(specs, pool.map(steps_of, specs), strict=True))
+    specs = [spec for spec, steps in found if steps is not None]
+    for spec, steps in found:
+        if steps is not None:
+            entries.setdefault(spec.id, {})["steps"] = steps
     path.write_text(json.dumps(data, indent=1))
 
     def current(spec: Symbol, n: str) -> Json:
