@@ -41,9 +41,13 @@ updated, and round again. Nothing waits for an EELS release.
 
 ## Cross-client map (xref)
 
-- [ ] Benchmark: 40 spec functions x geth and reth, grep agent vs `xref find`
-  vs the judged map, answer key pooled and labelled by a separate verifier
-  (`xref/bench/`). Spot-check the labels.
+- [x] Benchmark: 40 spec functions x geth and reth, grep agent vs `xref find`
+  vs the judged map, answer key pooled and labelled by a separate verifier.
+  Results in `xref/bench/results/report.md`.
+- [ ] Spot-check the benchmark's labels, the 10 listed in the report.
+- [ ] Build the map with an agent that searches the client, instead of
+  keyword candidates plus a judge: the benchmark's grep agent found more of
+  the right functions for about the same cost per question.
 - [ ] Better candidates before the judge: gas constants and their values,
   opcode numbers, precompile addresses, EIP numbers, then the call graph.
 - [ ] Execution-based mapping: run the EELS tests that hit a spec function

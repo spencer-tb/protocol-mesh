@@ -1,0 +1,5190 @@
+{
+ "vm.gas.allocate_evm_gas|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.initRuntimeGasBudget",
+    "line": 531,
+    "end_line": 543,
+    "relation": "equivalent",
+    "note": "Computes evmGas = gasLimit - intrinsic. Under Amsterdam it caps execution gas at min(MaxTxGas - intrinsic, evmGas) and puts the remainder in the state reservoir through NewGasBudget, which matches the spec split. The tracer hooks and the skipExecutionGasCap flag are extra."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/evm.go",
+    "qualname": "EVM.create",
+    "line": 550,
+    "end_line": 652,
+    "relation": "unrelated",
+    "note": "Runs CREATE frame execution. It never splits transaction gas into an execution grant and a state reservoir."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/instructions.go",
+    "qualname": "opCall",
+    "line": 736,
+    "end_line": 780,
+    "relation": "unrelated",
+    "note": "CALL opcode handler. It passes the parent's state reservoir to the child frame, which is not the transaction-level gas allocation."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/evm.go",
+    "qualname": "EVM.traceFrameExit",
+    "line": 493,
+    "end_line": 502,
+    "relation": "unrelated",
+    "note": "Only emits tracer events when a frame exits."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/instructions.go",
+    "qualname": "opStaticCall",
+    "line": 850,
+    "end_line": 881,
+    "relation": "unrelated",
+    "note": "STATICCALL opcode handler. It builds a gas budget for the child frame and does not allocate transaction gas."
+   }
+  ],
+  "cost_usd": 0.073548
+ },
+ "vm.gas.calculate_data_fee|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.buyGas",
+    "line": 464,
+    "end_line": 519,
+    "relation": "partial",
+    "note": "Computes blobFee = blobGas * blobBaseFee inline (the data fee), embedded in the larger gas purchase and balance check; the price comes from the block context."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "TransactionToMessage",
+    "line": 330,
+    "end_line": 387,
+    "relation": "unrelated",
+    "note": "Converts a transaction into a message; computes no fee."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction.go",
+    "qualname": "Transaction.Cost",
+    "line": 341,
+    "end_line": 352,
+    "relation": "unrelated",
+    "note": "Uses the blob fee cap rather than the blob gas price; this is the maximum cost, not the data fee."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "consensus/misc/eip4844/eip4844.go",
+    "qualname": "BlobConfig.blobBaseFee",
+    "line": 46,
+    "end_line": 48,
+    "relation": "unrelated",
+    "note": "Computes only the blob gas price (the calculate_blob_gas_price callee), not the fee."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction.go",
+    "qualname": "Transaction.BlobGasFeeCapCmp",
+    "line": 507,
+    "end_line": 509,
+    "relation": "unrelated",
+    "note": "Compares the blob fee caps of two transactions."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction.go",
+    "qualname": "Transaction.BlobGasFeeCap",
+    "line": 483,
+    "end_line": 488,
+    "relation": "unrelated",
+    "note": "Getter for the blob fee cap."
+   }
+  ],
+  "cost_usd": 0.07278799999999999
+ },
+ "vm.gas.calculate_gas_extend_memory|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gas_table.go",
+    "qualname": "memoryGasCost",
+    "line": 29,
+    "end_line": 56,
+    "relation": "equivalent",
+    "note": "Core implementation: word-rounds the new size, returns 0 if it isn't larger than current memory, otherwise returns new total cost minus cost already paid (tracked in lastGasCost). It covers one target size, not a list, and doesn't return the bytes to extend."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/interpreter.go",
+    "qualname": "computeMemorySize",
+    "line": 263,
+    "end_line": 274,
+    "relation": "partial",
+    "note": "Does part of the spec's size step: rounds the requested memory size up to a multiple of 32, i.e. the ceil32 in after_size."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/common.go",
+    "qualname": "calcMemSize64",
+    "line": 58,
+    "end_line": 63,
+    "relation": "partial",
+    "note": "Does part of the spec's size step: computes start+size with overflow checks, i.e. the end-of-range value in after_size."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gas_table.go",
+    "qualname": "pureMemoryGascost",
+    "line": 280,
+    "end_line": 286,
+    "relation": "unrelated",
+    "note": "Thin wrapper that just calls memoryGasCost and wraps the result in GasCosts."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gas_table.go",
+    "qualname": "gasCallCodeIntrinsic",
+    "line": 463,
+    "end_line": 479,
+    "relation": "unrelated",
+    "note": "CALLCODE gas: calls memoryGasCost and adds the value-transfer cost."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gas_table.go",
+    "qualname": "gasStaticCallIntrinsic",
+    "line": 511,
+    "end_line": 517,
+    "relation": "unrelated",
+    "note": "STATICCALL gas: only calls memoryGasCost."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gas_table.go",
+    "qualname": "gasDelegateCallIntrinsic",
+    "line": 503,
+    "end_line": 509,
+    "relation": "unrelated",
+    "note": "DELEGATECALL gas: only calls memoryGasCost."
+   }
+  ],
+  "cost_usd": 0.073496
+ },
+ "vm.gas.calculate_total_blob_gas|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction.go",
+    "qualname": "Transaction.BlobGas",
+    "line": 475,
+    "end_line": 480,
+    "relation": "equivalent",
+    "note": "Type-checks for a blob tx and returns per-blob gas times the hash count, else 0. Matches the spec exactly."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/tx_blob.go",
+    "qualname": "BlobTx.blobGas",
+    "line": 306,
+    "end_line": 306,
+    "relation": "partial",
+    "note": "Does the blob-tx calculation (BlobTxBlobGasPerBlob * len(BlobHashes)). The non-blob branch that returns 0 lives in the caller [0]."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction.go",
+    "qualname": "Transaction.Cost",
+    "line": 341,
+    "end_line": 352,
+    "relation": "unrelated",
+    "note": "Calculates the tx's maximum cost and only calls blobGas() as one input."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/block.go",
+    "qualname": "Block.ExcessBlobGas",
+    "line": 420,
+    "end_line": 427,
+    "relation": "unrelated",
+    "note": "Copies the header's excess blob gas field."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/block.go",
+    "qualname": "Block.BlobGasUsed",
+    "line": 429,
+    "end_line": 436,
+    "relation": "unrelated",
+    "note": "Copies the header's blob gas used field."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction.go",
+    "qualname": "Transaction.BlobGasFeeCapCmp",
+    "line": 507,
+    "end_line": 509,
+    "relation": "unrelated",
+    "note": "Compares the blob fee caps of two transactions."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.blobGasUsed",
+    "line": 1251,
+    "end_line": 1253,
+    "relation": "equivalent",
+    "note": "len(BlobHashes) * per-blob gas for the message. Non-blob txs have no blob hashes, so it gives 0, the same result as the spec."
+   }
+  ],
+  "cost_usd": 0.060004
+ },
+ "vm.gas.charge_gas_from_meter|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.ChargeExecutionOnly",
+    "line": 89,
+    "end_line": 96,
+    "relation": "equivalent",
+    "note": "Fails if execution gas is less than r, otherwise subtracts r. Same as the spec; the used-gas counter is extra bookkeeping."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/contract.go",
+    "qualname": "Contract.chargeExecution",
+    "line": 131,
+    "end_line": 140,
+    "relation": "unrelated",
+    "note": "Contract-level wrapper: hands the charge to GasBudget.ChargeExecution and adds a tracing hook. A caller, closer to the EVM-level charge_gas."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.ChargeExecution",
+    "line": 145,
+    "end_line": 147,
+    "relation": "equivalent",
+    "note": "Charges only execution gas on the budget through Charge, giving the same check and subtract as the spec."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.charge",
+    "line": 112,
+    "end_line": 137,
+    "relation": "partial",
+    "note": "Has the spec's execution-gas check and subtract, plus extra state-gas and spillover logic."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/gaspool.go",
+    "qualname": "GasPool.ChargeGasAmsterdam",
+    "line": 92,
+    "end_line": 104,
+    "relation": "unrelated",
+    "note": "Block-level gas pool totals for Amsterdam; does not touch a gas meter."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/gaspool.go",
+    "qualname": "GasPool.ChargeGasLegacy",
+    "line": 76,
+    "end_line": 86,
+    "relation": "unrelated",
+    "note": "Legacy block gas pool update that adds back returned gas; not a meter charge."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state/access_events.go",
+    "qualname": "AccessEvents.touchAddressAndChargeGas",
+    "line": 182,
+    "end_line": 245,
+    "relation": "unrelated",
+    "note": "Works out access-witness gas costs and marks state as accessed; does not charge a gas meter."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state/access_events.go",
+    "qualname": "AccessEvents.SlotGas",
+    "line": 171,
+    "end_line": 178,
+    "relation": "unrelated",
+    "note": "Wrapper that returns the witness gas cost of a storage slot."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state/access_events.go",
+    "qualname": "AccessEvents.AddAccount",
+    "line": 95,
+    "end_line": 108,
+    "relation": "unrelated",
+    "note": "Adds up the witness gas cost of an account access."
+   }
+  ],
+  "cost_usd": 0.08077980000000001
+ },
+ "vm.gas.charge_state_gas_from_meter|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.ChargeState",
+    "line": 150,
+    "end_line": 152,
+    "relation": "partial",
+    "note": "State-gas-only entry point; the reservoir and spill logic is delegated to Charge/charge."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.charge",
+    "line": 112,
+    "end_line": 137,
+    "relation": "equivalent",
+    "note": "Holds the spec logic: takes from StateGas first, spills the rest into ExecutionGas, tracks Spilled, and returns false (out of gas) if both together are too small. Also handles execution cost, which is zero for state-only charges."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/contract.go",
+    "qualname": "Contract.chargeState",
+    "line": 144,
+    "end_line": 153,
+    "relation": "partial",
+    "note": "Contract-level wrapper that calls ChargeState and adds a tracing hook; returning false stands in for OutOfGasError. Could also be read as a plain caller."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.Charge",
+    "line": 81,
+    "end_line": 85,
+    "relation": "partial",
+    "note": "Thin wrapper around charge that saves the gas budget from before the charge; no charging logic of its own."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.settleGas",
+    "line": 1046,
+    "end_line": 1109,
+    "relation": "unrelated",
+    "note": "End-of-transaction settlement: refunds, calldata floor, block gas pool."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.Absorb",
+    "line": 273,
+    "end_line": 303,
+    "relation": "unrelated",
+    "note": "Merges a child frame's gas back into the parent and repays spilled gas; the reverse of a charge."
+   }
+  ],
+  "cost_usd": 0.0830118
+ },
+ "vm.gas.check_max_fee_per_blob_gas|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.preCheck",
+    "line": 573,
+    "end_line": 703,
+    "relation": "partial",
+    "note": "Has the spec check inline among many other checks: if the tx uses blob gas, it rejects BlobGasFeeCap < BlobBaseFee (ErrBlobFeeCapTooLow). Uses the blob base fee precomputed in the block context instead of working it out from excess_blob_gas."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction_marshalling.go",
+    "qualname": "Transaction.UnmarshalJSON",
+    "line": 178,
+    "end_line": 521,
+    "relation": "unrelated",
+    "note": "JSON decoding of tx fields. It reads maxFeePerBlobGas but never checks it against the blob gas price."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "TransactionToMessage",
+    "line": 330,
+    "end_line": 387,
+    "relation": "unrelated",
+    "note": "Converts a tx to a Message. It only checks the blob fee cap for uint256 overflow, with no comparison to the blob base fee."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction_marshalling.go",
+    "qualname": "Transaction.MarshalJSON",
+    "line": 82,
+    "end_line": 175,
+    "relation": "unrelated",
+    "note": "JSON serialization of tx fields."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "consensus/misc/eip4844/eip4844.go",
+    "qualname": "MaxBlobGasPerBlock",
+    "line": 190,
+    "end_line": 192,
+    "relation": "unrelated",
+    "note": "Works out the maximum blob gas per block. Has nothing to do with the fee cap check."
+   }
+  ],
+  "cost_usd": 0.11605979999999999
+ },
+ "vm.gas.credit_state_gas_refund|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.RefundState",
+    "line": 160,
+    "end_line": 166,
+    "relation": "equivalent",
+    "note": "Same LIFO credit: min(s, Spilled) back to ExecutionGas (gas_left), Spilled reduced, remainder to StateGas reservoir; extra UsedStateGas bookkeeping only."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/contract.go",
+    "qualname": "Contract.refundState",
+    "line": 156,
+    "end_line": 163,
+    "relation": "unrelated",
+    "note": "Thin wrapper that only calls RefundState and emits a tracing event."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.settleGas",
+    "line": 1046,
+    "end_line": 1109,
+    "relation": "unrelated",
+    "note": "Transaction-level settlement (refund counter, floor, block pool, sender refund); no LIFO crediting of the frame's state gas."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.ExitHalt",
+    "line": 235,
+    "end_line": 250,
+    "relation": "unrelated",
+    "note": "Rebuilds the gas budget on halt, resetting the spill and reservoir; not a refund credit."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state/statedb.go",
+    "qualname": "StateDB.SubRefund",
+    "line": 315,
+    "end_line": 321,
+    "relation": "unrelated",
+    "note": "Lowers the StateDB refund counter; unrelated to the frame's state-gas pools."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/gaspool.go",
+    "qualname": "GasPool.ChargeGasLegacy",
+    "line": 76,
+    "end_line": 86,
+    "relation": "unrelated",
+    "note": "Block-level gas pool accounting for legacy forks."
+   }
+  ],
+  "cost_usd": 0.06860379999999999
+ },
+ "vm.gas.forfeit_remaining_gas|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.DrainExecution",
+    "line": 169,
+    "end_line": 172,
+    "relation": "equivalent",
+    "note": "Zeroes the remaining execution gas (and adds it to the used total), which is the spec's gas_left = 0."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.ExitHalt",
+    "line": 235,
+    "end_line": 250,
+    "relation": "partial",
+    "note": "Zeroes execution gas on a halt, but also pays back the spill and restores the reservoir. The spec does that payback before this function, which only asserts the spill is 0."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.executeCreate",
+    "line": 835,
+    "end_line": 880,
+    "relation": "unrelated",
+    "note": "Top-level create handler; only calls DrainExecution and haltTopFrame."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/gaspool.go",
+    "qualname": "GasPool.Used",
+    "line": 141,
+    "end_line": 151,
+    "relation": "unrelated",
+    "note": "Reports block gas pool usage; does not consume a frame's gas."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.haltTopFrame",
+    "line": 944,
+    "end_line": 970,
+    "relation": "unrelated",
+    "note": "Wrapper that calls ExitHalt and emits tracer events."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.executeCall",
+    "line": 884,
+    "end_line": 940,
+    "relation": "unrelated",
+    "note": "Top-level call handler; only calls DrainExecution and haltTopFrame."
+   }
+  ],
+  "cost_usd": 0.0738398
+ },
+ "vm.gas.repay_state_gas_spill|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.Absorb",
+    "line": 273,
+    "end_line": 303,
+    "relation": "partial",
+    "note": "After merging the child, it does the repayment inline: d = min(StateGas, Spilled), then moves d from StateGas into ExecutionGas and subtracts it from Spilled. This is mixed in with the child-merge accounting and tracing, and it has no assert."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.RefundState",
+    "line": 160,
+    "end_line": 166,
+    "relation": "unrelated",
+    "note": "State refund path: it repays the spill out of a refund amount s and lowers UsedStateGas. The spec function repays out of the existing reservoir after a merge and does not change the used counters."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.Forward",
+    "line": 178,
+    "end_line": 188,
+    "relation": "unrelated",
+    "note": "Hands gas to a child frame. No spill repayment."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.ExitRevert",
+    "line": 212,
+    "end_line": 227,
+    "relation": "unrelated",
+    "note": "Revert exit handler: rebuilds the reservoir and returns the spill to execution gas. Not the post-merge repayment."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.ExitHalt",
+    "line": 235,
+    "end_line": 250,
+    "relation": "unrelated",
+    "note": "Halt exit handler: rebuilds the reservoir and counts the remaining gas as used. Not the post-merge repayment."
+   }
+  ],
+  "cost_usd": 0.056935799999999995
+ },
+ "vm.gas.restore_state_gas|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.ExitRevert",
+    "line": 212,
+    "end_line": 227,
+    "relation": "equivalent",
+    "note": "Adds the spill back to execution gas, clears spill and used state gas, and resets the reservoir to the baseline (StateGas + UsedStateGas - Spilled). It doesn't zero refunds; geth likely handles that through the StateDB journal (not checked)."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.ExitHalt",
+    "line": 235,
+    "end_line": 250,
+    "relation": "partial",
+    "note": "Resets the reservoir to the baseline and clears the spill like the spec, but burns the spilled gas with the remaining execution gas instead of crediting it back. The restore is inlined in the halt exit."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.Exit",
+    "line": 258,
+    "end_line": 267,
+    "relation": "unrelated",
+    "note": "Only dispatches to ExitSuccess, ExitRevert or ExitHalt."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.Absorb",
+    "line": 273,
+    "end_line": 303,
+    "relation": "unrelated",
+    "note": "Merges a child frame's budget into the parent's; does no baseline restore."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.charge",
+    "line": 112,
+    "end_line": 137,
+    "relation": "unrelated",
+    "note": "Charges gas and records spill, the opposite of restoring."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gas_table.go",
+    "qualname": "stateGasCall8037",
+    "line": 628,
+    "end_line": 644,
+    "relation": "unrelated",
+    "note": "Works out the state gas cost of a CALL."
+   }
+  ],
+  "cost_usd": 0.0714358
+ },
+ "vm.gas.settle_transaction_gas|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.settleGas",
+    "line": 1046,
+    "end_line": 1109,
+    "relation": "equivalent",
+    "note": "Computes all the settlement amounts: gas used before the refund (gas limit minus leftover execution and state gas), the refund capped at 1/5 (via calcRefund), gas used after the refund raised to the calldata floor, execution gas = max(pre-refund gas minus state gas, floor), and state gas. It also charges the block gas pool and refunds the sender, which the spec leaves to the caller. It returns an error on negative state gas where the spec clamps to zero."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.calcRefund",
+    "line": 1238,
+    "end_line": 1248,
+    "relation": "partial",
+    "note": "Only the refund step: min(gasUsedBeforeRefund/quotient, refund counter)."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction.go",
+    "qualname": "Transaction.Gas",
+    "line": 317,
+    "end_line": 317,
+    "relation": "unrelated",
+    "note": "Gas limit getter."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction.go",
+    "qualname": "Transaction.GasPrice",
+    "line": 320,
+    "end_line": 320,
+    "relation": "unrelated",
+    "note": "Gas price getter."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction.go",
+    "qualname": "Transaction.GasFeeCap",
+    "line": 326,
+    "end_line": 326,
+    "relation": "unrelated",
+    "note": "Fee cap getter."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction.go",
+    "qualname": "Transaction.GasTipCap",
+    "line": 323,
+    "end_line": 323,
+    "relation": "unrelated",
+    "note": "Tip cap getter."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction.go",
+    "qualname": "Transaction.GasFeeCapCmp",
+    "line": 362,
+    "end_line": 364,
+    "relation": "unrelated",
+    "note": "Fee cap comparison."
+   }
+  ],
+  "cost_usd": 0.0713998
+ },
+ "transactions.calculate_effective_gas_price|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "TransactionToMessage",
+    "line": 330,
+    "end_line": 387,
+    "relation": "partial",
+    "note": "Sets msg.GasPrice to baseFee + tip, capped at the max fee: the spec's price calculation inlined. Has no max-fee >= baseFee check."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.preCheck",
+    "line": 573,
+    "end_line": 703,
+    "relation": "partial",
+    "note": "Holds the spec's error check (max fee below base fee -> ErrFeeCapTooLow) but does not compute the price."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/tx_dynamic_fee.go",
+    "qualname": "DynamicFeeTx.effectiveGasPrice",
+    "line": 100,
+    "end_line": 109,
+    "relation": "partial",
+    "note": "Dynamic-fee tx: baseFee + min(tip, maxFee - baseFee), the spec's fee-market branch, without the max-fee >= baseFee check."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/tx_blob.go",
+    "qualname": "BlobTx.effectiveGasPrice",
+    "line": 308,
+    "end_line": 317,
+    "relation": "partial",
+    "note": "Blob tx: same fee-market branch calculation, without the check."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/tx_setcode.go",
+    "qualname": "SetCodeTx.effectiveGasPrice",
+    "line": 224,
+    "end_line": 233,
+    "relation": "partial",
+    "note": "Set-code tx: same fee-market branch calculation, without the check."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/tx_legacy.go",
+    "qualname": "LegacyTx.effectiveGasPrice",
+    "line": 107,
+    "end_line": 109,
+    "relation": "partial",
+    "note": "Legacy tx: returns the gas price, the spec's plain-gas-price branch, without the base-fee check."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/tx_access_list.go",
+    "qualname": "AccessListTx.effectiveGasPrice",
+    "line": 111,
+    "end_line": 113,
+    "relation": "partial",
+    "note": "Access-list tx: returns the gas price, the plain-gas-price branch, without the check."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction.go",
+    "qualname": "Transaction.calcEffectiveGasTip",
+    "line": 398,
+    "end_line": 420,
+    "relation": "partial",
+    "note": "Checks max fee >= baseFee and computes priority_fee = min(tip, maxFee - baseFee), but returns only the tip, not tip + baseFee."
+   }
+  ],
+  "cost_usd": 0.09261180000000001
+ },
+ "transactions.calculate_max_gas_fee|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.buyGas",
+    "line": 464,
+    "end_line": 519,
+    "relation": "partial",
+    "note": "Inlines the spec logic: balanceCheck = GasLimit*GasFeeCap when the fee cap is set, otherwise GasLimit*GasPrice (mgval). Also adds value and blob fees, checks the balance and deducts."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction.go",
+    "qualname": "Transaction.Cost",
+    "line": 341,
+    "end_line": 352,
+    "relation": "partial",
+    "note": "Computes gas*inner.gasPrice(), where inner.gasPrice() returns the fee cap for fee-market txs, so that term is the max gas fee. Then adds the blob fee cap cost and the value."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "TransactionToMessage",
+    "line": 330,
+    "end_line": 387,
+    "relation": "unrelated",
+    "note": "Converts the tx to a message and computes the effective gas price. No gas_limit*fee product."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction.go",
+    "qualname": "Transaction.GasFeeCapCmp",
+    "line": 362,
+    "end_line": 364,
+    "relation": "unrelated",
+    "note": "Only compares the fee caps of two transactions."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.preCheck",
+    "line": 573,
+    "end_line": 703,
+    "relation": "unrelated",
+    "note": "Validation checks that end by calling buyGas. Does no max gas fee arithmetic itself."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction.go",
+    "qualname": "Transaction.BlobGasFeeCapCmp",
+    "line": 507,
+    "end_line": 509,
+    "relation": "unrelated",
+    "note": "Only compares the blob fee caps of two transactions."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction.go",
+    "qualname": "Transaction.BlobGasFeeCap",
+    "line": 483,
+    "end_line": 488,
+    "relation": "unrelated",
+    "note": "Getter for the blob fee cap."
+   }
+  ],
+  "cost_usd": 0.0946958
+ },
+ "transactions.check_nonce|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.preCheck",
+    "line": 573,
+    "end_line": 703,
+    "relation": "partial",
+    "note": "Does the spec's nonce check inside a larger function. It reads the sender's nonce from state and returns nonce too high if state is below the tx nonce, nonce too low if above. The same function also runs gas, fee, blob and EOA checks and buys gas."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/txpool/validation.go",
+    "qualname": "ValidateTransactionWithState",
+    "line": 270,
+    "end_line": 320,
+    "relation": "partial",
+    "note": "Tx-pool check. It rejects a nonce below the sender's state nonce, which is the spec's \"nonce too low\" half. For a nonce above it, it only rejects a gap past the pool's queued txs. It does not require an exact match."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "Message.SkipNonceCheck",
+    "line": 303,
+    "end_line": 306,
+    "relation": "unrelated",
+    "note": "Only sets a flag that makes preCheck skip the nonce check. It checks nothing itself."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/txpool/legacypool/legacypool.go",
+    "qualname": "LegacyPool.checkDelegationLimit",
+    "line": 597,
+    "end_line": 617,
+    "relation": "unrelated",
+    "note": "Pool rule limiting in-flight txs from delegated (EIP-7702) senders. Not a check that the nonce matches the sender's."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/evm.go",
+    "qualname": "EVM.createFramePreCheck",
+    "line": 506,
+    "end_line": 518,
+    "relation": "unrelated",
+    "note": "Pre-check for a CREATE frame: call depth, balance, and that the caller's nonce won't overflow. No comparison against a tx nonce."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/txpool/blobpool/blobpool.go",
+    "qualname": "BlobPool.checkDelegationLimit",
+    "line": 1648,
+    "end_line": 1675,
+    "relation": "unrelated",
+    "note": "Blob pool rule limiting in-flight txs from delegated senders. Not a nonce check."
+   }
+  ],
+  "cost_usd": 0.0792398
+ },
+ "transactions.decode_transaction|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction.go",
+    "qualname": "Transaction.DecodeRLP",
+    "line": 144,
+    "end_line": 180,
+    "relation": "equivalent",
+    "note": "Decodes a transaction as it appears in a block body. An RLP list is decoded as a legacy transaction, which matches the spec's LegacyTransaction branch. An RLP byte string is the EIP-2718 typed envelope and is passed to decodeTyped."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction.go",
+    "qualname": "Transaction.UnmarshalBinary",
+    "line": 184,
+    "end_line": 204,
+    "relation": "equivalent",
+    "note": "Decodes a transaction from raw bytes. A first byte above 0x7f is decoded as a legacy RLP transaction; any other byte goes to decodeTyped, which handles types 1-4 and rejects unsupported types. This is the same dispatch as the spec's bytes branch."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction.go",
+    "qualname": "Transaction.decodeTyped",
+    "line": 207,
+    "end_line": 231,
+    "relation": "partial",
+    "note": "Handles only the typed branch. It dispatches on the type byte (AccessList, DynamicFee, Blob, SetCode), decodes the rest of the payload, returns an error for unknown types and rejects payloads of one byte or less. It has no legacy path."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/receipt.go",
+    "qualname": "Receipt.UnmarshalBinary",
+    "line": 187,
+    "end_line": 200,
+    "relation": "unrelated",
+    "note": "Decodes receipts, not transactions."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/receipt.go",
+    "qualname": "Receipt.DecodeRLP",
+    "line": 156,
+    "end_line": 183,
+    "relation": "unrelated",
+    "note": "Decodes receipts from an RLP stream, not transactions."
+   }
+  ],
+  "cost_usd": 0.0582278
+ },
+ "transactions.has_access_list|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction.go",
+    "qualname": "Transaction.AccessList",
+    "line": 314,
+    "end_line": 314,
+    "relation": "partial",
+    "note": "Asks the transaction type for its access list, and legacy types return nil. This does the spec's type check implicitly, combined with reading the list, but it returns the list rather than a yes/no answer."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state/reader_eip_7928.go",
+    "qualname": "ReaderWithBlockLevelAccessList.Has",
+    "line": 279,
+    "end_line": 284,
+    "relation": "unrelated",
+    "note": "Checks whether code exists in the EIP-7928 block-level access list state reader. It has nothing to do with a transaction's access list."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction_signing.go",
+    "qualname": "NewEIP2930Signer",
+    "line": 325,
+    "end_line": 327,
+    "relation": "unrelated",
+    "note": "Builds a transaction signer for the Berlin fork. It does not check a transaction for an access list."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state/reader_eip_7928.go",
+    "qualname": "ReaderWithBlockLevelAccessList.Account",
+    "line": 238,
+    "end_line": 266,
+    "relation": "unrelated",
+    "note": "Reads an account and applies the changes recorded in the block-level access list. This is a state-reader job."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/bal/bal.go",
+    "qualname": "ConstructionBlockAccessList.AccountRead",
+    "line": 81,
+    "end_line": 85,
+    "relation": "unrelated",
+    "note": "Records an account read while building the block access list. It is not a transaction type check."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction_signing.go",
+    "qualname": "NewLondonSigner",
+    "line": 319,
+    "end_line": 321,
+    "relation": "unrelated",
+    "note": "Builds a transaction signer for the London fork."
+   }
+  ],
+  "cost_usd": 0.04781579999999999
+ },
+ "transactions.signing_hash_155|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/tx_legacy.go",
+    "qualname": "LegacyTx.sigHash",
+    "line": 128,
+    "end_line": 138,
+    "relation": "equivalent",
+    "note": "RLP-hashes nonce, gasPrice, gas, to, value, data, chainID, 0, 0, which matches signing_hash_155 exactly."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction_signing.go",
+    "qualname": "EIP155Signer.Hash",
+    "line": 393,
+    "end_line": 395,
+    "relation": "unrelated",
+    "note": "Only passes the work to tx.inner.sigHash and does no hashing itself."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction_signing.go",
+    "qualname": "modernSigner.Hash",
+    "line": 246,
+    "end_line": 248,
+    "relation": "unrelated",
+    "note": "Generic signer wrapper that only calls inner.sigHash."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction_signing.go",
+    "qualname": "EIP155Signer.Equal",
+    "line": 349,
+    "end_line": 352,
+    "relation": "unrelated",
+    "note": "Compares two signers for equality."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction_signing.go",
+    "qualname": "EIP155Signer.SignatureValues",
+    "line": 375,
+    "end_line": 389,
+    "relation": "unrelated",
+    "note": "Turns a signature into R, S, V values; does not compute a signing hash."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction_signing.go",
+    "qualname": "NewEIP155Signer",
+    "line": 336,
+    "end_line": 343,
+    "relation": "unrelated",
+    "note": "Constructor for the signer."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction_signing.go",
+    "qualname": "EIP155Signer.Sender",
+    "line": 356,
+    "end_line": 371,
+    "relation": "unrelated",
+    "note": "Recovers the sender. It uses the hash through s.Hash but does not compute it."
+   }
+  ],
+  "cost_usd": 0.0521678
+ },
+ "transactions.signing_hash_2930|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/tx_access_list.go",
+    "qualname": "AccessListTx.sigHash",
+    "line": 131,
+    "end_line": 144,
+    "relation": "equivalent",
+    "note": "Hashes the type 0x01 prefix plus the RLP of (chainID, nonce, gasPrice, gas, to, value, data, accessList), the same fields in the same order as the spec."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction_signing.go",
+    "qualname": "modernSigner.Hash",
+    "line": 246,
+    "end_line": 248,
+    "relation": "unrelated",
+    "note": "Only hands off to the transaction's own sigHash for whatever type it is. It computes nothing itself."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction_signing.go",
+    "qualname": "NewEIP2930Signer",
+    "line": 325,
+    "end_line": 327,
+    "relation": "unrelated",
+    "note": "Builds a signer for the Berlin fork. It doesn't compute a hash."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction_signing.go",
+    "qualname": "NewLondonSigner",
+    "line": 319,
+    "end_line": 321,
+    "relation": "unrelated",
+    "note": "Builds a signer for the London fork. It doesn't compute a hash."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction_signing.go",
+    "qualname": "NewCancunSigner",
+    "line": 310,
+    "end_line": 312,
+    "relation": "unrelated",
+    "note": "Builds a signer for the Cancun fork. It doesn't compute a hash."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction_signing.go",
+    "qualname": "NewPragueSigner",
+    "line": 300,
+    "end_line": 302,
+    "relation": "unrelated",
+    "note": "Builds a signer for the Prague fork. It doesn't compute a hash."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction_signing.go",
+    "qualname": "LatestSigner",
+    "line": 69,
+    "end_line": 90,
+    "relation": "unrelated",
+    "note": "Picks a signer based on the chain config. It doesn't compute a hash."
+   }
+  ],
+  "cost_usd": 0.042935799999999996
+ },
+ "transactions.signing_hash_7702|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/tx_setcode.go",
+    "qualname": "SetCodeTx.sigHash",
+    "line": 254,
+    "end_line": 269,
+    "relation": "equivalent",
+    "note": "keccak(0x04 || rlp([chainID, nonce, tip, feecap, gas, to, value, data, accessList, authList])), same fields and order as the spec."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction_signing.go",
+    "qualname": "modernSigner.Hash",
+    "line": 246,
+    "end_line": 248,
+    "relation": "unrelated",
+    "note": "Generic signer method that just passes the call on to the transaction type's sigHash. It only calls the implementation."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/hashing.go",
+    "qualname": "prefixedRlpHash",
+    "line": 68,
+    "end_line": 76,
+    "relation": "unrelated",
+    "note": "General helper that hashes a prefix byte plus RLP data for any transaction type. It is a primitive the function uses, not the 7702 signing hash."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction_signing.go",
+    "qualname": "NewPragueSigner",
+    "line": 300,
+    "end_line": 302,
+    "relation": "unrelated",
+    "note": "Builds a Prague signer, no hashing logic."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/eips.go",
+    "qualname": "enable7702",
+    "line": 565,
+    "end_line": 570,
+    "relation": "unrelated",
+    "note": "Sets the CALL-family gas functions in the jump table for 7702."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/operations_acl.go",
+    "qualname": "gasCallEIP7702",
+    "line": 342,
+    "end_line": 352,
+    "relation": "unrelated",
+    "note": "CALL gas calculation for 7702 delegation, not transaction signing."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/jump_table.go",
+    "qualname": "newPragueInstructionSet",
+    "line": 120,
+    "end_line": 124,
+    "relation": "unrelated",
+    "note": "Builds the Prague instruction set."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/operations_acl.go",
+    "qualname": "makeCallVariantGasCallEIP7702",
+    "line": 371,
+    "end_line": 465,
+    "relation": "unrelated",
+    "note": "Gas charging for CALL variants with delegation resolution, unrelated to the signing hash."
+   }
+  ],
+  "cost_usd": 0.0708878
+ },
+ "fork.apply_body|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "StateProcessor.Process",
+    "line": 68,
+    "end_line": 165,
+    "relation": "equivalent",
+    "note": "Runs the whole block body in order: the pre-execution system calls (beacon root and parent hash), every transaction, then PostExecution (withdrawals and requests) at access-list index n+1, merging the block access list along the way. This is the job of apply_body."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor_parallel.go",
+    "qualname": "StateProcessor.processParallel",
+    "line": 133,
+    "end_line": 335,
+    "relation": "equivalent",
+    "note": "Parallel version of the same body execution: pre-execution system calls at index 0, transactions with block-level gas accounting, then PostExecution at index n+1, building the access list from what actually ran. The excerpt is truncated, but the part shown covers every stage of apply_body."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "PostExecution",
+    "line": 190,
+    "end_line": 230,
+    "relation": "partial",
+    "note": "Covers the post-transaction half of apply_body: process withdrawals, then the general-purpose requests (deposits, withdrawal queue, consolidation queue), all at the given post-execution access-list index."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "PreExecution",
+    "line": 168,
+    "end_line": 185,
+    "relation": "partial",
+    "note": "Covers the pre-transaction half of apply_body: the two unchecked system calls to the beacon-roots contract and the history-storage contract with the parent hash."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "ProcessBeaconBlockRoot",
+    "line": 377,
+    "end_line": 408,
+    "relation": "unrelated",
+    "note": "Implements the unchecked system call to the beacon-roots contract (spec process_unchecked_system_transaction, bound to that contract), a function apply_body calls. Close call: it also sets the target address and data, which apply_body chooses."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "ProcessParentBlockHash",
+    "line": 412,
+    "end_line": 443,
+    "relation": "unrelated",
+    "note": "Implements the unchecked system call to the history-storage contract with the parent hash, a function apply_body calls. Close call for the same reason as [4]."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "ProcessWithdrawals",
+    "line": 233,
+    "end_line": 251,
+    "relation": "unrelated",
+    "note": "Implements the spec's process_withdrawals, a separate function that apply_body calls."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/bal/bal_encoding.go",
+    "qualname": "BlockAccessList.ValidateSize",
+    "line": 112,
+    "end_line": 120,
+    "relation": "unrelated",
+    "note": "Implements validate_block_access_list_gas_limit (item count must not exceed the block gas limit divided by the per-item cost), a separate function that apply_body calls."
+   }
+  ],
+  "cost_usd": 0.12235580000000001
+ },
+ "fork.calculate_base_fee_per_gas|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "consensus/misc/eip1559/eip1559.go",
+    "qualname": "CalcBaseFee",
+    "line": 60,
+    "end_line": 102,
+    "relation": "equivalent",
+    "note": "Computes the next base fee from the parent's gas limit, gas used and base fee. The target, the above/below/equal branches, the minimum increase of 1 and the division order all match the spec. It also returns the initial base fee at the London fork. The gas-limit check is done by its caller."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "consensus/misc/eip1559/eip1559.go",
+    "qualname": "VerifyEIP1559Header",
+    "line": 33,
+    "end_line": 57,
+    "relation": "partial",
+    "note": "Runs the spec's gas-limit check (check_gas_limit) through misc.VerifyGaslimit, then calls CalcBaseFee and compares the result with the header. It holds the gas-limit check part of the spec function."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "TransactionToMessage",
+    "line": 330,
+    "end_line": 387,
+    "relation": "unrelated",
+    "note": "Converts a transaction to a message and uses the base fee to work out the effective gas price. It does not compute the base fee."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.preCheck",
+    "line": 573,
+    "end_line": 703,
+    "relation": "unrelated",
+    "note": "Pre-execution transaction checks. It only compares the fee cap against the existing base fee."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction_marshalling.go",
+    "qualname": "Transaction.UnmarshalJSON",
+    "line": 178,
+    "end_line": 521,
+    "relation": "unrelated",
+    "note": "Decodes a transaction from JSON. It has nothing to do with base fee calculation."
+   }
+  ],
+  "cost_usd": 0.11565980000000001
+ },
+ "fork.check_transaction|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.preCheck",
+    "line": 573,
+    "end_line": 703,
+    "relation": "partial",
+    "note": "Does the includability checks: nonce, the Amsterdam total gas cap, EOA/delegation, fee cap vs base fee, blob fee cap vs blob base fee, and block gas pool capacity. Then calls buyGas for the balance check."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "TransactionToMessage",
+    "line": 330,
+    "end_line": 387,
+    "relation": "partial",
+    "note": "Recovers the sender, works out the effective gas price and builds the per-tx Message, which plays the role of the transaction environment."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.execute",
+    "line": 716,
+    "end_line": 831,
+    "relation": "partial",
+    "note": "Mostly execution. Inside it, it calls preCheck and checks intrinsic gas and the calldata floor (the validate_transaction part of admission)."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.buyGas",
+    "line": 464,
+    "end_line": 519,
+    "relation": "partial",
+    "note": "Does the balance check: gas*feeCap + value + blob gas*blobFeeCap. It also deducts the gas cost, which the spec does elsewhere."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction_marshalling.go",
+    "qualname": "Transaction.UnmarshalJSON",
+    "line": 178,
+    "end_line": 521,
+    "relation": "unrelated",
+    "note": "Decodes a transaction from JSON; nothing to do with block admission."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/txpool/validation.go",
+    "qualname": "ValidateTransaction",
+    "line": 63,
+    "end_line": 172,
+    "relation": "unrelated",
+    "note": "Transaction pool admission, not the check for including a transaction in a block. It overlaps with some static checks but serves a different purpose."
+   }
+  ],
+  "cost_usd": 0.1628918
+ },
+ "fork.execute_block|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/blockchain.go",
+    "qualname": "BlockChain.ProcessBlock",
+    "line": 2320,
+    "end_line": 2501,
+    "relation": "partial",
+    "note": "Executes block via processor and validates resulting gas/bloom/receipt/requests/BAL/state root via ValidateState; header validation, size cap, ommers, tx/withdrawals roots are done elsewhere."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/block_validator.go",
+    "qualname": "BlockValidator.ValidateState",
+    "line": 148,
+    "end_line": 204,
+    "relation": "partial",
+    "note": "Post-execution validation portion of execute_block: gas used, bloom, receipt root, requests hash, BAL hash, state root vs header."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/block_validator.go",
+    "qualname": "BlockValidator.ValidateBody",
+    "line": 51,
+    "end_line": 144,
+    "relation": "partial",
+    "note": "Pre-execution body checks from execute_block: RLP size cap, ommers, transactions root, withdrawals root, blob gas used, BAL hash when attached."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/blockchain.go",
+    "qualname": "BlockChain.insertChain",
+    "line": 1917,
+    "end_line": 2146,
+    "relation": "unrelated",
+    "note": "Chain insertion orchestration loop; only dispatches header verification, body validation and block processing."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/stateless.go",
+    "qualname": "ExecuteStateless",
+    "line": 45,
+    "end_line": 82,
+    "relation": "partial",
+    "note": "Stateless variant: executes block and validates gas/bloom/requests/BAL, but returns state and receipt roots instead of comparing them to the header."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "StateProcessor.Process",
+    "line": 68,
+    "end_line": 165,
+    "relation": "partial",
+    "note": "Sequential execution of the block body (apply_body equivalent: system calls, txs, withdrawals, requests, BAL build); no header root checks."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor_parallel.go",
+    "qualname": "StateProcessor.processParallel",
+    "line": 133,
+    "end_line": 335,
+    "relation": "partial",
+    "note": "Parallel BAL-driven execution of the block body plus concurrent state root computation; the apply_body part of execute_block without header comparisons."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "AssembleBlock",
+    "line": 545,
+    "end_line": 558,
+    "relation": "unrelated",
+    "note": "Block building: assigns state root and BAL hash into a new header rather than validating."
+   }
+  ],
+  "cost_usd": 0.17665979999999998
+ },
+ "fork.make_receipt|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "MakeReceipt",
+    "line": 303,
+    "end_line": 307,
+    "relation": "equivalent",
+    "note": "Builds the receipt with status from the failure flag, cumulative gas and logs (via makeReceipt), then sets the bloom. This matches the spec's Receipt construction. geth does the encoding later, when receipts are hashed."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "makeReceipt",
+    "line": 311,
+    "end_line": 345,
+    "relation": "partial",
+    "note": "Sets status, cumulative gas used and logs, plus extra geth fields, but does not compute the bloom. MakeReceipt adds the bloom afterwards."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/block.go",
+    "qualname": "NewBlock",
+    "line": 239,
+    "end_line": 290,
+    "relation": "unrelated",
+    "note": "Builds the block header from the receipts root and a merged bloom. It uses receipts but does not make them."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "applyTransactionWithEVM",
+    "line": 263,
+    "end_line": 300,
+    "relation": "partial",
+    "note": "Applies the message, then calls makeReceipt and computes the receipt bloom inline when withBloom is set. That covers part of make_receipt's job inside a larger function."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/blockchain.go",
+    "qualname": "summarizeBadBlock",
+    "line": 3026,
+    "end_line": 3051,
+    "relation": "unrelated",
+    "note": "Only prints receipt fields for a bad-block report."
+   }
+  ],
+  "cost_usd": 0.0725918
+ },
+ "fork.process_general_purpose_requests|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "PostExecution",
+    "line": 190,
+    "end_line": 230,
+    "relation": "partial",
+    "note": "Runs the whole request sequence in spec order: deposit logs, withdrawal, consolidation, builder deposit, builder exit. It also applies withdrawals and builds the block access list, so the request logic sits inside a larger function."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "processRequestsSystemCall",
+    "line": 469,
+    "end_line": 512,
+    "relation": "partial",
+    "note": "Shared helper for one system call. Checks the contract has code, calls it and adds the type-prefixed return data to requests if it isn't empty. This covers one request step of the spec function."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "ProcessWithdrawalQueue",
+    "line": 447,
+    "end_line": 449,
+    "relation": "partial",
+    "note": "The withdrawal request step: system call to WithdrawalQueueAddress, output prefixed with type 0x01."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "ProcessConsolidationQueue",
+    "line": 453,
+    "end_line": 455,
+    "relation": "partial",
+    "note": "The consolidation request step: system call to ConsolidationQueueAddress, output prefixed with type 0x02."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "ProcessBuilderDepositQueue",
+    "line": 459,
+    "end_line": 461,
+    "relation": "partial",
+    "note": "The builder deposit request step: system call to BuilderDepositAddress, output prefixed with type 0x03."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "ProcessBuilderExitQueue",
+    "line": 465,
+    "end_line": 467,
+    "relation": "partial",
+    "note": "The builder exit request step: system call to BuilderExitAddress, output prefixed with type 0x04."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "ParseDepositLogs",
+    "line": 518,
+    "end_line": 533,
+    "relation": "partial",
+    "note": "The deposit request step: parses deposit logs and adds the 0x00-prefixed deposit requests if there are any, like parse_deposit_requests plus the append."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "params/config.go",
+    "qualname": "ChainConfig.ActiveSystemContracts",
+    "line": 1089,
+    "end_line": 1110,
+    "relation": "unrelated",
+    "note": "Only lists system contract addresses for each fork. It processes no requests."
+   }
+  ],
+  "cost_usd": 0.0774478
+ },
+ "fork.process_unchecked_system_transaction|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "ProcessBeaconBlockRoot",
+    "line": 377,
+    "end_line": 408,
+    "relation": "partial",
+    "note": "Inlines the full unchecked system call for one hardcoded target (beacon roots): system-address msg, zero value, ignores failure, merges access list into BAL on Amsterdam. Specialised rather than generic."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "ProcessParentBlockHash",
+    "line": 412,
+    "end_line": 443,
+    "relation": "partial",
+    "note": "Same inlined unchecked system call pattern for the history storage contract (EIP-2935); ignores failure, merges BAL. Specialised to one target."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "systemCallGasBudget",
+    "line": 361,
+    "end_line": 373,
+    "relation": "partial",
+    "note": "Computes the system tx gas limit (30M = SYSTEM_TRANSACTION_GAS) and the Amsterdam state gas reservoir (max SSTOREs per call \u00d7 storage set cost), part of the spec's tx_env setup."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "processRequestsSystemCall",
+    "line": 469,
+    "end_line": 512,
+    "relation": "partial",
+    "note": "Checked variant: rejects empty code and errors on failure, plus request collection. It still inlines the core system call execution and BAL merge that the spec puts in the unchecked function."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor_parallel.go",
+    "qualname": "StateProcessor.processParallel",
+    "line": 133,
+    "end_line": 335,
+    "relation": "unrelated",
+    "note": "Block-level parallel processor; only invokes PreExecution/PostExecution and merges their results, no system tx logic of its own."
+   }
+  ],
+  "cost_usd": 0.1022158
+ },
+ "fork.state_transition|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/blockchain.go",
+    "qualname": "BlockChain.ProcessBlock",
+    "line": 2320,
+    "end_line": 2501,
+    "relation": "partial",
+    "note": "Covers the execute_block part: executes the block on parent state and validates it. Committing state and appending the block happen elsewhere (writeBlockWithState)."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/blockchain.go",
+    "qualname": "BlockChain.insertChain",
+    "line": 1917,
+    "end_line": 2146,
+    "relation": "partial",
+    "note": "Per-block import loop that drives the transition: verifies headers, executes each block, then writes state and block. Execution and state work are delegated."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/blockchain.go",
+    "qualname": "BlockChain.InsertChain",
+    "line": 1878,
+    "end_line": 1907,
+    "relation": "unrelated",
+    "note": "Wrapper: checks the blocks are contiguous, takes the lock and calls insertChain."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/blockchain.go",
+    "qualname": "BlockChain.writeBlockWithState",
+    "line": 1723,
+    "end_line": 1834,
+    "relation": "partial",
+    "note": "Matches apply_changes_to_state plus chain.blocks.append: commits statedb to the trie and writes the block to the db."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.applyAuthorizations",
+    "line": 1227,
+    "end_line": 1235,
+    "relation": "unrelated",
+    "note": "Per-transaction EIP-7702 authorization handling."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "ApplyMessage",
+    "line": 396,
+    "end_line": 404,
+    "relation": "unrelated",
+    "note": "Executes a single transaction message."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.calcRefund",
+    "line": 1238,
+    "end_line": 1248,
+    "relation": "unrelated",
+    "note": "Per-transaction gas refund calculation."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "newStateTransition",
+    "line": 437,
+    "end_line": 444,
+    "relation": "unrelated",
+    "note": "Constructor for the per-tx stateTransition struct."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.blobGasUsed",
+    "line": 1251,
+    "end_line": 1253,
+    "relation": "unrelated",
+    "note": "Per-tx blob gas helper."
+   }
+  ],
+  "cost_usd": 0.12019579999999999
+ },
+ "vm.instructions.system.call|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/instructions.go",
+    "qualname": "opCall",
+    "line": 736,
+    "end_line": 780,
+    "relation": "partial",
+    "note": "Run-the-call half of CALL: pops the stack, static check, stipend, child budget with the state reservoir, evm.Call, memory output, refill of state gas on failure. Gas is pre-charged in the dynamic gas function."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/operations_acl.go",
+    "qualname": "makeCallVariantGasCallEIP8037",
+    "line": 471,
+    "end_line": 558,
+    "relation": "partial",
+    "note": "Gas half of CALL: cold access, memory and transfer gas, delegation access, new-account state gas, and the 63/64 child gas (callGasTemp)."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/operations_acl.go",
+    "qualname": "gasCall8038",
+    "line": 363,
+    "end_line": 369,
+    "relation": "partial",
+    "note": "Static-context value check plus a call to the inner CALL gas calculation. A slice of the spec's gas and static logic."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gas_table.go",
+    "qualname": "executionGasCall8038",
+    "line": 601,
+    "end_line": 622,
+    "relation": "partial",
+    "note": "Prices the state-independent part of CALL: memory expansion plus value-transfer cost."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gas_table.go",
+    "qualname": "stateGasCall8037",
+    "line": 628,
+    "end_line": 644,
+    "relation": "partial",
+    "note": "New-account state gas when value goes to an empty account, matching the spec's charge_state_gas NEW_ACCOUNT step."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state/access_events.go",
+    "qualname": "AccessEvents.MessageCallGas",
+    "line": 113,
+    "end_line": 119,
+    "relation": "unrelated",
+    "note": "EIP-4762 (stateless/Verkle) access-event gas for message calls, not part of this fork's CALL logic."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gas_table.go",
+    "qualname": "gasCallIntrinsic",
+    "line": 421,
+    "end_line": 461,
+    "relation": "partial",
+    "note": "Older-fork CALL gas: memory, value transfer and new-account cost. Does part of the call's gas pricing."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/operations_acl.go",
+    "qualname": "makeCallVariantGasCallEIP2929",
+    "line": 222,
+    "end_line": 264,
+    "relation": "partial",
+    "note": "Cold/warm access-list charge for call variants wrapped around the older calculator. Part of CALL's access gas."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.chargeCallRecipientEIP2780",
+    "line": 1009,
+    "end_line": 1036,
+    "relation": "unrelated",
+    "note": "Charges the transaction's top-level recipient (new account, delegation), not the CALL opcode."
+   }
+  ],
+  "cost_usd": 0.1103838
+ },
+ "vm.instructions.system.create|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/instructions.go",
+    "qualname": "opCreate",
+    "line": 635,
+    "end_line": 687,
+    "relation": "partial",
+    "note": "Does the operation half of CREATE: pops the stack, computes the address from the sender and nonce, forwards gas and calls evm.create, then pushes the result. The static check, memory and init-code gas, and the size limit are handled in the gas function."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gas_table.go",
+    "qualname": "gasCreateEip8037",
+    "line": 544,
+    "end_line": 567,
+    "relation": "partial",
+    "note": "Amsterdam (EIP-8037) gas function for CREATE. Covers the static-context check, memory expansion cost, init-code word gas and the MAX_INIT_CODE_SIZE check. It does not do the operation itself."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/memory_table.go",
+    "qualname": "memoryCreate",
+    "line": 59,
+    "end_line": 61,
+    "relation": "partial",
+    "note": "Computes the memory size from CREATE's offset and size stack operands. This is the input to the memory-extension part of the spec's gas calculation."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gas_table.go",
+    "qualname": "gasCreate2Eip8037",
+    "line": 569,
+    "end_line": 595,
+    "relation": "unrelated",
+    "note": "Gas function for CREATE2. It adds keccak word gas, so it belongs to create2, not create."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gas_table.go",
+    "qualname": "gasCreate2Eip3860",
+    "line": 347,
+    "end_line": 368,
+    "relation": "unrelated",
+    "note": "Gas function for CREATE2 from the pre-Amsterdam EIP-3860 forks. It belongs to create2, not create."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gas_table.go",
+    "qualname": "gasCreateEip3860",
+    "line": 324,
+    "end_line": 345,
+    "relation": "partial",
+    "note": "Pre-Amsterdam CREATE gas function with the same logic as the spec's gas section: static check, memory gas, init-code word gas and the max init-code size check. It is not the operation itself."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/evm.go",
+    "qualname": "EVM.Create2",
+    "line": 716,
+    "end_line": 720,
+    "relation": "unrelated",
+    "note": "Builds the CREATE2 address from the salt and the init-code hash. It belongs to create2, not create."
+   }
+  ],
+  "cost_usd": 0.0697478
+ },
+ "vm.instructions.system.delegatecall|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/instructions.go",
+    "qualname": "opDelegateCall",
+    "line": 818,
+    "end_line": 848,
+    "relation": "partial",
+    "note": "Covers the opcode body only. It pops the stack, builds the child budget from the pre-deducted gas plus the whole state-gas reservoir, calls the child, pushes success, writes return data and refunds gas. The gas pricing lives in the gas function and the frame execution in EVM.DelegateCall."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/operations_acl.go",
+    "qualname": "makeCallVariantGasCallEIP7702",
+    "line": 371,
+    "end_line": 465,
+    "relation": "unrelated",
+    "note": "The EIP-7702 call gas function for the fork before Amsterdam. Its logic matches the Amsterdam one, but it charges warm delegation access with WarmStorageReadCostEIP2929, not WarmAccountAccessAmsterdam, and has no state-gas handling. The Amsterdam gas path is [6], so this is not the Amsterdam implementation."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/evm.go",
+    "qualname": "EVM.DelegateCall",
+    "line": 409,
+    "end_line": 441,
+    "relation": "partial",
+    "note": "Runs the delegated child frame: depth check, snapshot, precompile dispatch, resolving the (delegated) code, running with the parent's caller and value, and reverting on error. This is the generic_call step that the spec drives with should_transfer_value=False and to=current_target."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gas_table.go",
+    "qualname": "gasDelegateCallIntrinsic",
+    "line": 503,
+    "end_line": 509,
+    "relation": "partial",
+    "note": "Only computes the memory-expansion cost for DELEGATECALL, which is the extend_memory.cost part of the spec's state-independent gas."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/program/program.go",
+    "qualname": "Program.DelegateCall",
+    "line": 176,
+    "end_line": 189,
+    "relation": "unrelated",
+    "note": "A test helper that assembles bytecode for a DELEGATECALL. It does not implement any of the opcode's semantics."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/jump_table.go",
+    "qualname": "newHomesteadInstructionSet",
+    "line": 281,
+    "end_line": 292,
+    "relation": "unrelated",
+    "note": "A Homestead jump-table entry that only registers the DELEGATECALL handlers."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/operations_acl.go",
+    "qualname": "makeCallVariantGasCallEIP8037",
+    "line": 471,
+    "end_line": 558,
+    "relation": "partial",
+    "note": "The Amsterdam gas side of the opcode: cold or warm access to the target address, memory cost charged before state access, delegation resolution cost using WarmAccountAccessAmsterdam, and the child gas cap (callGas, 63/64 rule) that becomes the total charge. The execution side is in opDelegateCall and EVM.DelegateCall."
+   }
+  ],
+  "cost_usd": 0.1162278
+ },
+ "vm.instructions.system.generic_create|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/evm.go",
+    "qualname": "EVM.create",
+    "line": 550,
+    "end_line": 652,
+    "relation": "partial",
+    "note": "Covers the collision check, the access-list add, the nonce increment and running the child frame with snapshot and revert. The preflight checks, the account-creation charge, the 63/64 withholding and the stack push all happen elsewhere."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/instructions.go",
+    "qualname": "opCreate",
+    "line": 635,
+    "end_line": 687,
+    "relation": "partial",
+    "note": "Handles the CREATE side of generic_create: reads init code from memory, runs the charge and preflight, withholds 1/64 of the gas, calls create, pushes the result, absorbs leftover gas, refunds the charge on failure and sets return data. It also computes the CREATE address, which the spec does in the opcode, outside generic_create."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/instructions.go",
+    "qualname": "opCreate2",
+    "line": 689,
+    "end_line": 734,
+    "relation": "partial",
+    "note": "The CREATE2 counterpart of the opCreate orchestration. It does the same gas withholding, outcome push, account-charge refund on failure and return-data handling around evm.create."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/evm.go",
+    "qualname": "EVM.chargeAccountCreation",
+    "line": 530,
+    "end_line": 547,
+    "relation": "partial",
+    "note": "Covers the spec's PREFLIGHT abort (via createFramePreCheck, pushing 0 and clearing return data) and the NEW_ACCOUNT state-gas charge, which applies when the destination does not exist."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/evm.go",
+    "qualname": "EVM.createFramePreCheck",
+    "line": 506,
+    "end_line": 518,
+    "relation": "partial",
+    "note": "Holds only the preflight conditions: the depth limit, the sender balance against the endowment, and nonce overflow. In Amsterdam it is called from chargeAccountCreation."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.executeCreate",
+    "line": 835,
+    "end_line": 880,
+    "relation": "unrelated",
+    "note": "Handles creation for a top-level contract-creation transaction, not the CREATE/CREATE2 opcode lifecycle. It belongs to the transaction-processing path."
+   }
+  ],
+  "cost_usd": 0.0980998
+ },
+ "vm.instructions.system.revert|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/instructions.go",
+    "qualname": "opRevert",
+    "line": 890,
+    "end_line": 896,
+    "relation": "partial",
+    "note": "Does the REVERT operation: pops offset/size, copies memory to output, returns ErrExecutionReverted. Memory-expansion gas is charged elsewhere by geth's jump table."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/memory_table.go",
+    "qualname": "memoryRevert",
+    "line": 116,
+    "end_line": 118,
+    "relation": "partial",
+    "note": "Works out REVERT's memory size from the stack. This feeds the memory-expansion gas charge, which is the GAS part of the spec function."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.ExitRevert",
+    "line": 212,
+    "end_line": 227,
+    "relation": "unrelated",
+    "note": "Rebalances the gas budget when a frame exits on revert. This is caller-side frame handling, not the opcode."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "ExecutionResult.Revert",
+    "line": 64,
+    "end_line": 69,
+    "relation": "unrelated",
+    "note": "Returns the revert reason from a finished transaction result."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/tracing/journal.go",
+    "qualname": "journal.revert",
+    "line": 123,
+    "end_line": 132,
+    "relation": "unrelated",
+    "note": "Rolls back a tracing journal to a snapshot. Not the REVERT opcode."
+   }
+  ],
+  "cost_usd": 0.052103800000000006
+ },
+ "vm.eoa_delegation.calculate_delegation_cost|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/operations_acl.go",
+    "qualname": "makeCallVariantGasCallEIP8037",
+    "line": 471,
+    "end_line": 558,
+    "relation": "partial",
+    "note": "Inlines the delegation check inside the CALL gas function: parses the delegation from the code and charges WarmAccountAccessAmsterdam or the cold cost depending on whether the target is in the access list."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/operations_acl.go",
+    "qualname": "makeCallVariantGasCallEIP7702",
+    "line": 371,
+    "end_line": 465,
+    "relation": "partial",
+    "note": "Inlines the delegation check inside the CALL gas function: parses the delegation from the code and charges the warm cost (WarmStorageReadCostEIP2929) or the cold cost depending on whether the target is in the access list."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/tx_setcode.go",
+    "qualname": "ParseDelegation",
+    "line": 37,
+    "end_line": 42,
+    "relation": "partial",
+    "note": "Covers the validity check and delegated-address extraction (is_valid_delegation plus the slice) but no gas costing."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.applyAuthorization",
+    "line": 1150,
+    "end_line": 1222,
+    "relation": "unrelated",
+    "note": "Applies a set-code authorization. It calls ParseDelegation but never computes an access cost for the delegated address."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/operations_acl.go",
+    "qualname": "recordDelegationAccess",
+    "line": 329,
+    "end_line": 333,
+    "relation": "unrelated",
+    "note": "Only loads the target's code so it is recorded in the block access list. No cost and no parsing."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.chargeCallRecipientEIP2780",
+    "line": 1009,
+    "end_line": 1036,
+    "relation": "partial",
+    "note": "Inlines the delegation check for the transaction's recipient: parses the delegation and charges the cold or warm Amsterdam access cost depending on the access list."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/tx_setcode.go",
+    "qualname": "AddressToDelegation",
+    "line": 45,
+    "end_line": 47,
+    "relation": "unrelated",
+    "note": "Does the opposite job: builds delegation code from an address."
+   }
+  ],
+  "cost_usd": 0.09552379999999999
+ },
+ "vm.eoa_delegation.is_valid_delegation|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/tx_setcode.go",
+    "qualname": "ParseDelegation",
+    "line": 37,
+    "end_line": 42,
+    "relation": "equivalent",
+    "note": "Checks len==23 (EOA_DELEGATED_CODE_LENGTH) and the 0xef0100 prefix, the same check as the spec; it also returns the parsed address."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "crypto/kzg4844/kzg4844.go",
+    "qualname": "IsValidVersionedHash",
+    "line": 213,
+    "end_line": 215,
+    "relation": "unrelated",
+    "note": "Checks the format of a blob versioned hash, not delegation code."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/txpool/legacypool/legacypool.go",
+    "qualname": "LegacyPool.checkDelegationLimit",
+    "line": 597,
+    "end_line": 617,
+    "relation": "unrelated",
+    "note": "Txpool limit on pending transactions for delegated senders; it does not check the code format."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/operations_acl.go",
+    "qualname": "recordDelegationAccess",
+    "line": 329,
+    "end_line": 333,
+    "relation": "unrelated",
+    "note": "Records a code read for the access list; it does not validate anything."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.applyAuthorization",
+    "line": 1150,
+    "end_line": 1222,
+    "relation": "unrelated",
+    "note": "Applies a set-code authorization and only calls ParseDelegation; it does not do the validity check itself."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/txpool/blobpool/blobpool.go",
+    "qualname": "BlobPool.checkDelegationLimit",
+    "line": 1648,
+    "end_line": 1675,
+    "relation": "unrelated",
+    "note": "Blob pool limit on pending transactions; it only compares the code hash with the empty hash."
+   }
+  ],
+  "cost_usd": 0.0571558
+ },
+ "vm.eoa_delegation.resolve_delegated_code_address|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/operations_acl.go",
+    "qualname": "makeCallVariantGasCallEIP8037",
+    "line": 471,
+    "end_line": 558,
+    "relation": "partial",
+    "note": "The CALL gas function used from Amsterdam on (EIP-8037) includes the delegation check. It parses the delegation, charges warm (WarmAccountAccessAmsterdam) or cold, and warms the delegated address. That logic sits inside the larger CALL gas calculation."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/operations_acl.go",
+    "qualname": "makeCallVariantGasCallEIP7702",
+    "line": 371,
+    "end_line": 465,
+    "relation": "partial",
+    "note": "The EIP-7702 CALL gas function includes the same delegation check: warm or cold charge, plus warming the delegated address. It is mixed in with the EIP-2929, intrinsic and 63/64 call-gas logic."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/evm.go",
+    "qualname": "EVM.resolveCode",
+    "line": 724,
+    "end_line": 734,
+    "relation": "partial",
+    "note": "Follows one level of delegation to load the code the call target executes. This is the resolution half of the spec function, but it charges no gas and warms nothing."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/evm.go",
+    "qualname": "EVM.resolveCodeHash",
+    "line": 740,
+    "end_line": 749,
+    "relation": "partial",
+    "note": "Resolves the delegation to get the code hash for the call frame. This is part of the resolution, with no gas charge or warming."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.chargeCallRecipientEIP2780",
+    "line": 1009,
+    "end_line": 1036,
+    "relation": "partial",
+    "note": "For the top-level transaction recipient, includes the delegation check: charges cold or warm access for the delegated address and adds it to the access list. It also handles the EIP-2780 new-account state gas."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.applyAuthorization",
+    "line": 1150,
+    "end_line": 1222,
+    "relation": "unrelated",
+    "note": "Applies EIP-7702 authorizations, which writes delegations. It does not resolve or charge for delegated code access."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/operations_acl.go",
+    "qualname": "recordDelegationAccess",
+    "line": 329,
+    "end_line": 333,
+    "relation": "unrelated",
+    "note": "Only reads the target's code so it is recorded in the block access list. It charges nothing and does not resolve an address."
+   }
+  ],
+  "cost_usd": 0.0965638
+ },
+ "vm.interpreter.charge_value_transfer_to_non_alive_account|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gas_table.go",
+    "qualname": "stateGasCall8037",
+    "line": 628,
+    "end_line": 644,
+    "relation": "equivalent",
+    "note": "Same check (nonzero value and Empty(address), i.e. not alive) and returns the new-account state gas for the interpreter to charge."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gas_table.go",
+    "qualname": "gasSelfdestruct8037And8038",
+    "line": 648,
+    "end_line": 676,
+    "relation": "partial",
+    "note": "The same state-gas charge for an empty beneficiary is inlined for SELFDESTRUCT, using the account's balance as the value, next to access-list and execution-gas logic."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state/access_events.go",
+    "qualname": "AccessEvents.ValueTransferGas",
+    "line": 123,
+    "end_line": 133,
+    "relation": "unrelated",
+    "note": "Verkle access-event gas for touching the caller and target; no new-account state gas."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.chargeCallRecipientEIP2780",
+    "line": 1009,
+    "end_line": 1036,
+    "relation": "partial",
+    "note": "Inlines the transaction-level check (nonzero value to an empty recipient) and charges new-account state gas; also handles delegation access."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "intrinsicBaseGasEIP2780",
+    "line": 163,
+    "end_line": 194,
+    "relation": "unrelated",
+    "note": "Intrinsic base and value cost for EIP-2780; no check on whether the account is alive and no state-gas charge."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gas_table.go",
+    "qualname": "executionGasCall8038",
+    "line": 601,
+    "end_line": 622,
+    "relation": "unrelated",
+    "note": "Only execution gas for memory and value transfer; the new-account state gas is computed elsewhere."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gas_table.go",
+    "qualname": "gasCallIntrinsic",
+    "line": 421,
+    "end_line": 461,
+    "relation": "unrelated",
+    "note": "Same condition, but it charges the older CallNewAccountGas as regular gas for earlier forks, not Amsterdam state gas."
+   }
+  ],
+  "cost_usd": 0.0842358
+ },
+ "vm.interpreter.process_call|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/evm.go",
+    "qualname": "EVM.Call",
+    "line": 283,
+    "end_line": 356,
+    "relation": "equivalent",
+    "note": "Full process_call job: depth check, snapshot, value transfer, precompile or interpreter execution, revert on error."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/evm.go",
+    "qualname": "EVM.CallCode",
+    "line": 365,
+    "end_line": 402,
+    "relation": "partial",
+    "note": "Same frame structure for the CALLCODE case only (depth, snapshot, execute, revert); no actual value move."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/evm.go",
+    "qualname": "EVM.DelegateCall",
+    "line": 409,
+    "end_line": 441,
+    "relation": "partial",
+    "note": "Covers the no-transfer (delegate) case of process_call: depth, snapshot, precompile or run, revert on error."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/evm.go",
+    "qualname": "EVM.StaticCall",
+    "line": 447,
+    "end_line": 488,
+    "relation": "partial",
+    "note": "Covers the static, zero-value case of process_call: depth, snapshot, execute, revert on error."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/interpreter.go",
+    "qualname": "EVM.Run",
+    "line": 96,
+    "end_line": 138,
+    "relation": "partial",
+    "note": "Only the code-execution part (sets up the frame and runs the opcode loop); no depth check, snapshot, transfer or revert."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "processRequestsSystemCall",
+    "line": 469,
+    "end_line": 512,
+    "relation": "unrelated",
+    "note": "Caller: makes a system call through EVM.Call and handles the requests output."
+   }
+  ],
+  "cost_usd": 0.1014958
+ },
+ "vm.instructions.storage.sload|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/instructions.go",
+    "qualname": "opSload",
+    "line": 491,
+    "end_line": 497,
+    "relation": "partial",
+    "note": "Does the read: reads the storage value for the key on the stack and replaces the stack item. No gas or access tracking; geth puts that in a separate gas function."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/operations_acl.go",
+    "qualname": "gasSLoad8038",
+    "line": 113,
+    "end_line": 121,
+    "relation": "partial",
+    "note": "Does the Amsterdam gas step: marks a new slot as accessed and charges the cold cost (ColdStorageAccessAmsterdam), otherwise the warm cost. Does not read storage."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/operations_acl.go",
+    "qualname": "gasSLoadEIP2929",
+    "line": 101,
+    "end_line": 109,
+    "relation": "partial",
+    "note": "Same warm/cold gas logic, but uses the older EIP-2929 cold cost (pre-Amsterdam). Gas part only."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/operations_verkle.go",
+    "qualname": "gasSLoad4762",
+    "line": 31,
+    "end_line": 33,
+    "relation": "unrelated",
+    "note": "Verkle (EIP-4762) SLOAD gas through AccessEvents. Not the spec's warm/cold storage-key check."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/operations_acl.go",
+    "qualname": "makeGasSStoreFunc",
+    "line": 29,
+    "end_line": 94,
+    "relation": "unrelated",
+    "note": "SSTORE gas and refund calculation, not SLOAD."
+   }
+  ],
+  "cost_usd": 0.0688318
+ },
+ "vm.instructions.storage.tload|geth": {
+  "candidates": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/eips.go",
+    "qualname": "opTload",
+    "line": 203,
+    "end_line": 209,
+    "relation": "equivalent",
+    "note": "Reads the key from the stack, loads the value from the current contract's transient storage and writes it back into the same stack slot. Gas comes from the jump table and the interpreter advances the PC, as usual in geth."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/eips.go",
+    "qualname": "enable1153",
+    "line": 186,
+    "end_line": 200,
+    "relation": "partial",
+    "note": "Sets TLOAD's fixed gas cost (warm storage read, the spec's OPCODE_TLOAD) and its stack limits. It also sets up TSTORE."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state/statedb.go",
+    "qualname": "StateDB.GetTransientState",
+    "line": 574,
+    "end_line": 576,
+    "relation": "unrelated",
+    "note": "A lookup that tload calls. It matches the separate spec function get_transient_storage, not tload."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state/transient_storage.go",
+    "qualname": "transientStorage.Set",
+    "line": 42,
+    "end_line": 49,
+    "relation": "unrelated",
+    "note": "Writes transient storage, which is TSTORE's side."
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state/journal.go",
+    "qualname": "transientStorageChange.copy",
+    "line": 596,
+    "end_line": 602,
+    "relation": "unrelated",
+    "note": "Copies a journal entry. It plays no part in TLOAD."
+   }
+  ],
+  "cost_usd": 0.0528758
+ },
+ "vm.gas.allocate_evm_gas|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/cfg/gas.rs",
+    "qualname": "InitialAndFloorGas.initial_gas_and_reservoir",
+    "line": 560,
+    "end_line": 590,
+    "relation": "equivalent",
+    "note": "Computes regular gas = min(tx_gas, cap) - intrinsic_regular (== min(cap - intrinsic, tx_gas - intrinsic)) and reservoir = (tx_gas - intrinsic) - regular, matching the spec split. Extras (system-call cap bypass, deducting initial state gas from reservoir) do not change the core job."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/handler.rs",
+    "qualname": "Handler.tx_gas",
+    "line": 215,
+    "end_line": 221,
+    "relation": "unrelated",
+    "note": "Thin caller: invokes initial_gas_and_reservoir and wraps result in a GasTracker."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/handler.rs",
+    "qualname": "Handler.execution",
+    "line": 274,
+    "end_line": 298,
+    "relation": "unrelated",
+    "note": "Runs the execution loop; no gas allocation split."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/handler.rs",
+    "qualname": "Handler.runtime_oog_result",
+    "line": 310,
+    "end_line": 330,
+    "relation": "unrelated",
+    "note": "Builds synthetic OOG frame result; only re-calls tx_gas."
+   },
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/eth/block.rs",
+    "qualname": "EthBlockExecutor.execute_transaction_without_commit",
+    "line": 190,
+    "end_line": 248,
+    "relation": "unrelated",
+    "note": "Block-level gas capacity checks and transact call; not the execution/reservoir split."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/handler.rs",
+    "qualname": "Handler.last_frame_result",
+    "line": 505,
+    "end_line": 543,
+    "relation": "unrelated",
+    "note": "Settles first-frame gas and refunds into tx-level tracker after execution."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/handler.rs",
+    "qualname": "Handler.post_execution",
+    "line": 343,
+    "end_line": 370,
+    "relation": "unrelated",
+    "note": "Post-execution refunds, floor check, reimbursement and beneficiary reward."
+   }
+  ],
+  "cost_usd": 0.08291580000000001
+ },
+ "vm.gas.calculate_data_fee|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/transaction.rs",
+    "qualname": "Transaction.effective_balance_spending",
+    "line": 211,
+    "end_line": 231,
+    "relation": "partial",
+    "note": "Inlines blob_price * total_blob_gas (the spec's data fee) as part of the larger effective balance spending total; blob price is passed in rather than derived from excess_blob_gas."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/pre_execution.rs",
+    "qualname": "calculate_caller_fee",
+    "line": 129,
+    "end_line": 164,
+    "relation": "unrelated",
+    "note": "Deducts the caller's fee by calling effective_balance_spending; it does not compute the data fee itself."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/transaction.rs",
+    "qualname": "Transaction.calc_max_data_fee",
+    "line": 117,
+    "end_line": 119,
+    "relation": "unrelated",
+    "note": "Uses max_fee_per_blob_gas (upper bound for the balance check), not the actual blob gas price from excess_blob_gas."
+   },
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/traits.rs",
+    "qualname": "T.calc_max_data_fee",
+    "line": 218,
+    "end_line": 220,
+    "relation": "unrelated",
+    "note": "Thin wrapper forwarding to revm's calc_max_data_fee, which computes the max blob fee, not the actual data fee."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/transaction.rs",
+    "qualname": "Transaction.max_balance_spending",
+    "line": 165,
+    "end_line": 180,
+    "relation": "unrelated",
+    "note": "Max balance check using max fees, including the max blob fee; not the actual data fee."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/consensus/common/src/validation.rs",
+    "qualname": "cancun_block_incorrect_blob_gas_used",
+    "line": 493,
+    "end_line": 525,
+    "relation": "unrelated",
+    "note": "Test of blob_gas_used header validation."
+   }
+  ],
+  "cost_usd": 0.060719800000000004
+ },
+ "vm.gas.calculate_gas_extend_memory|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/interpreter/shared_memory.rs",
+    "qualname": "resize_memory",
+    "line": 565,
+    "end_line": 578,
+    "relation": "partial",
+    "note": "Rounds offset+len up to words and skips when memory doesn't grow (the after_size <= before_size check). The cost is worked out in resize_memory_cold."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/interpreter/shared_memory.rs",
+    "qualname": "resize_memory_cold",
+    "line": 582,
+    "end_line": 607,
+    "relation": "partial",
+    "note": "Works out the cost for the new word count, gets the extra charge from set_words_num and charges it. This is the spec's total_cost - already_paid for one range."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/gas.rs",
+    "qualname": "MemoryGas.set_words_num",
+    "line": 349,
+    "end_line": 357,
+    "relation": "partial",
+    "note": "Stores the new word count and cost and returns new cost minus old, the spec's to_be_paid step for one range."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/interpreter.rs",
+    "qualname": "Interpreter.resize_memory",
+    "line": 184,
+    "end_line": 191,
+    "relation": "unrelated",
+    "note": "Only passes the call on to the free resize_memory function."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/instructions/contract/call_helpers.rs",
+    "qualname": "resize_memory",
+    "line": 36,
+    "end_line": 51,
+    "relation": "partial",
+    "note": "Skips memory growth when len is zero (the spec's size == 0 check), then calls resize_memory. Mostly a caller."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/interpreter.rs",
+    "qualname": "Interpreter.clear",
+    "line": 117,
+    "end_line": 149,
+    "relation": "unrelated",
+    "note": "Resets interpreter state. Does nothing with memory gas."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/interpreter.rs",
+    "qualname": "Interpreter.new_inner",
+    "line": 93,
+    "end_line": 112,
+    "relation": "unrelated",
+    "note": "Interpreter constructor."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/gas.rs",
+    "qualname": "MemoryGas.new",
+    "line": 338,
+    "end_line": 343,
+    "relation": "unrelated",
+    "note": "Sets up an empty MemoryGas."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/gas.rs",
+    "qualname": "Gas.memory",
+    "line": 85,
+    "end_line": 87,
+    "relation": "unrelated",
+    "note": "Getter for the memory gas state."
+   }
+  ],
+  "cost_usd": 0.06429180000000001
+ },
+ "vm.gas.calculate_total_blob_gas|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/transaction.rs",
+    "qualname": "Transaction.total_blob_gas",
+    "line": 106,
+    "end_line": 108,
+    "relation": "equivalent",
+    "note": "Returns GAS_PER_BLOB times the number of blob hashes. Non-blob transactions have no hashes, so the result is 0, as in the spec's else branch."
+   },
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/traits.rs",
+    "qualname": "T.total_blob_gas",
+    "line": 214,
+    "end_line": 216,
+    "relation": "equivalent",
+    "note": "Thin wrapper that only forwards to revm's total_blob_gas and returns the same value. A strict reading of the 'only calls it' rule would make this unrelated."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/consensus/common/src/validation.rs",
+    "qualname": "validate_cancun_gas",
+    "line": 76,
+    "end_line": 88,
+    "relation": "unrelated",
+    "note": "Block-level check that the header's blob_gas_used matches the body total. It does not compute a transaction's blob gas."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/transaction.rs",
+    "qualname": "Transaction.calc_max_data_fee",
+    "line": 117,
+    "end_line": 119,
+    "relation": "unrelated",
+    "note": "Calls total_blob_gas and multiplies it by max_fee_per_blob_gas to get the maximum blob fee."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/transaction.rs",
+    "qualname": "Transaction.effective_balance_spending",
+    "line": 211,
+    "end_line": 231,
+    "relation": "unrelated",
+    "note": "Calls total_blob_gas while computing the balance a transaction needs (gas cost, value and blob fee)."
+   }
+  ],
+  "cost_usd": 0.0562838
+ },
+ "vm.gas.charge_gas_from_meter|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/cfg/gas.rs",
+    "qualname": "GasTracker.record_regular_cost",
+    "line": 171,
+    "end_line": 177,
+    "relation": "equivalent",
+    "note": "Checked subtract of cost from remaining; if remaining is too low it changes nothing and returns false (out of gas). Same as the spec's check then subtract."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/gas.rs",
+    "qualname": "Gas.record_regular_cost",
+    "line": 317,
+    "end_line": 319,
+    "relation": "equivalent",
+    "note": "Thin wrapper that passes straight to the tracker's checked subtract; the same charge exposed on the Gas struct."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/gas.rs",
+    "qualname": "Gas.record_cost",
+    "line": 281,
+    "end_line": 283,
+    "relation": "equivalent",
+    "note": "revm's usual entry point for charging execution gas; passes straight to record_regular_cost (checked subtract, false on out of gas)."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/gas.rs",
+    "qualname": "test_refill_reservoir",
+    "line": 454,
+    "end_line": 476,
+    "relation": "unrelated",
+    "note": "Unit test of state-gas reservoir refill; does not charge gas from the meter."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/cfg/gas_params.rs",
+    "qualname": "GasParams.eip2780_base_to_value_gas",
+    "line": 1089,
+    "end_line": 1105,
+    "relation": "unrelated",
+    "note": "Works out the intrinsic base/value transaction cost under EIP-2780; does not subtract from a meter."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/cfg/gas_params.rs",
+    "qualname": "GasParams.selfdestruct_cost",
+    "line": 464,
+    "end_line": 481,
+    "relation": "unrelated",
+    "note": "Works out the SELFDESTRUCT gas cost; no meter change and no out-of-gas check."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/post_execution.rs",
+    "qualname": "reward_beneficiary",
+    "line": 98,
+    "end_line": 127,
+    "relation": "unrelated",
+    "note": "Pays transaction fees to the block beneficiary after execution."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/interpreter_action.rs",
+    "qualname": "FrameInput.reduce_gas_limit",
+    "line": 43,
+    "end_line": 53,
+    "relation": "unrelated",
+    "note": "Lowers a frame's gas limit with a floor at zero; no out-of-gas check, so it is not a charge."
+   }
+  ],
+  "cost_usd": 0.0650278
+ },
+ "vm.gas.charge_state_gas_from_meter|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/cfg/gas.rs",
+    "qualname": "GasTracker.record_state_cost",
+    "line": 188,
+    "end_line": 204,
+    "relation": "equivalent",
+    "note": "Takes state gas from the reservoir first, then charges the rest to regular gas and records the spill. Returns false instead of raising OutOfGasError."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/gas.rs",
+    "qualname": "Gas.record_state_cost",
+    "line": 308,
+    "end_line": 310,
+    "relation": "equivalent",
+    "note": "Thin wrapper that passes the call unchanged to GasTracker.record_state_cost, which does the full charge."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/gas.rs",
+    "qualname": "test_refill_reservoir",
+    "line": 454,
+    "end_line": 476,
+    "relation": "unrelated",
+    "note": "Unit test of refill_reservoir that only calls the charge function."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/frame.rs",
+    "qualname": "sibling_refill_restores_parent_regular_gas",
+    "line": 742,
+    "end_line": 774,
+    "relation": "unrelated",
+    "note": "Test of refilling a sibling frame. It calls the charge but does not implement it."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/frame.rs",
+    "qualname": "handle_reservoir_remaining_gas",
+    "line": 595,
+    "end_line": 631,
+    "relation": "unrelated",
+    "note": "Merges a finished child frame's gas into the parent, not a state gas charge."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/cfg/gas.rs",
+    "qualname": "GasTracker.refill_reservoir",
+    "line": 248,
+    "end_line": 258,
+    "relation": "unrelated",
+    "note": "Does the opposite: gives state gas back and undoes earlier spills."
+   }
+  ],
+  "cost_usd": 0.06595580000000001
+ },
+ "vm.gas.check_max_fee_per_blob_gas|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/validation.rs",
+    "qualname": "validate_eip4844_tx",
+    "line": 81,
+    "end_line": 118,
+    "relation": "partial",
+    "note": "Contains the spec's check (block blob gas price > max_blob_fee -> error), inlined with extra validation (empty blobs, version byte, max blobs count); the blob gas price is computed by the caller."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/transaction/either.rs",
+    "qualname": "Either.max_fee_per_blob_gas",
+    "line": 94,
+    "end_line": 99,
+    "relation": "unrelated",
+    "note": "Getter that passes the fee cap through an Either wrapper; no comparison against the blob gas price."
+   },
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/traits.rs",
+    "qualname": "T.max_fee_per_blob_gas",
+    "line": 210,
+    "end_line": 212,
+    "relation": "unrelated",
+    "note": "Trait getter forwarding to revm Transaction::max_fee_per_blob_gas; no check."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/src/tx.rs",
+    "qualname": "TxEnvBuilder.max_fee_per_blob_gas",
+    "line": 385,
+    "end_line": 388,
+    "relation": "unrelated",
+    "note": "Builder setter for the max_fee_per_blob_gas field."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/src/tx.rs",
+    "qualname": "TxEnv.max_fee_per_blob_gas",
+    "line": 219,
+    "end_line": 221,
+    "relation": "unrelated",
+    "note": "Field getter on TxEnv; no check."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/transaction-pool/src/validate/mod.rs",
+    "qualname": "ValidPoolTransaction.max_fee_per_blob_gas",
+    "line": 373,
+    "end_line": 375,
+    "relation": "unrelated",
+    "note": "Pool transaction getter returning Option<u128>; no check."
+   }
+  ],
+  "cost_usd": 0.0513998
+ },
+ "vm.gas.credit_state_gas_refund|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/cfg/gas.rs",
+    "qualname": "GasTracker.refill_reservoir",
+    "line": 248,
+    "end_line": 258,
+    "relation": "equivalent",
+    "note": "Same LIFO credit: min(amount, spill) goes back to remaining, spill drops by that much, the rest goes to the reservoir. Also lowers state_gas_spent, which is extra bookkeeping."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/gas.rs",
+    "qualname": "Gas.refill_reservoir",
+    "line": 209,
+    "end_line": 211,
+    "relation": "unrelated",
+    "note": "One-line wrapper that only calls GasTracker.refill_reservoir."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/cfg/gas.rs",
+    "qualname": "GasTracker.absorb_returned_reservoir",
+    "line": 109,
+    "end_line": 118,
+    "relation": "unrelated",
+    "note": "Merges a child frame's returned reservoir: replaces the reservoir instead of adding to it. A different operation from crediting a refund."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/handler.rs",
+    "qualname": "Handler.post_execution",
+    "line": 343,
+    "end_line": 370,
+    "relation": "unrelated",
+    "note": "End-of-transaction refund, gas floor, reimbursement and fee flow. No state-gas reservoir credit."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/pre_execution.rs",
+    "qualname": "apply_eip7702_auth_list",
+    "line": 234,
+    "end_line": 305,
+    "relation": "unrelated",
+    "note": "Processes and charges for the EIP-7702 authorization list. No refund credit."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/instructions/host.rs",
+    "qualname": "sstore_default_gas_accounting",
+    "line": 252,
+    "end_line": 302,
+    "relation": "unrelated",
+    "note": "Only calls refill_reservoir when a storage slot is restored 0->x->0."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/result.rs",
+    "qualname": "test_block_regular_gas_used_no_floor_no_refund",
+    "line": 1397,
+    "end_line": 1434,
+    "relation": "unrelated",
+    "note": "Unit test of how block gas splits between regular and state gas."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/precompile/src/interface.rs",
+    "qualname": "PrecompileOutput.set_gas",
+    "line": 210,
+    "end_line": 216,
+    "relation": "unrelated",
+    "note": "Only copies tracker fields into the precompile output."
+   }
+  ],
+  "cost_usd": 0.0873398
+ },
+ "vm.gas.forfeit_remaining_gas|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/cfg/gas.rs",
+    "qualname": "GasTracker.spend_all",
+    "line": 274,
+    "end_line": 276,
+    "relation": "equivalent",
+    "note": "Sets the remaining execution gas to 0, which is the spec's core action (gas_left = 0). It leaves out the assertion that the spill is zero."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/gas.rs",
+    "qualname": "Gas.spend_all",
+    "line": 226,
+    "end_line": 228,
+    "relation": "equivalent",
+    "note": "A thin wrapper that hands off to GasTracker.spend_all, which zeroes the remaining gas. It does the same job as forfeit_remaining_gas."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/frame.rs",
+    "qualname": "handle_reservoir_remaining_gas",
+    "line": 595,
+    "end_line": 631,
+    "relation": "partial",
+    "note": "Settles a child frame into its parent. On an exceptional halt it first rolls back state gas, which restores the spill (as the spec's assert requires), then calls spend_all to burn the remaining gas. The forfeit is one step inside a larger function."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/instructions/contract/call_helpers.rs",
+    "qualname": "load_account_delegated_handle_error",
+    "line": 120,
+    "end_line": 136,
+    "relation": "unrelated",
+    "note": "Loads a delegated account and passes in the remaining gas. It never forfeits gas."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/interpreter.rs",
+    "qualname": "Interpreter.clear",
+    "line": 117,
+    "end_line": 149,
+    "relation": "unrelated",
+    "note": "Resets the interpreter and sets up a new gas meter. It does not forfeit gas."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/handler.rs",
+    "qualname": "Handler.last_frame_result",
+    "line": 505,
+    "end_line": 543,
+    "relation": "partial",
+    "note": "Settles the transaction-level gas. On a halt it calls spend_all again after refilling the reservoir, so any spill that was credited back is burned too. That inline halt-consume step is part of the spec function's job. The first spend_all just accounts for gas forwarded to the first frame and is not a forfeit."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/frame.rs",
+    "qualname": "EthFrame.clear",
+    "line": 104,
+    "end_line": 140,
+    "relation": "unrelated",
+    "note": "Resets a frame and sets up a new gas meter. It does not forfeit gas."
+   }
+  ],
+  "cost_usd": 0.0658758
+ },
+ "vm.gas.repay_state_gas_spill|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/cfg/gas.rs",
+    "qualname": "GasTracker.absorb_returned_reservoir",
+    "line": 109,
+    "end_line": 118,
+    "relation": "equivalent",
+    "note": "Takes the child's returned reservoir and moves min(reservoir, state_gas_spilled) back to remaining. It lowers the spill by the same amount and keeps the rest as the reservoir. That matches the spec's repayment on the merged meter."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/frame.rs",
+    "qualname": "handle_reservoir_remaining_gas",
+    "line": 595,
+    "end_line": 631,
+    "relation": "unrelated",
+    "note": "This is the child-merge handler. It settles and merges the child, then calls absorb_returned_reservoir for the repayment. It does no repayment of its own."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/cfg/gas.rs",
+    "qualname": "GasTracker.record_state_cost",
+    "line": 188,
+    "end_line": 204,
+    "relation": "unrelated",
+    "note": "Charges state gas and spills into regular gas, raising state_gas_spilled. That is the opposite of repaying the spill."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/frame.rs",
+    "qualname": "sibling_refill_restores_parent_regular_gas",
+    "line": 742,
+    "end_line": 774,
+    "relation": "unrelated",
+    "note": "Unit test that runs the repayment path; it does not implement it."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/gas.rs",
+    "qualname": "test_record_state_cost_oog_inflates_state_gas_spent",
+    "line": 433,
+    "end_line": 447,
+    "relation": "unrelated",
+    "note": "Unit test for the out-of-gas case of record_state_cost."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/gas.rs",
+    "qualname": "test_record_state_cost",
+    "line": 365,
+    "end_line": 428,
+    "relation": "unrelated",
+    "note": "Unit test for charging state gas."
+   }
+  ],
+  "cost_usd": 0.0698518
+ },
+ "vm.gas.restore_state_gas|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/cfg/gas.rs",
+    "qualname": "GasTracker.rollback_state_gas",
+    "line": 220,
+    "end_line": 228,
+    "relation": "partial",
+    "note": "Does the state-gas rollback: adds the spill back to remaining and resets the reservoir to its starting value (reservoir + spent - spilled), then clears the counters. It does not reset refunds; [2] does that."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/gas.rs",
+    "qualname": "Gas.rollback_state_gas",
+    "line": 201,
+    "end_line": 203,
+    "relation": "partial",
+    "note": "Only passes the call to GasTracker.rollback_state_gas [0], so it covers the same part of the spec function."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/frame.rs",
+    "qualname": "handle_reservoir_remaining_gas",
+    "line": 595,
+    "end_line": 631,
+    "relation": "partial",
+    "note": "On revert or halt it calls rollback_state_gas and sets refunds to zero, which completes the spec logic. It also merges the child frame's gas into the parent, which is outside this spec function."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/frame_data.rs",
+    "qualname": "FrameResult.refundable_state_gas",
+    "line": 136,
+    "end_line": 146,
+    "relation": "unrelated",
+    "note": "Decides whether new-account or create state gas is refundable after a failed frame, a different job."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/result.rs",
+    "qualname": "ResultGas.set_state_gas_spent",
+    "line": 198,
+    "end_line": 200,
+    "relation": "unrelated",
+    "note": "Plain setter on ResultGas."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/result.rs",
+    "qualname": "ResultGas.with_state_gas_spent",
+    "line": 239,
+    "end_line": 242,
+    "relation": "unrelated",
+    "note": "Plain builder setter on ResultGas."
+   }
+  ],
+  "cost_usd": 0.0592278
+ },
+ "vm.gas.settle_transaction_gas|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/handler.rs",
+    "qualname": "Handler.post_execution",
+    "line": 343,
+    "end_line": 370,
+    "relation": "partial",
+    "note": "Covers settlement inline: it applies the refund cap, builds the result gas and applies the floor. It also does reimbursement and the beneficiary payment, which fall outside this spec function."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/post_execution.rs",
+    "qualname": "build_result_gas",
+    "line": 13,
+    "end_line": 37,
+    "relation": "partial",
+    "note": "Computes the pre-refund gas as limit - remaining - reservoir and clamps state gas to zero. Both match parts of the settlement."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/gas.rs",
+    "qualname": "Gas.set_final_refund",
+    "line": 245,
+    "end_line": 250,
+    "relation": "partial",
+    "note": "Caps the refund at the pre-refund gas used (total spent minus reservoir) divided by the quotient, which matches min(before//5, refund_counter)."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/post_execution.rs",
+    "qualname": "eip7623_check_gas_floor",
+    "line": 43,
+    "end_line": 58,
+    "relation": "partial",
+    "note": "Applies the calldata floor so that gas used is max(after_refund, floor). This is the floor part of the settlement."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/result.rs",
+    "qualname": "ResultGas.tx_gas_used",
+    "line": 263,
+    "end_line": 269,
+    "relation": "partial",
+    "note": "Computes gas_used as max(total - refund, floor). This is one output of the settlement."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/result.rs",
+    "qualname": "ResultGas.block_regular_gas_used",
+    "line": 279,
+    "end_line": 285,
+    "relation": "partial",
+    "note": "Computes execution_gas_used as max(before_refund - state_gas, floor), matching the spec's block execution dimension."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/result.rs",
+    "qualname": "ResultGas.block_state_gas_used",
+    "line": 291,
+    "end_line": 293,
+    "relation": "partial",
+    "note": "Supplies the block state_gas_used dimension. It is a thin getter over the final state gas spent, and the clamping happens elsewhere."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/evm/src/executor.rs",
+    "qualname": "EthBlockExecutor.validate_transaction_gas_limit",
+    "line": 275,
+    "end_line": 304,
+    "relation": "unrelated",
+    "note": "Checks the transaction gas limit against block availability before execution. It is not post-execution settlement."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/evm/src/executor.rs",
+    "qualname": "EthBigBlockExecutor.validate_transaction_gas_limit",
+    "line": 889,
+    "end_line": 894,
+    "relation": "unrelated",
+    "note": "Wrapper that delegates to the gas limit validation."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/transaction.rs",
+    "qualname": "Transaction.gas_balance_spending",
+    "line": 239,
+    "end_line": 245,
+    "relation": "unrelated",
+    "note": "Computes the balance needed upfront to buy gas. It has nothing to do with settlement."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/transaction-pool/src/validate/mod.rs",
+    "qualname": "ValidPoolTransaction.gas_limit",
+    "line": 405,
+    "end_line": 407,
+    "relation": "unrelated",
+    "note": "Getter that returns the gas limit."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/evm/src/executor.rs",
+    "qualname": "EthBlockExecutor.execute_transaction_without_commit",
+    "line": 343,
+    "end_line": 356,
+    "relation": "unrelated",
+    "note": "Orchestrates transaction execution. It only reaches settlement through called code."
+   }
+  ],
+  "cost_usd": 0.0824158
+ },
+ "transactions.calculate_effective_gas_price|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/transaction.rs",
+    "qualname": "Transaction.effective_gas_price",
+    "line": 147,
+    "end_line": 160,
+    "relation": "partial",
+    "note": "Does the price calculation: legacy and 2930 txs pay gas_price, fee-market txs pay min(max_fee, base_fee + priority_fee), which equals the spec's result. It never checks max_fee or gas_price against the base fee, so the error half is done elsewhere."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/validation.rs",
+    "qualname": "validate_priority_fee_tx",
+    "line": 43,
+    "end_line": 63,
+    "relation": "partial",
+    "note": "Does the spec's fee-market check: raises GasPriceLessThanBasefee when min(max_fee, base_fee + priority_fee) < base_fee, which only happens when max_fee < base_fee. It returns nothing, so it does not supply the price. The priority-fee-greater-than-max-fee check is extra and not part of this spec function."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/validation.rs",
+    "qualname": "validate_legacy_gas_price",
+    "line": 29,
+    "end_line": 40,
+    "relation": "partial",
+    "note": "Does the spec's legacy check: errors when gas_price < base_fee. Supplying the price itself happens elsewhere."
+   },
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/traits.rs",
+    "qualname": "T.effective_gas_price",
+    "line": 234,
+    "end_line": 236,
+    "relation": "unrelated",
+    "note": "Thin wrapper that only forwards to revm's Transaction::effective_gas_price and adds no logic of its own."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/src/context.rs",
+    "qualname": "Context.effective_gas_price",
+    "line": 496,
+    "end_line": 499,
+    "relation": "unrelated",
+    "note": "Host accessor that reads the block's basefee and calls tx.effective_gas_price; it only calls the real logic."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/host.rs",
+    "qualname": "Eip7702Host.effective_gas_price",
+    "line": 424,
+    "end_line": 426,
+    "relation": "unrelated",
+    "note": "Test host that hands the call to a dummy host."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/host.rs",
+    "qualname": "DummyHost.effective_gas_price",
+    "line": 282,
+    "end_line": 284,
+    "relation": "unrelated",
+    "note": "Dummy host stub that always returns zero."
+   }
+  ],
+  "cost_usd": 0.0492158
+ },
+ "transactions.calculate_max_gas_fee|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/transaction.rs",
+    "qualname": "Transaction.max_balance_spending",
+    "line": 165,
+    "end_line": 180,
+    "relation": "partial",
+    "note": "Computes gas_limit * max_fee_per_gas inline. For legacy transactions max_fee_per_gas defaults to gas_price. It then adds the value and the blob fee for a total balance check."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/transaction-pool/src/validate/eth.rs",
+    "qualname": "EthTransactionValidator.max_gas_limit",
+    "line": 966,
+    "end_line": 968,
+    "relation": "unrelated",
+    "note": "Only reads the block gas limit. No fee calculation."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/pre_execution.rs",
+    "qualname": "calculate_caller_fee",
+    "line": 129,
+    "end_line": 164,
+    "relation": "unrelated",
+    "note": "Charges the caller using the effective gas price, which is based on the base fee, not the fee cap."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/transaction-pool/src/validate/eth.rs",
+    "qualname": "EthTransactionValidator.validate_stateless",
+    "line": 457,
+    "end_line": 661,
+    "relation": "unrelated",
+    "note": "Pool validation. It subtracts the value from cost(), which includes the blob fee, and checks the result against a local fee cap. It calls the cost calculation rather than doing it."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/transaction.rs",
+    "qualname": "Transaction.max_fee_per_gas",
+    "line": 137,
+    "end_line": 139,
+    "relation": "unrelated",
+    "note": "Getter that returns gas_price by default. It does not multiply by the gas limit."
+   }
+  ],
+  "cost_usd": 0.0753838
+ },
+ "transactions.check_nonce|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/pre_execution.rs",
+    "qualname": "validate_account_nonce_and_code",
+    "line": 84,
+    "end_line": 123,
+    "relation": "partial",
+    "note": "Has the full too-high/too-low nonce comparison, mixed in with the EIP-3607 code check and a nonce-overflow check, and it can be disabled."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/transaction-pool/src/validate/eth.rs",
+    "qualname": "EthTransactionValidator.validate_sender_nonce",
+    "line": 773,
+    "end_line": 788,
+    "relation": "partial",
+    "note": "Pool check that only rejects nonces that are too low; higher nonces are allowed on purpose."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/src/cfg.rs",
+    "qualname": "CfgEnv.is_nonce_check_disabled",
+    "line": 554,
+    "end_line": 556,
+    "relation": "unrelated",
+    "note": "Getter for the flag that disables the nonce check."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/evm/src/lib.rs",
+    "qualname": "EthEvmEnv.with_nonce_check_disabled",
+    "line": 187,
+    "end_line": 190,
+    "relation": "unrelated",
+    "note": "Builder that turns off the nonce-check feature; does no checking itself."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/transaction-pool/src/validate/eth.rs",
+    "qualname": "EthTransactionValidator.validate_stateful",
+    "line": 667,
+    "end_line": 733,
+    "relation": "unrelated",
+    "note": "Runs the pool's stateful checks in order and calls validate_sender_nonce; no nonce logic of its own."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/pre_execution.rs",
+    "qualname": "validate_account_nonce_and_code_with_components",
+    "line": 69,
+    "end_line": 80,
+    "relation": "unrelated",
+    "note": "Thin wrapper that reads tx and cfg and calls validate_account_nonce_and_code."
+   }
+  ],
+  "cost_usd": 0.0587158
+ },
+ "transactions.decode_transaction|reth": {
+  "candidates": [
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/evm/src/lib.rs",
+    "qualname": "EthEvmConfig.tx_iterator_for_payload",
+    "line": 571,
+    "end_line": 589,
+    "relation": "unrelated",
+    "note": "Caller: passes each payload tx to decode_2718_exact (the real equivalent) and then recovers the sender. It doesn't do the type-byte decoding itself."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/transaction-pool/src/validate/eth.rs",
+    "qualname": "EthTransactionValidator.eip2718",
+    "line": 194,
+    "end_line": 196,
+    "relation": "unrelated",
+    "note": "Getter for the eip2718 flag on the pool validator. No decoding."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/transaction-pool/src/validate/eth.rs",
+    "qualname": "EthTransactionValidatorBuilder.set_eip2718",
+    "line": 1234,
+    "end_line": 1237,
+    "relation": "unrelated",
+    "note": "Builder setter for the eip2718 flag. No decoding."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/transaction-pool/src/validate/eth.rs",
+    "qualname": "EthTransactionValidatorBuilder.no_eip2718",
+    "line": 1229,
+    "end_line": 1231,
+    "relation": "unrelated",
+    "note": "Builder helper that turns the eip2718 flag off. No decoding."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/primitives/src/receipt.rs",
+    "qualname": "decode_legacy_receipt",
+    "line": 74,
+    "end_line": 99,
+    "relation": "unrelated",
+    "note": "Test that decodes a legacy receipt, not a transaction."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/instructions/stack.rs",
+    "qualname": "decode_single",
+    "line": 116,
+    "end_line": 122,
+    "relation": "unrelated",
+    "note": "revm helper that maps an instruction argument to a stack index. Nothing to do with transactions."
+   }
+  ],
+  "cost_usd": 0.0576598
+ },
+ "transactions.has_access_list|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/context/src/tx.rs",
+    "qualname": "TxEnv.access_list",
+    "line": 211,
+    "end_line": 213,
+    "relation": "unrelated",
+    "note": "Getter that always returns Some(iterator) over the stored access list. It never checks whether the transaction type supports an access list."
+   },
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/env.rs",
+    "qualname": "TxEnv.set_access_list",
+    "line": 220,
+    "end_line": 226,
+    "relation": "unrelated",
+    "note": "Setter that stores an access list and upgrades the tx type from Legacy to EIP-2930. It changes the transaction rather than asking whether it has an access list."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/src/tx.rs",
+    "qualname": "test_tx_env_builder_build_valid_eip2930",
+    "line": 734,
+    "end_line": 752,
+    "relation": "unrelated",
+    "note": "Unit test that builds an EIP-2930 TxEnv. It does not implement the predicate."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/src/tx.rs",
+    "qualname": "test_tx_env_builder_derive_tx_type_eip2930",
+    "line": 1026,
+    "end_line": 1039,
+    "relation": "unrelated",
+    "note": "Unit test for deriving the tx type from a present access list. It does not implement the predicate."
+   },
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/tx.rs",
+    "qualname": "TxEnv.from_recovered_tx",
+    "line": 505,
+    "end_line": 513,
+    "relation": "unrelated",
+    "note": "Converts a tx envelope into a TxEnv by matching on its type. It never classifies whether the type supports an access list."
+   },
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/env.rs",
+    "qualname": "TransactionEnvMut.with_access_list",
+    "line": 205,
+    "end_line": 208,
+    "relation": "unrelated",
+    "note": "Builder-style wrapper that just calls set_access_list. It does not check for access list support."
+   }
+  ],
+  "cost_usd": 0.0470718
+ },
+ "transactions.signing_hash_155|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/precompile/src/secp256k1/k256.rs",
+    "qualname": "ecrecover",
+    "line": 8,
+    "end_line": 31,
+    "relation": "unrelated",
+    "note": "Recovers an address from a signature and a prehashed message. It never builds the EIP-155 signing payload."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/instructions/system.rs",
+    "qualname": "keccak256",
+    "line": 18,
+    "end_line": 40,
+    "relation": "unrelated",
+    "note": "This is the KECCAK256 opcode: it hashes a memory range. It does not RLP-encode transaction fields with the chain ID."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/interpreter_action/create_inputs.rs",
+    "qualname": "CreateInputs.init_code_hash",
+    "line": 77,
+    "end_line": 81,
+    "relation": "unrelated",
+    "note": "Hashes init code for CREATE2. It has nothing to do with transaction signing hashes."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/precompile/src/secp256k1/bitcoin_secp256k1.rs",
+    "qualname": "ecrecover",
+    "line": 14,
+    "end_line": 24,
+    "relation": "unrelated",
+    "note": "Another ecrecover backend: it recovers the public key and hashes it to get the address. It does not compute the signing hash."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/transaction-pool/src/validate/mod.rs",
+    "qualname": "TransactionValidationOutcome.tx_hash",
+    "line": 59,
+    "end_line": 65,
+    "relation": "unrelated",
+    "note": "Returns the stored tx hash from a validation outcome. It does not compute an EIP-155 signing hash."
+   }
+  ],
+  "cost_usd": 0.0416078
+ },
+ "transactions.signing_hash_2930|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/context/src/tx.rs",
+    "qualname": "test_tx_env_builder_derive_tx_type_eip2930",
+    "line": 1026,
+    "end_line": 1039,
+    "relation": "unrelated",
+    "note": "Unit test checking that the builder derives tx type EIP-2930. It does not hash anything."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/src/tx.rs",
+    "qualname": "test_tx_env_builder_build_valid_eip2930",
+    "line": 734,
+    "end_line": 752,
+    "relation": "unrelated",
+    "note": "Unit test that builds an EIP-2930 TxEnv. It computes no signing hash."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/transaction-pool/src/validate/eth.rs",
+    "qualname": "setup_gas_price_txs",
+    "line": 2264,
+    "end_line": 2298,
+    "relation": "unrelated",
+    "note": "Test fixture that builds legacy and EIP-2930 transactions with a test signature. It computes no signing hash."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/transaction/transaction_type.rs",
+    "qualname": "TransactionType.from",
+    "line": 53,
+    "end_line": 62,
+    "relation": "unrelated",
+    "note": "Maps a u8 to a transaction type enum. It does no RLP encoding or keccak hashing."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/transaction.rs",
+    "qualname": "Transaction.effective_gas_price",
+    "line": 147,
+    "end_line": 160,
+    "relation": "unrelated",
+    "note": "Computes the effective gas price. It has nothing to do with the signing hash."
+   }
+  ],
+  "cost_usd": 0.0428838
+ },
+ "transactions.signing_hash_7702|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/host.rs",
+    "qualname": "Eip7702Host.blob_hash",
+    "line": 430,
+    "end_line": 432,
+    "relation": "unrelated",
+    "note": "Test host delegation for the blob hash; not a tx signing hash."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/host.rs",
+    "qualname": "Eip7702Host.block_hash",
+    "line": 436,
+    "end_line": 438,
+    "relation": "unrelated",
+    "note": "Block hash lookup delegation."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/src/journal/inner.rs",
+    "qualname": "JournalInner.set_code",
+    "line": 398,
+    "end_line": 408,
+    "relation": "unrelated",
+    "note": "Sets account code in the journal; no tx signing hash."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/transaction-pool/src/validate/eth.rs",
+    "qualname": "EthTransactionValidator.validate_sender_bytecode",
+    "line": 736,
+    "end_line": 770,
+    "relation": "unrelated",
+    "note": "Validates sender bytecode for the EIP-7702 delegation check; no signing hash."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/journaled_state/account.rs",
+    "qualname": "JournaledAccount.delegate",
+    "line": 466,
+    "end_line": 477,
+    "relation": "unrelated",
+    "note": "Applies an EIP-7702 delegation to an account; no tx signing hash."
+   }
+  ],
+  "cost_usd": 0.0393998
+ },
+ "fork.apply_body|reth": {
+  "candidates": [
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/block/mod.rs",
+    "qualname": "BlockExecutor.execute_block",
+    "line": 449,
+    "end_line": 463,
+    "relation": "equivalent",
+    "note": "Runs the whole block body: pre-execution changes (system calls), then each transaction, then post-execution (withdrawals, requests, access list)."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/evm/src/executor.rs",
+    "qualname": "EthBlockExecutor.finish_with_prepared_block_access_list",
+    "line": 399,
+    "end_line": 464,
+    "relation": "partial",
+    "note": "Post-transaction part only: sets the access-list index to N+1, then collects requests (deposits and system calls), applies withdrawals and balance changes, and takes the built access list. No pre-execution system calls, transaction loop or access-list gas check."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/evm/src/executor.rs",
+    "qualname": "EthBlockExecutor.apply_pre_execution_changes",
+    "line": 250,
+    "end_line": 269,
+    "relation": "partial",
+    "note": "Pre-execution system calls only (beacon roots and history storage), the first part of apply_body."
+   },
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/eth/block.rs",
+    "qualname": "EthBlockExecutor.apply_pre_execution_changes",
+    "line": 182,
+    "end_line": 188,
+    "relation": "partial",
+    "note": "Beacon-root and blockhashes system calls, the two process_unchecked_system_transaction calls at the start of apply_body."
+   },
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/eth/block.rs",
+    "qualname": "EthBlockExecutor.finish",
+    "line": 283,
+    "end_line": 354,
+    "relation": "partial",
+    "note": "Post-transaction part only: collects deposit and system-contract requests and applies withdrawal balance increments. No access-list handling."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/consensus/src/lib.rs",
+    "qualname": "EthBeaconConsensus.validate_block_post_execution",
+    "line": 118,
+    "end_line": 141,
+    "relation": "unrelated",
+    "note": "Checks the execution result against the header after the block runs. Does not execute the body."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/consensus/src/validation.rs",
+    "qualname": "validate_block_post_execution_with_bal_hashes",
+    "line": 43,
+    "end_line": 130,
+    "relation": "unrelated",
+    "note": "Compares gas used, receipts root, requests hash and access-list hash with the header after execution. A separate validation step."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/consensus/src/validation.rs",
+    "qualname": "validate_block_post_execution",
+    "line": 20,
+    "end_line": 40,
+    "relation": "unrelated",
+    "note": "Wrapper around the post-execution header validation."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/evm/src/executor.rs",
+    "qualname": "EthBlockExecutor.set_transaction_block_access_index",
+    "line": 191,
+    "end_line": 196,
+    "relation": "partial",
+    "note": "Sets the access-list index to receipts + 1. At finish this is the spec's step that sets the index to N+1 for post-execution work."
+   }
+  ],
+  "cost_usd": 0.09279180000000001
+ },
+ "fork.calculate_base_fee_per_gas|reth": {
+  "candidates": [
+   {
+    "repo": "reth",
+    "path": "crates/consensus/common/src/validation.rs",
+    "qualname": "validate_against_parent_eip1559_base_fee",
+    "line": 326,
+    "end_line": 353,
+    "relation": "unrelated",
+    "note": "Only calls chain_spec.next_block_base_fee and compares the result to the header's base fee. It does none of the base fee arithmetic and no gas limit check, so it is a caller, not the implementation."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/transaction-pool/src/validate/mod.rs",
+    "qualname": "ValidPoolTransaction.effective_tip_per_gas",
+    "line": 394,
+    "end_line": 396,
+    "relation": "unrelated",
+    "note": "Forwards to the transaction's effective tip calculation. Has nothing to do with deriving the base fee from the parent block."
+   },
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/rpc/fees.rs",
+    "qualname": "CallFees.ensure_fees",
+    "line": 42,
+    "end_line": 142,
+    "relation": "unrelated",
+    "note": "Works out the effective gas price for RPC calls from the request's fee fields and the block base fee. It does not compute the base fee."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/block/blob.rs",
+    "qualname": "get_base_fee_per_blob_gas",
+    "line": 72,
+    "end_line": 74,
+    "relation": "unrelated",
+    "note": "Blob gas price from excess blob gas (EIP-4844), not the EIP-1559 base fee."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/validation.rs",
+    "qualname": "validate_priority_fee_for_tx",
+    "line": 67,
+    "end_line": 78,
+    "relation": "unrelated",
+    "note": "Checks a transaction's priority fee against its max fee and the base fee. It does not compute the base fee."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/transaction-pool/src/validate/mod.rs",
+    "qualname": "ValidPoolTransaction.max_fee_per_gas",
+    "line": 380,
+    "end_line": 382,
+    "relation": "unrelated",
+    "note": "Simple getter for the transaction's max fee per gas."
+   }
+  ],
+  "cost_usd": 0.0681518
+ },
+ "fork.check_transaction|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/handler.rs",
+    "qualname": "Handler.validate",
+    "line": 201,
+    "end_line": 206,
+    "relation": "partial",
+    "note": "Runs env validation, intrinsic gas and the state checks. Also deducts the caller's fee, which the spec does later in process_transaction."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/pre_execution.rs",
+    "qualname": "validate_against_state_and_deduct_caller",
+    "line": 168,
+    "end_line": 188,
+    "relation": "partial",
+    "note": "Loads the sender and checks nonce, code and balance, which are part of check_transaction. Also deducts the fee and bumps the nonce."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/validation.rs",
+    "qualname": "validate_tx_env",
+    "line": 121,
+    "end_line": 237,
+    "relation": "partial",
+    "note": "Checks that need no state: chain id, gas cap, fee caps, blob fields, tx gas vs block gas limit. Part of admitting a transaction."
+   },
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/eth/block.rs",
+    "qualname": "EthBlockExecutor.execute_transaction_without_commit",
+    "line": 190,
+    "end_line": 248,
+    "relation": "partial",
+    "note": "Does the check_block_gas_capacity step in place (regular and state gas budgets) before executing."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/pre_execution.rs",
+    "qualname": "validate_account_nonce_and_code",
+    "line": 84,
+    "end_line": 123,
+    "relation": "partial",
+    "note": "The nonce match and the sender-not-EOA (delegation allowed) checks from check_transaction."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/handler.rs",
+    "qualname": "Handler.tx_gas",
+    "line": 215,
+    "end_line": 221,
+    "relation": "partial",
+    "note": "Splits gas into an execution grant and a state gas reservoir, the allocate_evm_gas step used to build tx env. Borderline: it does little besides this one call."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/pre_execution.rs",
+    "qualname": "calculate_caller_fee",
+    "line": 129,
+    "end_line": 164,
+    "relation": "partial",
+    "note": "Sender balance sufficiency check, plus computing the deducted balance, which the spec does not do here."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/transaction.rs",
+    "qualname": "Transaction.total_blob_gas",
+    "line": 106,
+    "end_line": 108,
+    "relation": "unrelated",
+    "note": "Matches the separate helper calculate_total_blob_gas."
+   },
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/rpc/fees.rs",
+    "qualname": "CallFees.ensure_fees",
+    "line": 42,
+    "end_line": 142,
+    "relation": "unrelated",
+    "note": "Fills fee fields for RPC call requests; not block transaction admission."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/validation.rs",
+    "qualname": "validate_priority_fee_tx",
+    "line": 43,
+    "end_line": 63,
+    "relation": "unrelated",
+    "note": "Fee checks from the separate helper calculate_effective_gas_price."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/transaction.rs",
+    "qualname": "Transaction.effective_balance_spending",
+    "line": 211,
+    "end_line": 231,
+    "relation": "unrelated",
+    "note": "Computes actual spending at the block blob price, not the spec's max-fee balance requirement."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/validation.rs",
+    "qualname": "validate_eip4844_tx",
+    "line": 81,
+    "end_line": 118,
+    "relation": "unrelated",
+    "note": "Matches the separate helpers check_max_fee_per_blob_gas and the static blob checks in validate_transaction."
+   }
+  ],
+  "cost_usd": 0.1482358
+ },
+ "fork.execute_block|reth": {
+  "candidates": [
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/consensus/src/validation.rs",
+    "qualname": "validate_block_post_execution_with_bal_hashes",
+    "line": 43,
+    "end_line": 130,
+    "relation": "partial",
+    "note": "Post-execution half of execute_block: checks gas_used, receipts root and logs bloom, requests hash and block access list hash against the header. No state root check and no execution."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/consensus/src/lib.rs",
+    "qualname": "EthBeaconConsensus.validate_block_post_execution",
+    "line": 118,
+    "end_line": 141,
+    "relation": "partial",
+    "note": "Consensus trait entry point that hands off to the post-execution root and hash checks in [0], with an optional skip of the requests-hash check."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/consensus/src/validation.rs",
+    "qualname": "validate_block_post_execution",
+    "line": 20,
+    "end_line": 40,
+    "relation": "partial",
+    "note": "Public wrapper that runs the same post-execution root and hash checks as [0] (pre-Amsterdam BAL hashes turned off)."
+   },
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/block/mod.rs",
+    "qualname": "BlockExecutor.execute_block",
+    "line": 449,
+    "end_line": 463,
+    "relation": "partial",
+    "note": "Execution core: pre-execution system calls, each transaction, then post-execution changes. This matches the apply_body step, with no header or root validation."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/consensus/common/src/validation.rs",
+    "qualname": "validate_block_pre_execution",
+    "line": 141,
+    "end_line": 150,
+    "relation": "partial",
+    "note": "Wrapper for the pre-execution body checks (transactions root, ommers, withdrawals), which are part of execute_block's header checks."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/evm/src/execution.rs",
+    "qualname": "execute_block",
+    "line": 715,
+    "end_line": 766,
+    "relation": "unrelated",
+    "note": "Test helper that builds a chain spec and dummy block, runs it and compares state-hook output. No consensus validation."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/consensus/common/src/validation.rs",
+    "qualname": "post_merge_hardfork_fields",
+    "line": 195,
+    "end_line": 238,
+    "relation": "partial",
+    "note": "Does several execute_block checks: ommers hash (empty ommers), withdrawals root, blob gas used and the MAX_RLP_BLOCK_SIZE limit."
+   }
+  ],
+  "cost_usd": 0.0970238
+ },
+ "fork.make_receipt|reth": {
+  "candidates": [
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/eth/receipt_builder.rs",
+    "qualname": "AlloyReceiptBuilder.build_receipt",
+    "line": 48,
+    "end_line": 63,
+    "relation": "equivalent",
+    "note": "Builds the receipt from success status, cumulative gas and logs, adds the bloom, and wraps it in the envelope for its tx type (the encode_receipt step)."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/evm/src/receipt.rs",
+    "qualname": "RethReceiptBuilder.build_receipt",
+    "line": 15,
+    "end_line": 25,
+    "relation": "partial",
+    "note": "Builds the receipt from status, cumulative gas, logs and tx type, but computes no bloom and does no typed encoding."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/primitives/src/receipt.rs",
+    "qualname": "test_encode_2718_length",
+    "line": 132,
+    "end_line": 167,
+    "relation": "unrelated",
+    "note": "Test of the encoded length of a 2718 receipt."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/primitives/src/receipt.rs",
+    "qualname": "encode_legacy_receipt",
+    "line": 42,
+    "end_line": 70,
+    "relation": "unrelated",
+    "note": "Test of legacy receipt encoding."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/primitives/src/receipt.rs",
+    "qualname": "check_receipt_root_optimism",
+    "line": 208,
+    "end_line": 231,
+    "relation": "unrelated",
+    "note": "Test of the receipt root calculation."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/primitives/src/receipt.rs",
+    "qualname": "decode_legacy_receipt",
+    "line": 74,
+    "end_line": 99,
+    "relation": "unrelated",
+    "note": "Test of legacy receipt decoding."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/consensus/src/validation.rs",
+    "qualname": "verify_receipts",
+    "line": 134,
+    "end_line": 152,
+    "relation": "unrelated",
+    "note": "Checks receipts against the header's receipts root and logs bloom; does not build receipts."
+   }
+  ],
+  "cost_usd": 0.0687438
+ },
+ "fork.process_general_purpose_requests|reth": {
+  "candidates": [
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/eth/block.rs",
+    "qualname": "EthBlockExecutor.finish",
+    "line": 283,
+    "end_line": 354,
+    "relation": "partial",
+    "note": "Does deposit parsing + delegates the 4 system calls (via append_post_execution_changes), but inlined in a larger finish routine that also does rewards/DAO/gas accounting."
+   },
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/block/system_calls/mod.rs",
+    "qualname": "SystemCaller.append_post_execution_changes",
+    "line": 66,
+    "end_line": 103,
+    "relation": "partial",
+    "note": "Performs withdrawal, consolidation, builder deposit and builder exit system calls and appends non-empty typed requests; omits deposit-request parsing."
+   },
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/block/system_calls/mod.rs",
+    "qualname": "SystemCaller.apply_post_execution_changes",
+    "line": 56,
+    "end_line": 63,
+    "relation": "partial",
+    "note": "Thin wrapper around append_post_execution_changes returning the system-call requests; same subset (no deposits)."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/evm/src/execution.rs",
+    "qualname": "collects_amsterdam_builder_requests",
+    "line": 993,
+    "end_line": 1025,
+    "relation": "unrelated",
+    "note": "Unit test asserting request output."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/evm/src/execution.rs",
+    "qualname": "post_execution_system_call_state_changes",
+    "line": 351,
+    "end_line": 419,
+    "relation": "partial",
+    "note": "Executes the four request system calls (builder ones gated on Amsterdam) and pushes typed requests; deposit parsing is done elsewhere."
+   },
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/block/system_calls/eip8282.rs",
+    "qualname": "transact_builder_deposit_requests_contract_call",
+    "line": 45,
+    "end_line": 61,
+    "relation": "unrelated",
+    "note": "Only the single builder-deposit system call (analogue of process_checked_system_transaction), no request assembly."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/evm/src/execution.rs",
+    "qualname": "block_requests_from_receipts",
+    "line": 297,
+    "end_line": 317,
+    "relation": "partial",
+    "note": "Parses deposit requests from receipts and pushes DEPOSIT_REQUEST_TYPE \u2014 the deposit half of the spec function."
+   }
+  ],
+  "cost_usd": 0.0953038
+ },
+ "fork.process_unchecked_system_transaction|reth": {
+  "candidates": [
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/eth/mod.rs",
+    "qualname": "EthEvm.transact_system_call",
+    "line": 233,
+    "end_line": 240,
+    "relation": "partial",
+    "note": "Thin wrapper that delegates to system_call_with_caller (run plus finalize). It does not commit state to the block."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/system_call.rs",
+    "qualname": "SystemCallEvm.system_call_with_caller",
+    "line": 132,
+    "end_line": 141,
+    "relation": "partial",
+    "note": "Runs the system tx and finalizes the journal into state, but does not commit it the way incorporate_tx_into_block does."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/system_call.rs",
+    "qualname": "Evm.system_call_one_with_caller",
+    "line": 286,
+    "end_line": 300,
+    "relation": "partial",
+    "note": "Builds the system tx env and runs it through the handler, with no state finalization or commit."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/system_call.rs",
+    "qualname": "Evm.system_call_with_caller_commit",
+    "line": 362,
+    "end_line": 373,
+    "relation": "equivalent",
+    "note": "Builds and runs the system tx with no code or failure check, then finalizes and commits state to the db. This is the full unchecked system transaction flow."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/handler.rs",
+    "qualname": "Handler.run_system_call",
+    "line": 126,
+    "end_line": 155,
+    "relation": "partial",
+    "note": "Execution core: sets up gas, opens a journal checkpoint and runs the frame. This corresponds to process_top_level."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/system_call.rs",
+    "qualname": "TxEnv.new_system_tx_with_caller",
+    "line": 70,
+    "end_line": 82,
+    "relation": "partial",
+    "note": "Builds the system tx env (caller, target, data, system gas limit). This corresponds to the TransactionEnvironment construction."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/system_call.rs",
+    "qualname": "SystemCallEvm.system_call_one",
+    "line": 114,
+    "end_line": 120,
+    "relation": "partial",
+    "note": "Runs the system call with SYSTEM_ADDRESS as caller, without finalizing or committing state."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/system_call.rs",
+    "qualname": "SystemCallTx.new_system_tx",
+    "line": 57,
+    "end_line": 59,
+    "relation": "partial",
+    "note": "Builds the tx env with SYSTEM_ADDRESS as origin. This is only the env construction."
+   },
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/block/system_calls/eip2935.rs",
+    "qualname": "transact_blockhashes_contract_call",
+    "line": 26,
+    "end_line": 55,
+    "relation": "unrelated",
+    "note": "Caller: invokes the system call for the EIP-2935 history contract. It does not implement the function."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/evm/src/execution.rs",
+    "qualname": "execute_system_call",
+    "line": 421,
+    "end_line": 451,
+    "relation": "equivalent",
+    "note": "Runs the system tx and commits the state into the block. For history and beacon-roots addresses it accepts reverts and halts (unchecked). It also adds failure checks for request contracts."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/system_call.rs",
+    "qualname": "SystemCallEvm.system_call",
+    "line": 123,
+    "end_line": 129,
+    "relation": "partial",
+    "note": "Runs and finalizes the system call with SYSTEM_ADDRESS, without committing state."
+   }
+  ],
+  "cost_usd": 0.0919638
+ },
+ "fork.state_transition|reth": {
+  "candidates": [
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/block/mod.rs",
+    "qualname": "BlockExecutor.execute_block",
+    "line": 449,
+    "end_line": 463,
+    "relation": "unrelated",
+    "note": "Implements the spec's execute_block (pre-changes, txs, post-changes), which state_transition only calls. It does not apply the diff to state or append to the chain."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/evm/src/executor.rs",
+    "qualname": "EthBlockExecutor.new",
+    "line": 102,
+    "end_line": 142,
+    "relation": "unrelated",
+    "note": "Executor constructor that only initializes fields."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/evm/src/execution.rs",
+    "qualname": "post_block_balance_state_changes",
+    "line": 476,
+    "end_line": 557,
+    "relation": "unrelated",
+    "note": "Post-block rewards, withdrawals and DAO drain. Part of block execution, not state_transition."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/evm/src/executor.rs",
+    "qualname": "EthBlockExecutor.apply_pre_execution_changes",
+    "line": 250,
+    "end_line": 269,
+    "relation": "unrelated",
+    "note": "Pre-execution system calls, part of block execution."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/evm/src/execution.rs",
+    "qualname": "execute_block",
+    "line": 715,
+    "end_line": 766,
+    "relation": "unrelated",
+    "note": "Test helper that builds a synthetic block, executes it and compares hooked and unhooked output."
+   }
+  ],
+  "cost_usd": 0.0738798
+ },
+ "vm.instructions.system.call|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/instructions/contract.rs",
+    "qualname": "call",
+    "line": 166,
+    "end_line": 247,
+    "relation": "equivalent",
+    "note": "Implements the CALL opcode (and other call kinds): pops the stack, rejects a value transfer in a static context, prices memory, computes access/delegation/value/new-account state gas and the child gas, then dispatches the new call frame with the reservoir and the new-account-charged flag."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/instructions/contract/call_helpers.rs",
+    "qualname": "load_acc_and_calc_gas",
+    "line": 61,
+    "end_line": 114,
+    "relation": "partial",
+    "note": "Gas portion of call: value-transfer cost, delegated account load and access cost, new-account state gas (EIP-8037), 63/64 child gas and its charge, call stipend."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/instructions/contract/call_helpers.rs",
+    "qualname": "get_memory_input_and_out_ranges",
+    "line": 16,
+    "end_line": 31,
+    "relation": "partial",
+    "note": "Pops the memory operands and expands/charges memory for the input and output ranges, i.e. the spec's calculate_gas_extend_memory step for call."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/execution.rs",
+    "qualname": "create_init_frame",
+    "line": 46,
+    "end_line": 154,
+    "relation": "unrelated",
+    "note": "Builds the top-level transaction frame, not the CALL opcode."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/frame.rs",
+    "qualname": "EthFrame.make_call_frame",
+    "line": 144,
+    "end_line": 255,
+    "relation": "unrelated",
+    "note": "Corresponds to the spec's generic_call (depth check, checkpoint, value transfer, precompile, frame setup), which call only invokes."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/system_call.rs",
+    "qualname": "test_system_call",
+    "line": 393,
+    "end_line": 436,
+    "relation": "unrelated",
+    "note": "Unit test for the system call."
+   }
+  ],
+  "cost_usd": 0.1093518
+ },
+ "vm.instructions.system.create|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/instructions/contract.rs",
+    "qualname": "create",
+    "line": 26,
+    "end_line": 163,
+    "relation": "equivalent",
+    "note": "Full CREATE opcode: static check, pops endowment/offset/size, init-code size limit and cost, memory expansion, base create gas, address from sender nonce, child frame dispatch (generic_create part). Shared with CREATE2 through a const generic."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/interpreter_action/create_inputs.rs",
+    "qualname": "CreateInputs.created_address",
+    "line": 63,
+    "end_line": 71,
+    "relation": "unrelated",
+    "note": "Only works out the contract address. That matches the separate spec helper compute_contract_address, not create's own logic."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/interpreter_action/create_inputs.rs",
+    "qualname": "CreateInputs.init_code",
+    "line": 99,
+    "end_line": 101,
+    "relation": "unrelated",
+    "note": "Trivial getter for the init code."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/interpreter_action/create_inputs.rs",
+    "qualname": "CreateInputs.new",
+    "line": 39,
+    "end_line": 58,
+    "relation": "unrelated",
+    "note": "Struct constructor for CreateInputs. No opcode logic."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/interpreter_action/create_inputs.rs",
+    "qualname": "CreateInputs.init_code_hash",
+    "line": 77,
+    "end_line": 81,
+    "relation": "unrelated",
+    "note": "Cached keccak of the init code, used for CREATE2 addresses. Not part of CREATE."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/interpreter_action/create_inputs.rs",
+    "qualname": "CreateInputs.set_init_code",
+    "line": 126,
+    "end_line": 130,
+    "relation": "unrelated",
+    "note": "Setter that replaces the init code and resets the caches."
+   }
+  ],
+  "cost_usd": 0.0721638
+ },
+ "vm.instructions.system.delegatecall|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/instructions/contract.rs",
+    "qualname": "call",
+    "line": 166,
+    "end_line": 247,
+    "relation": "equivalent",
+    "note": "Generic call<KIND> instruction. For DELEGATECALL it checks the Homestead fork and pops gas and address. Through its helpers it pops the memory arguments, extends memory, charges access and delegation gas and withholds child gas. It keeps the current target, caller and apparent value, does not transfer value, passes the reservoir and starts the child frame. That is the whole job of the spec delegatecall."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/instructions/contract/call_helpers.rs",
+    "qualname": "load_acc_and_calc_gas",
+    "line": 61,
+    "end_line": 114,
+    "relation": "partial",
+    "note": "Charges the dynamic access and delegation gas (and state gas). It then works out and charges the 63/64-capped child gas limit. This matches the spec's gas checks plus calculate_message_call_gas and charge_gas, only one part of delegatecall."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/instructions/contract/call_helpers.rs",
+    "qualname": "load_account_delegated",
+    "line": 145,
+    "end_line": 200,
+    "relation": "partial",
+    "note": "Loads the target account, adds the cold-access cost and follows an EIP-7702 delegation, adding its access cost. Returns the code and code hash. This matches the spec's access-cost, calculate_delegation_cost and get_code steps, a sub-part of delegatecall."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/instructions/contract/call_helpers.rs",
+    "qualname": "get_memory_input_and_out_ranges",
+    "line": 16,
+    "end_line": 31,
+    "relation": "partial",
+    "note": "Pops the memory input and output offsets and sizes and resizes memory, charging the expansion gas. This is the spec's stack-pop and memory-extension part of delegatecall."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/interpreter_action/call_inputs.rs",
+    "qualname": "CallScheme.is_delegate_call",
+    "line": 253,
+    "end_line": 255,
+    "relation": "unrelated",
+    "note": "Only checks whether a CallScheme is DelegateCall. Does no delegatecall work."
+   },
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/overrides.rs",
+    "qualname": "test_create2_delegatecall_state_diff_inspect",
+    "line": 774,
+    "end_line": 998,
+    "relation": "unrelated",
+    "note": "Test that builds bytecode using DELEGATECALL. It is not an implementation."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/instructions.rs",
+    "qualname": "gas_table_spec",
+    "line": 90,
+    "end_line": 141,
+    "relation": "unrelated",
+    "note": "Builds the static per-opcode gas table for every opcode, including DELEGATECALL's warm base cost. It is a table of constants, not delegatecall logic."
+   },
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/precompiles.rs",
+    "qualname": "PrecompileInput.is_direct_call",
+    "line": 736,
+    "end_line": 738,
+    "relation": "unrelated",
+    "note": "Precompile input helper that checks whether target equals bytecode address. Not the delegatecall instruction."
+   }
+  ],
+  "cost_usd": 0.11963580000000001
+ },
+ "vm.instructions.system.generic_create|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/instructions/contract.rs",
+    "qualname": "create",
+    "line": 26,
+    "end_line": 163,
+    "relation": "partial",
+    "note": "Covers the first half of generic_create. It reads init code from memory, runs the preflight checks (balance, nonce overflow, depth) that push 0 and clear return data, and warms the destination. It charges the new-account state gas when the destination is not alive, keeps back 1/64 of the gas and passes the reservoir to the child. It also includes the opcode's own pricing, which the spec does elsewhere. The collision check, nonce bump, child frame and outcome resolution happen in other functions."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/frame.rs",
+    "qualname": "EthFrame.make_create_frame",
+    "line": 259,
+    "end_line": 364,
+    "relation": "partial",
+    "note": "Sets up the child create frame: bumps the caller nonce, computes the created address, warms it, runs the collision check through create_account_checkpoint and builds the child interpreter with the gas limit and reservoir. This is the collision and dispatch part of generic_create. It also repeats the depth and balance checks."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/frame.rs",
+    "qualname": "EthFrame.return_result",
+    "line": 464,
+    "end_line": 571,
+    "relation": "partial",
+    "note": "Handles the outcome step for CREATE. It sets return data to the child's output on revert and clears it otherwise. It merges the child's gas back into the parent, pushes the created address or 0, and refunds the new-account state gas when a charged create failed. Its CALL branch is separate logic."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/src/journal/inner.rs",
+    "qualname": "JournalInner.create_account_checkpoint",
+    "line": 538,
+    "end_line": 600,
+    "relation": "partial",
+    "note": "Runs the collision check (code or nonce present means CreateCollision), which matches account_deployable in generic_create. It also marks the account created, sets its nonce to 1 and moves the value, which the spec does inside process_create. This is a sub-piece of the lifecycle."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/frame_data.rs",
+    "qualname": "FrameResult.refundable_state_gas",
+    "line": 136,
+    "end_line": 146,
+    "relation": "partial",
+    "note": "Decides whether the create state-gas charge is refunded: the create failed or produced no address, and the charge was taken. This is the condition for credit_state_gas_refund in generic_create's outcome step. The actual refund is applied in return_result."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/frame.rs",
+    "qualname": "EthFrame.process_next_action",
+    "line": 398,
+    "end_line": 461,
+    "relation": "unrelated",
+    "note": "General frame plumbing. It forwards the NewFrame action and, once the frame returns, commits or reverts the checkpoint through return_create and wraps the outcome along with the charged-state-gas flag. That is the job of process_create/process_message, not generic_create."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/execution.rs",
+    "qualname": "create_init_frame",
+    "line": 46,
+    "end_line": 154,
+    "relation": "unrelated",
+    "note": "Builds the top-level frame input for a transaction, including the state-gas charge for a create transaction. This is transaction-level work, not the CREATE opcode's child-frame lifecycle."
+   }
+  ],
+  "cost_usd": 0.1301758
+ },
+ "vm.instructions.system.revert|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/instructions/control.rs",
+    "qualname": "revert",
+    "line": 110,
+    "end_line": 117,
+    "relation": "equivalent",
+    "note": "The REVERT opcode itself. It rejects the opcode before Byzantium, then calls return_inner with Revert, which pops offset and size, expands memory, sets the output and ends the frame."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/instructions/control.rs",
+    "qualname": "return_inner",
+    "line": 73,
+    "end_line": 96,
+    "relation": "partial",
+    "note": "Shared helper for RETURN and REVERT. It pops offset and size, charges for memory growth, reads the output from memory and sets the return action. The Revert outcome is passed in by the caller."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/precompile/src/interface.rs",
+    "qualname": "PrecompileOutput.revert",
+    "line": 168,
+    "end_line": 178,
+    "relation": "unrelated",
+    "note": "Builds a revert result for a precompile, not the opcode."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/result.rs",
+    "qualname": "ExecutionResult.map_haltreason",
+    "line": 427,
+    "end_line": 450,
+    "relation": "unrelated",
+    "note": "Converts the halt reason in an execution result."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/precompile_provider.rs",
+    "qualname": "precompile_output_to_interpreter_result",
+    "line": 95,
+    "end_line": 125,
+    "relation": "unrelated",
+    "note": "Turns a precompile's status into an interpreter result."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/interpreter.rs",
+    "qualname": "InterpreterResult.is_revert",
+    "line": 397,
+    "end_line": 399,
+    "relation": "unrelated",
+    "note": "Only checks whether a result is a revert."
+   }
+  ],
+  "cost_usd": 0.0562878
+ },
+ "vm.eoa_delegation.calculate_delegation_cost|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/instructions/contract/call_helpers.rs",
+    "qualname": "load_account_delegated",
+    "line": 145,
+    "end_line": 200,
+    "relation": "partial",
+    "note": "Includes the delegation logic (detect 7702 target, add warm read plus extra cold cost if the target is cold) inside a larger call-cost function that also charges for the account's own cold access and new-account cost."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/src/journal/inner.rs",
+    "qualname": "JournalInner.load_account_delegated",
+    "line": 779,
+    "end_line": 813,
+    "relation": "partial",
+    "note": "Finds the delegation designation and loads the target to record whether it is cold. The caller computes the gas; this function does not."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/host.rs",
+    "qualname": "Host.load_account_delegated",
+    "line": 156,
+    "end_line": 178,
+    "relation": "partial",
+    "note": "Host default version of the same thing: finds the 7702 target and reports whether it is cold, without computing a cost."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/pre_execution.rs",
+    "qualname": "apply_auth_list_eip2780",
+    "line": 328,
+    "end_line": 449,
+    "relation": "unrelated",
+    "note": "Applies authorizations and charges for writing them (set_delegation's job), not for accessing a delegation target."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/pre_execution.rs",
+    "qualname": "apply_eip7702_auth_list",
+    "line": 234,
+    "end_line": 305,
+    "relation": "unrelated",
+    "note": "Runs authorization-list processing and returns the refund. Not about delegation access cost."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/cfg/gas_params.rs",
+    "qualname": "GasParams.tx_access_list_address_cost",
+    "line": 899,
+    "end_line": 901,
+    "relation": "unrelated",
+    "note": "Gas parameter getter for access-list addresses."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/cfg/gas_params.rs",
+    "qualname": "GasParams.tx_access_list_storage_key_cost",
+    "line": 904,
+    "end_line": 906,
+    "relation": "unrelated",
+    "note": "Gas parameter getter for access-list storage keys."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/pre_execution.rs",
+    "qualname": "validate_account_nonce_and_code",
+    "line": 84,
+    "end_line": 123,
+    "relation": "unrelated",
+    "note": "Checks the sender's code and nonce before execution."
+   }
+  ],
+  "cost_usd": 0.0951598
+ },
+ "vm.eoa_delegation.is_valid_delegation|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/pre_execution.rs",
+    "qualname": "apply_auth_list_eip2780",
+    "line": 328,
+    "end_line": 449,
+    "relation": "unrelated",
+    "note": "Applies the authorization list. Only calls bytecode.is_eip7702() for the delegation check and has no length or marker logic of its own."
+   },
+   {
+    "repo": "reth",
+    "path": "crates/transaction-pool/src/validate/mod.rs",
+    "qualname": "TransactionValidationOutcome.is_valid",
+    "line": 84,
+    "end_line": 86,
+    "relation": "unrelated",
+    "note": "Checks a txpool validation outcome enum variant. Has nothing to do with delegation code."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/precompile/src/bls12_381/blst.rs",
+    "qualname": "is_valid_be",
+    "line": 598,
+    "end_line": 600,
+    "relation": "unrelated",
+    "note": "Checks that a BLS12-381 field element is below the modulus."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/interpreter/ext_bytecode.rs",
+    "qualname": "ExtBytecode.is_valid_legacy_jump",
+    "line": 142,
+    "end_line": 146,
+    "relation": "unrelated",
+    "note": "Looks up a legacy JUMPDEST in the jump table."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/pre_execution.rs",
+    "qualname": "validate_account_nonce_and_code",
+    "line": 84,
+    "end_line": 123,
+    "relation": "unrelated",
+    "note": "EIP-3607 sender code check and nonce check. Calls is_eip7702() rather than implementing the delegation check."
+   }
+  ],
+  "cost_usd": 0.0648398
+ },
+ "vm.eoa_delegation.resolve_delegated_code_address|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/instructions/contract/call_helpers.rs",
+    "qualname": "load_account_delegated",
+    "line": 145,
+    "end_line": 200,
+    "relation": "partial",
+    "note": "Resolves the 7702 designation and charges warm plus the cold extra for the delegated account, warming it and returning its code. Also charges target access and new-account costs, so the spec logic sits inside a larger function."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/instructions/contract/call_helpers.rs",
+    "qualname": "load_account_delegated_handle_error",
+    "line": 120,
+    "end_line": 136,
+    "relation": "unrelated",
+    "note": "Thin wrapper that only calls load_account_delegated with the remaining gas."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/src/journal/inner.rs",
+    "qualname": "JournalInner.load_account_delegated",
+    "line": 779,
+    "end_line": 813,
+    "relation": "partial",
+    "note": "Finds the delegated address and loads (warms) it, recording whether it was cold. Charges no gas."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/host.rs",
+    "qualname": "Host.load_account_delegated",
+    "line": 156,
+    "end_line": 178,
+    "relation": "partial",
+    "note": "Host default: detects the delegation, warms the delegate and reports whether it was cold. Charges no gas."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/pre_execution.rs",
+    "qualname": "apply_auth_list_eip2780",
+    "line": 328,
+    "end_line": 449,
+    "relation": "unrelated",
+    "note": "Applies authorizations (sets delegation designations and charges state gas); does not resolve a call target's delegation."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/execution.rs",
+    "qualname": "create_init_frame",
+    "line": 46,
+    "end_line": 154,
+    "relation": "partial",
+    "note": "For a top-level call it resolves the recipient's delegation inline, charges warm then the cold difference, warms the account and loads its code. This is embedded in tx frame creation."
+   }
+  ],
+  "cost_usd": 0.0981198
+ },
+ "vm.interpreter.charge_value_transfer_to_non_alive_account|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/instructions/contract/call_helpers.rs",
+    "qualname": "load_account_delegated",
+    "line": 145,
+    "end_line": 200,
+    "relation": "partial",
+    "note": "Does the spec's condition: when the account is empty and value is sent, it works out new_account_state_gas under EIP-8037. It only returns the amount; the caller deducts it."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/instructions/contract/call_helpers.rs",
+    "qualname": "load_acc_and_calc_gas",
+    "line": 61,
+    "end_line": 114,
+    "relation": "partial",
+    "note": "Takes the state gas worked out by load_account_delegated and deducts it with state_gas!. This is the charge half of the spec logic for CALL-family opcodes, inside the wider CALL gas calculation."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/execution.rs",
+    "qualname": "create_init_frame",
+    "line": 46,
+    "end_line": 154,
+    "relation": "partial",
+    "note": "At the transaction level, it charges new_account_state_gas when tx value is non-zero and the recipient is empty. This is the spec check written inline inside frame setup."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/instructions/host.rs",
+    "qualname": "selfdestruct",
+    "line": 368,
+    "end_line": 414,
+    "relation": "partial",
+    "note": "In SELFDESTRUCT, it charges new_account_state_gas when value goes to a target that does not exist (had_value && !target_exists). This is the same check written inline in the opcode."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/interpreter_action/call_inputs.rs",
+    "qualname": "CallValue.transfer",
+    "line": 293,
+    "end_line": 298,
+    "relation": "unrelated",
+    "note": "Only reads the value from the CallValue enum. It charges nothing."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/cfg/gas_params.rs",
+    "qualname": "GasParams.eip2780_base_to_value_gas",
+    "line": 1089,
+    "end_line": 1105,
+    "relation": "unrelated",
+    "note": "Works out the EIP-2780 intrinsic regular gas (base, cold access, value cost). It has no check for whether the account is alive and no state gas."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/interpreter_action/call_inputs.rs",
+    "qualname": "CallInputs.transfer_to",
+    "line": 214,
+    "end_line": 216,
+    "relation": "unrelated",
+    "note": "Getter that returns the target address."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/cfg/gas_params.rs",
+    "qualname": "GasParams.new_account_cost",
+    "line": 718,
+    "end_line": 726,
+    "relation": "unrelated",
+    "note": "Returns the older regular-gas new-account cost from EIP-161. It is not the EIP-8037 state gas charge."
+   }
+  ],
+  "cost_usd": 0.0842118
+ },
+ "vm.interpreter.process_call|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/frame.rs",
+    "qualname": "EthFrame.make_call_frame",
+    "line": 144,
+    "end_line": 255,
+    "relation": "partial",
+    "note": "Covers the front half of process_call: the depth-limit check, the journal checkpoint (the snapshot), the value transfer and running precompiles, with commit or revert for precompiles. Running the bytecode and rolling back state on error happen elsewhere."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/frame.rs",
+    "qualname": "EthFrame.process_next_action",
+    "line": 398,
+    "end_line": 461,
+    "relation": "partial",
+    "note": "Covers the back half of process_call: when a call frame finishes, it commits the checkpoint on success or reverts it on error (the spec's restore_tx_state on error)."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/interpreter.rs",
+    "qualname": "Interpreter.run_plain",
+    "line": 325,
+    "end_line": 342,
+    "relation": "partial",
+    "note": "This is the opcode loop: it steps through instructions until something halts it, then records the halt. That matches the spec's while-loop and its handling of exceptional halts."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/frame.rs",
+    "qualname": "EthFrame.return_result",
+    "line": 464,
+    "end_line": 571,
+    "relation": "unrelated",
+    "note": "Runs in the parent frame after a child returns. It pushes the success flag, copies the return data and merges the child's gas into the parent, which is the call opcode's job. It also refunds the upfront state-gas charge, which is the opposite of a charge."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/frame.rs",
+    "qualname": "EthFrame.make_create_frame",
+    "line": 259,
+    "end_line": 364,
+    "relation": "unrelated",
+    "note": "Sets up a CREATE frame (nonce bump, address derivation, account creation). That matches process_create_message, not process_call."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/result.rs",
+    "qualname": "HaltReason.fmt",
+    "line": 1150,
+    "end_line": 1175,
+    "relation": "unrelated",
+    "note": "Only formats error enum values as display strings."
+   }
+  ],
+  "cost_usd": 0.0972478
+ },
+ "vm.instructions.storage.sload|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/instructions/host.rs",
+    "qualname": "sload",
+    "line": 165,
+    "end_line": 188,
+    "relation": "equivalent",
+    "note": "SLOAD opcode handler: pops the key, loads storage for the target address and charges the extra cold cost when the slot is cold. The journal marks the slot accessed. Assumes the base warm cost of 100 is charged by revm's static gas table, which was not in the code shown."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/src/journal/inner.rs",
+    "qualname": "JournalInner.sload",
+    "line": 996,
+    "end_line": 1006,
+    "relation": "partial",
+    "note": "Journal-level read: loads the slot, marks it accessed or warm and returns the present value. Covers the access-set update and get_storage, but has no gas or stack handling."
+   },
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/traits.rs",
+    "qualname": "EvmInternals.sload",
+    "line": 634,
+    "end_line": 640,
+    "relation": "partial",
+    "note": "Thin wrapper around the journal storage read with warm or cold tracking. Covers the state lookup only, not gas or the stack."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/journaled_state.rs",
+    "qualname": "JournalTr.sload",
+    "line": 65,
+    "end_line": 73,
+    "relation": "partial",
+    "note": "Default trait method that delegates to sload_skip_cold_load(false). Storage read plus access marking only."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/host.rs",
+    "qualname": "Host.sload",
+    "line": 121,
+    "end_line": 123,
+    "relation": "partial",
+    "note": "Host storage read that delegates to sload_skip_cold_load and is used by the pre-Berlin opcode path. Storage lookup only."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/src/journal.rs",
+    "qualname": "Journal.sload",
+    "line": 118,
+    "end_line": 126,
+    "relation": "partial",
+    "note": "Journal impl that calls inner.sload_assume_account_present to read the slot and track whether it is cold. State part only."
+   }
+  ],
+  "cost_usd": 0.0686078
+ },
+ "vm.instructions.storage.tload|reth": {
+  "candidates": [
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/instructions/host.rs",
+    "qualname": "tload",
+    "line": 319,
+    "end_line": 327,
+    "relation": "equivalent",
+    "note": "The TLOAD opcode handler. It checks for Cancun, takes the key from the stack top, reads transient storage for the current target and writes the value back in place. The fixed gas cost is presumably charged through the instruction table."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/src/journal/inner.rs",
+    "qualname": "JournalInner.tload",
+    "line": 1069,
+    "end_line": 1071,
+    "relation": "unrelated",
+    "note": "Only reads the transient storage value, which is the counterpart of get_transient_storage, a function the spec's tload calls. It doesn't do the opcode's stack or gas work."
+   },
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/traits.rs",
+    "qualname": "EvmInternals.tload",
+    "line": 688,
+    "end_line": 690,
+    "relation": "unrelated",
+    "note": "A wrapper that passes the call down to the internal transient storage read. It doesn't implement the opcode."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/src/context.rs",
+    "qualname": "Context.tload",
+    "line": 536,
+    "end_line": 538,
+    "relation": "unrelated",
+    "note": "A host-level wrapper that passes the call to the journal's tload. It is only the storage lookup the opcode uses."
+   },
+   {
+    "repo": "revm",
+    "path": "crates/context/src/journal.rs",
+    "qualname": "Journal.tload",
+    "line": 139,
+    "end_line": 141,
+    "relation": "unrelated",
+    "note": "A journal wrapper that passes the call to the inner transient storage read. It is a callee, not the opcode."
+   }
+  ],
+  "cost_usd": 0.046667799999999995
+ }
+}
