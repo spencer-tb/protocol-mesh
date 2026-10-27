@@ -158,8 +158,100 @@ vm.eoa_delegation.resolve_delegated_code_address	2	part	2/2	repos/clients/nimbus
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> vm.eoa_delegation.get_delegated_code_address	parseDelegationAddress
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> state_tracker.get_code	getCode
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> vm.eoa_delegation.get_delegated_code_address	isDelegation
+vm.gas.calculate_data_fee	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/eip4844.nim:130-134	blobGasFee
+vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_total_blob_gas	getTotalBlobGas
+vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	getBlobBaseFee
+vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_total_blob_gas	getTotalBlobGas
+vm.gas.calculate_gas_extend_memory	0,1,3,5	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_costs.nim:158-354	gasCosts
+vm.gas.calculate_gas_extend_memory	2,4	missing	-	-	-
+vm.gas.calculate_total_blob_gas	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/eip4844.nim:115-116	getTotalBlobGas
 vm.gas.charge_gas_from_meter	0,1	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_meter.nim:27-38	consumeGas
 vm.gas.charge_state_gas_from_meter	0,1,2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_meter.nim:55-67	chargeStateGas
+vm.gas.check_max_fee_per_blob_gas	0,2	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/core/tx_pool/tx_desc.nim:213-246	classifyValid
+vm.gas.check_max_fee_per_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	getBlobBaseFee
 vm.gas.credit_state_gas_refund	0,1	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_meter.nim:107-112	creditStateGasRefund
+vm.gas.forfeit_remaining_gas	1	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_meter.nim:72-74	burnGas
+vm.gas.forfeit_remaining_gas	0	missing	-	-	-
 vm.gas.repay_state_gas_spill	0,1,2,3	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_meter.nim:119-128	repayStateGasSpill
 vm.gas.restore_state_gas	0,1	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_meter.nim:102-105	refillFrameStateGas
+vm.instructions.storage.sload	0,1,2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_memory.nim:145-151	sloadEIP2929Op
+vm.instructions.storage.sload	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_helpers.nim:49-58	gasEip2929AccountCheck
+vm.instructions.storage.sload	1,2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_memory.nim:147-150	sloadEIP2929Op.sloadEIP2929
+vm.instructions.storage.sload	0,2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/stack.nim:349-356	unaryWithTop
+vm.instructions.storage.sload	-	delegated	2/2	-> state_tracker.get_storage	getStorage
+vm.instructions.storage.sload	-	delegated	2/2	-> vm.gas.charge_gas	opcodeGasCost
+vm.instructions.storage.sload	-	delegated	1/2	-> state_tracker.get_storage	trackStorageRead
+vm.instructions.storage.sload	-	delegated	2/2	-> vm.gas.charge_gas	consumeGas
+vm.instructions.storage.tload	0,2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_memory.nim:314-321	tloadOp
+vm.instructions.storage.tload	1	part	1/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_dispatcher.nim:43-55	handleFixedGasCostsDirective
+vm.instructions.storage.tload	-	delegated	2/2	-> state_tracker.get_transient_storage	getTransientStorage
+vm.instructions.storage.tload	-	delegated	1/2	-> vm.gas.charge_gas	opcodeGasCost
+vm.instructions.storage.tload	-	delegated	1/2	-> vm.stack.pop	lsCheck
+vm.instructions.storage.tload	-	delegated	1/2	-> vm.stack.pop	lsPeekInt
+vm.instructions.storage.tload	-	delegated	2/2	-> vm.gas.charge_gas	opcodeGasCost
+vm.instructions.storage.tload	-	delegated	2/2	-> vm.gas.charge_gas	consumeGas
+vm.instructions.storage.tload	-	delegated	2/2	-> vm.stack.pop	ensurePop
+vm.instructions.system.call	0,1,2,3,4,5	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_call.nim:264-331	callOp
+vm.instructions.system.call	1,2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_call.nim:83-100	gasCallEIP2929
+vm.instructions.system.call	0	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_call.nim:133-153	callParams
+vm.instructions.system.call	2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_call.nim:206-221	loadCallCode
+vm.instructions.system.call	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_costs.nim:390-408	prefix gasCall1
+vm.instructions.system.call	2,4	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_costs.nim:411-465	prefix gasCall2
+vm.instructions.system.call	-	delegated	2/2	-> vm.eoa_delegation.calculate_delegation_cost	gasCallDelegate
+vm.instructions.system.call	-	delegated	1/2	-> vm.eoa_delegation.calculate_delegation_cost	delegateResolutionCost
+vm.instructions.system.call	-	delegated	2/2	-> vm.instructions.system.generic_call	execSubCall
+vm.instructions.system.call	-	delegated	2/2	-> state_tracker.is_account_alive	accountExistsOrAlive
+vm.instructions.system.call	-	delegated	2/2	-> vm.gas.check_gas	checkGas
+vm.instructions.system.call	-	delegated	2/2	-> vm.gas.check_gas	checkGas
+vm.instructions.system.call	-	delegated	2/2	-> vm.gas.charge_state_gas	chargeStateGas
+vm.instructions.system.call	-	delegated	1/2	-> vm.gas.charge_gas	opcodeGasCost
+vm.instructions.system.call	-	delegated	2/2	-> vm.gas.charge_gas	opcodeGasCost
+vm.instructions.system.create	0,1,2,3,4,5	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_create.nim:120-169	createOp
+vm.instructions.system.create	4	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/message.nim:24-28	generateContractAddress
+vm.instructions.system.create	4	part	1/2	repos/clients/nimbus-eth1/execution_chain/evm/memory.nim:30-35	extend
+vm.instructions.system.create	0	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_helpers.nim:68-75	checkInStaticContext
+vm.instructions.system.create	-	delegated	2/2	-> vm.gas.charge_gas	opcodeGasCost
+vm.instructions.system.create	-	delegated	2/2	-> vm.instructions.system.generic_create	execSubCreate
+vm.instructions.system.create	-	delegated	2/2	-> vm.instructions.system.generic_create	postExecutionCreate
+vm.instructions.system.delegatecall	5	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_call.nim:443-443	delegateCallOp
+vm.instructions.system.delegatecall	1,2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_call.nim:83-100	gasCallEIP2929
+vm.instructions.system.delegatecall	0,5	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_call.nim:163-182	delegateCallParams
+vm.instructions.system.delegatecall	3	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_call.nim:206-221	loadCallCode
+vm.instructions.system.delegatecall	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_costs.nim:390-408	prefix gasCall1
+vm.instructions.system.delegatecall	2,4	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_costs.nim:411-465	prefix gasCall2
+vm.instructions.system.delegatecall	-	delegated	1/2	-> vm.eoa_delegation.calculate_delegation_cost	gasCallDelegate
+vm.instructions.system.delegatecall	-	delegated	1/2	-> vm.eoa_delegation.calculate_delegation_cost	delegateResolutionCost
+vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.charge_gas	opcodeGasCost
+vm.instructions.system.delegatecall	-	delegated	2/2	-> state_tracker.get_code	getCode
+vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.instructions.system.generic_call	execSubCall
+vm.instructions.system.generic_create	2,3,4	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_create.nim:66-112	execSubCreate
+vm.instructions.system.generic_create	5	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_create.nim:41-64	postExecutionCreate
+vm.instructions.system.generic_create	0,1	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_create.nim:120-169	createOp
+vm.instructions.system.generic_create	-	delegated	2/2	-> state_tracker.increment_nonce	incrementNonce
+vm.instructions.system.generic_create	-	delegated	2/2	-> state_tracker.account_deployable	accountDeployable
+vm.instructions.system.generic_create	-	delegated	2/2	-> state_tracker.is_account_alive	accountExistsOrAlive
+vm.instructions.system.generic_create	-	delegated	2/2	-> vm.gas.charge_state_gas	chargeStateGas
+vm.instructions.system.revert	0,1,2,3	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_sysops.nim:54-81	revertOp
+vm.instructions.system.revert	2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/memory.nim:30-35	extend
+vm.instructions.system.revert	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	prefix gasHalt
+vm.instructions.system.revert	-	delegated	1/2	-> vm.gas.calculate_gas_extend_memory	gasCosts
+vm.instructions.system.revert	-	delegated	1/2	-> vm.gas.charge_gas	opcodeGasCost
+vm.instructions.system.revert	-	delegated	2/2	-> vm.memory.memory_read_bytes	read
+vm.instructions.system.revert	-	delegated	2/2	-> vm.stack.pop	lsPeekMemRef
+vm.instructions.system.revert	-	delegated	2/2	-> vm.stack.pop	lsShrink
+vm.instructions.system.revert	-	delegated	2/2	-> vm.stack.pop	lsCheck
+vm.instructions.system.revert	-	delegated	2/2	-> vm.gas.charge_gas	consumeGas
+vm.interpreter.charge_value_transfer_to_non_alive_account	0	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_call.nim:264-331	callOp
+vm.interpreter.charge_value_transfer_to_non_alive_account	-	delegated	2/2	-> state_tracker.is_account_alive	accountExistsOrAlive
+vm.interpreter.charge_value_transfer_to_non_alive_account	-	delegated	2/2	-> vm.gas.charge_state_gas_from_meter	chargeStateGas
+vm.interpreter.process_call	3	entry	1/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter_dispatch.nim:227-258	execCallOrCreate
+vm.interpreter.process_call	3	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter_dispatch.nim:29-47	runVM
+vm.interpreter.process_call	1,2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter_dispatch.nim:69-86	beforeExecCall
+vm.interpreter.process_call	4,5	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter_dispatch.nim:162-176	afterExec
+vm.interpreter.process_call	3	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter_dispatch.nim:188-225	executeOpcodes
+vm.interpreter.process_call	4	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_call.nim:223-258	execSubCall
+vm.interpreter.process_call	0	inlined	1/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_call.nim:264-331	callOp
+vm.interpreter.process_call	-	delegated	2/2	-> state_tracker.copy_tx_state	beginSavePoint
+vm.interpreter.process_call	-	delegated	2/2	-> state_tracker.restore_tx_state	rollback
+vm.interpreter.process_call	-	delegated	2/2	-> vm.gas.restore_state_gas	refillFrameStateGas
+vm.interpreter.process_call	-	delegated	2/2	-> vm.emit_transfer_log	emitTransferLog

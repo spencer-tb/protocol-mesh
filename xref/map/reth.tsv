@@ -161,27 +161,25 @@ vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> vm.eoa_deleg
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> vm.gas.charge_gas_from_meter	GasTracker.spend
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	1/2	-> vm.gas.charge_gas_from_meter	RemainingGas.spend
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> state_tracker.get_account	Evm.load_account
-vm.gas.allocate_evm_gas	0,1,2	entry	2/2	revm/crates/context/interface/src/cfg/gas.rs:560-590	InitialAndFloorGas.initial_gas_and_reservoir
-vm.gas.calculate_data_fee	0	inlined	2/2	revm/crates/context/interface/src/transaction.rs:211-231	Transaction.effective_balance_spending
-vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	calc_blob_gasprice
-vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_total_blob_gas	Transaction.total_blob_gas
-vm.gas.calculate_gas_extend_memory	0,1	entry	2/2	revm/crates/interpreter/src/interpreter/shared_memory.rs:565-578	resize_memory
-vm.gas.calculate_gas_extend_memory	1	part	2/2	revm/crates/interpreter/src/instructions/contract/call_helpers.rs:36-51	resize_memory
-vm.gas.calculate_gas_extend_memory	3,4,5	part	2/2	revm/crates/interpreter/src/gas.rs:349-357	MemoryGas.set_words_num
-vm.gas.calculate_gas_extend_memory	2,3	part	2/2	revm/crates/interpreter/src/interpreter/shared_memory.rs:582-607	resize_memory_cold
+vm.gas.allocate_evm_gas	0,1,2	entry	2/2	repos/clients/evm2/crates/evm2/src/ethereum/mod.rs:513-536	initial_gas_and_reservoir
+vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	blob_basefee
+vm.gas.calculate_data_fee	0	missing	-	-	-
+vm.gas.calculate_gas_extend_memory	0,1	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/memory.rs:101-114	Memory.resize_evm
+vm.gas.calculate_gas_extend_memory	1	inlined	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/system.rs:35-50	resize_memory_range
+vm.gas.calculate_gas_extend_memory	2,3,4	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/memory.rs:118-141	Memory.resize_evm_cold
+vm.gas.calculate_gas_extend_memory	3,4	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:745-753	MemoryGas.set_words_num
 vm.gas.calculate_gas_extend_memory	-	delegated	2/2	-> vm.gas.calculate_memory_gas_cost	GasParams.memory_cost
-vm.gas.calculate_total_blob_gas	0	entry	2/2	revm/crates/context/interface/src/transaction.rs:106-108	Transaction.total_blob_gas
+vm.gas.calculate_gas_extend_memory	5	missing	-	-	-
+vm.gas.calculate_total_blob_gas	0	inlined	2/2	repos/clients/evm2/crates/evm2/src/ethereum/eip4844.rs:38-100	prepare_with_hooks
 vm.gas.charge_gas_from_meter	0,1	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:313-322	GasTracker.spend
 vm.gas.charge_gas_from_meter	0,1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:328-335	GasTracker.try_spend
 vm.gas.charge_gas_from_meter	0,1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:508-517	RemainingGas.spend
 vm.gas.charge_state_gas_from_meter	0,1,2	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:340-354	GasTracker.spend_state
 vm.gas.charge_state_gas_from_meter	1,2	part	1/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:313-322	GasTracker.spend
 vm.gas.charge_state_gas_from_meter	2	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:360-366	GasTracker.try_spend_state
-vm.gas.check_max_fee_per_blob_gas	2	entry	2/2	revm/crates/handler/src/validation.rs:81-118	validate_eip4844_tx
-vm.gas.check_max_fee_per_blob_gas	1	part	2/2	revm/crates/context/interface/src/block/blob.rs:36-42	BlobExcessGasAndPrice.new
-vm.gas.check_max_fee_per_blob_gas	1	inlined	2/2	alloy-evm/crates/evm/src/eth/env.rs:57-98	EvmEnv.for_eth
-vm.gas.check_max_fee_per_blob_gas	0	part	2/2	revm/crates/handler/src/validation.rs:121-237	validate_tx_env
-vm.gas.check_max_fee_per_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	calc_blob_gasprice
+vm.gas.check_max_fee_per_blob_gas	2	entry	2/2	repos/clients/evm2/crates/evm2/src/ethereum/eip4844.rs:154-162	validate_blob_fee
+vm.gas.check_max_fee_per_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	blob_basefee
+vm.gas.check_max_fee_per_blob_gas	0,1	missing	-	-	-
 vm.gas.credit_state_gas_refund	0,1	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:409-416	GasTracker.refill_reservoir
 vm.gas.forfeit_remaining_gas	1	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:439-447	GasTracker.settle_gas
 vm.gas.forfeit_remaining_gas	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:475-477	GasTracker.spend_all
@@ -191,78 +189,73 @@ vm.gas.repay_state_gas_spill	0,1,2	entry	2/2	repos/clients/evm2/crates/evm2/src/
 vm.gas.repay_state_gas_spill	3	missing	-	-	-
 vm.gas.restore_state_gas	0,1	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:382-390	GasTracker.rollback_state_gas
 vm.gas.restore_state_gas	2	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:439-447	GasTracker.settle_gas
-vm.gas.settle_transaction_gas	0,3,5	part	2/2	revm/crates/handler/src/post_execution.rs:13-37	build_result_gas
-vm.gas.settle_transaction_gas	0,2	part	2/2	revm/crates/handler/src/post_execution.rs:43-58	eip7623_check_gas_floor
-vm.gas.settle_transaction_gas	1	part	2/2	revm/crates/interpreter/src/gas.rs:245-250	Gas.set_final_refund
-vm.gas.settle_transaction_gas	1,2	part	2/2	revm/crates/context/interface/src/result.rs:263-269	ResultGas.tx_gas_used
-vm.gas.settle_transaction_gas	4	part	2/2	revm/crates/context/interface/src/result.rs:279-285	ResultGas.block_regular_gas_used
-vm.instructions.storage.sload	0,1,2	entry	2/2	revm/crates/interpreter/src/instructions/host.rs:165-188	sload
-vm.instructions.storage.sload	1	part	2/2	revm/crates/interpreter/src/instructions.rs:90-141	gas_table_spec
-vm.instructions.storage.sload	1,2	part	2/2	revm/crates/context/interface/src/journaled_state/account.rs:171-230	JournaledAccount.sload_concrete_error
-vm.instructions.storage.sload	1	part	2/2	revm/crates/state/src/lib.rs:618-620	EvmStorageSlot.is_cold_transaction_id
-vm.instructions.storage.sload	-	delegated	2/2	-> vm.gas.charge_gas	Gas.record_cost_unsafe
-vm.instructions.storage.sload	3	missing	-	-	-
-vm.instructions.storage.tload	0,2	entry	2/2	revm/crates/interpreter/src/instructions/host.rs:319-327	tload
-vm.instructions.storage.tload	1,3	inlined	2/2	revm/crates/interpreter/src/interpreter.rs:295-321	Interpreter.step
-vm.instructions.storage.tload	1	part	2/2	revm/crates/interpreter/src/instructions.rs:316-489	gas_table_impl
-vm.instructions.storage.tload	-	delegated	2/2	-> state_tracker.get_transient_storage	TransientStorage.get_value
-vm.instructions.storage.tload	-	delegated	2/2	-> vm.gas.charge_gas	Gas.record_cost_unsafe
-vm.instructions.system.call	0,4,5	entry	2/2	revm/crates/interpreter/src/instructions/contract.rs:166-247	call
-vm.instructions.system.call	0,1,5	part	2/2	revm/crates/interpreter/src/instructions/contract/call_helpers.rs:16-31	get_memory_input_and_out_ranges
-vm.instructions.system.call	1,5	part	2/2	revm/crates/interpreter/src/instructions/contract/call_helpers.rs:36-51	resize_memory
-vm.instructions.system.call	1,2,3,4	part	2/2	revm/crates/interpreter/src/instructions/contract/call_helpers.rs:61-114	load_acc_and_calc_gas
-vm.instructions.system.call	1,2,3	part	2/2	revm/crates/interpreter/src/instructions/contract/call_helpers.rs:145-200	load_account_delegated
-vm.instructions.system.call	-	delegated	2/2	-> vm.instructions.system.generic_call	EthFrame.make_call_frame
-vm.instructions.system.call	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	resize_memory
-vm.instructions.system.call	-	delegated	2/2	-> utils.address.to_address_masked	U256.into_address
+vm.gas.settle_transaction_gas	0,1,3,5	entry	2/2	repos/clients/evm2/crates/evm2/src/ethereum/mod.rs:774-819	finalize_gas
+vm.gas.settle_transaction_gas	0,1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/host.rs:70-84	MessageResultExt.final_refund
+vm.gas.settle_transaction_gas	2	part	2/2	repos/clients/evm2/crates/evm2/src/evm/tx.rs:114-118	TxResultExt.tx_gas_used
+vm.gas.settle_transaction_gas	4	part	2/2	repos/clients/evm2/crates/evm2/src/evm/tx.rs:129-132	TxResultExt.execution_gas_spent
+vm.gas.settle_transaction_gas	5	inlined	2/2	repos/clients/evm2/crates/evm2/src/ethereum/mod.rs:747-771	default_settle_gas
+vm.instructions.storage.sload	0,1,2	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/host.rs:22-39	sload
+vm.instructions.storage.sload	1,2	part	2/2	repos/clients/evm2/crates/evm2/src/evm/mod.rs:1748-1771	Evm.sload
+vm.instructions.storage.tload	0,2	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/host.rs:115-118	tload
+vm.instructions.storage.tload	3	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/mod.rs:40-42	inc_pc
+vm.instructions.storage.tload	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/packed.rs:61-67	RemainingGas.pre_step
+vm.instructions.storage.tload	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/mod.rs:76-82	pre_step
+vm.instructions.storage.tload	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/tco.rs:132-137	pre_step
+vm.instructions.storage.tload	-	delegated	2/2	-> state_tracker.get_transient_storage	State.tload
+vm.instructions.storage.tload	-	delegated	2/2	-> vm.gas.charge_gas	GasTracker.spend
+vm.instructions.storage.tload	-	delegated	2/2	-> vm.gas.charge_gas	RemainingGas.spend
+vm.instructions.system.call	5	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/system.rs:230-262	call_inner
+vm.instructions.system.call	1,5	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/system.rs:35-50	resize_memory_range
+vm.instructions.system.call	1,5	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/system.rs:52-63	get_memory_input_and_out_ranges
+vm.instructions.system.call	1,2,3,4	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/system.rs:75-150	load_acc_and_calc_gas
+vm.instructions.system.call	0,1,4	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/system.rs:153-227	prepare_call
+vm.instructions.system.call	-	delegated	2/2	-> state_tracker.is_account_alive	Evm.target_is_empty_for_new_account_gas
 vm.instructions.system.call	-	delegated	2/2	-> vm.gas.calculate_message_call_gas	GasParams.call_stipend_reduction
-vm.instructions.system.create	0,1,2,3,4,5	entry	2/2	revm/crates/interpreter/src/instructions/contract.rs:26-163	create
-vm.instructions.system.create	-	delegated	2/2	-> utils.address.compute_contract_address	CreateInputs.created_address
-vm.instructions.system.create	-	delegated	2/2	-> vm.instructions.system.generic_create	EthFrame.make_create_frame
-vm.instructions.system.create	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	resize_memory
+vm.instructions.system.call	-	delegated	2/2	-> vm.gas.charge_state_gas	Gas.spend_state
+vm.instructions.system.call	-	delegated	2/2	-> vm.instructions.system.generic_call	Evm.execute_message
+vm.instructions.system.call	-	delegated	2/2	-> vm.instructions.system.generic_call	GasTracker.merge_child_gas
+vm.instructions.system.call	-	delegated	1/2	-> vm.instructions.system.generic_call	Gas.merge_child_gas
+vm.instructions.system.create	0,1,2,3,4,5	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/system.rs:290-420	create_inner
+vm.instructions.system.create	0	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/system.rs:19-24	require_non_staticcall
+vm.instructions.system.create	2,4	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/system.rs:35-50	resize_memory_range
 vm.instructions.system.create	-	delegated	2/2	-> vm.gas.init_code_cost	GasParams.initcode_cost
-vm.instructions.system.delegatecall	0,4,5	entry	2/2	revm/crates/interpreter/src/instructions/contract.rs:166-247	call
-vm.instructions.system.delegatecall	0,1,5	part	2/2	revm/crates/interpreter/src/instructions/contract/call_helpers.rs:16-31	get_memory_input_and_out_ranges
-vm.instructions.system.delegatecall	1,2,4	part	2/2	revm/crates/interpreter/src/instructions/contract/call_helpers.rs:61-114	load_acc_and_calc_gas
-vm.instructions.system.delegatecall	1,2,3	part	2/2	revm/crates/interpreter/src/instructions/contract/call_helpers.rs:145-200	load_account_delegated
-vm.instructions.system.delegatecall	-	delegated	2/2	-> utils.address.to_address_masked	U256.into_address
-vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.instructions.system.generic_call	EthFrame.make_call_frame
-vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	resize_memory
-vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	resize_memory_cold
-vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.calculate_message_call_gas	GasParams.call_stipend_reduction
-vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	resize_memory
-vm.instructions.system.delegatecall	-	delegated	2/2	-> state_tracker.get_account	Journal.load_account_info_skip_cold_load
-vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	GasParams.memory_cost
-vm.instructions.system.generic_create	0,1,2,3	entry	2/2	revm/crates/interpreter/src/instructions/contract.rs:26-163	create
-vm.instructions.system.generic_create	5	part	2/2	revm/crates/handler/src/frame_data.rs:136-146	FrameResult.refundable_state_gas
-vm.instructions.system.generic_create	3,4	part	2/2	revm/crates/handler/src/frame.rs:259-364	EthFrame.make_create_frame
-vm.instructions.system.generic_create	5	part	2/2	revm/crates/handler/src/frame.rs:464-571	EthFrame.return_result
-vm.instructions.system.generic_create	3	part	2/2	revm/crates/context/src/journal/inner.rs:538-600	JournalInner.create_account_checkpoint
-vm.instructions.system.generic_create	-	delegated	2/2	-> vm.memory.memory_read_bytes	MemoryTr.slice_len
-vm.instructions.system.generic_create	-	delegated	2/2	-> vm.memory.memory_read_bytes	SharedMemory.slice_len
-vm.instructions.system.generic_create	-	delegated	2/2	-> vm.incorporate_child	handle_reservoir_remaining_gas
-vm.instructions.system.revert	3	entry	2/2	revm/crates/interpreter/src/instructions/control.rs:110-117	revert
-vm.instructions.system.revert	0,1,2,3	part	2/2	revm/crates/interpreter/src/instructions/control.rs:73-96	return_inner
-vm.instructions.system.revert	2	part	2/2	revm/crates/interpreter/src/interpreter/shared_memory.rs:287-291	SharedMemory.resize
-vm.instructions.system.revert	1	part	2/2	revm/crates/interpreter/src/interpreter/shared_memory.rs:565-578	resize_memory
-vm.instructions.system.revert	1,2	part	2/2	revm/crates/interpreter/src/interpreter/shared_memory.rs:582-607	resize_memory_cold
-vm.instructions.system.revert	-	delegated	2/2	-> vm.gas.charge_gas	GasTracker.record_regular_cost
-vm.instructions.system.revert	-	delegated	2/2	-> vm.memory.memory_read_bytes	SharedMemory.slice_len
+vm.instructions.system.create	-	delegated	2/2	-> utils.address.compute_contract_address	derive_create_destination
+vm.instructions.system.create	-	delegated	2/2	-> vm.stack.pop	StackMut.popn
+vm.instructions.system.create	-	delegated	1/2	-> vm.stack.pop	StackMut.pop
+vm.instructions.system.create	-	delegated	2/2	-> vm.gas.charge_gas	GasTracker.spend
+vm.instructions.system.create	-	delegated	1/2	-> vm.gas.charge_gas	RemainingGas.spend
+vm.instructions.system.create	-	delegated	1/2	-> vm.gas.charge_gas	Gas.spend
+vm.instructions.system.delegatecall	5	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/system.rs:275-277	delegatecall
+vm.instructions.system.delegatecall	1,5	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/system.rs:35-50	resize_memory_range
+vm.instructions.system.delegatecall	1,5	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/system.rs:52-63	get_memory_input_and_out_ranges
+vm.instructions.system.delegatecall	1,2,3,4	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/system.rs:75-150	load_acc_and_calc_gas
+vm.instructions.system.delegatecall	0,1,4,5	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/system.rs:153-227	prepare_call
+vm.instructions.system.delegatecall	5	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/system.rs:230-262	call_inner
+vm.instructions.system.delegatecall	-	delegated	1/2	-> vm.instructions.system.generic_call	memory_range_bytes
+vm.instructions.system.delegatecall	-	delegated	1/2	-> vm.instructions.system.generic_call	Evm.execute_message
+vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.instructions.system.generic_call	GasTracker.merge_child_gas
+vm.instructions.system.generic_create	0,1,2,3,4,5	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/system.rs:290-420	create_inner
+vm.instructions.system.generic_create	-	delegated	2/2	-> vm.memory.memory_read_bytes	memory_range_bytes
+vm.instructions.system.revert	0,3	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/control.rs:63-65	revert
+vm.instructions.system.revert	1,2,3	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/control.rs:68-90	return_inner
+vm.instructions.system.revert	2	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/memory.rs:81-83	Memory.resize_to
+vm.instructions.system.revert	1,2	part	1/2	repos/clients/evm2/crates/evm2/src/interpreter/memory.rs:101-114	Memory.resize_evm
+vm.instructions.system.revert	1,2	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/memory.rs:118-141	Memory.resize_evm_cold
+vm.instructions.system.revert	2	part	1/2	repos/clients/evm2/crates/evm2/src/interpreter/runtime.rs:700-702	InterpreterState.set_output
 vm.instructions.system.revert	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	GasParams.memory_cost
-vm.instructions.system.revert	-	delegated	2/2	-> vm.memory.memory_read_bytes	MemoryTr.slice_len
 vm.instructions.system.revert	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	MemoryGas.set_words_num
-vm.interpreter.charge_value_transfer_to_non_alive_account	0	inlined	2/2	revm/crates/handler/src/execution.rs:46-154	create_init_frame
-vm.interpreter.charge_value_transfer_to_non_alive_account	0	part	2/2	revm/crates/interpreter/src/instructions/contract/call_helpers.rs:61-114	load_acc_and_calc_gas
-vm.interpreter.charge_value_transfer_to_non_alive_account	0	part	2/2	revm/crates/interpreter/src/instructions/contract/call_helpers.rs:145-200	load_account_delegated
-vm.interpreter.charge_value_transfer_to_non_alive_account	-	delegated	2/2	-> vm.gas.charge_state_gas_from_meter	GasTracker.record_state_cost
-vm.interpreter.process_call	0,1,2,3,5	entry	2/2	revm/crates/handler/src/frame.rs:144-255	EthFrame.make_call_frame
-vm.interpreter.process_call	3	part	2/2	revm/crates/handler/src/precompile_provider.rs:141-171	EthPrecompiles.run
-vm.interpreter.process_call	3	part	2/2	revm/crates/interpreter/src/interpreter.rs:325-342	Interpreter.run_plain
-vm.interpreter.process_call	5	part	2/2	revm/crates/handler/src/frame.rs:398-461	EthFrame.process_next_action
-vm.interpreter.process_call	4	part	2/2	revm/crates/handler/src/frame.rs:595-631	handle_reservoir_remaining_gas
-vm.interpreter.process_call	-	delegated	2/2	-> vm.gas.restore_state_gas	GasTracker.rollback_state_gas
-vm.interpreter.process_call	-	delegated	2/2	-> vm.gas.forfeit_remaining_gas	GasTracker.spend_all
-vm.interpreter.process_call	-	delegated	2/2	-> state_tracker.move_ether	JournalInner.transfer_loaded
-vm.interpreter.process_call	-	delegated	2/2	-> state_tracker.copy_tx_state	JournalInner.checkpoint
-vm.interpreter.process_call	-	delegated	2/2	-> state_tracker.restore_tx_state	JournalInner.checkpoint_revert
-vm.interpreter.process_call	-	delegated	2/2	-> vm.emit_transfer_log	JournalInner.eip7708_transfer_log
+vm.instructions.system.revert	-	delegated	2/2	-> vm.gas.charge_gas	GasTracker.spend
+vm.instructions.system.revert	-	delegated	1/2	-> vm.gas.charge_gas	RemainingGas.spend
+vm.interpreter.charge_value_transfer_to_non_alive_account	0	inlined	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/system.rs:75-150	load_acc_and_calc_gas
+vm.interpreter.charge_value_transfer_to_non_alive_account	0	inlined	2/2	repos/clients/evm2/crates/evm2/src/ethereum/mod.rs:568-679	prepare_initial_frame
+vm.interpreter.charge_value_transfer_to_non_alive_account	-	delegated	2/2	-> state_tracker.is_account_alive	AccountHandle.is_empty_for_new_account_gas
+vm.interpreter.process_call	0,1,2,3	entry	2/2	repos/clients/evm2/crates/evm2/src/evm/mod.rs:1517-1560	Evm.execute_call_message
+vm.interpreter.process_call	3	part	1/2	repos/clients/evm2/crates/evm2/src/evm/mod.rs:366-382	Evm.execute_precompile
+vm.interpreter.process_call	4	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:439-447	GasTracker.settle_gas
+vm.interpreter.process_call	3,5	part	2/2	repos/clients/evm2/crates/evm2/src/evm/mod.rs:1563-1601	Evm.execute_call_precompile
+vm.interpreter.process_call	5	part	2/2	repos/clients/evm2/crates/evm2/src/evm/mod.rs:1604-1624	Evm.finish_call_message_run
+vm.interpreter.process_call	3	part	2/2	repos/clients/evm2/crates/evm2/src/evm/mod.rs:1640-1672	Evm.run_interpreter
+vm.interpreter.process_call	-	delegated	2/2	-> vm.emit_transfer_log	Evm.log_eip7708_transfer
+vm.interpreter.process_call	-	delegated	2/2	-> state_tracker.copy_tx_state	State.checkpoint
+vm.interpreter.process_call	-	delegated	2/2	-> state_tracker.move_ether	State.transfer
+vm.interpreter.process_call	-	delegated	2/2	-> state_tracker.restore_tx_state	State.rollback

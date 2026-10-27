@@ -167,18 +167,17 @@ vm.eoa_delegation.calculate_delegation_cost	-	delegated	2/2	-> vm.eoa_delegation
 vm.eoa_delegation.is_valid_delegation	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/Eip7702Constants.cs:25-27	Eip7702Constants.IsDelegatedCode
 vm.eoa_delegation.resolve_delegated_code_address	0,1,3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/CodeInfoRepository.cs:72-94	CodeInfoRepository.GetCachedCodeInfo
 vm.gas.allocate_evm_gas	0,1,2	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:813-842	EthereumGasPolicy.TryCreateAvailableFromIntrinsic
-vm.gas.allocate_evm_gas	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:1996-2003	TransactionProcessorBase.CalculateInitialStateReservoir
 vm.gas.calculate_data_fee	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/BlobGasCalculator.cs:57-65	BlobGasCalculator.TryCalculateBlobBaseFee
 vm.gas.calculate_data_fee	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:58-67	BlobBaseFeeCalculator.TryCalculateBlobFees
 vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	BlobGasCalculator.TryCalculateFeePerBlobGas
 vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	BlobGasCalculator.TryCalculateFeePerBlobGas
 vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	BlobGasCalculator.CalculateFeePerBlobGas
 vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	TransactionExtensions.CalculateFeePerBlobGas
-vm.gas.calculate_gas_extend_memory	1,5	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/EvmPooledMemory.cs:314-326	EvmPooledMemory.CalculateMemoryCost
-vm.gas.calculate_gas_extend_memory	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/EvmPooledMemory.cs:96-123	EvmPooledMemory.CheckMemoryAccessViolation
-vm.gas.calculate_gas_extend_memory	1,5	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/EvmPooledMemory.cs:300-312	EvmPooledMemory.CalculateMemoryCost
-vm.gas.calculate_gas_extend_memory	1	inlined	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:433-446	EthereumGasPolicy.UpdateMemoryCost
-vm.gas.calculate_gas_extend_memory	2,4	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/EvmPooledMemory.cs:702-719	EvmPooledMemory.ComputeMemoryExpansionCost
+vm.gas.calculate_gas_extend_memory	1,5	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/EvmPooledMemory.cs:300-312	EvmPooledMemory.CalculateMemoryCost
+vm.gas.calculate_gas_extend_memory	1	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/EvmPooledMemory.cs:96-123	EvmPooledMemory.CheckMemoryAccessViolation
+vm.gas.calculate_gas_extend_memory	1,5	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/EvmPooledMemory.cs:314-326	EvmPooledMemory.CalculateMemoryCost
+vm.gas.calculate_gas_extend_memory	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:433-446	EthereumGasPolicy.UpdateMemoryCost
+vm.gas.calculate_gas_extend_memory	2,3,4	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/EvmPooledMemory.cs:702-719	EvmPooledMemory.ComputeMemoryExpansionCost
 vm.gas.calculate_gas_extend_memory	3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/EvmPooledMemory.cs:722-726	EvmPooledMemory.ExpansionCost
 vm.gas.calculate_gas_extend_memory	0	missing	-	-	-
 vm.gas.calculate_total_blob_gas	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/TransactionExtensions.cs:73-73	TransactionExtensions.GetBlobGas
@@ -190,119 +189,90 @@ vm.gas.charge_state_gas_from_meter	1	part	2/2	repos/clients/nethermind/src/Nethe
 vm.gas.charge_state_gas_from_meter	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:117-118	EthereumGasPolicy.ConsumeRaw
 vm.gas.charge_state_gas_from_meter	1,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:120-126	EthereumGasPolicy.TryConsume
 vm.gas.check_max_fee_per_blob_gas	0,1,2	inlined	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Validators/BlockValidator.cs:402-462	BlockValidator.ValidateEip4844Fields
-vm.gas.check_max_fee_per_blob_gas	0,1,2	inlined	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:1192-1294	TransactionProcessorBase.BuyGas
-vm.gas.check_max_fee_per_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	TransactionExtensions.CalculateFeePerBlobGas
 vm.gas.check_max_fee_per_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	BlobGasCalculator.TryCalculateFeePerBlobGas
 vm.gas.check_max_fee_per_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	BlobGasCalculator.CalculateFeePerBlobGas
-vm.gas.check_max_fee_per_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	BlobGasCalculator.CalculateFeePerBlobGas.FakeExponentialOverflow
-vm.gas.check_max_fee_per_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	BlobGasCalculator.TryCalculateFeePerBlobGas
 vm.gas.credit_state_gas_refund	0,1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:568-587	EthereumGasPolicy.RefundStateGas
 vm.gas.credit_state_gas_refund	0,1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:600-608	EthereumGasPolicy.AddStateGasRefundToReservoir
 vm.gas.credit_state_gas_refund	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:627-633	EthereumGasPolicy.TrackStateGasSpillRefund
 vm.gas.forfeit_remaining_gas	1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:81-82	EthereumGasPolicy.ClearExecutionGas
-vm.gas.forfeit_remaining_gas	0	missing	-	-	-
 vm.gas.repay_state_gas_spill	0,1,2	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:172-184	EthereumGasPolicy.RepayStateGasSpill
 vm.gas.repay_state_gas_spill	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:221-223	EthereumGasPolicy.GetUnrefundedStateGasSpill
 vm.gas.repay_state_gas_spill	3	missing	-	-	-
 vm.gas.restore_state_gas	0,1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:188-196	EthereumGasPolicy.RestoreChildStateGas
 vm.gas.restore_state_gas	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:200-207	EthereumGasPolicy.RestoreChildStateGasOnHalt
 vm.gas.restore_state_gas	2	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:610-625	EthereumGasPolicy.RemoveStateGasRefundFromReservoir
-vm.gas.settle_transaction_gas	1,2,3,5	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:1938-1979	TransactionProcessorBase.Refund
+vm.gas.settle_transaction_gas	1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:1938-1979	TransactionProcessorBase.Refund
 vm.gas.settle_transaction_gas	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/RefundHelper.cs:18-24	RefundHelper.CalculateClaimableRefund
 vm.gas.settle_transaction_gas	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/IGasPolicy.cs:49-60	IGasPolicy.GetPreRefundGas
 vm.gas.settle_transaction_gas	4	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/Eip8037BlockGasInclusionCheck.cs:56-57	Eip8037BlockGasInclusionCheck.CalculateBlockExecutionGas
-vm.gas.settle_transaction_gas	2,3,4	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:1722-1742	TransactionProcessorBase.RefundOnFail
-vm.gas.settle_transaction_gas	0,1,2,4	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:1776-1810	TransactionProcessorBase.RefundOnTopLevelHalt
-vm.gas.settle_transaction_gas	5	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:1812-1826	TransactionProcessorBase.RefundFailedEip8037Gas
+vm.gas.settle_transaction_gas	0,2,4	inlined	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:1722-1742	TransactionProcessorBase.RefundOnFail
+vm.gas.settle_transaction_gas	0,2,4	inlined	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:1745-1774	TransactionProcessorBase.RefundOnContractCollision
+vm.gas.settle_transaction_gas	0,1,2,4	inlined	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:1776-1810	TransactionProcessorBase.RefundOnTopLevelHalt
 vm.gas.settle_transaction_gas	0,1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:2005-2026	TransactionProcessorBase.CalculateSpentGasAndRefund
-vm.gas.settle_transaction_gas	3,4	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:2031-2044	TransactionProcessorBase.CalculateBlockGas
+vm.gas.settle_transaction_gas	4	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:2031-2044	TransactionProcessorBase.CalculateBlockGas
+vm.gas.settle_transaction_gas	3	missing	-	-	-
 vm.instructions.storage.sload	0,1,2	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Storage.cs:834-887	EvmInstructions.InstructionSLoad
-vm.instructions.storage.sload	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/StackAccessTracker.cs:155-166	StackAccessTracker.TrackingState.IsCold
-vm.instructions.storage.sload	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/StackAccessTracker.cs:168-175	StackAccessTracker.TrackingState.WarmUp
 vm.instructions.storage.sload	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:381-412	EthereumGasPolicy.TryConsumeStorageAccessGasCore
 vm.instructions.storage.sload	-	delegated	2/2	-> vm.stack.pop	PopBytesByRef
 vm.instructions.storage.sload	3	missing	-	-	-
 vm.instructions.storage.tload	0,1,2	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Storage.cs:36-75	EvmInstructions.InstructionTLoad
-vm.instructions.storage.tload	3	inlined	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.Dispatch.std.cs:280-488	VirtualMachine.RawCalliHelper.ExecuteOpcode
-vm.instructions.storage.tload	-	delegated	2/2	-> state_tracker.get_transient_storage	IWorldState.GetTransientState
 vm.instructions.storage.tload	-	delegated	2/2	-> vm.stack.pop	PopBytesByRef
+vm.instructions.storage.tload	3	missing	-	-	-
 vm.instructions.system.call	0,1,2,3,4,5	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Call.cs:93-337	EvmInstructions.InstructionCall
-vm.instructions.system.call	5	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Call.cs:20-26	EvmInstructions.HasAtLeast
-vm.instructions.system.call	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/CodeInfoRepository.cs:72-94	CodeInfoRepository.GetCachedCodeInfo
 vm.instructions.system.call	1,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:248-272	EthereumGasPolicy.TryConsumeAccountAccessGasCore
 vm.instructions.system.call	3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Call.cs:340-349	EvmInstructions.ChargesNewAccount
-vm.instructions.system.call	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:672-674	EthereumGasPolicy.TryConsumeCallValueTransfer
 vm.instructions.system.call	3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:680-685	EthereumGasPolicy.TryConsumeNewAccountCreation
-vm.instructions.system.call	-	delegated	2/2	-> vm.gas.charge_state_gas	EthereumGasPolicy.TryConsumeStateGas
 vm.instructions.system.call	-	delegated	2/2	-> vm.instructions.system.generic_call	EvmInstructions.CreateFullCallFrame
-vm.instructions.system.call	-	delegated	2/2	-> utils.address.to_address_masked	PopAddress
 vm.instructions.system.call	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	EthereumGasPolicy.UpdateMemoryCost
+vm.instructions.system.call	-	delegated	2/2	-> vm.gas.charge_state_gas	EthereumGasPolicy.TryConsumeStateGas
 vm.instructions.system.call	-	delegated	2/2	-> vm.gas.calculate_message_call_gas	EthereumGasPolicy.TryReserveChildGasCore
 vm.instructions.system.call	-	delegated	2/2	-> vm.gas.drain_state_gas_reservoir	EthereumGasPolicy.CreateChildFrameGas
-vm.instructions.system.call	-	delegated	2/2	-> utils.address.to_address_masked	PopAddress
 vm.instructions.system.call	-	delegated	2/2	-> utils.address.to_address_masked	PopAddress
 vm.instructions.system.create	0,1,2,3,4,5	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Create.cs:96-321	EvmInstructions.InstructionCreate
 vm.instructions.system.create	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/CreateGasCost.cs:18-23	CreateGasCost.Base
 vm.instructions.system.create	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:345-355	EthereumGasPolicy.TryConsumeCreateGas
-vm.instructions.system.create	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:433-446	EthereumGasPolicy.UpdateMemoryCost
-vm.instructions.system.create	-	delegated	2/2	-> state_tracker.get_account	IAccountStateProvider.GetNonce
-vm.instructions.system.create	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	EvmPooledMemory.CalculateMemoryCost
+vm.instructions.system.create	2	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:433-446	EthereumGasPolicy.UpdateMemoryCost
 vm.instructions.system.create	-	delegated	2/2	-> utils.address.compute_contract_address	ContractAddress.From
-vm.instructions.system.delegatecall	2,3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/CodeInfoRepository.cs:72-94	CodeInfoRepository.GetCachedCodeInfo
-vm.instructions.system.delegatecall	1,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:248-272	EthereumGasPolicy.TryConsumeAccountAccessGasCore
-vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	EvmPooledMemory.CalculateMemoryCost
+vm.instructions.system.delegatecall	0,1,2,3,4,5	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Call.cs:93-337	EvmInstructions.InstructionCall
+vm.instructions.system.delegatecall	4,5	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Call.cs:583-660	EvmInstructions.CreateFullCallFrame
 vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	EthereumGasPolicy.UpdateMemoryCost
-vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.calculate_message_call_gas	EthereumGasPolicy.TryReserveChildGasCore
-vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.instructions.system.generic_call	EvmInstructions.CreateFullCallFrame
-vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.drain_state_gas_reservoir	EthereumGasPolicy.CreateChildFrameGas
+vm.instructions.system.delegatecall	-	delegated	1/2	-> state_tracker.get_code	CodeInfoRepository.GetCachedCodeInfo
 vm.instructions.system.delegatecall	-	delegated	2/2	-> state_tracker.get_code	CodeInfoRepository.GetDelegatedCodeInfo
+vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.calculate_message_call_gas	EthereumGasPolicy.TryReserveChildGasCore
+vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.drain_state_gas_reservoir	EthereumGasPolicy.CreateChildFrameGas
+vm.instructions.system.delegatecall	-	delegated	1/2	-> utils.address.to_address_masked	PopAddress
 vm.instructions.system.delegatecall	-	delegated	2/2	-> utils.address.to_address_masked	PopAddress
+vm.instructions.system.delegatecall	-	delegated	1/2	-> utils.address.to_address_masked	PopAddress
 vm.instructions.system.generic_create	0,1,2,3,4	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Create.cs:96-321	EvmInstructions.InstructionCreate
-vm.instructions.system.generic_create	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/IGasPolicy.cs:187-189	IGasPolicy.TryConsumeCreateStateGas
 vm.instructions.system.generic_create	5	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.cs:674-681	VirtualMachine.PrepareCreateData
-vm.instructions.system.generic_create	5	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.cs:871-896	VirtualMachine.HandleRevert
 vm.instructions.system.generic_create	5	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.cs:967-991	VirtualMachine.UnwindHaltedChild
-vm.instructions.system.generic_create	-	delegated	2/2	-> vm.memory.memory_read_bytes	EvmPooledMemory.TryLoadOwned
-vm.instructions.system.generic_create	-	delegated	2/2	-> state_tracker.account_deployable	IWorldState.IsNonZeroAccount
 vm.instructions.system.generic_create	-	delegated	2/2	-> vm.gas.withhold_create_gas	EthereumGasPolicy.TryReserveChildGasCore
-vm.instructions.system.generic_create	-	delegated	2/2	-> vm.gas.withhold_create_gas	EthereumGasPolicy.TryReserveChildGas
 vm.instructions.system.generic_create	-	delegated	2/2	-> vm.gas.drain_state_gas_reservoir	EthereumGasPolicy.CreateChildFrameGas
 vm.instructions.system.generic_create	-	delegated	2/2	-> vm.interpreter.process_create	VirtualMachine.TryChargeAndDepositCode
-vm.instructions.system.generic_create	-	delegated	2/2	-> vm.gas.credit_state_gas_refund	VirtualMachine.CreditStateGasRefund
-vm.instructions.system.generic_create	-	delegated	2/2	-> vm.stack.push	PushZero
+vm.instructions.system.generic_create	-	delegated	1/2	-> vm.stack.push	PushZero
+vm.instructions.system.generic_create	-	delegated	2/2	-> vm.memory.memory_read_bytes	EvmPooledMemory.TryLoadOwned
 vm.instructions.system.revert	0,1,2,3	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.ControlFlow.cs:325-354	EvmInstructions.InstructionRevert
-vm.instructions.system.revert	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.cs:130-158	ReturnDataScratch.Stage
 vm.instructions.system.revert	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.cs:250-263	VirtualMachine.StageReturnData
-vm.instructions.system.revert	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	EvmPooledMemory.CheckMemoryAccessViolation
-vm.instructions.system.revert	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	EvmPooledMemory.CalculateMemoryCost
-vm.instructions.system.revert	-	delegated	2/2	-> vm.memory.memory_read_bytes	EvmPooledMemory.LoadSpanAfterGas
-vm.instructions.system.revert	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	EvmPooledMemory.ComputeMemoryExpansionCost
+vm.instructions.system.revert	1	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:433-446	EthereumGasPolicy.UpdateMemoryCost
+vm.instructions.system.revert	3	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.cs:871-896	VirtualMachine.HandleRevert
 vm.instructions.system.revert	-	delegated	2/2	-> vm.stack.pop	PopMemoryPositionAndUInt256
-vm.instructions.system.revert	-	delegated	2/2	-> vm.memory.memory_read_bytes	EvmPooledMemory.LoadSpanAfterGas
-vm.instructions.system.revert	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	EvmPooledMemory.CheckMemoryAccessViolation
 vm.instructions.system.revert	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	EvmPooledMemory.CalculateMemoryCost
-vm.instructions.system.revert	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	EvmPooledMemory.ExpansionCost
-vm.instructions.system.revert	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	EthereumGasPolicy.UpdateMemoryCost
-vm.instructions.system.revert	-	delegated	2/2	-> vm.stack.pop	ReadUInt256FromSlot
-vm.instructions.system.revert	-	delegated	2/2	-> vm.stack.pop	ReadMemoryPositionFromSlot
+vm.instructions.system.revert	-	delegated	2/2	-> vm.memory.memory_read_bytes	EvmPooledMemory.LoadSpanAfterGas
+vm.instructions.system.revert	-	delegated	2/2	-> vm.memory.memory_read_bytes	EvmPooledMemory.LoadSpanAfterGas
+vm.instructions.system.revert	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	EvmPooledMemory.CalculateMemoryCost
+vm.instructions.system.revert	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	EvmPooledMemory.CheckMemoryAccessViolation
+vm.instructions.system.revert	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	EvmPooledMemory.CheckMemoryAccessViolation
+vm.instructions.system.revert	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	EvmPooledMemory.ComputeMemoryExpansionCost
 vm.interpreter.charge_value_transfer_to_non_alive_account	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Call.cs:340-349	EvmInstructions.ChargesNewAccount
-vm.interpreter.charge_value_transfer_to_non_alive_account	0	inlined	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:386-533	TransactionProcessorBase.ExecuteEvmTransaction
-vm.interpreter.charge_value_transfer_to_non_alive_account	0	inlined	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:535-635	TransactionProcessorBase.ExecuteSimpleTransfer
+vm.interpreter.charge_value_transfer_to_non_alive_account	0	inlined	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Call.cs:352-445	EvmInstructions.InstructionPay
 vm.interpreter.charge_value_transfer_to_non_alive_account	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:680-685	EthereumGasPolicy.TryConsumeNewAccountCreation
-vm.interpreter.charge_value_transfer_to_non_alive_account	-	delegated	2/2	-> vm.gas.charge_state_gas_from_meter	EthereumGasPolicy.TryConsumeStateGas
 vm.interpreter.process_call	2,3	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.cs:1625-1737	VirtualMachine.ExecuteCall
-vm.interpreter.process_call	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.ExecutionHandlers.cs:62-76	VirtualMachine.InitializeFrameCore
-vm.interpreter.process_call	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.ExecutionHandlers.cs:78-83	VirtualMachine.AddTransferLogCore
 vm.interpreter.process_call	1,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Call.cs:583-660	EvmInstructions.CreateFullCallFrame
 vm.interpreter.process_call	5	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.cs:871-896	VirtualMachine.HandleRevert
-vm.interpreter.process_call	4,5	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.cs:914-965	VirtualMachine.HandleFailure
-vm.interpreter.process_call	4	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.cs:967-991	VirtualMachine.UnwindHaltedChild
-vm.interpreter.process_call	4	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.cs:998-1007	VirtualMachine.PopAndRestoreParentState
+vm.interpreter.process_call	5	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.cs:914-965	VirtualMachine.HandleFailure
 vm.interpreter.process_call	5	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.cs:1127-1160	VirtualMachine.HandleException
 vm.interpreter.process_call	2,3,4	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.cs:1181-1232	VirtualMachine.ExecutePrecompile
 vm.interpreter.process_call	2,3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.cs:1432-1478	VirtualMachine.RunPrecompile
-vm.interpreter.process_call	3,4	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.cs:1740-1820	VirtualMachine.RunByteCode
-vm.interpreter.process_call	-	delegated	2/2	-> vm.gas.restore_state_gas	EthereumGasPolicy.RestoreChildStateGas
-vm.interpreter.process_call	-	delegated	2/2	-> vm.gas.restore_state_gas	EthereumGasPolicy.RestoreChildStateGasOnHalt
+vm.interpreter.process_call	3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.cs:1489-1531	VirtualMachine.ExecutePrecompileCall
 vm.interpreter.process_call	-	delegated	2/2	-> vm.emit_transfer_log	VirtualMachine.AddTransferLog
-vm.interpreter.process_call	0	missing	-	-	-
+vm.interpreter.process_call	-	delegated	1/2	-> vm.emit_transfer_log	VirtualMachine.AddTransferLogCore

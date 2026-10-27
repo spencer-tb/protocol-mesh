@@ -183,9 +183,111 @@ vm.eoa_delegation.resolve_delegated_code_address	2,3	inlined	2/2	repos/clients/e
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> vm.eoa_delegation.get_delegated_code_address	get_authorized_address_from_code
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> vm.eoa_delegation.get_delegated_code_address	code_has_delegation
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> vm.eoa_delegation.get_delegated_code_address	is_eip7702_delegation
+vm.gas.allocate_evm_gas	0,1,2	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/utils.rs:530-609	VM.add_intrinsic_gas
+vm.gas.calculate_data_fee	0	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/utils.rs:161-180	calculate_blob_gas_cost
+vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	get_base_fee_per_blob_gas
+vm.gas.calculate_gas_extend_memory	1,3,5	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/memory.rs:632-641	expansion_cost
+vm.gas.calculate_gas_extend_memory	1,2	part	2/2	repos/clients/ethrex/crates/vm/levm/src/memory.rs:661-670	calculate_memory_size
+vm.gas.calculate_gas_extend_memory	-	delegated	2/2	-> vm.gas.calculate_memory_gas_cost	cost
+vm.gas.calculate_gas_extend_memory	0,4	missing	-	-	-
+vm.gas.calculate_total_blob_gas	0	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/utils.rs:140-159	get_max_blob_gas_price
+vm.gas.calculate_total_blob_gas	0	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/utils.rs:161-180	calculate_blob_gas_cost
 vm.gas.charge_gas_from_meter	0,1	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/call_frame.rs:506-514	CallFrame.increase_consumed_gas
 vm.gas.charge_state_gas_from_meter	0,1	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/vm.rs:1172-1208	VM.increase_state_gas
 vm.gas.charge_state_gas_from_meter	1,2	part	2/2	repos/clients/ethrex/crates/vm/levm/src/call_frame.rs:506-514	CallFrame.increase_consumed_gas
+vm.gas.check_max_fee_per_blob_gas	1,2	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/hooks/default_hook.rs:691-705	validate_max_fee_per_blob_gas
+vm.gas.check_max_fee_per_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	get_base_fee_per_blob_gas
+vm.gas.check_max_fee_per_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	calculate_base_fee_per_blob_gas
+vm.gas.check_max_fee_per_blob_gas	0	missing	-	-	-
 vm.gas.credit_state_gas_refund	0,1	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/vm.rs:1220-1253	VM.credit_state_gas_refund
+vm.gas.forfeit_remaining_gas	1	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/execution_handlers.rs:13-43	VM.handle_precompile_result
+vm.gas.forfeit_remaining_gas	1	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/execution_handlers.rs:46-102	VM.handle_opcode_result
+vm.gas.forfeit_remaining_gas	1	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/execution_handlers.rs:105-137	VM.handle_opcode_error
+vm.gas.forfeit_remaining_gas	0	missing	-	-	-
 vm.gas.repay_state_gas_spill	0,1,2,3	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/vm.rs:1292-1322	VM.repay_state_gas_spill
 vm.gas.restore_state_gas	0,1	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/vm.rs:1345-1396	VM.refill_frame_state_gas
+vm.gas.settle_transaction_gas	0,3,4	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/hooks/default_hook.rs:312-398	DefaultHook.finalize_execution
+vm.gas.settle_transaction_gas	3,4,5	part	2/2	repos/clients/ethrex/crates/vm/levm/src/hooks/default_hook.rs:419-486	refund_sender
+vm.gas.settle_transaction_gas	1	part	2/2	repos/clients/ethrex/crates/vm/levm/src/hooks/default_hook.rs:489-494	compute_gas_refunded
+vm.gas.settle_transaction_gas	1,2	part	2/2	repos/clients/ethrex/crates/vm/levm/src/hooks/default_hook.rs:497-511	compute_actual_gas_used
+vm.instructions.storage.sload	0,1,2	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/stack_memory_storage_flow.rs:241-271	OpSLoadHandler.eval
+vm.instructions.storage.sload	1	part	2/2	repos/clients/ethrex/crates/vm/levm/src/gas_cost.rs:274-280	cold_storage_access_cost
+vm.instructions.storage.sload	1	part	2/2	repos/clients/ethrex/crates/vm/levm/src/vm.rs:281-305	Substate.add_accessed_slot
+vm.instructions.storage.sload	1	part	2/2	repos/clients/ethrex/crates/vm/levm/src/vm.rs:308-318	Substate.is_slot_accessed
+vm.instructions.storage.sload	1	part	2/2	repos/clients/ethrex/crates/vm/levm/src/gas_cost.rs:578-586	sload
+vm.instructions.storage.sload	3	part	2/2	repos/clients/ethrex/crates/vm/levm/src/call_frame.rs:633-635	VM.advance_pc
+vm.instructions.storage.sload	-	delegated	2/2	-> state_tracker.get_storage	VM.get_storage_value
+vm.instructions.storage.sload	-	delegated	2/2	-> vm.gas.charge_gas	CallFrame.increase_consumed_gas
+vm.instructions.storage.sload	-	delegated	2/2	-> vm.stack.pop	Stack.pop1
+vm.instructions.storage.sload	-	delegated	2/2	-> vm.stack.push	Stack.push
+vm.instructions.storage.sload	-	delegated	1/2	-> state_tracker.get_storage	seed_one_storage_slot_from_bal
+vm.instructions.storage.sload	-	delegated	2/2	-> state_tracker.get_storage	GeneralizedDatabase.get_value_from_database
+vm.instructions.storage.tload	0,1,2	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/stack_memory_storage_flow.rs:204-214	OpTLoadHandler.eval
+vm.instructions.storage.tload	3	part	2/2	repos/clients/ethrex/crates/vm/levm/src/call_frame.rs:633-635	VM.advance_pc
+vm.instructions.storage.tload	-	delegated	2/2	-> vm.stack.pop	Stack.pop1
+vm.instructions.storage.tload	-	delegated	2/2	-> vm.gas.charge_gas	CallFrame.increase_consumed_gas
+vm.instructions.storage.tload	-	delegated	2/2	-> state_tracker.get_transient_storage	Substate.get_transient
+vm.instructions.storage.tload	-	delegated	2/2	-> vm.stack.push	Stack.push
+vm.instructions.system.call	0,1,2,3,4,5	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/system.rs:35-223	OpCallHandler.eval
+vm.instructions.system.call	1	part	1/2	repos/clients/ethrex/crates/vm/levm/src/gas_cost.rs:304-310	call_positive_value_cost
+vm.instructions.system.call	2,4	part	2/2	repos/clients/ethrex/crates/vm/levm/src/gas_cost.rs:936-984	call
+vm.instructions.system.call	1	part	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/system.rs:1113-1139	VM.check_call_static_gas
+vm.instructions.system.call	-	delegated	2/2	-> vm.eoa_delegation.calculate_delegation_cost	eip7702_peek_delegation
+vm.instructions.system.call	-	delegated	2/2	-> vm.gas.calculate_message_call_gas	calculate_cost_and_gas_limit_call
+vm.instructions.system.call	-	delegated	2/2	-> vm.gas.charge_state_gas	VM.increase_state_gas
+vm.instructions.system.call	-	delegated	2/2	-> vm.instructions.system.generic_call	VM.generic_call
+vm.instructions.system.call	-	delegated	2/2	-> vm.stack.pop	Stack.pop
+vm.instructions.system.call	-	delegated	2/2	-> utils.address.to_address_masked	word_to_address
+vm.instructions.system.call	-	delegated	2/2	-> state_tracker.get_account	GeneralizedDatabase.get_account
+vm.instructions.system.call	-	delegated	2/2	-> vm.gas.check_gas	CallFrame.check_gas
+vm.instructions.system.create	0,1,2,5	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/system.rs:632-662	OpCreateHandler.eval
+vm.instructions.system.create	2	part	2/2	repos/clients/ethrex/crates/vm/levm/src/gas_cost.rs:698-747	compute_gas_create
+vm.instructions.system.create	3,4	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/system.rs:895-1106	VM.create_with_initcode_buffer
+vm.instructions.system.create	-	delegated	2/2	-> vm.instructions.system.generic_create	VM.generic_create
+vm.instructions.system.create	-	delegated	2/2	-> vm.stack.pop	Stack.pop
+vm.instructions.system.create	-	delegated	1/2	-> vm.gas.calculate_gas_extend_memory	calculate_memory_size
+vm.instructions.system.create	-	delegated	2/2	-> vm.gas.charge_gas	CallFrame.increase_consumed_gas
+vm.instructions.system.create	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	expansion_cost
+vm.instructions.system.create	-	delegated	2/2	-> state_tracker.get_account	GeneralizedDatabase.get_account
+vm.instructions.system.delegatecall	0,1,2,3,4,5	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/system.rs:365-483	OpDelegateCallHandler.eval
+vm.instructions.system.delegatecall	1	part	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/system.rs:1113-1139	VM.check_call_static_gas
+vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.eoa_delegation.calculate_delegation_cost	eip7702_peek_delegation
+vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.calculate_message_call_gas	calculate_cost_and_gas_limit_call
+vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.instructions.system.generic_call	VM.generic_call
+vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	expansion_cost
+vm.instructions.system.delegatecall	-	delegated	1/2	-> vm.gas.calculate_gas_extend_memory	calculate_memory_size
+vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.stack.pop	Stack.pop
+vm.instructions.system.delegatecall	-	delegated	2/2	-> utils.address.to_address_masked	word_to_address
+vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.check_gas	CallFrame.check_gas
+vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.charge_gas	CallFrame.increase_consumed_gas
+vm.instructions.system.generic_create	0,1,2,3,4	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/system.rs:895-1106	VM.create_with_initcode_buffer
+vm.instructions.system.generic_create	5	part	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/system.rs:1502-1593	VM.handle_return_create
+vm.instructions.system.generic_create	-	delegated	2/2	-> vm.gas.withhold_create_gas	max_message_call_gas
+vm.instructions.system.generic_create	-	delegated	2/2	-> vm.gas.charge_state_gas	VM.increase_state_gas
+vm.instructions.system.generic_create	-	delegated	2/2	-> vm.gas.credit_state_gas_refund	VM.credit_state_gas_refund
+vm.instructions.system.generic_create	-	delegated	2/2	-> vm.memory.memory_read_bytes	Memory.with_range
+vm.instructions.system.generic_create	-	delegated	2/2	-> state_tracker.get_account	GeneralizedDatabase.get_account
+vm.instructions.system.generic_create	-	delegated	2/2	-> vm.stack.push	Stack.push
+vm.instructions.system.revert	0,1,2,3	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/system.rs:851-866	OpRevertHandler.eval
+vm.instructions.system.revert	2	part	2/2	repos/clients/ethrex/crates/vm/levm/src/memory.rs:222-251	Memory.resize
+vm.instructions.system.revert	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	calculate_memory_size
+vm.instructions.system.revert	-	delegated	1/2	-> vm.gas.calculate_gas_extend_memory	exit_opcode
+vm.instructions.system.revert	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	expansion_cost
+vm.instructions.system.revert	-	delegated	2/2	-> vm.gas.charge_gas	CallFrame.increase_consumed_gas
+vm.instructions.system.revert	-	delegated	1/2	-> vm.memory.memory_read_bytes	Memory.load_range
+vm.instructions.system.revert	-	delegated	2/2	-> vm.stack.pop	Stack.pop
+vm.instructions.system.revert	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	cost
+vm.interpreter.charge_value_transfer_to_non_alive_account	0	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/system.rs:35-223	OpCallHandler.eval
+vm.interpreter.charge_value_transfer_to_non_alive_account	-	delegated	2/2	-> vm.gas.charge_state_gas_from_meter	VM.increase_state_gas
+vm.interpreter.process_call	0,1,2,3	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/system.rs:1202-1362	VM.generic_call
+vm.interpreter.process_call	4	part	2/2	repos/clients/ethrex/crates/vm/levm/src/execution_handlers.rs:13-43	VM.handle_precompile_result
+vm.interpreter.process_call	4	part	2/2	repos/clients/ethrex/crates/vm/levm/src/execution_handlers.rs:105-137	VM.handle_opcode_error
+vm.interpreter.process_call	3	part	1/2	repos/clients/ethrex/crates/vm/levm/src/precompiles.rs:500-594	execute_precompile
+vm.interpreter.process_call	5	part	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/system.rs:1371-1388	VM.handle_state_backup
+vm.interpreter.process_call	3	part	2/2	repos/clients/ethrex/crates/vm/levm/src/vm.rs:2900-2969	VM.run_dispatch
+vm.interpreter.process_call	-	delegated	2/2	-> vm.gas.restore_state_gas	VM.refill_frame_state_gas
+vm.interpreter.process_call	-	delegated	2/2	-> state_tracker.copy_tx_state	Substate.push_backup
+vm.interpreter.process_call	-	delegated	2/2	-> state_tracker.restore_tx_state	Substate.revert_backup
+vm.interpreter.process_call	-	delegated	2/2	-> state_tracker.restore_tx_state	VM.restore_cache_state_consuming
+vm.interpreter.process_call	-	delegated	2/2	-> state_tracker.restore_tx_state	VM.restore_cache_state
+vm.interpreter.process_call	-	delegated	2/2	-> state_tracker.move_ether	VM.transfer
