@@ -60,6 +60,9 @@ paths = [
     "crates/ethereum/primitives",
     "crates/consensus/common",
     "crates/transaction-pool/src/validate",
+    "crates/evm/evm",
+    "crates/evm/execution-types",
+    "crates/engine/tree/src/tree/payload_processor/bal",
 ]
 exclude = ["**/tests/**"]
 
@@ -76,6 +79,10 @@ paths = [
     "src/Nethermind/Nethermind.Consensus/Processing",
     "src/Nethermind/Nethermind.Core",
     "src/Nethermind/Nethermind.Specs",
+    "src/Nethermind/Nethermind.State",
+    "src/Nethermind/Nethermind.BalRecorder",
+    "src/Nethermind/Nethermind.Serialization.Rlp",
+    "src/Nethermind/Nethermind.Crypto",
 ]
 exclude = [
     "**/*.Test*/**",
@@ -111,6 +118,8 @@ paths = [
     "execution/types",
     "execution/bal",
     "execution/chain",
+    "execution/state",
+    "execution/exec",
 ]
 exclude = ["**/*_test.go", "**/testdata/**"]
 
@@ -121,12 +130,16 @@ name = "ethrex"
 url = "https://github.com/lambdaclass/ethrex"
 ref = "main"
 paths = [
-    "crates/vm/levm/src",
-    "crates/vm/backends",
+    "crates/vm",
     "crates/common/types",
     "crates/blockchain",
 ]
-exclude = ["**/tests/**", "crates/blockchain/metrics/**"]
+exclude = [
+    "**/tests/**",
+    "crates/blockchain/metrics/**",
+    "crates/vm/levm/bench/**",
+    "crates/vm/levm/runner/**",
+]
 
 [clients.nimbus]
 lang = "nim"
@@ -140,6 +153,13 @@ paths = [
     "execution_chain/transaction",
     "execution_chain/block_access_list",
     "execution_chain/common",
+    "execution_chain/db",
+]
+# The ledger and access list, not the database backends.
+exclude = [
+    "execution_chain/db/aristo*",
+    "execution_chain/db/kvt*",
+    "execution_chain/db/core_db*",
 ]
 
 [clients.evmone]
