@@ -1,0 +1,5 @@
+cache/
+.venv/
+__pycache__/
+data/index/
+data/judge-cache/

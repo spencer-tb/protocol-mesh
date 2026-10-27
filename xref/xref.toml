@@ -1,0 +1,154 @@
+# Local clones that `find` and `diff` read by default, by repo name,
+# relative to this file. These are the protocol-mesh checkouts in repos/.
+# A missing path falls back to the cached upstream clone. `--upstream`
+# forces the cache.
+[checkouts]
+go-ethereum = "../repos/clients/go-ethereum"
+revm = "../repos/clients/revm"
+reth = "../repos/clients/reth"
+nethermind = "../repos/clients/nethermind"
+besu = "../repos/clients/besu"
+erigon = "../repos/clients/erigon"
+ethrex = "../repos/clients/ethrex"
+nimbus-eth1 = "../repos/clients/nimbus-eth1"
+
+# Which spec fork anchors the map, and where each client keeps the code
+# that implements it. `paths` are sparse-checkout cone directories,
+# `exclude` are globs dropped at parse time.
+
+[spec]
+name = "execution-specs"
+url = "https://github.com/ethereum/execution-specs"
+ref = "forks/bogota"
+fork = "amsterdam"
+paths = ["src/ethereum/forks/amsterdam"]
+exclude = ["**/execution_engine/**"]
+
+[clients.geth]
+lang = "go"
+[[clients.geth.repos]]
+name = "go-ethereum"
+url = "https://github.com/ethereum/go-ethereum"
+ref = "master"
+paths = ["core", "params", "consensus/misc", "crypto/kzg4844"]
+exclude = [
+    "**/*_test.go",
+    "**/testdata/**",
+    "core/rawdb/**",
+    "core/filtermaps/**",
+    "core/history/**",
+    "core/overlay/**",
+]
+
+[clients.reth]
+lang = "rust"
+[[clients.reth.repos]]
+name = "revm"
+url = "https://github.com/bluealloy/revm"
+ref = "main"
+paths = [
+    "crates/interpreter",
+    "crates/handler",
+    "crates/precompile",
+    "crates/context",
+    "crates/primitives",
+    "crates/state",
+]
+exclude = ["**/tests/**", "**/benches/**", "**/bench/**"]
+[[clients.reth.repos]]
+name = "alloy-evm"
+url = "https://github.com/alloy-rs/evm"
+ref = "main"
+paths = ["crates/evm"]
+exclude = ["**/tests/**"]
+[[clients.reth.repos]]
+name = "reth"
+url = "https://github.com/paradigmxyz/reth"
+ref = "main"
+paths = [
+    "crates/ethereum/evm",
+    "crates/ethereum/consensus",
+    "crates/ethereum/primitives",
+    "crates/consensus/common",
+    "crates/transaction-pool/src/validate",
+]
+exclude = ["**/tests/**"]
+
+[clients.nethermind]
+lang = "csharp"
+[[clients.nethermind.repos]]
+name = "nethermind"
+url = "https://github.com/NethermindEth/nethermind"
+ref = "master"
+paths = [
+    "src/Nethermind/Nethermind.Evm",
+    "src/Nethermind/Nethermind.Evm.Precompiles",
+    "src/Nethermind/Nethermind.Consensus/Validators",
+    "src/Nethermind/Nethermind.Consensus/Processing",
+    "src/Nethermind/Nethermind.Core",
+    "src/Nethermind/Nethermind.Specs",
+]
+exclude = [
+    "**/*.Test*/**",
+    "**/*Tests.cs",
+    "src/Nethermind/Nethermind.Core/Collections/**",
+    "src/Nethermind/Nethermind.Core/Threading/**",
+    "src/Nethermind/Nethermind.Core/Caching/**",
+]
+
+[clients.besu]
+lang = "java"
+[[clients.besu.repos]]
+name = "besu"
+url = "https://github.com/hyperledger/besu"
+ref = "main"
+paths = [
+    "evm/src/main",
+    "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet",
+    "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core",
+    "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/processing",
+    "datatypes/src/main",
+]
+
+[clients.erigon]
+lang = "go"
+[[clients.erigon.repos]]
+name = "erigon"
+url = "https://github.com/erigontech/erigon"
+ref = "main"
+paths = [
+    "execution/vm",
+    "execution/protocol",
+    "execution/types",
+    "execution/bal",
+    "execution/chain",
+]
+exclude = ["**/*_test.go", "**/testdata/**"]
+
+[clients.ethrex]
+lang = "rust"
+[[clients.ethrex.repos]]
+name = "ethrex"
+url = "https://github.com/lambdaclass/ethrex"
+ref = "main"
+paths = [
+    "crates/vm/levm/src",
+    "crates/vm/backends",
+    "crates/common/types",
+    "crates/blockchain",
+]
+exclude = ["**/tests/**", "crates/blockchain/metrics/**"]
+
+[clients.nimbus]
+lang = "nim"
+[[clients.nimbus.repos]]
+name = "nimbus-eth1"
+url = "https://github.com/status-im/nimbus-eth1"
+ref = "master"
+paths = [
+    "execution_chain/evm",
+    "execution_chain/core",
+    "execution_chain/transaction",
+    "execution_chain/block_access_list",
+    "execution_chain/common",
+]

@@ -1,0 +1,44 @@
+set positional-arguments
+
+# List recipes
+default:
+    @just --list
+
+# Fetch the spec and client repos (shallow, sparse, about 25 s)
+sync *repos:
+    uv run el-xref sync "$@"
+
+# Extract function symbols from every repo (about 10 s)
+index *repos:
+    uv run el-xref index "$@"
+
+# Judge spec functions against clients, reusing unchanged answers
+link *args:
+    uv run el-xref link "$@"
+
+# Write data/MAP.md from data/map.json
+render:
+    uv run el-xref render
+
+# Where do clients implement a spec function
+show query *args:
+    uv run el-xref show "$@"
+
+# Which spec function does a client function implement
+where query:
+    uv run el-xref where "$1"
+
+# Client code touched by a spec git range, run from an execution-specs clone
+touch revisions *args:
+    uv run el-xref touch "$@"
+
+# Score the map against eval/gold.toml
+eval:
+    uv run el-xref eval
+
+# Refresh everything, judging at most `calls` changed pairs
+nightly calls="300":
+    uv run el-xref sync
+    uv run el-xref index
+    uv run el-xref link --max-calls {{calls}}
+    uv run el-xref render

@@ -1,0 +1,5220 @@
+{
+ "entries": {
+  "fork.apply_body": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0941,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:21:34Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 165,
+       "hash": "a9f2d7cc56c2973f",
+       "line": 68,
+       "note": "Process runs the pre-execution system calls, loops over the transactions with block access index i+1, then calls PostExecution with index len(txs)+1 and merges the block access list, mirroring apply_body.",
+       "path": "core/state_processor.go",
+       "qualname": "StateProcessor.Process",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 230,
+       "hash": "2c20504e25f51acd",
+       "line": 190,
+       "note": "PostExecution covers the post-transaction steps of apply_body: process_withdrawals followed by the general-purpose request system calls.",
+       "path": "core/state_processor.go",
+       "qualname": "PostExecution",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 335,
+       "hash": "58b259425052e996",
+       "line": 133,
+       "note": "processParallel is the parallel path for executing a block body under Amsterdam, using postIndex = len(txs)+1 and rebuilding the block access list.",
+       "path": "core/state_processor_parallel.go",
+       "qualname": "StateProcessor.processParallel",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 120,
+       "hash": "424d19b7d03efc79",
+       "line": 112,
+       "note": "ValidateSize enforces the BAL item limit of blockGasLimit / BALItemCost, which is the validate_block_access_list_gas_limit step.",
+       "path": "core/types/bal/bal_encoding.go",
+       "qualname": "BlockAccessList.ValidateSize",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "9828ebaccf6db04b"
+    },
+    "reth": {
+     "cost_usd": 0.0684,
+     "effort": "medium",
+     "hints": [
+      "apply_pre_execution_changes",
+      "execute_transaction_with_result_closure",
+      "execute_block"
+     ],
+     "judged_at": "2026-10-26T12:24:41Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 464,
+       "hash": "fd49be2d627ef40a",
+       "line": 399,
+       "note": "Implements apply_body's post-transaction steps: sets the BAL index to N+1, computes general-purpose requests, processes withdrawals via post_block_balance_state_changes, and takes the BAL builder.",
+       "path": "crates/ethereum/evm/src/executor.rs",
+       "qualname": "EthBlockExecutor.finish_with_prepared_block_access_list",
+       "relation": "partial",
+       "repo": "reth"
+      },
+      {
+       "confidence": "low",
+       "end_line": 196,
+       "hash": "9e83b78442639283",
+       "line": 191,
+       "note": "Sets the block access index to receipts.len()+1, matching the EIP-7928 post-execution index step.",
+       "path": "crates/ethereum/evm/src/executor.rs",
+       "qualname": "EthBlockExecutor.set_transaction_block_access_index",
+       "relation": "partial",
+       "repo": "reth"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "9828ebaccf6db04b"
+    }
+   },
+   "end_line": 852,
+   "line": 783,
+   "path": "src/ethereum/forks/amsterdam/fork.py"
+  },
+  "fork.apply_fork": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.1586,
+     "effort": "medium",
+     "hints": [
+      "ApplyDAOHardFork",
+      "Process",
+      "IsAmsterdam"
+     ],
+     "judged_at": "2026-10-26T12:21:20Z",
+     "matches": [],
+     "model": "claude-opus-5-5",
+     "rounds": 2,
+     "spec_hash": "fc299b328e5599e2"
+    },
+    "reth": {
+     "cost_usd": 0.092,
+     "effort": "medium",
+     "hints": [
+      "DAO_HARDFORK_ACCOUNTS",
+      "drain_balances",
+      "DAO_HARDFORK_BENEFICIARY"
+     ],
+     "judged_at": "2026-10-26T12:24:21Z",
+     "matches": [],
+     "model": "claude-opus-5-5",
+     "rounds": 2,
+     "spec_hash": "fc299b328e5599e2"
+    }
+   },
+   "end_line": 185,
+   "line": 165,
+   "path": "src/ethereum/forks/amsterdam/fork.py"
+  },
+  "fork.calculate_base_fee_per_gas": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.1224,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:21:19Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 102,
+       "hash": "8e0893445303ea8c",
+       "line": 60,
+       "note": "CalcBaseFee computes the parent gas target from the elasticity multiplier, applies max(1, delta) when gas used is above target and subtracts delta when below, matching the spec formula.",
+       "path": "consensus/misc/eip1559/eip1559.go",
+       "qualname": "CalcBaseFee",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 57,
+       "hash": "334e255068b16eff",
+       "line": 33,
+       "note": "VerifyEIP1559Header covers the spec's check_gas_limit step through VerifyGaslimit, and it compares the header base fee with CalcBaseFee.",
+       "path": "consensus/misc/eip1559/eip1559.go",
+       "qualname": "VerifyEIP1559Header",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "a3f825680a6c6ee2"
+    },
+    "reth": {
+     "cost_usd": 0.0986,
+     "effort": "medium",
+     "hints": [
+      "calc_next_block_base_fee",
+      "next_block_base_fee",
+      "BaseFeeParams"
+     ],
+     "judged_at": "2026-10-26T12:24:32Z",
+     "matches": [
+      {
+       "confidence": "medium",
+       "end_line": 353,
+       "hash": "675d5ced339e6958",
+       "line": 326,
+       "note": "Computes the expected base fee from the parent header via chain_spec.next_block_base_fee and checks the header against it, but the EIP-1559 arithmetic is done elsewhere.",
+       "path": "crates/consensus/common/src/validation.rs",
+       "qualname": "validate_against_parent_eip1559_base_fee",
+       "relation": "partial",
+       "repo": "reth"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 2,
+     "spec_hash": "a3f825680a6c6ee2"
+    }
+   },
+   "end_line": 421,
+   "line": 361,
+   "path": "src/ethereum/forks/amsterdam/fork.py"
+  },
+  "fork.check_gas_limit": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0663,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:21:43Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 41,
+       "hash": "7119dcbc60081979",
+       "line": 27,
+       "note": "VerifyGaslimit rejects |parent-header| >= parent/GasLimitBoundDivisor and header < MinGasLimit, which is the same set of bounds as check_gas_limit.",
+       "path": "consensus/misc/gaslimit.go",
+       "qualname": "VerifyGaslimit",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 57,
+       "hash": "334e255068b16eff",
+       "line": 33,
+       "note": "VerifyEIP1559Header checks the gas limit bounds by calling misc.VerifyGaslimit as one step of header validation.",
+       "path": "consensus/misc/eip1559/eip1559.go",
+       "qualname": "VerifyEIP1559Header",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "1730d61b9cda986b"
+    },
+    "reth": {
+     "cost_usd": 0.0627,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:24:58Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 416,
+       "hash": "5040e17042a0935c",
+       "line": 375,
+       "note": "It checks the increase and decrease against parent_gas_limit / GAS_LIMIT_BOUND_DIVISOR and then enforces MINIMUM_GAS_LIMIT, which are the same bounds as check_gas_limit.",
+       "path": "crates/consensus/common/src/validation.rs",
+       "qualname": "validate_against_parent_gas_limit",
+       "relation": "equivalent",
+       "repo": "reth"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "1730d61b9cda986b"
+    }
+   },
+   "end_line": 1155,
+   "line": 1118,
+   "path": "src/ethereum/forks/amsterdam/fork.py"
+  },
+  "fork.check_transaction": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.1826,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:21:31Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 703,
+       "hash": "fdced6feb0d99789",
+       "line": 573,
+       "note": "preCheck does the nonce check, the MaxTxTotalGas cap, the EOA/delegation sender check, the fee-cap and blob-fee-cap checks and the block gas pool capacity check (CheckGasAmsterdam), then calls buyGas.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.preCheck",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 387,
+       "hash": "db66ba1c26b6b745",
+       "line": 330,
+       "note": "TransactionToMessage recovers the sender with types.Sender, computes the effective gas price from baseFee and the tip, and builds the Message that plays the role of the spec's tx environment.",
+       "path": "core/state_transition.go",
+       "qualname": "TransactionToMessage",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 519,
+       "hash": "ea06ced49bdbc78d",
+       "line": 464,
+       "note": "buyGas checks the balance against gasLimit*feeCap + value + blobGas*blobFeeCap, which is the spec's max_gas_fee balance check that raises InsufficientBalanceError.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.buyGas",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "low",
+       "end_line": 831,
+       "hash": "0981dc25e14fc866",
+       "line": 716,
+       "note": "execute checks intrinsic gas and the calldata floor after preCheck, which matches the intrinsic part of validate_transaction inside check_transaction.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.execute",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "4bbef653f2f36c37"
+    },
+    "reth": {
+     "cost_usd": 0.1175,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:24:40Z",
+     "matches": [
+      {
+       "confidence": "medium",
+       "end_line": 237,
+       "hash": "5ab66545ba97eb4b",
+       "line": 121,
+       "note": "validate_tx_env does the transaction-environment checks against the block (chain id, EIP-7825 gas cap, fee/blob checks per type) that make up part of check_transaction.",
+       "path": "crates/handler/src/validation.rs",
+       "qualname": "validate_tx_env",
+       "relation": "partial",
+       "repo": "revm"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 164,
+       "hash": "30c50c2c1b5f419a",
+       "line": 129,
+       "note": "calculate_caller_fee does the sender balance check via ensure_enough_balance (max gas fee + value), matching the spec's InsufficientBalanceError step.",
+       "path": "crates/handler/src/pre_execution.rs",
+       "qualname": "calculate_caller_fee",
+       "relation": "partial",
+       "repo": "revm"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 118,
+       "hash": "f1bfd82b2d11b382",
+       "line": 81,
+       "note": "validate_eip4844_tx rejects when the block blob gas price is above max_fee_per_blob_gas, matching the spec's check_max_fee_per_blob_gas step.",
+       "path": "crates/handler/src/validation.rs",
+       "qualname": "validate_eip4844_tx",
+       "relation": "partial",
+       "repo": "revm"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "4bbef653f2f36c37"
+    }
+   },
+   "end_line": 625,
+   "line": 481,
+   "path": "src/ethereum/forks/amsterdam/fork.py"
+  },
+  "fork.disburse_gas_fees": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.1073,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:21:46Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 831,
+       "hash": "0981dc25e14fc866",
+       "line": 716,
+       "note": "Computes effectiveTip = GasPrice - baseFee, fee = gasUsed * effectiveTip and credits the coinbase via AddBalance, matching the spec's priority-fee payment.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.execute",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 1109,
+       "hash": "bd43da231cc5d3dc",
+       "line": 1046,
+       "note": "Settles gasLeft/gasUsed and, per the caller's 'refund the ETH back' comment, returns the leftover gas value to the sender in its truncated tail, matching the payer refund step.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.settleGas",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "e7870c1c2cbb190f"
+    },
+    "reth": {
+     "cost_usd": 0.079,
+     "effort": "medium",
+     "hints": [
+      "reimburse_caller"
+     ],
+     "judged_at": "2026-10-26T12:24:50Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 127,
+       "hash": "9585685aed7b1937",
+       "line": 98,
+       "note": "Credits the beneficiary with (effective_gas_price - basefee) * gas used, which is the coinbase priority-fee half of disburse_gas_fees.",
+       "path": "crates/handler/src/post_execution.rs",
+       "qualname": "reward_beneficiary",
+       "relation": "partial",
+       "repo": "revm"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 370,
+       "hash": "1dfdf4ef508ff9b8",
+       "line": 343,
+       "note": "Calls reimburse_caller (unused-gas refund) and then reward_beneficiary (priority fee), along with other refund and gas-floor steps.",
+       "path": "crates/handler/src/handler.rs",
+       "qualname": "Handler.post_execution",
+       "relation": "partial",
+       "repo": "revm"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "e7870c1c2cbb190f"
+    }
+   },
+   "end_line": 1001,
+   "line": 965,
+   "path": "src/ethereum/forks/amsterdam/fork.py"
+  },
+  "fork.execute_block": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.1493,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:21:19Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 204,
+       "hash": "5c7c1c464d01e8f3",
+       "line": 148,
+       "note": "Checks gas used, bloom, receipt root, requests hash, block access list hash and state root against the header after execution.",
+       "path": "core/block_validator.go",
+       "qualname": "BlockValidator.ValidateState",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 144,
+       "hash": "3987e8c05100d92d",
+       "line": 51,
+       "note": "Checks the RLP block-size cap, uncles, transactions root, withdrawals root and blob gas used before execution.",
+       "path": "core/block_validator.go",
+       "qualname": "BlockValidator.ValidateBody",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 165,
+       "hash": "a9f2d7cc56c2973f",
+       "line": 68,
+       "note": "Runs the block body (the apply_body step): pre-execution system calls, transaction loop, withdrawals/requests and block access list construction.",
+       "path": "core/state_processor.go",
+       "qualname": "StateProcessor.Process",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 82,
+       "hash": "33101d7b1c4ac088",
+       "line": 45,
+       "note": "Chains Process and ValidateState to execute a block and validate its roots, but in stateless mode it returns the state and receipt roots instead of checking them.",
+       "path": "core/stateless.go",
+       "qualname": "ExecuteStateless",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "d12a33804a92ca25"
+    },
+    "reth": {
+     "cost_usd": 0.0955,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:24:23Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 130,
+       "hash": "970714e133019d56",
+       "line": 43,
+       "note": "Performs the post-execution header checks from execute_block: gas_used, receipts root, logs bloom, requests hash and block access list hash.",
+       "path": "crates/ethereum/consensus/src/validation.rs",
+       "qualname": "validate_block_post_execution_with_bal_hashes",
+       "relation": "partial",
+       "repo": "reth"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 463,
+       "hash": "3560aa68b88a7666",
+       "line": 449,
+       "note": "Runs the block's execution: pre-execution changes, then each transaction, then post-execution changes, matching apply_body in execute_block.",
+       "path": "crates/evm/src/block/mod.rs",
+       "qualname": "BlockExecutor.execute_block",
+       "relation": "partial",
+       "repo": "alloy-evm"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 238,
+       "hash": "9f32b8312709357e",
+       "line": 195,
+       "note": "Checks the ommers hash, the MAX_RLP_BLOCK_SIZE limit and withdrawals, matching the pre-execution checks at the start of execute_block.",
+       "path": "crates/consensus/common/src/validation.rs",
+       "qualname": "post_merge_hardfork_fields",
+       "relation": "partial",
+       "repo": "reth"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "d12a33804a92ca25"
+    }
+   },
+   "end_line": 358,
+   "line": 267,
+   "path": "src/ethereum/forks/amsterdam/fork.py"
+  },
+  "fork.get_last_256_block_hashes": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0931,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:21:15Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 134,
+       "hash": "32ddedc45b5dd24a",
+       "line": 98,
+       "note": "GetHashFn gives BLOCKHASH its recent block hashes by caching and walking each header's ParentHash back from the current block, which is the same job as the spec's parent_hash list.",
+       "path": "core/evm.go",
+       "qualname": "GetHashFn",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "d8b6cff1020bf524"
+    },
+    "reth": {
+     "cost_usd": 0.0588,
+     "effort": "medium",
+     "hints": [
+      "block_hash_ref",
+      "BlockHashReader::block_hash",
+      "StateProviderDatabase"
+     ],
+     "judged_at": "2026-10-26T12:24:22Z",
+     "matches": [
+      {
+       "confidence": "medium",
+       "end_line": 574,
+       "hash": "c5aa63d700e6c0f8",
+       "line": 568,
+       "note": "Filters the stored block hashes to the 256-block window just below block_number, the same window the spec builds for BLOCKHASH.",
+       "path": "crates/ethereum/evm/src/executor.rs",
+       "qualname": "EthBigBlockPlan.hashes_for_block",
+       "relation": "partial",
+       "repo": "reth"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "d8b6cff1020bf524"
+    }
+   },
+   "end_line": 225,
+   "line": 188,
+   "path": "src/ethereum/forks/amsterdam/fork.py"
+  },
+  "fork.make_receipt": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0724,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:21:27Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 307,
+       "hash": "07b50d2146401f7b",
+       "line": 303,
+       "note": "Builds the receipt from the execution result and cumulative gas, then sets its bloom with CreateBloom, as the spec does with logs_bloom.",
+       "path": "core/state_processor.go",
+       "qualname": "MakeReceipt",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 345,
+       "hash": "1a7f46afdbbb565f",
+       "line": 311,
+       "note": "Sets the status from result.Failed(), the CumulativeGasUsed field and the logs, but not the bloom.",
+       "path": "core/state_processor.go",
+       "qualname": "makeReceipt",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "2d071237fecaaaba"
+    },
+    "reth": {
+     "cost_usd": 0.0657,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:24:31Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 25,
+       "hash": "09549f887add2eb2",
+       "line": 15,
+       "note": "Reth's receipt builder builds Receipt{tx_type, success: result.status, cumulative_gas_used, logs} per executed tx; the bloom is derived from the logs when needed.",
+       "path": "crates/ethereum/evm/src/receipt.rs",
+       "qualname": "RethReceiptBuilder.build_receipt",
+       "relation": "equivalent",
+       "repo": "reth"
+      },
+      {
+       "confidence": "high",
+       "end_line": 63,
+       "hash": "dd32e5ed2338e3cb",
+       "line": 48,
+       "note": "Builds the receipt with Eip658 success status, cumulative gas, logs and with_bloom(), then wraps it in a ReceiptEnvelope by tx type, matching Receipt plus encode_receipt.",
+       "path": "crates/evm/src/eth/receipt_builder.rs",
+       "qualname": "AlloyReceiptBuilder.build_receipt",
+       "relation": "equivalent",
+       "repo": "alloy-evm"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "2d071237fecaaaba"
+    }
+   },
+   "end_line": 662,
+   "line": 628,
+   "path": "src/ethereum/forks/amsterdam/fork.py"
+  },
+  "fork.process_checked_system_transaction": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0899,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:21:29Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 512,
+       "hash": "f96d2e787d7de2f0",
+       "line": 469,
+       "note": "Returns an error when GetCodeSize(addr)==0, runs the system call with evm.Call and returns an error if the call fails, which is the checked system transaction; it also adds the request-type prefix and appends the request, which is extra work.",
+       "path": "core/state_processor.go",
+       "qualname": "processRequestsSystemCall",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "d053b3dd2ca8967e"
+    },
+    "reth": {
+     "cost_usd": 0.0754,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:24:40Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 451,
+       "hash": "c0201e94b770f194",
+       "line": 421,
+       "note": "Runs the system call and returns a BlockValidationError when the withdrawal/consolidation request call fails, but accepts beacon-root/history failures; it has no explicit code-presence check.",
+       "path": "crates/ethereum/evm/src/execution.rs",
+       "qualname": "execute_system_call",
+       "relation": "partial",
+       "repo": "reth"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 150,
+       "hash": "2f20386c98e1c09c",
+       "line": 140,
+       "note": "Runs the EIP-7002 system call, raising a validation error if execution fails, then commits and calls post_commit, which likely checks whether the call succeeded.",
+       "path": "crates/evm/src/block/system_calls/mod.rs",
+       "qualname": "SystemCaller.apply_withdrawal_requests_contract_call",
+       "relation": "partial",
+       "repo": "alloy-evm"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 163,
+       "hash": "039fb27e75c8b1fc",
+       "line": 153,
+       "note": "Runs the EIP-7251 system call, raising a validation error if execution fails, then commits and calls post_commit, which likely checks whether the call succeeded.",
+       "path": "crates/evm/src/block/system_calls/mod.rs",
+       "qualname": "SystemCaller.apply_consolidation_requests_contract_call",
+       "relation": "partial",
+       "repo": "alloy-evm"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "d053b3dd2ca8967e"
+    }
+   },
+   "end_line": 721,
+   "line": 665,
+   "path": "src/ethereum/forks/amsterdam/fork.py"
+  },
+  "fork.process_general_purpose_requests": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.08,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:21:36Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 230,
+       "hash": "2c20504e25f51acd",
+       "line": 190,
+       "note": "PostExecution parses deposit logs, then runs the withdrawal, consolidation, builder deposit and builder exit queue system calls in order, which is the same sequence as the spec.",
+       "path": "core/state_processor.go",
+       "qualname": "PostExecution",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 512,
+       "hash": "f96d2e787d7de2f0",
+       "line": 469,
+       "note": "processRequestsSystemCall does the checked system call for each step and adds the type byte to the front of any non-empty return data.",
+       "path": "core/state_processor.go",
+       "qualname": "processRequestsSystemCall",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 533,
+       "hash": "bb39d93fa9bc44c6",
+       "line": 518,
+       "note": "ParseDepositLogs builds the deposit request with type 0x00 and appends it only when it is non-empty.",
+       "path": "core/state_processor.go",
+       "qualname": "ParseDepositLogs",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 461,
+       "hash": "cdba8911f98cdc0a",
+       "line": 459,
+       "note": "ProcessBuilderDepositQueue is the builder deposit step, request type 0x03.",
+       "path": "core/state_processor.go",
+       "qualname": "ProcessBuilderDepositQueue",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 467,
+       "hash": "9a5c511fff8cbf2a",
+       "line": 465,
+       "note": "ProcessBuilderExitQueue is the builder exit step, request type 0x04.",
+       "path": "core/state_processor.go",
+       "qualname": "ProcessBuilderExitQueue",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 449,
+       "hash": "232e110d561dc745",
+       "line": 447,
+       "note": "ProcessWithdrawalQueue is the withdrawal request step, type 0x01.",
+       "path": "core/state_processor.go",
+       "qualname": "ProcessWithdrawalQueue",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 455,
+       "hash": "c7981a01910ac298",
+       "line": 453,
+       "note": "ProcessConsolidationQueue is the consolidation request step, type 0x02.",
+       "path": "core/state_processor.go",
+       "qualname": "ProcessConsolidationQueue",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "69687fb22cbc0568"
+    },
+    "reth": {
+     "cost_usd": 0.0945,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:24:54Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 419,
+       "hash": "7b773cec384566c0",
+       "line": 351,
+       "note": "Runs the withdrawal, consolidation and (from Amsterdam) builder deposit/exit system calls with empty calldata, and adds each output with its request type; deposits are handled separately.",
+       "path": "crates/ethereum/evm/src/execution.rs",
+       "qualname": "post_execution_system_call_state_changes",
+       "relation": "partial",
+       "repo": "reth"
+      },
+      {
+       "confidence": "high",
+       "end_line": 317,
+       "hash": "b578e235350b233c",
+       "line": 297,
+       "note": "Builds the block's request list starting with DEPOSIT_REQUEST_TYPE + the deposits parsed from receipts, which is the spec's first step.",
+       "path": "crates/ethereum/evm/src/execution.rs",
+       "qualname": "block_requests_from_receipts",
+       "relation": "partial",
+       "repo": "reth"
+      },
+      {
+       "confidence": "high",
+       "end_line": 103,
+       "hash": "97b2569c4809f91c",
+       "line": 66,
+       "note": "alloy-evm version of the system-call part: withdrawal, consolidation and Amsterdam builder deposit/exit requests, each added only when non-empty.",
+       "path": "crates/evm/src/block/system_calls/mod.rs",
+       "qualname": "SystemCaller.append_post_execution_changes",
+       "relation": "partial",
+       "repo": "alloy-evm"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 354,
+       "hash": "863bd725e5e295a1",
+       "line": 283,
+       "note": "Adds deposit requests and then calls append_post_execution_changes, so it covers the whole spec flow but sits inside larger block-finalisation work.",
+       "path": "crates/evm/src/eth/block.rs",
+       "qualname": "EthBlockExecutor.finish",
+       "relation": "partial",
+       "repo": "alloy-evm"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "69687fb22cbc0568"
+    }
+   },
+   "end_line": 921,
+   "line": 855,
+   "path": "src/ethereum/forks/amsterdam/fork.py"
+  },
+  "fork.process_transaction": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.1317,
+     "effort": "medium",
+     "hints": [
+      "applyTransactionWithEVM",
+      "ApplyMessage",
+      "stateTransition.execute"
+     ],
+     "judged_at": "2026-10-26T12:21:43Z",
+     "matches": [
+      {
+       "confidence": "medium",
+       "end_line": 165,
+       "hash": "a9f2d7cc56c2973f",
+       "line": 68,
+       "note": "The per-transaction loop body sets the block-access index to i+1 with SetTxContext, applies the tx, then adds the receipt, logs and per-tx access list to the block outputs.",
+       "path": "core/state_processor.go",
+       "qualname": "StateProcessor.Process",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 358,
+       "hash": "d36a745b0be606b3",
+       "line": 351,
+       "note": "Turns the tx into a Message (sender recovery and chain-id check) and hands off to ApplyTransactionWithEVM, which does the actual per-tx processing.",
+       "path": "core/state_processor.go",
+       "qualname": "ApplyTransaction",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 345,
+       "hash": "1a7f46afdbbb565f",
+       "line": 311,
+       "note": "Builds the receipt from status, cumulative gas and logs, which matches the spec's make_receipt step.",
+       "path": "core/state_processor.go",
+       "qualname": "makeReceipt",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "a5498dbb29323796"
+    },
+    "reth": {
+     "cost_usd": 0.1034,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:24:53Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 341,
+       "hash": "13b0c9a3a6b0c95a",
+       "line": 306,
+       "note": "Sets the block access index, executes and commits the transaction, adds to regular, state, cumulative and blob gas, and builds and pushes the receipt, matching process_transaction's flow.",
+       "path": "crates/ethereum/evm/src/executor.rs",
+       "qualname": "EthBlockExecutor.execute_transaction_with_commit_condition",
+       "relation": "equivalent",
+       "repo": "reth"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 385,
+       "hash": "e1b0525a9ad38ee2",
+       "line": 358,
+       "note": "Commits a detached transaction result, then does the post-execution gas accounting (regular, state, cumulative, blob) and builds the receipt, as in the spec's second half.",
+       "path": "crates/ethereum/evm/src/executor.rs",
+       "qualname": "EthBlockExecutor.commit_transaction",
+       "relation": "partial",
+       "repo": "reth"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 356,
+       "hash": "58f614eeb2e607f7",
+       "line": 343,
+       "note": "Sets the block access index, checks the gas limit and executes the transaction without committing, covering the execution half of process_transaction.",
+       "path": "crates/ethereum/evm/src/executor.rs",
+       "qualname": "EthBlockExecutor.execute_transaction_without_commit",
+       "relation": "partial",
+       "repo": "reth"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 248,
+       "hash": "2d8750a4cd9d4a35",
+       "line": 190,
+       "note": "Checks block regular and state gas capacity, then calls evm.transact; this is the execution step inside process_transaction.",
+       "path": "crates/evm/src/eth/block.rs",
+       "qualname": "EthBlockExecutor.execute_transaction_without_commit",
+       "relation": "partial",
+       "repo": "alloy-evm"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "a5498dbb29323796"
+    }
+   },
+   "end_line": 1093,
+   "line": 1004,
+   "path": "src/ethereum/forks/amsterdam/fork.py"
+  },
+  "fork.process_unchecked_system_transaction": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.1001,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:21:39Z",
+     "matches": [
+      {
+       "confidence": "medium",
+       "end_line": 408,
+       "hash": "10771b3028dc53a3",
+       "line": 377,
+       "note": "Builds a SystemAddress message to BeaconRootsAddress, makes an unchecked evm.Call ignoring failures, then runs Finalise and merges into the block access list; this is the spec's logic with the target address hardcoded.",
+       "path": "core/state_processor.go",
+       "qualname": "ProcessBeaconBlockRoot",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 443,
+       "hash": "64c2ed530558ad87",
+       "line": 412,
+       "note": "Same unchecked system call pattern (failures ignored, Finalise, blockAccessList.Merge on Amsterdam), hardcoded to HistoryStorageAddress.",
+       "path": "core/state_processor.go",
+       "qualname": "ProcessParentBlockHash",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 373,
+       "hash": "5b00ed10c2cdd98b",
+       "line": 361,
+       "note": "Computes the system call gas budget, including the Amsterdam state-gas reservoir of SystemMaxSStoresPerCall storage creations, matching state_gas_reservoir setup.",
+       "path": "core/state_processor.go",
+       "qualname": "systemCallGasBudget",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "32dfefb03cedaa3d"
+    },
+    "reth": {
+     "cost_usd": 0.0637,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:24:41Z",
+     "matches": [
+      {
+       "confidence": "medium",
+       "end_line": 451,
+       "hash": "c0201e94b770f194",
+       "line": 421,
+       "note": "Runs SystemTx::new(address,data) through evm.system_call, tolerates failure for beacon-root/history addresses (the unchecked path), and commits the outcome into block state like incorporate_tx_into_block.",
+       "path": "crates/ethereum/evm/src/execution.rs",
+       "qualname": "execute_system_call",
+       "relation": "equivalent",
+       "repo": "reth"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 82,
+       "hash": "62fb4fb3b9aa8bb4",
+       "line": 70,
+       "note": "Builds the system transaction environment (caller, Call kind to target, data, SYSTEM_CALL_GAS_LIMIT), matching the TransactionEnvironment construction step.",
+       "path": "crates/handler/src/system_call.rs",
+       "qualname": "TxEnv.new_system_tx_with_caller",
+       "relation": "partial",
+       "repo": "revm"
+      },
+      {
+       "confidence": "low",
+       "end_line": 141,
+       "hash": "96237323a3afe7a3",
+       "line": 132,
+       "note": "Executes the system call and finalizes the resulting state, corresponding to process_top_level plus state settlement.",
+       "path": "crates/handler/src/system_call.rs",
+       "qualname": "SystemCallEvm.system_call_with_caller",
+       "relation": "partial",
+       "repo": "revm"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "32dfefb03cedaa3d"
+    }
+   },
+   "end_line": 780,
+   "line": 724,
+   "path": "src/ethereum/forks/amsterdam/fork.py"
+  },
+  "fork.process_withdrawals": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0889,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:21:43Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 251,
+       "hash": "61f2190ea7a429cc",
+       "line": 233,
+       "note": "Loops over the withdrawals, converts the gwei amount to wei, calls AddBalance on each address, then merges the finalised access list into the BAL when Amsterdam is active.",
+       "path": "core/state_processor.go",
+       "qualname": "ProcessWithdrawals",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "low",
+       "end_line": 290,
+       "hash": "2041820479081e94",
+       "line": 239,
+       "note": "Builds the withdrawals root with DeriveSha over RLP-encoded withdrawals, which is the same step as the spec's withdrawals_trie building.",
+       "path": "core/types/block.go",
+       "qualname": "NewBlock",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "9c9fc6000ec81b84"
+    },
+    "reth": {
+     "cost_usd": 0.0871,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:24:56Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 557,
+       "hash": "b623ea84e45d790f",
+       "line": 476,
+       "note": "reth's post-block state change sums each `withdrawal.amount_wei()` per address and applies the balance increments to the EVM state, including the block access list (BAL) builder. The same function also handles block rewards and the DAO fork.",
+       "path": "crates/ethereum/evm/src/execution.rs",
+       "qualname": "post_block_balance_state_changes",
+       "relation": "partial",
+       "repo": "reth"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 97,
+       "hash": "bfd9e83ea6c01ab9",
+       "line": 82,
+       "note": "Adds `withdrawal.amount_wei()` to each withdrawal address's balance increment once Shanghai is active, which is the per-withdrawal credit step in the spec's `create_ether`.",
+       "path": "crates/evm/src/block/state_changes.rs",
+       "qualname": "insert_post_block_withdrawals_balance_increments",
+       "relation": "partial",
+       "repo": "alloy-evm"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "9c9fc6000ec81b84"
+    }
+   },
+   "end_line": 1115,
+   "line": 1096,
+   "path": "src/ethereum/forks/amsterdam/fork.py"
+  },
+  "fork.state_transition": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.1264,
+     "effort": "medium",
+     "hints": [
+      "BlockChain.insertChain",
+      "BlockChain.processBlock",
+      "StateProcessor.Process"
+     ],
+     "judged_at": "2026-10-26T12:21:23Z",
+     "matches": [
+      {
+       "confidence": "medium",
+       "end_line": 2146,
+       "hash": "d5e02e6a5f62e5dd",
+       "line": 1917,
+       "note": "insertChain is geth's block import path: it verifies headers, processes each block against parent state and writes the block and state to the chain, which is what state_transition does.",
+       "path": "core/blockchain.go",
+       "qualname": "BlockChain.insertChain",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 2501,
+       "hash": "54421790530a150f",
+       "line": 2320,
+       "note": "ProcessBlock executes a single block on the parent state root and commits the result, covering the execute_block + apply_changes_to_state steps.",
+       "path": "core/blockchain.go",
+       "qualname": "BlockChain.ProcessBlock",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 2,
+     "spec_hash": "26c020a9a6b92934"
+    },
+    "reth": {
+     "cost_usd": 0.0927,
+     "effort": "medium",
+     "hints": [
+      "insert_block_inner",
+      "validate_block_with_state",
+      "on_new_payload"
+     ],
+     "judged_at": "2026-10-26T12:24:23Z",
+     "matches": [
+      {
+       "confidence": "low",
+       "end_line": 463,
+       "hash": "3560aa68b88a7666",
+       "line": 449,
+       "note": "Covers only the execute_block step (pre-execution, transactions, post-execution) that state_transition delegates to; it does not apply state or append the block to the chain.",
+       "path": "crates/evm/src/block/mod.rs",
+       "qualname": "BlockExecutor.execute_block",
+       "relation": "partial",
+       "repo": "alloy-evm"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "26c020a9a6b92934"
+    }
+   },
+   "end_line": 264,
+   "line": 228,
+   "path": "src/ethereum/forks/amsterdam/fork.py"
+  },
+  "fork.update_sender_state": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.1087,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:21:39Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 519,
+       "hash": "ea06ced49bdbc78d",
+       "line": 464,
+       "note": "buyGas computes the gas limit times the gas price plus the blob gas times the blob base fee, then calls SubBalance on the sender (BalanceDecreaseGasBuy), which is the spec's up-front fee debit.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.buyGas",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 940,
+       "hash": "18aa5c2a2a656b88",
+       "line": 884,
+       "note": "executeCall starts with SetNonce(msg.From, GetNonce+1), the spec's increment_nonce step for the sender.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.executeCall",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "ead3b1e1004d1326"
+    },
+    "reth": {
+     "cost_usd": 0.1002,
+     "effort": "medium",
+     "hints": [
+      "validate_against_state_and_deduct_caller",
+      "deduct_caller",
+      "calculate_caller_fee"
+     ],
+     "judged_at": "2026-10-26T12:24:54Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 188,
+       "hash": "2bad01e2c1b65937",
+       "line": 168,
+       "note": "Loads the caller account, works out the new balance after the gas and blob fee, sets it, and bumps the nonce (for creates the nonce is bumped elsewhere).",
+       "path": "crates/handler/src/pre_execution.rs",
+       "qualname": "validate_against_state_and_deduct_caller",
+       "relation": "equivalent",
+       "repo": "revm"
+      },
+      {
+       "confidence": "high",
+       "end_line": 164,
+       "hash": "30c50c2c1b5f419a",
+       "line": 129,
+       "note": "Computes the caller's balance after the gas and blob fees are taken off, which is the fee-deduction step of the spec.",
+       "path": "crates/handler/src/pre_execution.rs",
+       "qualname": "calculate_caller_fee",
+       "relation": "partial",
+       "repo": "revm"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 2,
+     "spec_hash": "ead3b1e1004d1326"
+    }
+   },
+   "end_line": 962,
+   "line": 924,
+   "path": "src/ethereum/forks/amsterdam/fork.py"
+  },
+  "fork.validate_header": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.1265,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:21:29Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 125,
+       "hash": "dbc8ac30e4e0b8c8",
+       "line": 94,
+       "note": "Recomputes CalcExcessBlobGas from the parent header and rejects a mismatched header.ExcessBlobGas, matching the spec's excess_blob_gas check.",
+       "path": "consensus/misc/eip4844/eip4844.go",
+       "qualname": "VerifyEIP4844Header",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 57,
+       "hash": "334e255068b16eff",
+       "line": 33,
+       "note": "Recomputes CalcBaseFee from the parent header and rejects a mismatched header.BaseFee, matching the spec's expected_base_fee_per_gas check.",
+       "path": "consensus/misc/eip1559/eip1559.go",
+       "qualname": "VerifyEIP1559Header",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "1bb54b03e2ac790f"
+    },
+    "reth": {
+     "cost_usd": 0.0742,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:24:30Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 267,
+       "hash": "3a473f900823baf9",
+       "line": 175,
+       "note": "Standalone header checks: zero difficulty, zero nonce and empty ommers hash after the merge, plus the extra-data length check and gas_used <= gas_limit.",
+       "path": "crates/ethereum/consensus/src/lib.rs",
+       "qualname": "EthBeaconConsensus.validate_header",
+       "relation": "partial",
+       "repo": "reth"
+      },
+      {
+       "confidence": "high",
+       "end_line": 294,
+       "hash": "81c8fd9533f5896c",
+       "line": 269,
+       "note": "Checks the header against its parent: parent hash and number, timestamp, EIP-1559 base fee and EIP-4844 excess blob gas.",
+       "path": "crates/ethereum/consensus/src/lib.rs",
+       "qualname": "EthBeaconConsensus.validate_header_against_parent",
+       "relation": "partial",
+       "repo": "reth"
+      },
+      {
+       "confidence": "high",
+       "end_line": 353,
+       "hash": "675d5ced339e6958",
+       "line": 326,
+       "note": "Compares the header's base fee with the expected value from next_block_base_fee, like calculate_base_fee_per_gas.",
+       "path": "crates/consensus/common/src/validation.rs",
+       "qualname": "validate_against_parent_eip1559_base_fee",
+       "relation": "partial",
+       "repo": "reth"
+      },
+      {
+       "confidence": "high",
+       "end_line": 456,
+       "hash": "7fdff75127eab3b2",
+       "line": 422,
+       "note": "Compares the header's excess_blob_gas with the value computed from the parent, like calculate_excess_blob_gas.",
+       "path": "crates/consensus/common/src/validation.rs",
+       "qualname": "validate_against_parent_4844",
+       "relation": "partial",
+       "repo": "reth"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 34,
+       "hash": "11a5b2e2e407b29a",
+       "line": 22,
+       "note": "Checks that gas_used does not exceed gas_limit.",
+       "path": "crates/consensus/common/src/validation.rs",
+       "qualname": "validate_header_gas",
+       "relation": "partial",
+       "repo": "reth"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 288,
+       "hash": "8c37ce7fccb01b6b",
+       "line": 278,
+       "note": "Checks the extra-data length against the maximum size (32 bytes).",
+       "path": "crates/consensus/common/src/validation.rs",
+       "qualname": "validate_header_extra_data",
+       "relation": "partial",
+       "repo": "reth"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "1bb54b03e2ac790f"
+    }
+   },
+   "end_line": 478,
+   "line": 424,
+   "path": "src/ethereum/forks/amsterdam/fork.py"
+  },
+  "transactions.calculate_effective_gas_price": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0835,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:22:02Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 109,
+       "hash": "ce537f0971a88b9e",
+       "line": 100,
+       "note": "DynamicFeeTx.effectiveGasPrice computes min(tipCap, feeCap-baseFee)+baseFee, the spec's fee-market branch, but doesn't raise when the fee cap is below the base fee.",
+       "path": "core/types/tx_dynamic_fee.go",
+       "qualname": "DynamicFeeTx.effectiveGasPrice",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 317,
+       "hash": "dd48cb67f5d58621",
+       "line": 308,
+       "note": "BlobTx.effectiveGasPrice runs the same fee-market formula, min(tip, feeCap-baseFee)+baseFee, for blob transactions.",
+       "path": "core/types/tx_blob.go",
+       "qualname": "BlobTx.effectiveGasPrice",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 233,
+       "hash": "8f96913dffbf4a63",
+       "line": 224,
+       "note": "SetCodeTx.effectiveGasPrice runs the same fee-market formula for set-code transactions.",
+       "path": "core/types/tx_setcode.go",
+       "qualname": "SetCodeTx.effectiveGasPrice",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 109,
+       "hash": "cd52561726de38ec",
+       "line": 107,
+       "note": "LegacyTx.effectiveGasPrice returns tx.GasPrice outright, the spec's plain gas-price branch, without the base-fee check.",
+       "path": "core/types/tx_legacy.go",
+       "qualname": "LegacyTx.effectiveGasPrice",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 113,
+       "hash": "b40233745a5b5d21",
+       "line": 111,
+       "note": "AccessListTx.effectiveGasPrice returns tx.GasPrice, the spec's plain gas-price branch.",
+       "path": "core/types/tx_access_list.go",
+       "qualname": "AccessListTx.effectiveGasPrice",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 387,
+       "hash": "db66ba1c26b6b745",
+       "line": 330,
+       "note": "TransactionToMessage sets msg.GasPrice to min(baseFee+tipCap, feeCap), which is the effective gas price calculation as one step.",
+       "path": "core/state_transition.go",
+       "qualname": "TransactionToMessage",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 420,
+       "hash": "067cd6cc237ec91c",
+       "line": 398,
+       "note": "calcEffectiveGasTip returns ErrGasFeeCapTooLow when feeCap < baseFee and computes min(tipCap, feeCap-baseFee), the spec's check plus priority-fee step.",
+       "path": "core/types/transaction.go",
+       "qualname": "Transaction.calcEffectiveGasTip",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "a80adb3302210b2f"
+    },
+    "reth": {
+     "cost_usd": 0.0563,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:25:15Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 160,
+       "hash": "747cb0866cc50e81",
+       "line": 147,
+       "note": "Returns gas_price for legacy/2930 transactions, and min(max_fee, base_fee + max_priority_fee) for fee-market transactions, the same as the spec's priority-fee formula.",
+       "path": "crates/context/interface/src/transaction.rs",
+       "qualname": "Transaction.effective_gas_price",
+       "relation": "equivalent",
+       "repo": "revm"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 63,
+       "hash": "5999ce960f9ec425",
+       "line": 43,
+       "note": "Rejects a fee-market tx whose effective price is below the base fee with GasPriceLessThanBasefee, which is the spec's insufficient-max-fee check.",
+       "path": "crates/handler/src/validation.rs",
+       "qualname": "validate_priority_fee_tx",
+       "relation": "partial",
+       "repo": "revm"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "a80adb3302210b2f"
+    }
+   },
+   "end_line": 839,
+   "line": 813,
+   "path": "src/ethereum/forks/amsterdam/transactions.py"
+  },
+  "transactions.calculate_intrinsic_cost": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.1402,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:20:53Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 160,
+       "hash": "2c1914574953ab37",
+       "line": 72,
+       "note": "IntrinsicGas computes the execution side: the EIP-2780 base, auth base cost, calldata, init code, access list and the EIP-7981 access-list data surcharge.",
+       "path": "core/state_transition.go",
+       "qualname": "IntrinsicGas",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 256,
+       "hash": "0ae98f9d5f14407c",
+       "line": 197,
+       "note": "FloorDataGas computes the calldata_floor side with EIP-7976 tokens and access-list tokens, anchored on intrinsicBaseGasEIP2780.",
+       "path": "core/state_transition.go",
+       "qualname": "FloorDataGas",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 194,
+       "hash": "27b566930df04a29",
+       "line": 163,
+       "note": "intrinsicBaseGasEIP2780 computes the TX_BASE plus recipient (CREATE_ACCESS or COLD_ACCOUNT_ACCESS) plus value cost, and skips them for self-transfers.",
+       "path": "core/state_transition.go",
+       "qualname": "intrinsicBaseGasEIP2780",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "44adc5f50b0c2f47"
+    },
+    "reth": {
+     "cost_usd": 0.08,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:25:03Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 1079,
+       "hash": "2db433dd17c39d59",
+       "line": 1013,
+       "note": "initial_tx_gas works out the calldata tokens, the EIP-2780 base/to/value gas, the access-list costs, the per-auth cost, the initcode cost and the floor gas anchored on the base, all as in the spec.",
+       "path": "crates/context/interface/src/cfg/gas_params.rs",
+       "qualname": "GasParams.initial_tx_gas",
+       "relation": "equivalent",
+       "repo": "revm"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 954,
+       "hash": "1ddc9b5a12d774f1",
+       "line": 949,
+       "note": "tx_floor_tokens_in_access_list works out the EIP-7981 access-list floor tokens (20 bytes per address, 32 per key), which the spec adds to both the floor and the execution gas.",
+       "path": "crates/context/interface/src/cfg/gas_params.rs",
+       "qualname": "GasParams.tx_floor_tokens_in_access_list",
+       "relation": "partial",
+       "repo": "revm"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 885,
+       "hash": "457189b9bb808e47",
+       "line": 876,
+       "note": "tx_floor_cost works out the calldata floor gas with uniform per-byte tokens (EIP-7976), which is the spec's floor_tokens_in_calldata step.",
+       "path": "crates/context/interface/src/cfg/gas_params.rs",
+       "qualname": "GasParams.tx_floor_cost",
+       "relation": "partial",
+       "repo": "revm"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "44adc5f50b0c2f47"
+    }
+   },
+   "end_line": 798,
+   "line": 689,
+   "path": "src/ethereum/forks/amsterdam/transactions.py"
+  },
+  "transactions.calculate_max_gas_fee": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.1369,
+     "effort": "medium",
+     "hints": [
+      "stateTransition.buyGas",
+      "Transaction.Cost",
+      "mgval"
+     ],
+     "judged_at": "2026-10-26T12:22:07Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 519,
+       "hash": "ea06ced49bdbc78d",
+       "line": 464,
+       "note": "buyGas computes balanceCheck = GasLimit * GasFeeCap (falling back to GasLimit * GasPrice), which is the max gas fee step inside the larger balance check and gas purchase.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.buyGas",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 352,
+       "hash": "75f6f59bf396d652",
+       "line": 341,
+       "note": "Cost computes gas * inner.gasPrice() (which is the fee cap for dynamic-fee txs) as one step before adding blob fees and value.",
+       "path": "core/types/transaction.go",
+       "qualname": "Transaction.Cost",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 2,
+     "spec_hash": "be1b87797ff350bc"
+    },
+    "reth": {
+     "cost_usd": 0.0631,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:25:13Z",
+     "matches": [
+      {
+       "confidence": "medium",
+       "end_line": 180,
+       "hash": "2d6e04f0c5ee5473",
+       "line": 165,
+       "note": "max_balance_spending first computes gas_limit * max_fee_per_gas (which falls back to gas_price for legacy txs), then adds value and the blob fee; that first product is the spec's max gas fee.",
+       "path": "crates/context/interface/src/transaction.rs",
+       "qualname": "Transaction.max_balance_spending",
+       "relation": "partial",
+       "repo": "revm"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "be1b87797ff350bc"
+    }
+   },
+   "end_line": 849,
+   "line": 842,
+   "path": "src/ethereum/forks/amsterdam/transactions.py"
+  },
+  "transactions.chain_id": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0466,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:22:04Z",
+     "matches": [
+      {
+       "confidence": "medium",
+       "end_line": 308,
+       "hash": "686d49aa3015245f",
+       "line": 306,
+       "note": "Transaction.ChainId hands off to inner.chainID(), which derives the chain ID from v for legacy transactions and returns the stored field for typed ones, matching the spec's two branches.",
+       "path": "core/types/transaction.go",
+       "qualname": "Transaction.ChainId",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "4a6b51e442e79646"
+    },
+    "reth": {
+     "cost_usd": 0.0531,
+     "effort": "medium",
+     "hints": [
+      "extract_chain_id",
+      "decode_signed_legacy_fields",
+      "to_eip155_value"
+     ],
+     "judged_at": "2026-10-26T12:25:21Z",
+     "matches": [],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "4a6b51e442e79646"
+    }
+   },
+   "end_line": 880,
+   "line": 862,
+   "path": "src/ethereum/forks/amsterdam/transactions.py"
+  },
+  "transactions.check_nonce": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0761,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:21:56Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 703,
+       "hash": "fdced6feb0d99789",
+       "line": 573,
+       "note": "preCheck begins by comparing the state nonce with msg.Nonce and returns ErrNonceTooHigh or ErrNonceTooLow, which is the same check as check_nonce.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.preCheck",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "0807912d55af599f"
+    },
+    "reth": {
+     "cost_usd": 0.0412,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:25:14Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 123,
+       "hash": "1d6f1a44c26f0b29",
+       "line": 84,
+       "note": "Compares the tx nonce with the account nonce and returns NonceTooHigh or NonceTooLow, which is the same check as the spec; it also does EIP-3607 and nonce-overflow checks.",
+       "path": "crates/handler/src/pre_execution.rs",
+       "qualname": "validate_account_nonce_and_code",
+       "relation": "equivalent",
+       "repo": "revm"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 788,
+       "hash": "36a38e957813376b",
+       "line": 773,
+       "note": "The transaction pool only rejects a tx nonce below the sender nonce, which is the spec's 'nonce too low' branch.",
+       "path": "crates/transaction-pool/src/validate/eth.rs",
+       "qualname": "EthTransactionValidator.validate_sender_nonce",
+       "relation": "partial",
+       "repo": "reth"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "0807912d55af599f"
+    }
+   },
+   "end_line": 859,
+   "line": 852,
+   "path": "src/ethereum/forks/amsterdam/transactions.py"
+  },
+  "transactions.count_tokens_in_data": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0621,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:21:51Z",
+     "matches": [
+      {
+       "confidence": "medium",
+       "end_line": 256,
+       "hash": "0ae98f9d5f14407c",
+       "line": 197,
+       "note": "FloorDataGas's pre-Amsterdam branch counts tokens inline as zeros via bytes.Count plus non-zero bytes \u00d7 TxTokenPerNonZeroByte (4), which matches count_tokens_in_data; the Amsterdam branch prices every byte as 4 tokens instead.",
+       "path": "core/state_transition.go",
+       "qualname": "FloorDataGas",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "bd79eca77c31be75"
+    },
+    "reth": {
+     "cost_usd": 0.0485,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:25:08Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 647,
+       "hash": "8edbae660cbed39f",
+       "line": 643,
+       "note": "It counts zero bytes, takes the rest as non-zero bytes, and returns zeros + non_zeros * multiplier, which is the spec formula with the multiplier passed in as a parameter.",
+       "path": "crates/context/interface/src/cfg/gas.rs",
+       "qualname": "get_tokens_in_calldata",
+       "relation": "equivalent",
+       "repo": "revm"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 639,
+       "hash": "d076cc40149d27f1",
+       "line": 637,
+       "note": "Thin wrapper that calls get_tokens_in_calldata with the Istanbul non-zero multiplier, which is 4 and matches the spec's fixed value.",
+       "path": "crates/context/interface/src/cfg/gas.rs",
+       "qualname": "get_tokens_in_calldata_istanbul",
+       "relation": "equivalent",
+       "repo": "revm"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "bd79eca77c31be75"
+    }
+   },
+   "end_line": 810,
+   "line": 801,
+   "path": "src/ethereum/forks/amsterdam/transactions.py"
+  },
+  "transactions.decode_transaction": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0519,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:21:51Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 204,
+       "hash": "c4f77202bc966f69",
+       "line": 184,
+       "note": "Decodes raw bytes the same way the spec does: a first byte above 0x7f is treated as a legacy RLP transaction, and anything else goes to the typed-envelope decoder.",
+       "path": "core/types/transaction.go",
+       "qualname": "Transaction.UnmarshalBinary",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 231,
+       "hash": "864e5b3bfc6c7977",
+       "line": 207,
+       "note": "Switches on the type byte (types 1, 2, 3, 4) to pick AccessListTx, DynamicFeeTx, BlobTx or SetCodeTx, decodes b[1:], and returns ErrTxTypeNotSupported for unknown types.",
+       "path": "core/types/transaction.go",
+       "qualname": "Transaction.decodeTyped",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 180,
+       "hash": "3ec62141abdb8fd2",
+       "line": 144,
+       "note": "Does the same legacy-or-typed split when reading from an RLP stream, where a typed transaction is wrapped in an RLP byte string.",
+       "path": "core/types/transaction.go",
+       "qualname": "Transaction.DecodeRLP",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "4d199dea2013e23c"
+    },
+    "reth": {
+     "cost_usd": 0.1226,
+     "effort": "medium",
+     "hints": [
+      "decode_2718",
+      "typed_decode",
+      "fallback_decode"
+     ],
+     "judged_at": "2026-10-26T12:25:10Z",
+     "matches": [
+      {
+       "confidence": "medium",
+       "end_line": 589,
+       "hash": "81e5cedef312ab34",
+       "line": 571,
+       "note": "Decodes each raw payload transaction via TransactionSigned::decode_2718_exact (EIP-2718 type-byte dispatch), then also recovers the signer.",
+       "path": "crates/ethereum/evm/src/lib.rs",
+       "qualname": "EthEvmConfig.tx_iterator_for_payload",
+       "relation": "partial",
+       "repo": "reth"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 2,
+     "spec_hash": "4d199dea2013e23c"
+    }
+   },
+   "end_line": 585,
+   "line": 557,
+   "path": "src/ethereum/forks/amsterdam/transactions.py"
+  },
+  "transactions.encode_transaction": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0641,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:21:53Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 141,
+       "hash": "813fef43059a7f2e",
+       "line": 134,
+       "note": "Returns plain RLP for a legacy tx and the type byte followed by the inner RLP for typed txs, matching encode_transaction's output.",
+       "path": "core/types/transaction.go",
+       "qualname": "Transaction.MarshalBinary",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 129,
+       "hash": "6ad87658ab4b8b8e",
+       "line": 126,
+       "note": "Writes the type byte followed by the inner encoding, which is the typed-transaction branch of the spec function.",
+       "path": "core/types/transaction.go",
+       "qualname": "Transaction.encodeTyped",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 680,
+       "hash": "360dcb04288a760d",
+       "line": 673,
+       "note": "Builds the trie value by branching on legacy (RLP of inner) versus typed (encodeTyped), the same way the spec uses encode_transaction in the transactions trie.",
+       "path": "core/types/transaction.go",
+       "qualname": "Transactions.EncodeIndex",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 123,
+       "hash": "df42bde98d12d322",
+       "line": 111,
+       "note": "Same legacy/typed branch for block bodies; it also wraps the typed bytes as an RLP string, as rlp.encode does with the spec's Bytes return.",
+       "path": "core/types/transaction.go",
+       "qualname": "Transaction.EncodeRLP",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "b4348be117c18f74"
+    },
+    "reth": {
+     "cost_usd": 0.0955,
+     "effort": "medium",
+     "hints": [
+      "encode_2718",
+      "EthereumTxEnvelope::encode_2718",
+      "Encodable2718"
+     ],
+     "judged_at": "2026-10-26T12:25:14Z",
+     "matches": [],
+     "model": "claude-opus-5-5",
+     "rounds": 2,
+     "spec_hash": "b4348be117c18f74"
+    }
+   },
+   "end_line": 554,
+   "line": 535,
+   "path": "src/ethereum/forks/amsterdam/transactions.py"
+  },
+  "transactions.get_transaction_hash": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0787,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:22:25Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 619,
+       "hash": "356b77a88d7676d5",
+       "line": 606,
+       "note": "Transaction.Hash takes rlpHash of the inner tx for legacy transactions and prefixedRlpHash (keccak of type byte plus payload) for typed transactions, which is the same as the spec's two branches.",
+       "path": "core/types/transaction.go",
+       "qualname": "Transaction.Hash",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "4ff72705324844b4"
+    },
+    "reth": {
+     "cost_usd": 0.0856,
+     "effort": "medium",
+     "hints": [
+      "trie_hash",
+      "tx_hash_with_type",
+      "encoded_2718"
+     ],
+     "judged_at": "2026-10-26T12:25:44Z",
+     "matches": [],
+     "model": "claude-opus-5-5",
+     "rounds": 2,
+     "spec_hash": "4ff72705324844b4"
+    }
+   },
+   "end_line": 1120,
+   "line": 1107,
+   "path": "src/ethereum/forks/amsterdam/transactions.py"
+  },
+  "transactions.has_access_list": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0896,
+     "effort": "medium",
+     "hints": [
+      "Transaction.AccessList",
+      "TxData interface accessList",
+      "AccessListTx.accessList"
+     ],
+     "judged_at": "2026-10-26T12:22:37Z",
+     "matches": [
+      {
+       "confidence": "low",
+       "end_line": 97,
+       "hash": "565cd7e713d4dc29",
+       "line": 97,
+       "note": "geth has no type guard; the TxData accessList() method, which returns nil for LegacyTx, is how per-type access-list capability shows up indirectly.",
+       "path": "core/types/tx_legacy.go",
+       "qualname": "LegacyTx.accessList",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 2,
+     "spec_hash": "885f49475299644d"
+    },
+    "reth": {
+     "cost_usd": 0.0727,
+     "effort": "medium",
+     "hints": [
+      "Transaction::access_list",
+      "fn access_list(&self) -> Option<&AccessList>",
+      "TxEnvelope::access_list"
+     ],
+     "judged_at": "2026-10-26T12:25:43Z",
+     "matches": [],
+     "model": "claude-opus-5-5",
+     "rounds": 2,
+     "spec_hash": "885f49475299644d"
+    }
+   },
+   "end_line": 1134,
+   "line": 1123,
+   "path": "src/ethereum/forks/amsterdam/transactions.py"
+  },
+  "transactions.recover_sender": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0593,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:22:06Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 270,
+       "hash": "e5ddc54b59cd107b",
+       "line": 254,
+       "note": "modernSigner.Sender picks the path by tx type: legacy txs go to the legacy signer, and typed txs use y_parity+27 with the per-type signing hash in recoverPlain.",
+       "path": "core/types/transaction_signing.go",
+       "qualname": "modernSigner.Sender",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 504,
+       "hash": "060d6a342ac767a4",
+       "line": 479,
+       "note": "recoverPlain checks r/s, including low-s via homestead, runs Ecrecover, and returns keccak256(pub)[12:] as the address.",
+       "path": "core/types/transaction_signing.go",
+       "qualname": "recoverPlain",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 371,
+       "hash": "505f47551011cfe9",
+       "line": 356,
+       "note": "EIP155Signer.Sender covers the EIP-155 legacy branch: it takes chain_id out of v and recovers using the 155 signing hash.",
+       "path": "core/types/transaction_signing.go",
+       "qualname": "EIP155Signer.Sender",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 423,
+       "hash": "d60e5fa150d30210",
+       "line": 417,
+       "note": "HomesteadSigner.Sender covers the pre-155 legacy branch, where v is 27/28 and the hash has no chain id.",
+       "path": "core/types/transaction_signing.go",
+       "qualname": "HomesteadSigner.Sender",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "low",
+       "end_line": 157,
+       "hash": "779c575e49e76afc",
+       "line": 141,
+       "note": "types.Sender is a caching wrapper that hands recovery off to signer.Sender.",
+       "path": "core/types/transaction_signing.go",
+       "qualname": "Sender",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "cb2527932eaad573"
+    },
+    "reth": {
+     "cost_usd": 0.0671,
+     "effort": "medium",
+     "hints": [
+      "recover_signer",
+      "recover_signer_unchecked",
+      "try_recover"
+     ],
+     "judged_at": "2026-10-26T12:25:23Z",
+     "matches": [],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "cb2527932eaad573"
+    }
+   },
+   "end_line": 944,
+   "line": 883,
+   "path": "src/ethereum/forks/amsterdam/transactions.py"
+  },
+  "transactions.signing_hash_155": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0323,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:22:08Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 138,
+       "hash": "a7eebb7335a2acfd",
+       "line": 128,
+       "note": "LegacyTx.sigHash computes rlpHash of nonce, gasPrice, gas, to, value, data, chainID, 0, 0, which is the same tuple the spec hashes.",
+       "path": "core/types/tx_legacy.go",
+       "qualname": "LegacyTx.sigHash",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 395,
+       "hash": "7d17883a78e530bf",
+       "line": 393,
+       "note": "EIP155Signer.Hash is a thin wrapper that hands off to tx.inner.sigHash with the signer's chainId.",
+       "path": "core/types/transaction_signing.go",
+       "qualname": "EIP155Signer.Hash",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "77e5234e2c92923f"
+    },
+    "reth": {
+     "cost_usd": 0.0499,
+     "effort": "medium",
+     "hints": [
+      "TxLegacy::encode_for_signing",
+      "TxLegacy::encode_eip155_signing_fields",
+      "SignableTransaction::signature_hash"
+     ],
+     "judged_at": "2026-10-26T12:25:23Z",
+     "matches": [],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "77e5234e2c92923f"
+    }
+   },
+   "end_line": 994,
+   "line": 971,
+   "path": "src/ethereum/forks/amsterdam/transactions.py"
+  },
+  "transactions.signing_hash_1559": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0901,
+     "effort": "medium",
+     "hints": [
+      "DynamicFeeTx.sigHash",
+      "prefixedRlpHash",
+      "DynamicFeeTxType"
+     ],
+     "judged_at": "2026-10-26T12:22:23Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 141,
+       "hash": "fed93e113c26b3c5",
+       "line": 127,
+       "note": "DynamicFeeTx.sigHash computes keccak of the 0x02 prefix plus the RLP of chainID, nonce, tip cap, fee cap, gas, to, value, data and access list, which is exactly the spec's field list.",
+       "path": "core/types/tx_dynamic_fee.go",
+       "qualname": "DynamicFeeTx.sigHash",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "low",
+       "end_line": 76,
+       "hash": "3f3f13e7163e399b",
+       "line": 68,
+       "note": "prefixedRlpHash is the generic helper that does the keccak(prefix || rlp) step this function relies on.",
+       "path": "core/types/hashing.go",
+       "qualname": "prefixedRlpHash",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 2,
+     "spec_hash": "c6811c0fb00569a3"
+    },
+    "reth": {
+     "cost_usd": 0.0811,
+     "effort": "medium",
+     "hints": [
+      "SignableTransaction for TxEip1559 encode_for_signing",
+      "signature_hash",
+      "payload_len_for_signature"
+     ],
+     "judged_at": "2026-10-26T12:25:31Z",
+     "matches": [],
+     "model": "claude-opus-5-5",
+     "rounds": 2,
+     "spec_hash": "c6811c0fb00569a3"
+    }
+   },
+   "end_line": 1047,
+   "line": 1023,
+   "path": "src/ethereum/forks/amsterdam/transactions.py"
+  },
+  "transactions.signing_hash_2930": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0718,
+     "effort": "medium",
+     "hints": [
+      "AccessListTx.sigHash",
+      "prefixedRlpHash",
+      "tx_access_list.go"
+     ],
+     "judged_at": "2026-10-26T12:22:18Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 144,
+       "hash": "998defe62c1a304b",
+       "line": 131,
+       "note": "AccessListTx.sigHash computes keccak of the 0x01 type prefix plus RLP of (chainID, nonce, gasPrice, gas, to, value, data, accessList), exactly like the spec.",
+       "path": "core/types/tx_access_list.go",
+       "qualname": "AccessListTx.sigHash",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 2,
+     "spec_hash": "d80b26804a4c2f74"
+    },
+    "reth": {
+     "cost_usd": 0.0485,
+     "effort": "medium",
+     "hints": [
+      "TxEip2930.encode_for_signing",
+      "SignableTransaction.signature_hash",
+      "TxEip2930.payload_len_for_signature"
+     ],
+     "judged_at": "2026-10-26T12:25:27Z",
+     "matches": [],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "d80b26804a4c2f74"
+    }
+   },
+   "end_line": 1020,
+   "line": 997,
+   "path": "src/ethereum/forks/amsterdam/transactions.py"
+  },
+  "transactions.signing_hash_4844": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0699,
+     "effort": "medium",
+     "hints": [
+      "BlobTx.sigHash",
+      "modernSigner.Hash",
+      "prefixedRlpHash"
+     ],
+     "judged_at": "2026-10-26T12:22:21Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 454,
+       "hash": "e3737870dd2ab640",
+       "line": 438,
+       "note": "BlobTx.sigHash computes a keccak hash of the RLP field list with the BlobTxType (0x03) prefix, using the same fields in the same order as the spec.",
+       "path": "core/types/tx_blob.go",
+       "qualname": "BlobTx.sigHash",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 2,
+     "spec_hash": "dc4300287a6a8162"
+    },
+    "reth": {
+     "cost_usd": 0.0498,
+     "effort": "medium",
+     "hints": [
+      "TxEip4844::encode_for_signing",
+      "SignableTransaction::signature_hash",
+      "TxEip4844::encode_fields"
+     ],
+     "judged_at": "2026-10-26T12:25:29Z",
+     "matches": [],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "dc4300287a6a8162"
+    }
+   },
+   "end_line": 1076,
+   "line": 1050,
+   "path": "src/ethereum/forks/amsterdam/transactions.py"
+  },
+  "transactions.signing_hash_7702": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0905,
+     "effort": "medium",
+     "hints": [
+      "SetCodeTx.sigHash",
+      "prefixedRlpHash",
+      "SetCodeTxType"
+     ],
+     "judged_at": "2026-10-26T12:22:29Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 269,
+       "hash": "572a48f6e2c2f7c5",
+       "line": 254,
+       "note": "SetCodeTx.sigHash computes prefixedRlpHash(SetCodeTxType=0x04, ...) over chainID, nonce, tip, feecap, gas, to, value, data, access list and auth list, the same fields as the spec.",
+       "path": "core/types/tx_setcode.go",
+       "qualname": "SetCodeTx.sigHash",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 2,
+     "spec_hash": "5009536342dbb4aa"
+    },
+    "reth": {
+     "cost_usd": 0.0419,
+     "effort": "medium",
+     "hints": [
+      "TxEip7702.encode_for_signing",
+      "SignableTransaction::signature_hash",
+      "TxEip7702.payload_len_for_signature"
+     ],
+     "judged_at": "2026-10-26T12:25:28Z",
+     "matches": [],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "5009536342dbb4aa"
+    }
+   },
+   "end_line": 1104,
+   "line": 1079,
+   "path": "src/ethereum/forks/amsterdam/transactions.py"
+  },
+  "transactions.signing_hash_pre155": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0787,
+     "effort": "medium",
+     "hints": [
+      "FrontierSigner.Hash",
+      "HomesteadSigner",
+      "rlpHash([]interface{}{tx.Nonce(), tx.GasPrice(), tx.Gas(), tx.To(), tx.Value(), tx.Data()})"
+     ],
+     "judged_at": "2026-10-26T12:22:18Z",
+     "matches": [],
+     "model": "claude-opus-5-5",
+     "rounds": 2,
+     "spec_hash": "88f027c9f0a9995c"
+    },
+    "reth": {
+     "cost_usd": 0.071,
+     "effort": "medium",
+     "hints": [
+      "TxLegacy::encode_for_signing",
+      "TxLegacy::signature_hash",
+      "encode_eip155_signing_fields"
+     ],
+     "judged_at": "2026-10-26T12:25:21Z",
+     "matches": [],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "88f027c9f0a9995c"
+    }
+   },
+   "end_line": 968,
+   "line": 947,
+   "path": "src/ethereum/forks/amsterdam/transactions.py"
+  },
+  "transactions.validate_transaction": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.1474,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:21:56Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 703,
+       "hash": "fdced6feb0d99789",
+       "line": 573,
+       "note": "Block-path preCheck enforces the nonce max, the MaxTxTotalGas cap, tip<=feecap, the blob tx rules (no create, non-empty hashes, max blobs, versioned hash), the setcode rules (no create, non-empty auth list) and the init code size.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.preCheck",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 831,
+       "hash": "0981dc25e14fc866",
+       "line": 716,
+       "note": "execute computes IntrinsicGas and FloorDataGas, checks each against GasLimit, and in Amsterdam rejects the tx if max(intrinsic, floor) > MaxTxGas.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.execute",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 172,
+       "hash": "3108a7179bb4be06",
+       "line": 63,
+       "note": "Txpool ValidateTransaction repeats most of the same stateless checks (init code size, MaxTxTotalGas, tip vs fee cap, nonce max, intrinsic/floor gas and the MaxTxGas cap, empty auth list) in the pool context.",
+       "path": "core/txpool/validation.go",
+       "qualname": "ValidateTransaction",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "low",
+       "end_line": 40,
+       "hash": "43a1e8dbddd3d975",
+       "line": 29,
+       "note": "CheckMaxInitCodeSize performs the spec's InitCodeTooLargeError check for contract creations.",
+       "path": "core/vm/common.go",
+       "qualname": "CheckMaxInitCodeSize",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "7b56b58b6459829a"
+    },
+    "reth": {
+     "cost_usd": 0.1498,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:25:08Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 237,
+       "hash": "5ab66545ba97eb4b",
+       "line": 121,
+       "note": "revm validate_tx_env checks nonce==u64::MAX, create initcode size limit, tx gas limit cap, priority fee vs max fee, blob validation and empty authorization list, but not intrinsic gas.",
+       "path": "crates/handler/src/validation.rs",
+       "qualname": "validate_tx_env",
+       "relation": "partial",
+       "repo": "revm"
+      },
+      {
+       "confidence": "high",
+       "end_line": 118,
+       "hash": "f1bfd82b2d11b382",
+       "line": 81,
+       "note": "validate_eip4844_tx implements the blob block of the spec: empty blobs, KZG version byte per hash, and max blob count.",
+       "path": "crates/handler/src/validation.rs",
+       "qualname": "validate_eip4844_tx",
+       "relation": "partial",
+       "repo": "revm"
+      },
+      {
+       "confidence": "high",
+       "end_line": 1600,
+       "hash": "540c0c643964257a",
+       "line": 1567,
+       "note": "ensure_intrinsic_gas compares gas_limit with intrinsic and floor gas and rejects when max(intrinsic, floor) exceeds the regular gas cap per EIP-8037.",
+       "path": "crates/transaction-pool/src/validate/eth.rs",
+       "qualname": "ensure_intrinsic_gas",
+       "relation": "partial",
+       "repo": "reth"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 661,
+       "hash": "6ff21e1d4502838b",
+       "line": 457,
+       "note": "Pool validate_stateless performs the EIP-2681 nonce check, initcode size, gas limit cap, tip-above-fee-cap and empty 7702 authorization list checks alongside pool-specific rules.",
+       "path": "crates/transaction-pool/src/validate/eth.rs",
+       "qualname": "EthTransactionValidator.validate_stateless",
+       "relation": "partial",
+       "repo": "reth"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "7b56b58b6459829a"
+    }
+   },
+   "end_line": 686,
+   "line": 588,
+   "path": "src/ethereum/forks/amsterdam/transactions.py"
+  },
+  "vm.eoa_delegation.calculate_delegation_cost": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0854,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:22:37Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 558,
+       "hash": "c5df22b7a30ebc69",
+       "line": 471,
+       "note": "Its Amsterdam call-gas function contains the EIP-7702 step: ParseDelegation on the target's code, then WarmAccountAccessAmsterdam if the delegate is in the access list, otherwise coldCost.",
+       "path": "core/vm/operations_acl.go",
+       "qualname": "makeCallVariantGasCallEIP8037",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 1036,
+       "hash": "c83a769377fdc791",
+       "line": 1009,
+       "note": "For the transaction recipient, it parses the delegation and charges ColdAccountAccessAmsterdam, or WarmAccountAccessAmsterdam if the target is already in the access list.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.chargeCallRecipientEIP2780",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 465,
+       "hash": "476cdb3cd7f0e17d",
+       "line": 371,
+       "note": "The pre-Amsterdam call-gas variant does the same delegation check and charges warm or cold access for the delegated target.",
+       "path": "core/vm/operations_acl.go",
+       "qualname": "makeCallVariantGasCallEIP7702",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 42,
+       "hash": "d03515295bf0460d",
+       "line": 37,
+       "note": "ParseDelegation does the is_valid_delegation check and pulls out the delegated address from the code after the marker.",
+       "path": "core/types/tx_setcode.go",
+       "qualname": "ParseDelegation",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "6a4719eb4d9f05b5"
+    },
+    "reth": {
+     "cost_usd": 0.0924,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:25:51Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 200,
+       "hash": "1fda201a2e1e4814",
+       "line": 145,
+       "note": "Reads the delegate address with eip7702_address and charges the warm cost plus the extra cold cost for the delegate. This sits inside a larger function that also charges for the original account and for new accounts.",
+       "path": "crates/interpreter/src/instructions/contract/call_helpers.rs",
+       "qualname": "load_account_delegated",
+       "relation": "partial",
+       "repo": "revm"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "6a4719eb4d9f05b5"
+    }
+   },
+   "end_line": 188,
+   "line": 155,
+   "path": "src/ethereum/forks/amsterdam/vm/eoa_delegation.py"
+  },
+  "vm.eoa_delegation.get_delegated_code_address": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0684,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:22:29Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 42,
+       "hash": "d03515295bf0460d",
+       "line": 37,
+       "note": "ParseDelegation checks for the 23-byte length and the delegation prefix, then returns the address after the prefix (or false), which is exactly what get_delegated_code_address does.",
+       "path": "core/types/tx_setcode.go",
+       "qualname": "ParseDelegation",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "ed958693d0d07b69"
+    },
+    "reth": {
+     "cost_usd": 0.0807,
+     "effort": "medium",
+     "hints": [
+      "Bytecode::eip7702_address",
+      "Eip7702Bytecode::new_raw",
+      "Eip7702Bytecode::address"
+     ],
+     "judged_at": "2026-10-26T12:25:38Z",
+     "matches": [],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "ed958693d0d07b69"
+    }
+   },
+   "end_line": 81,
+   "line": 64,
+   "path": "src/ethereum/forks/amsterdam/vm/eoa_delegation.py"
+  },
+  "vm.eoa_delegation.is_valid_delegation": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0637,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:22:26Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 42,
+       "hash": "d03515295bf0460d",
+       "line": 37,
+       "note": "ParseDelegation checks len(b)==23 and the DelegationPrefix and returns a validity bool, which is the same check is_valid_delegation does.",
+       "path": "core/types/tx_setcode.go",
+       "qualname": "ParseDelegation",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "f17a43aec08a9f32"
+    },
+    "reth": {
+     "cost_usd": 0.1209,
+     "effort": "medium",
+     "hints": [
+      "Eip7702Bytecode::new_raw",
+      "EIP7702_MAGIC_BYTES",
+      "Bytecode::new_raw_checked"
+     ],
+     "judged_at": "2026-10-26T12:25:40Z",
+     "matches": [],
+     "model": "claude-opus-5-5",
+     "rounds": 2,
+     "spec_hash": "f17a43aec08a9f32"
+    }
+   },
+   "end_line": 61,
+   "line": 42,
+   "path": "src/ethereum/forks/amsterdam/vm/eoa_delegation.py"
+  },
+  "vm.eoa_delegation.recover_authority": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0631,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:22:33Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 165,
+       "hash": "e271c8703cedb8d5",
+       "line": 144,
+       "note": "SetCodeAuthorization.Authority checks the signature values with ValidateSignatureValues (homestead=true, so low-s), computes SigHash, runs Ecrecover and returns the last 20 bytes of keccak256 of the public key.",
+       "path": "core/types/tx_setcode.go",
+       "qualname": "SetCodeAuthorization.Authority",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "cd530150c3bf51e0"
+    },
+    "reth": {
+     "cost_usd": 0.0678,
+     "effort": "medium",
+     "hints": [
+      "SignedAuthorization::recover_authority",
+      "Authorization::signature_hash",
+      "SignedAuthorization::signature"
+     ],
+     "judged_at": "2026-10-26T12:25:50Z",
+     "matches": [
+      {
+       "confidence": "medium",
+       "end_line": 336,
+       "hash": "4e1e880a86d2f44b",
+       "line": 295,
+       "note": "Recovers each authorization's authority inline via auth.signature() validation plus secp256k1::recover_signer over auth.signature_hash(), mapping failure to Invalid.",
+       "path": "crates/evm/src/tx.rs",
+       "qualname": "TxEnv.from_recovered_tx",
+       "relation": "partial",
+       "repo": "alloy-evm"
+      },
+      {
+       "confidence": "low",
+       "end_line": 23,
+       "hash": "c1a7050422421d6d",
+       "line": 21,
+       "note": "Thin wrapper that delegates to SignedAuthorization::recover_authority, which holds the actual recovery logic.",
+       "path": "crates/context/interface/src/transaction/alloy_types.rs",
+       "qualname": "SignedAuthorization.authority",
+       "relation": "partial",
+       "repo": "revm"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "cd530150c3bf51e0"
+    }
+   },
+   "end_line": 152,
+   "line": 112,
+   "path": "src/ethereum/forks/amsterdam/vm/eoa_delegation.py"
+  },
+  "vm.eoa_delegation.resolve_delegated_code_address": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.1012,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:22:37Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 465,
+       "hash": "476cdb3cd7f0e17d",
+       "line": 371,
+       "note": "Inside the call gas function, ParseDelegation on the target's code leads to a warm (WarmStorageReadCostEIP2929) or cold charge and AddAddressToAccessList(target), which mirrors the spec's charge-and-warm step for call opcodes.",
+       "path": "core/vm/operations_acl.go",
+       "qualname": "makeCallVariantGasCallEIP7702",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 1036,
+       "hash": "c83a769377fdc791",
+       "line": 1009,
+       "note": "For the top-level transaction recipient, it parses the delegation, charges WarmAccountAccessAmsterdam or ColdAccountAccessAmsterdam and warms the target, which is the same resolve-and-charge logic.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.chargeCallRecipientEIP2780",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "d9c2ef9ef6bd2df0"
+    },
+    "reth": {
+     "cost_usd": 0.088,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:25:49Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 200,
+       "hash": "1fda201a2e1e4814",
+       "line": 145,
+       "note": "For a target with an EIP-7702 designation (`eip7702_address`), it charges `warm_storage_read_cost`, adds `cold_account_additional_cost` if the delegate is cold, and loads (warms) the delegate; it also charges the target's own access and new-account cost.",
+       "path": "crates/interpreter/src/instructions/contract/call_helpers.rs",
+       "qualname": "load_account_delegated",
+       "relation": "partial",
+       "repo": "revm"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 154,
+       "hash": "7580033b14daf149",
+       "line": 46,
+       "note": "With EIP-2780 enabled, a delegated transaction target is charged warm access upfront plus the cold difference after `load_account_info_skip_cold_load`, which warms the delegate; this is the same resolve step at transaction level.",
+       "path": "crates/handler/src/execution.rs",
+       "qualname": "create_init_frame",
+       "relation": "partial",
+       "repo": "revm"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "d9c2ef9ef6bd2df0"
+    }
+   },
+   "end_line": 109,
+   "line": 84,
+   "path": "src/ethereum/forks/amsterdam/vm/eoa_delegation.py"
+  },
+  "vm.eoa_delegation.set_delegation": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0822,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:22:41Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 1235,
+       "hash": "655a8a42adba8d4e",
+       "line": 1227,
+       "note": "Loops over all authorizations with per-authority tracking map and returns false on runtime OOG, like the spec's loop structure.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.applyAuthorizations",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 1222,
+       "hash": "62df15b651428176",
+       "line": 1150,
+       "note": "Per-authorization body: validates, charges ACCOUNT_WRITE with sender/value-recipient exemptions, NEW_ACCOUNT state gas, AUTH_BASE once per authority, then sets nonce and delegation code.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.applyAuthorization",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "2e3f956126a586bd"
+    },
+    "reth": {
+     "cost_usd": 0.0999,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:25:55Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 449,
+       "hash": "8f5d65cef16bf598",
+       "line": 328,
+       "note": "This loops over the authorizations and charges NEW_ACCOUNT state gas, ACCOUNT_WRITE once per authority, and the net-new delegation-bytes state gas once per authority, then calls delegate, matching the spec step for step.",
+       "path": "crates/handler/src/pre_execution.rs",
+       "qualname": "apply_auth_list_eip2780",
+       "relation": "equivalent",
+       "repo": "revm"
+      },
+      {
+       "confidence": "high",
+       "end_line": 305,
+       "hash": "8bc547203842db68",
+       "line": 234,
+       "note": "This Amsterdam entry point seeds written_accounts with the sender and, for value-bearing calls, the recipient, then calls apply_auth_list_eip2780; that covers the spec's accounts_with_paid_writes setup.",
+       "path": "crates/handler/src/pre_execution.rs",
+       "qualname": "apply_eip7702_auth_list",
+       "relation": "partial",
+       "repo": "revm"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 477,
+       "hash": "e3db920092e61e64",
+       "line": 466,
+       "note": "This performs the final step: it writes the 0xef0100||address delegation code (or clears it for the null address) and bumps the authority's nonce.",
+       "path": "crates/context/interface/src/journaled_state/account.rs",
+       "qualname": "JournaledAccount.delegate",
+       "relation": "partial",
+       "repo": "revm"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "2e3f956126a586bd"
+    }
+   },
+   "end_line": 321,
+   "line": 231,
+   "path": "src/ethereum/forks/amsterdam/vm/eoa_delegation.py"
+  },
+  "vm.eoa_delegation.validate_authorization": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0645,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:22:39Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 1140,
+       "hash": "2c8c186631fff8cc",
+       "line": 1112,
+       "note": "Runs the same checks in the same order as the spec: chain ID is zero or matches, nonce overflow, signature recovery, adding the authority to the access list, existing code must be a delegation, and nonce must match.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.validateAuthorization",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "low",
+       "end_line": 1222,
+       "hash": "62df15b651428176",
+       "line": 1150,
+       "note": "Calls validateAuthorization first and then applies the authorization, so validation is only one step inside this larger function.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.applyAuthorization",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "4fa1311783868419"
+    },
+    "reth": {
+     "cost_usd": 0.0691,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:25:52Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 449,
+       "hash": "8f5d65cef16bf598",
+       "line": 328,
+       "note": "Steps 1-6 of the loop body do exactly the spec checks (chain id 0 or current, nonce != u64::MAX, recover authority, warm account, code empty or EIP-7702, nonce match); this is the Amsterdam/EIP-8037 variant, and it also charges gas and sets the delegation.",
+       "path": "crates/handler/src/pre_execution.rs",
+       "qualname": "apply_auth_list_eip2780",
+       "relation": "partial",
+       "repo": "revm"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 523,
+       "hash": "3828195a9ff14111",
+       "line": 461,
+       "note": "The pre-Amsterdam apply_auth_list loop has the same validation checks inline before it counts refunds and calls delegate.",
+       "path": "crates/handler/src/pre_execution.rs",
+       "qualname": "apply_auth_list",
+       "relation": "partial",
+       "repo": "revm"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "4fa1311783868419"
+    }
+   },
+   "end_line": 228,
+   "line": 191,
+   "path": "src/ethereum/forks/amsterdam/vm/eoa_delegation.py"
+  },
+  "vm.gas.allocate_evm_gas": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.1106,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:31Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 543,
+       "hash": "eed330a0ceab0c7c",
+       "line": 531,
+       "note": "initRuntimeGasBudget subtracts the intrinsic gas from the gas limit, caps execution gas at min(MaxTxGas-intrinsicGas, evmGas), and gives the rest to the state reservoir through NewGasBudget.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.initRuntimeGasBudget",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "193a5035d0b45d2f"
+    }
+   },
+   "end_line": 1137,
+   "line": 1105,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.gas.calculate_blob_gas_price": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0858,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:20Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 48,
+       "hash": "5749210a6769a04f",
+       "line": 46,
+       "note": "blobBaseFee returns fakeExponential(minBlobGasPrice, excessBlobGas, UpdateFraction), which is the same as the spec's taylor_exponential call.",
+       "path": "consensus/misc/eip4844/eip4844.go",
+       "qualname": "BlobConfig.blobBaseFee",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "8d5b48a093e942c0"
+    }
+   },
+   "end_line": 976,
+   "line": 957,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.gas.calculate_data_fee": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0923,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:24Z",
+     "matches": [
+      {
+       "confidence": "medium",
+       "end_line": 519,
+       "hash": "ea06ced49bdbc78d",
+       "line": 464,
+       "note": "buyGas computes blobFee = blobGasUsed * BlobBaseFee inline. That is the spec's data fee, done as one step of buying gas.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.buyGas",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "b4f30476a580cc6c"
+    }
+   },
+   "end_line": 998,
+   "line": 979,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.gas.calculate_excess_blob_gas": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0996,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:23Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 169,
+       "hash": "5345036f9cfbc001",
+       "line": 138,
+       "note": "calcExcessBlobGas sums the parent's excess and used blob gas, returns 0 below target, applies the EIP-7918 reserve-price branch scaled by (Max-Target)/Max, and otherwise subtracts the target.",
+       "path": "consensus/misc/eip4844/eip4844.go",
+       "qualname": "calcExcessBlobGas",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 136,
+       "hash": "df18bf765dcae71d",
+       "line": 129,
+       "note": "CalcExcessBlobGas is a public wrapper that resolves the fork and blob config, then delegates to calcExcessBlobGas.",
+       "path": "consensus/misc/eip4844/eip4844.go",
+       "qualname": "CalcExcessBlobGas",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "4a38ef6d45be63d3"
+    }
+   },
+   "end_line": 933,
+   "line": 886,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.gas.calculate_gas_extend_memory": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.066,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:16Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 56,
+       "hash": "cd86644348c2aaab",
+       "line": 29,
+       "note": "Rounds the new size up to whole words, applies the linear-plus-quadratic memory cost, and charges the new total minus mem.lastGasCost, which is the spec's total_cost minus already_paid.",
+       "path": "core/vm/gas_table.go",
+       "qualname": "memoryGasCost",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "d05b08e7b44e7b50"
+    }
+   },
+   "end_line": 798,
+   "line": 761,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.gas.calculate_memory_gas_cost": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0587,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:11Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 56,
+       "hash": "cd86644348c2aaab",
+       "line": 29,
+       "note": "memoryGasCost computes words*MemoryGas + words^2/QuadCoeffDiv, the same as the spec, and also subtracts the last cost to return the expansion delta.",
+       "path": "core/vm/gas_table.go",
+       "qualname": "memoryGasCost",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "12ec97b31db0ba8e"
+    }
+   },
+   "end_line": 758,
+   "line": 737,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.gas.calculate_message_call_gas": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0905,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:16Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 53,
+       "hash": "2b5df2e725273a2e",
+       "line": 38,
+       "note": "callGas subtracts the base cost from available gas, applies the 63/64 cap and returns min(requested, cap), which is the spec's forwarded-gas calculation.",
+       "path": "core/vm/gas.go",
+       "qualname": "callGas",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 419,
+       "hash": "388e6912ddc9b621",
+       "line": 403,
+       "note": "makeCallVariantGasCost calls callGas and adds the intrinsic cost to it, which matches the spec's `cost = gas + extra_gas` output.",
+       "path": "core/vm/gas_table.go",
+       "qualname": "makeCallVariantGasCost",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "low",
+       "end_line": 558,
+       "hash": "c5df22b7a30ebc69",
+       "line": 471,
+       "note": "The Amsterdam (EIP-8037) call gas function charges the extra execution gas and presumably computes the forwarded gas through callGas in its truncated tail.",
+       "path": "core/vm/operations_acl.go",
+       "qualname": "makeCallVariantGasCallEIP8037",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "low",
+       "end_line": 780,
+       "hash": "0ff748af75d92b66",
+       "line": 736,
+       "note": "opCall adds params.CallStipend to the forwarded gas when value is non-zero, which matches the spec's stipend handling.",
+       "path": "core/vm/instructions.go",
+       "qualname": "opCall",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "264c11d33dda9314"
+    }
+   },
+   "end_line": 843,
+   "line": 801,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.gas.calculate_total_blob_gas": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.046,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:21Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 480,
+       "hash": "2e5063f7a5df7da5",
+       "line": 475,
+       "note": "Transaction.BlobGas returns the blob gas when the tx is a BlobTx and 0 otherwise, which is exactly the spec's branch.",
+       "path": "core/types/transaction.go",
+       "qualname": "Transaction.BlobGas",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 306,
+       "hash": "08050378bae33f0b",
+       "line": 306,
+       "note": "BlobTx.blobGas computes BlobTxBlobGasPerBlob * len(BlobHashes), the blob-transaction branch of the spec.",
+       "path": "core/types/tx_blob.go",
+       "qualname": "BlobTx.blobGas",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 1253,
+       "hash": "e1ba7c8b5709ad0a",
+       "line": 1251,
+       "note": "stateTransition.blobGasUsed computes len(msg.BlobHashes) * BlobTxBlobGasPerBlob for the message, which yields 0 for non-blob txs because they have no hashes.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.blobGasUsed",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "b1312a632b8bb9d3"
+    }
+   },
+   "end_line": 954,
+   "line": 936,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.gas.charge_gas": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0595,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:22:46Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 140,
+       "hash": "7fda153606728f0c",
+       "line": 131,
+       "note": "Subtracts execution gas from the contract's GasBudget and emits a gas-change trace event, mirroring evm_trace + charge_gas_from_meter.",
+       "path": "core/vm/contract.go",
+       "qualname": "Contract.chargeExecution",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 147,
+       "hash": "c4bb5601460ad19a",
+       "line": 145,
+       "note": "Performs only the execution-gas deduction from the meter (charge_gas_from_meter step) without tracing.",
+       "path": "core/vm/gascosts.go",
+       "qualname": "GasBudget.ChargeExecution",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "7db230e529a15ba1"
+    }
+   },
+   "end_line": 410,
+   "line": 396,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.gas.charge_gas_from_meter": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0979,
+     "effort": "medium",
+     "hints": [
+      "ChargeExecutionOnly",
+      "GasBudget",
+      "UseGas"
+     ],
+     "judged_at": "2026-10-26T12:22:55Z",
+     "matches": [
+      {
+       "confidence": "low",
+       "end_line": 295,
+       "hash": "44092ea0e84e68ce",
+       "line": 280,
+       "note": "When state gas is zero it charges execution gas through contract.Gas.ChargeExecutionOnly and returns ErrOutOfGas on failure, but the actual check and subtraction happen in that callee.",
+       "path": "core/vm/interpreter.go",
+       "qualname": "Contract.chargeDynamicGas",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 2,
+     "spec_hash": "ed9c5770885aae4e"
+    }
+   },
+   "end_line": 393,
+   "line": 379,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.gas.charge_state_gas": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0744,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:20:53Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 153,
+       "hash": "1b5e334b9e271812",
+       "line": 144,
+       "note": "Contract.chargeState charges state gas through the budget and emits a gas-change trace event, the same pairing as evm_trace plus charge_state_gas_from_meter in the spec.",
+       "path": "core/vm/contract.go",
+       "qualname": "Contract.chargeState",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 152,
+       "hash": "1206bc789ce359ba",
+       "line": 150,
+       "note": "GasBudget.ChargeState is the meter-level state-gas charge with no tracing, so it covers only the charge_state_gas_from_meter step.",
+       "path": "core/vm/gascosts.go",
+       "qualname": "GasBudget.ChargeState",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 137,
+       "hash": "1d92d1007f72a8da",
+       "line": 112,
+       "note": "GasBudget.charge does the actual work: it takes gas from the reservoir, spills the rest into execution gas and adds to the Spilled counter.",
+       "path": "core/vm/gascosts.go",
+       "qualname": "GasBudget.charge",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "f8eaf3366a3c42a8"
+    }
+   },
+   "end_line": 456,
+   "line": 439,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.gas.charge_state_gas_from_meter": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0736,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:22:48Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 137,
+       "hash": "1d92d1007f72a8da",
+       "line": 112,
+       "note": "It takes state gas from the reservoir first and moves any shortfall to ExecutionGas, adding it to Spilled; it fails when the combined pools can't cover the cost, matching the spec's three branches (it also deducts an execution-gas cost).",
+       "path": "core/vm/gascosts.go",
+       "qualname": "GasBudget.charge",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 152,
+       "hash": "1206bc789ce359ba",
+       "line": 150,
+       "note": "ChargeState(s) is the state-only entry point matching the spec signature, and it hands off to charge with GasCosts{StateGas: s}, where the reservoir and spill logic runs.",
+       "path": "core/vm/gascosts.go",
+       "qualname": "GasBudget.ChargeState",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "7ace554f4ccdcc7e"
+    }
+   },
+   "end_line": 436,
+   "line": 413,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.gas.check_block_gas_capacity": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0872,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:34Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 72,
+       "hash": "c00744041a879956",
+       "line": 64,
+       "note": "Checks the execution reservation against initial-cumulativeExecution and the state reservation against initial-cumulativeState, returning ErrGasLimitReached; it has no blob-gas check and leaves the TX_MAX_GAS_LIMIT cap to the caller.",
+       "path": "core/gaspool.go",
+       "qualname": "GasPool.CheckGasAmsterdam",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "d9fa44b75b869a78"
+    }
+   },
+   "end_line": 1088,
+   "line": 1038,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.gas.check_gas": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.1047,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:22:46Z",
+     "matches": [
+      {
+       "confidence": "medium",
+       "end_line": 461,
+       "hash": "7cff9b5f238b6f15",
+       "line": 421,
+       "note": "Contains the inline check `if contract.Gas.ExecutionGas < gas { return 0, ErrOutOfGas }`, which tests memory plus transfer gas without charging it before state access, as the spec's check_gas does in CALL.",
+       "path": "core/vm/gas_table.go",
+       "qualname": "gasCallIntrinsic",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "6e2576ae49df75bd"
+    }
+   },
+   "end_line": 376,
+   "line": 362,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.gas.check_max_fee_per_blob_gas": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.1161,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:26Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 703,
+       "hash": "fdced6feb0d99789",
+       "line": 573,
+       "note": "preCheck has a step that runs only when blobGasUsed() > 0 and returns ErrBlobFeeCapTooLow if BlobGasFeeCap < BlobBaseFee; this is the spec check inside a larger validation function.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.preCheck",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "752f3e1e4f01292e"
+    }
+   },
+   "end_line": 1035,
+   "line": 1001,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.gas.commit_state_gas": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.1223,
+     "effort": "medium",
+     "hints": [
+      "GasBudget.Commit",
+      "CommittedSpill",
+      "Spilled = 0"
+     ],
+     "judged_at": "2026-10-26T12:22:58Z",
+     "matches": [],
+     "model": "claude-opus-5-5",
+     "rounds": 2,
+     "spec_hash": "5115e60dd2c827f0"
+    }
+   },
+   "end_line": 490,
+   "line": 459,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.gas.credit_state_gas_refund": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0709,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:01Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 166,
+       "hash": "e86a6f186cc35b0c",
+       "line": 160,
+       "note": "RefundState puts min(s, Spilled) back into ExecutionGas, lowers Spilled by that amount and adds the rest to the StateGas reservoir, which is the spec's LIFO credit.",
+       "path": "core/vm/gascosts.go",
+       "qualname": "GasBudget.RefundState",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 163,
+       "hash": "3de29a689ea06497",
+       "line": 156,
+       "note": "Contract.refundState is a wrapper that calls Gas.RefundState and emits a tracing event.",
+       "path": "core/vm/contract.go",
+       "qualname": "Contract.refundState",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "1821efd174100866"
+    }
+   },
+   "end_line": 616,
+   "line": 594,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.gas.drain_state_gas_reservoir": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0869,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:12Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 188,
+       "hash": "10ef872e2c046307",
+       "line": 178,
+       "note": "Forward hands the parent's whole StateGas to the child budget and sets g.StateGas = 0, which is the reservoir drain; it also forwards execution gas.",
+       "path": "core/vm/gascosts.go",
+       "qualname": "GasBudget.Forward",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "f82fc318ba627885"
+    }
+   },
+   "end_line": 710,
+   "line": 689,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.gas.forfeit_remaining_gas": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0615,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:07Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 172,
+       "hash": "43aef98ec74249f8",
+       "line": 169,
+       "note": "Moves the remaining ExecutionGas into UsedExecutionGas and sets ExecutionGas to 0, which matches the spec setting gas_left to 0.",
+       "path": "core/vm/gascosts.go",
+       "qualname": "GasBudget.DrainExecution",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 250,
+       "hash": "9f5eb502a01ce1ad",
+       "line": 235,
+       "note": "Sets ExecutionGas to 0 on a halt and folds the spilled amount back in the same step, so the spec's burn is one part of this larger function.",
+       "path": "core/vm/gascosts.go",
+       "qualname": "GasBudget.ExitHalt",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "48bfe8871955645d"
+    }
+   },
+   "end_line": 663,
+   "line": 650,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.gas.init_code_cost": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0961,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:21Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 567,
+       "hash": "768c316300fe5b03",
+       "line": 544,
+       "note": "Amsterdam CREATE gas computes words := (size+31)/32 and wordGas := params.InitCodeWordGas * words, the same as init_code_cost.",
+       "path": "core/vm/gas_table.go",
+       "qualname": "gasCreateEip8037",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 595,
+       "hash": "d8568edd347b0e42",
+       "line": 569,
+       "note": "Amsterdam CREATE2 gas includes InitCodeWordGas * words, the init_code_cost part, plus the Keccak256 per-word cost.",
+       "path": "core/vm/gas_table.go",
+       "qualname": "gasCreate2Eip8037",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 160,
+       "hash": "2c1914574953ab37",
+       "line": 72,
+       "note": "IntrinsicGas adds toWordSize(dataLen) * params.InitCodeWordGas for create transactions, which is init_code_cost applied to transaction data.",
+       "path": "core/state_transition.go",
+       "qualname": "IntrinsicGas",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 345,
+       "hash": "afc943ff73fa84d7",
+       "line": 324,
+       "note": "The EIP-3860 CREATE gas function computes params.InitCodeWordGas * ((size+31)/32) inline, but for forks before Amsterdam.",
+       "path": "core/vm/gas_table.go",
+       "qualname": "gasCreateEip3860",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 368,
+       "hash": "fe1ad7957ad401dd",
+       "line": 347,
+       "note": "The EIP-3860 CREATE2 gas function includes the InitCodeWordGas per-word charge inline, but for forks before Amsterdam.",
+       "path": "core/vm/gas_table.go",
+       "qualname": "gasCreate2Eip3860",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "462124e36df8ef1e"
+    }
+   },
+   "end_line": 883,
+   "line": 864,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.gas.max_message_call_gas": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0686,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:14Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 53,
+       "hash": "2b5df2e725273a2e",
+       "line": 38,
+       "note": "callGas computes `gas := availableGas - availableGas/64` under EIP-150, which is the 63/64 rule, and then caps the requested gas with it.",
+       "path": "core/vm/gas.go",
+       "qualname": "callGas",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "95e3e7b6c8d4b50e"
+    }
+   },
+   "end_line": 861,
+   "line": 846,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.gas.repay_state_gas_spill": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0584,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:01Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 303,
+       "hash": "33f065f573d490b1",
+       "line": 273,
+       "note": "After merging the child, Absorb computes d := min(g.StateGas, g.Spilled) and moves it from StateGas and Spilled into ExecutionGas, which is exactly the spill repayment.",
+       "path": "core/vm/gascosts.go",
+       "qualname": "GasBudget.Absorb",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "68dbd7e22633922c"
+    }
+   },
+   "end_line": 647,
+   "line": 619,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.gas.restore_child_gas": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0939,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:09Z",
+     "matches": [
+      {
+       "confidence": "medium",
+       "end_line": 303,
+       "hash": "33f065f573d490b1",
+       "line": 273,
+       "note": "Absorb returns the child's execution gas (`g.ExecutionGas += child.ExecutionGas`) and reservoir (`g.StateGas = child.StateGas`) to the parent, which matches restore_child_gas when the child was never entered, but it is the general merge and also handles spill and used-gas accounting.",
+       "path": "core/vm/gascosts.go",
+       "qualname": "GasBudget.Absorb",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "78f52cca8a489f8e"
+    }
+   },
+   "end_line": 734,
+   "line": 713,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.gas.restore_state_gas": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0638,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:22:55Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 227,
+       "hash": "7200ef69b314f552",
+       "line": 212,
+       "note": "Credits g.Spilled back to ExecutionGas, zeroes Spilled/UsedStateGas and resets StateGas to the baseline reservoir (StateGas+UsedStateGas-Spilled) on revert.",
+       "path": "core/vm/gascosts.go",
+       "qualname": "GasBudget.ExitRevert",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 250,
+       "hash": "9f5eb502a01ce1ad",
+       "line": 235,
+       "note": "Resets the reservoir to the baseline and clears spill/used state gas on halt, but also burns the frame's execution gas (halt-specific).",
+       "path": "core/vm/gascosts.go",
+       "qualname": "GasBudget.ExitHalt",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "48110f47951214ef"
+    }
+   },
+   "end_line": 517,
+   "line": 493,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.gas.restore_state_gas_to_entry": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0688,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:22:57Z",
+     "matches": [
+      {
+       "confidence": "medium",
+       "end_line": 227,
+       "hash": "7200ef69b314f552",
+       "line": 212,
+       "note": "ExitRevert returns all Spilled gas to ExecutionGas, rebuilds the entry reservoir (StateGas+UsedStateGas-Spilled) and zeroes the spill and used-state counters, matching the spec's refill-and-reset to the grant.",
+       "path": "core/vm/gascosts.go",
+       "qualname": "GasBudget.ExitRevert",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "16ddc8d40d0a30a5"
+    }
+   },
+   "end_line": 555,
+   "line": 520,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.gas.settle_transaction_gas": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0646,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:29Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 1109,
+       "hash": "bd43da231cc5d3dc",
+       "line": 1046,
+       "note": "settleGas computes gasUsedBeforeRefund from limit minus execution and state gas left, caps the refund via calcRefund, applies the calldata floor, and derives txExecutionGas = max(before-refund minus state gas, floor).",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.settleGas",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "low",
+       "end_line": 104,
+       "hash": "465d7f4b4d46d7b5",
+       "line": 92,
+       "note": "ChargeGasAmsterdam only adds the already-settled execution and state amounts to the block totals, which is the step that consumes this settlement.",
+       "path": "core/gaspool.go",
+       "qualname": "GasPool.ChargeGasAmsterdam",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "edacc8c3e29cc1b8"
+    }
+   },
+   "end_line": 1228,
+   "line": 1163,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.gas.tx_state_gas_used": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.072,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:00Z",
+     "matches": [
+      {
+       "confidence": "medium",
+       "end_line": 1109,
+       "hash": "bd43da231cc5d3dc",
+       "line": 1046,
+       "note": "settleGas derives the transaction's state gas from the top frame's running counter (`txStateGas := uint64(st.gasRemaining.UsedStateGas)`) and rejects it if negative; geth keeps this net counter up to date as gas is charged and refunded instead of computing it the way the spec does.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.settleGas",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "4bb72b474c262945"
+    }
+   },
+   "end_line": 591,
+   "line": 558,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.gas.withhold_create_gas": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0899,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:08Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 687,
+       "hash": "4d390313d7c9da3d",
+       "line": 635,
+       "note": "opCreate works out the all-but-one-64th share (forward -= forward/64) from the frame's ExecutionGas and takes it from the frame via forwardGas to fund the child.",
+       "path": "core/vm/instructions.go",
+       "qualname": "opCreate",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 734,
+       "hash": "3acf5575f8f5ac8f",
+       "line": 689,
+       "note": "opCreate2 does the same inline 63/64 split of ExecutionGas and forwardGas withholding for the CREATE2 child.",
+       "path": "core/vm/instructions.go",
+       "qualname": "opCreate2",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "59238c466484cef5"
+    }
+   },
+   "end_line": 686,
+   "line": 666,
+   "path": "src/ethereum/forks/amsterdam/vm/gas.py"
+  },
+  "vm.instructions.storage.sload": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0939,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:34Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 121,
+       "hash": "b0f699d415c542b8",
+       "line": 113,
+       "note": "Amsterdam SLOAD gas step: checks SlotInAccessList, adds the slot if missing, and charges ColdStorageAccessAmsterdam (cold) or the warm read cost.",
+       "path": "core/vm/operations_acl.go",
+       "qualname": "gasSLoad8038",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 497,
+       "hash": "32da5eda8d87035b",
+       "line": 491,
+       "note": "SLOAD operation step: reads the key from the stack, calls StateDB.GetState for the contract address, and replaces the stack top with the value.",
+       "path": "core/vm/instructions.go",
+       "qualname": "opSload",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "8f039419a18797b8"
+    }
+   },
+   "end_line": 65,
+   "line": 37,
+   "path": "src/ethereum/forks/amsterdam/vm/instructions/storage.py"
+  },
+  "vm.instructions.storage.sstore": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0862,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:33Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 740,
+       "hash": "c3c2262baa0a2022",
+       "line": 680,
+       "note": "Amsterdam SSTORE dynamic gas: static check, stipend sentry, cold/warm access before the slot read, StorageWriteAmsterdam, the state-gas StorageCreationSize charge with RefundState, and the refund counter logic.",
+       "path": "core/vm/gas_table.go",
+       "qualname": "gasSStore8037And8038",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 506,
+       "hash": "7e36d1b4011c8f72",
+       "line": 499,
+       "note": "Execution step: the static check, popping key and value, and SetState, which matches set_storage.",
+       "path": "core/vm/instructions.go",
+       "qualname": "opSstore",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "87d4586f6ec7dd59"
+    }
+   },
+   "end_line": 161,
+   "line": 68,
+   "path": "src/ethereum/forks/amsterdam/vm/instructions/storage.py"
+  },
+  "vm.instructions.storage.tload": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0284,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:35Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 209,
+       "hash": "6f9a100647a2c1f7",
+       "line": 203,
+       "note": "opTload peeks the key, reads transient state for the contract address and writes the value back in place on the stack.",
+       "path": "core/vm/eips.go",
+       "qualname": "opTload",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 200,
+       "hash": "d2cbd4d0b8f670fb",
+       "line": 186,
+       "note": "enable1153 registers TLOAD with constantGas WarmStorageReadCostEIP2929, which is the spec's charge_gas step.",
+       "path": "core/vm/eips.go",
+       "qualname": "enable1153",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "c3c56bb131b2b6da"
+    }
+   },
+   "end_line": 186,
+   "line": 164,
+   "path": "src/ethereum/forks/amsterdam/vm/instructions/storage.py"
+  },
+  "vm.instructions.storage.tstore": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0286,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:37Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 219,
+       "hash": "fc4e6fb7808beef3",
+       "line": 212,
+       "note": "opTstore checks readOnly (static), pops key/value, and calls SetTransientState on the contract address.",
+       "path": "core/vm/eips.go",
+       "qualname": "opTstore",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 200,
+       "hash": "d2cbd4d0b8f670fb",
+       "line": 186,
+       "note": "enable1153 registers TSTORE with constantGas WarmStorageReadCostEIP2929, which is the spec's charge_gas step.",
+       "path": "core/vm/eips.go",
+       "qualname": "enable1153",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "394373a99c6ef3ee"
+    }
+   },
+   "end_line": 216,
+   "line": 189,
+   "path": "src/ethereum/forks/amsterdam/vm/instructions/storage.py"
+  },
+  "vm.instructions.system.call": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.1119,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:47Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 780,
+       "hash": "0ff748af75d92b66",
+       "line": 736,
+       "note": "opCall pops the CALL stack arguments, checks write protection, passes the state reservoir to the child via evm.Call, and refills the new-account state gas when the child fails, matching the spec's operation step.",
+       "path": "core/vm/instructions.go",
+       "qualname": "opCall",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 558,
+       "hash": "c5df22b7a30ebc69",
+       "line": 471,
+       "note": "makeCallVariantGasCallEIP8037 does the Amsterdam dynamic gas: cold-access warming, execution charge before state access, 7702 delegation cost, state gas for the new account, then the callGas child grant.",
+       "path": "core/vm/operations_acl.go",
+       "qualname": "makeCallVariantGasCallEIP8037",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 622,
+       "hash": "f8983b6187c5f26e",
+       "line": 601,
+       "note": "executionGasCall8038 computes the memory expansion plus the Amsterdam CALL_VALUE transfer cost, and the static-context value check.",
+       "path": "core/vm/gas_table.go",
+       "qualname": "executionGasCall8038",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 644,
+       "hash": "23f973c61271b9bd",
+       "line": 628,
+       "note": "stateGasCall8037 charges NEW_ACCOUNT state gas when value is sent to an empty account, the same as new_account_charged in the spec.",
+       "path": "core/vm/gas_table.go",
+       "qualname": "stateGasCall8037",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "7ea224085d029ff0"
+    }
+   },
+   "end_line": 589,
+   "line": 466,
+   "path": "src/ethereum/forks/amsterdam/vm/instructions/system.py"
+  },
+  "vm.instructions.system.callcode": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0994,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:55Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 816,
+       "hash": "b290d16cf7fadb5c",
+       "line": 782,
+       "note": "opCallCode pops the seven CALLCODE stack args, adds the stipend for non-zero value, hands the state reservoir to the child, calls evm.CallCode and writes the return data, which is the spec's OPERATION step.",
+       "path": "core/vm/instructions.go",
+       "qualname": "opCallCode",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 402,
+       "hash": "ed9c027ba986763d",
+       "line": 365,
+       "note": "EVM.CallCode runs the generic_call part: depth check, insufficient-balance check, snapshot, running the target's code in the caller's context, and revert on error.",
+       "path": "core/vm/evm.go",
+       "qualname": "EVM.CallCode",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 558,
+       "hash": "c5df22b7a30ebc69",
+       "line": 471,
+       "note": "The Amsterdam call-variant gas function adds the cold address to the access list, charges memory and transfer gas, then charges EIP-7702 delegation access, matching the spec's gas and state-access phases.",
+       "path": "core/vm/operations_acl.go",
+       "qualname": "makeCallVariantGasCallEIP8037",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 501,
+       "hash": "b91ac10a57083f5d",
+       "line": 485,
+       "note": "gasCallCodeIntrinsic8038 works out the Amsterdam memory-expansion plus value-transfer (CallValueTransferAmsterdam) part of CALLCODE gas.",
+       "path": "core/vm/gas_table.go",
+       "qualname": "gasCallCodeIntrinsic8038",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "abc241633ad8b9c9"
+    }
+   },
+   "end_line": 702,
+   "line": 592,
+   "path": "src/ethereum/forks/amsterdam/vm/instructions/system.py"
+  },
+  "vm.instructions.system.create": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0853,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:45Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 687,
+       "hash": "4d390313d7c9da3d",
+       "line": 635,
+       "note": "opCreate pops value/offset/size, computes CreateAddress from caller nonce and calls evm.create, mirroring the spec's create operation.",
+       "path": "core/vm/instructions.go",
+       "qualname": "opCreate",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 567,
+       "hash": "768c316300fe5b03",
+       "line": 544,
+       "note": "gasCreateEip8037 is the Amsterdam CREATE dynamic gas: static check, memory expansion, init-code word gas and max init-code size check.",
+       "path": "core/vm/gas_table.go",
+       "qualname": "gasCreateEip8037",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "53136648fb411de7"
+    }
+   },
+   "end_line": 240,
+   "line": 188,
+   "path": "src/ethereum/forks/amsterdam/vm/instructions/system.py"
+  },
+  "vm.instructions.system.create2": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0672,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:40Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 734,
+       "hash": "3acf5575f8f5ac8f",
+       "line": 689,
+       "note": "opCreate2 pops endowment/offset/size/salt, computes the CreateAddress2 address and runs evm.create, matching the spec's operation.",
+       "path": "core/vm/instructions.go",
+       "qualname": "opCreate2",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 595,
+       "hash": "d8568edd347b0e42",
+       "line": 569,
+       "note": "gasCreate2Eip8037 is the Amsterdam dynamic gas: it checks the static context, charges memory expansion plus InitCodeWordGas+Keccak256WordGas per word, and enforces the max initcode size.",
+       "path": "core/vm/gas_table.go",
+       "qualname": "gasCreate2Eip8037",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "low",
+       "end_line": 614,
+       "hash": "efb888ff853bf171",
+       "line": 590,
+       "note": "enable8037And8038 sets CREATE2's constant gas to CreateAccessAmsterdam, which matches GasCosts.CREATE_ACCESS in the spec.",
+       "path": "core/vm/eips.go",
+       "qualname": "enable8037And8038",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "1c4fb8fbd0f9b7a7"
+    }
+   },
+   "end_line": 305,
+   "line": 243,
+   "path": "src/ethereum/forks/amsterdam/vm/instructions/system.py"
+  },
+  "vm.instructions.system.delegatecall": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0904,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:55Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 848,
+       "hash": "ab8f9e72219af0b8",
+       "line": 818,
+       "note": "opDelegateCall pops the six stack args, hands the state reservoir to the child via NewGasBudget, calls evm.DelegateCall with the parent's caller and value, and writes the return data to memory.",
+       "path": "core/vm/instructions.go",
+       "qualname": "opDelegateCall",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 558,
+       "hash": "c5df22b7a30ebc69",
+       "line": 471,
+       "note": "The Amsterdam (EIP-8037/8038) call-variant gas function covers the cold-access charge, the memory/intrinsic check before state access, the EIP-7702 delegation access cost and the child gas grant.",
+       "path": "core/vm/operations_acl.go",
+       "qualname": "makeCallVariantGasCallEIP8037",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 441,
+       "hash": "525a1d87aba1e922",
+       "line": 409,
+       "note": "EVM.DelegateCall does the generic_call work: the depth check, the snapshot, the precompile or code run in the current target's context, and the revert.",
+       "path": "core/vm/evm.go",
+       "qualname": "EVM.DelegateCall",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "low",
+       "end_line": 509,
+       "hash": "99b7f2c01b2aa0bd",
+       "line": 503,
+       "note": "gasDelegateCallIntrinsic only works out the memory expansion cost that is passed into the 8037 call gas function.",
+       "path": "core/vm/gas_table.go",
+       "qualname": "gasDelegateCallIntrinsic",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "309d07d898bad54f"
+    }
+   },
+   "end_line": 879,
+   "line": 780,
+   "path": "src/ethereum/forks/amsterdam/vm/instructions/system.py"
+  },
+  "vm.instructions.system.generic_call": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.1161,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:54Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 780,
+       "hash": "0ff748af75d92b66",
+       "line": 736,
+       "note": "CALL opcode side of the lifecycle: dispatches via evm.Call, pushes success/0, writes output to memory, absorbs child gas via refundGas, and refunds the account-creation state gas on child error (Amsterdam).",
+       "path": "core/vm/instructions.go",
+       "qualname": "opCall",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 816,
+       "hash": "b290d16cf7fadb5c",
+       "line": 782,
+       "note": "CALLCODE opcode side: dispatches the child, pushes the result, writes return data to memory, and absorbs the child's gas.",
+       "path": "core/vm/instructions.go",
+       "qualname": "opCallCode",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 848,
+       "hash": "ab8f9e72219af0b8",
+       "line": 818,
+       "note": "DELEGATECALL opcode side: dispatches the child, pushes the result, writes the output, and absorbs the child's gas.",
+       "path": "core/vm/instructions.go",
+       "qualname": "opDelegateCall",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 881,
+       "hash": "dadd588bd501ae4f",
+       "line": 850,
+       "note": "STATICCALL opcode side: dispatches the child, pushes the result, writes the output, and absorbs the child's gas.",
+       "path": "core/vm/instructions.go",
+       "qualname": "opStaticCall",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 356,
+       "hash": "75fb0cb822e1c72f",
+       "line": 283,
+       "note": "Before starting, checks the depth limit and insufficient balance and returns the gas untouched; then builds the child contract, runs it and reverts state on error.",
+       "path": "core/vm/evm.go",
+       "qualname": "EVM.Call",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 402,
+       "hash": "ed9c027ba986763d",
+       "line": 365,
+       "note": "CallCode frame runner: checks the depth and balance before starting, then runs the child frame and settles its gas.",
+       "path": "core/vm/evm.go",
+       "qualname": "EVM.CallCode",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 441,
+       "hash": "525a1d87aba1e922",
+       "line": 409,
+       "note": "DelegateCall frame runner: checks the depth before starting, then runs the child frame and settles its gas.",
+       "path": "core/vm/evm.go",
+       "qualname": "EVM.DelegateCall",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 488,
+       "hash": "ca608382590020e6",
+       "line": 447,
+       "note": "StaticCall frame runner: checks the depth before starting, then runs the child read-only and settles its gas.",
+       "path": "core/vm/evm.go",
+       "qualname": "EVM.StaticCall",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "low",
+       "end_line": 303,
+       "hash": "33f065f573d490b1",
+       "line": 273,
+       "note": "Merges the child's leftover gas budget into the parent, matching the spec's incorporate_child gas step.",
+       "path": "core/vm/gascosts.go",
+       "qualname": "GasBudget.Absorb",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "92ea83f94eca5069"
+    }
+   },
+   "end_line": 463,
+   "line": 370,
+   "path": "src/ethereum/forks/amsterdam/vm/instructions/system.py"
+  },
+  "vm.instructions.system.generic_create": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.1114,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:41Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 652,
+       "hash": "cf81b8abd4e75f23",
+       "line": 550,
+       "note": "EVM.create covers the child-frame part: nonce increment, access-list add, collision check that burns execution gas, snapshot, value transfer and running the initcode.",
+       "path": "core/vm/evm.go",
+       "qualname": "EVM.create",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 547,
+       "hash": "48dcca92d0d19600",
+       "line": 530,
+       "note": "chargeAccountCreation runs the preflight (createFramePreCheck covers balance, nonce and depth, then pushes 0) and the NEW_ACCOUNT state-gas charge when the target is empty.",
+       "path": "core/vm/evm.go",
+       "qualname": "EVM.chargeAccountCreation",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 687,
+       "hash": "4d390313d7c9da3d",
+       "line": 635,
+       "note": "opCreate does the 63/64 withholding, calls evm.create, pushes the address or 0, absorbs the child's gas, refunds the account-creation charge on failure and sets return data.",
+       "path": "core/vm/instructions.go",
+       "qualname": "opCreate",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 734,
+       "hash": "3acf5575f8f5ac8f",
+       "line": 689,
+       "note": "opCreate2 runs the same lifecycle as opCreate (63/64 forward, create, push result, refundGas, creation-charge refill on failure, return data) for CREATE2.",
+       "path": "core/vm/instructions.go",
+       "qualname": "opCreate2",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "375d4dddb9decb3b"
+    }
+   },
+   "end_line": 185,
+   "line": 59,
+   "path": "src/ethereum/forks/amsterdam/vm/instructions/system.py"
+  },
+  "vm.instructions.system.return_": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.1483,
+     "effort": "medium",
+     "hints": [
+      "opReturn",
+      "memoryReturn",
+      "gasReturn"
+     ],
+     "judged_at": "2026-10-26T12:23:46Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 888,
+       "hash": "ffd9f333ba93e477",
+       "line": 883,
+       "note": "opReturn pops offset and size, copies that memory range out as output and halts with errStopToken.",
+       "path": "core/vm/instructions.go",
+       "qualname": "opReturn",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 114,
+       "hash": "a1ee2a05c0d8351d",
+       "line": 112,
+       "note": "memoryReturn works out the memory size from offset and size that the interpreter uses to charge memory-expansion gas for RETURN.",
+       "path": "core/vm/memory_table.go",
+       "qualname": "memoryReturn",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 2,
+     "spec_hash": "5999d24aa55e7dac"
+    }
+   },
+   "end_line": 338,
+   "line": 308,
+   "path": "src/ethereum/forks/amsterdam/vm/instructions/system.py"
+  },
+  "vm.instructions.system.revert": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0332,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:59Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 896,
+       "hash": "26032f89beecf86c",
+       "line": 890,
+       "note": "opRevert pops offset and size, copies that memory range into returnData and returns ErrExecutionReverted, which is the spec's operation.",
+       "path": "core/vm/instructions.go",
+       "qualname": "opRevert",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 118,
+       "hash": "67404868f3d12ae3",
+       "line": 116,
+       "note": "memoryRevert works out the memory size from the two stack arguments, which feeds the spec's calculate_gas_extend_memory step.",
+       "path": "core/vm/memory_table.go",
+       "qualname": "memoryRevert",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "90efd163b03ae9bd"
+    }
+   },
+   "end_line": 1010,
+   "line": 984,
+   "path": "src/ethereum/forks/amsterdam/vm/instructions/system.py"
+  },
+  "vm.instructions.system.selfdestruct": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0709,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:23:56Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 975,
+       "hash": "58c59ce16439442b",
+       "line": 932,
+       "note": "Amsterdam execution path: checks static context, pops the beneficiary, moves the balance, deletes the account only if it was created in this transaction (IsNewContract), and emits the EIP-7708 transfer log when the beneficiary is a different address.",
+       "path": "core/vm/instructions.go",
+       "qualname": "opSelfdestruct6780",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 676,
+       "hash": "0a66c21d4adaf31b",
+       "line": 648,
+       "note": "Amsterdam dynamic gas for SELFDESTRUCT: charges cold-access gas and adds the address to the access list, checks gas before touching state, then charges AccountWriteAmsterdam plus account-creation state gas when the beneficiary is empty and the balance is non-zero.",
+       "path": "core/vm/gas_table.go",
+       "qualname": "gasSelfdestruct8037And8038",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "9993585021c13c48"
+    }
+   },
+   "end_line": 777,
+   "line": 705,
+   "path": "src/ethereum/forks/amsterdam/vm/instructions/system.py"
+  },
+  "vm.instructions.system.staticcall": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.1083,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:24:07Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 881,
+       "hash": "dadd588bd501ae4f",
+       "line": 850,
+       "note": "opStaticCall pops the six stack args, reads input memory, hands the state reservoir to the child via NewGasBudget, calls evm.StaticCall and writes output/return data, matching the spec's OPERATION step.",
+       "path": "core/vm/instructions.go",
+       "qualname": "opStaticCall",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 558,
+       "hash": "c5df22b7a30ebc69",
+       "line": 471,
+       "note": "The EIP-8037 call-variant gas function does the Amsterdam-era cold access warming/charging, memory-gas-before-state check and 7702 delegation access charge that the spec does in its gas steps; it is likely the base of gasStaticCall8038.",
+       "path": "core/vm/operations_acl.go",
+       "qualname": "makeCallVariantGasCallEIP8037",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 488,
+       "hash": "ca608382590020e6",
+       "line": 447,
+       "note": "EVM.StaticCall runs the read-only child frame (depth check, precompile, delegation-resolved code), corresponding to generic_call with is_staticcall=True.",
+       "path": "core/vm/evm.go",
+       "qualname": "EVM.StaticCall",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "low",
+       "end_line": 110,
+       "hash": "16d1cb1e0eecdd58",
+       "line": 97,
+       "note": "memoryStaticCall computes the memory size from the input/output ranges, the memory-size half of the spec's calculate_gas_extend_memory step.",
+       "path": "core/vm/memory_table.go",
+       "qualname": "memoryStaticCall",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "e833c50ee640818c"
+    }
+   },
+   "end_line": 981,
+   "line": 882,
+   "path": "src/ethereum/forks/amsterdam/vm/instructions/system.py"
+  },
+  "vm.interpreter.charge_value_transfer_to_non_alive_account": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.0834,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:24:01Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 644,
+       "hash": "23f973c61271b9bd",
+       "line": 628,
+       "note": "Returns AccountCreationSize*CostPerStateByte as state gas when value is non-zero and StateDB.Empty(address), which is the spec's check that value > 0 and the account is not alive.",
+       "path": "core/vm/gas_table.go",
+       "qualname": "stateGasCall8037",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 1036,
+       "hash": "c83a769377fdc791",
+       "line": 1009,
+       "note": "Its first step charges AccountCreationSize*CostPerStateByte as state gas when value is non-zero and the tx recipient is Empty; it then also handles delegation access.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.chargeCallRecipientEIP2780",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "01f94f00c8c568af"
+    }
+   },
+   "end_line": 130,
+   "line": 119,
+   "path": "src/ethereum/forks/amsterdam/vm/interpreter.py"
+  },
+  "vm.interpreter.create_evm": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.1431,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:24:09Z",
+     "matches": [
+      {
+       "confidence": "medium",
+       "end_line": 940,
+       "hash": "18aa5c2a2a656b88",
+       "line": 884,
+       "note": "Top-level call path: on Amsterdam it applies the 7702 authorizations, then charges the recipient (chargeCallRecipientEIP2780), and on out-of-gas reverts state and halts without dispatching, matching create_evm's call branch.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.executeCall",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 880,
+       "hash": "12618f60b904eb68",
+       "line": 835,
+       "note": "Top-level create path: charges AccountCreationSize state gas when the create address is empty before entering the frame, matching create_evm's is_create branch.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.executeCreate",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 1036,
+       "hash": "c83a769377fdc791",
+       "line": 1009,
+       "note": "Implements charge_value_transfer_to_non_alive_account plus resolve_delegated_code_address (delegation target warm/cold charge and warming) for the top frame.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.chargeCallRecipientEIP2780",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "a781dd867fa58621"
+    }
+   },
+   "end_line": 232,
+   "line": 133,
+   "path": "src/ethereum/forks/amsterdam/vm/interpreter.py"
+  },
+  "vm.interpreter.process_call": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.1197,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:24:14Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 356,
+       "hash": "75fb0cb822e1c72f",
+       "line": 283,
+       "note": "EVM.Call does what process_call does: checks the depth limit, takes a snapshot, transfers value, runs the precompile or the interpreter, and reverts to the snapshot on error.",
+       "path": "core/vm/evm.go",
+       "qualname": "EVM.Call",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 402,
+       "hash": "ed9c027ba986763d",
+       "line": 365,
+       "note": "CallCode follows the same frame steps (depth check, snapshot, run precompile or code, revert on error) for CALLCODE, but does not move any ether.",
+       "path": "core/vm/evm.go",
+       "qualname": "EVM.CallCode",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 441,
+       "hash": "525a1d87aba1e922",
+       "line": 409,
+       "note": "DelegateCall follows the same frame steps (depth check, snapshot, run precompile or code, revert on error) without a value transfer, matching should_transfer_value=False.",
+       "path": "core/vm/evm.go",
+       "qualname": "EVM.DelegateCall",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 488,
+       "hash": "ca608382590020e6",
+       "line": 447,
+       "note": "StaticCall follows the same frame steps (depth check, snapshot, run precompile or code, revert on error) for static frames.",
+       "path": "core/vm/evm.go",
+       "qualname": "EVM.StaticCall",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "low",
+       "end_line": 258,
+       "hash": "6c0115939678502e",
+       "line": 147,
+       "note": "execTraced is the interpreter loop that fetches and runs each opcode, which is the inner while-loop of process_call.",
+       "path": "core/vm/interpreter.go",
+       "qualname": "EVM.execTraced",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "340f79508b342836"
+    }
+   },
+   "end_line": 469,
+   "line": 395,
+   "path": "src/ethereum/forks/amsterdam/vm/interpreter.py"
+  },
+  "vm.interpreter.process_create": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.1182,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:24:11Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 704,
+       "hash": "cf489998cd6c192e",
+       "line": 656,
+       "note": "initNewContract runs the initcode, rejects a 0xEF prefix, checks max code size, charges the keccak per-word gas and the per-byte state gas (Amsterdam branch), then calls SetCode, which is the code-deposit half of process_create.",
+       "path": "core/vm/evm.go",
+       "qualname": "EVM.initNewContract",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 652,
+       "hash": "cf81b8abd4e75f23",
+       "line": 550,
+       "note": "EVM.create takes a snapshot, calls CreateContract (mark created and reset storage), sets the new account's nonce to 1, runs the initcode through initNewContract and reverts to the snapshot on error, which is the frame logic of process_create; it also includes the collision check and value transfer that the spec handles elsewhere.",
+       "path": "core/vm/evm.go",
+       "qualname": "EVM.create",
+       "relation": "equivalent",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "dad733ddcaa8082d"
+    }
+   },
+   "end_line": 392,
+   "line": 324,
+   "path": "src/ethereum/forks/amsterdam/vm/interpreter.py"
+  },
+  "vm.interpreter.process_top_level": {
+   "clients": {
+    "geth": {
+     "cost_usd": 0.1169,
+     "effort": "medium",
+     "hints": [],
+     "judged_at": "2026-10-26T12:24:11Z",
+     "matches": [
+      {
+       "confidence": "high",
+       "end_line": 940,
+       "hash": "18aa5c2a2a656b88",
+       "line": 884,
+       "note": "Does the call branch: runs preparation (authorizations, EIP-2780 charge), on failure reverts to a snapshot and calls haltTopFrame, otherwise dispatches evm.Call.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.executeCall",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "high",
+       "end_line": 880,
+       "hash": "12618f60b904eb68",
+       "line": 835,
+       "note": "Does the create branch: charges account-creation state gas, on failure halts the top frame, otherwise dispatches evm.Create.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.executeCreate",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 970,
+       "hash": "247f7a649f8f04c5",
+       "line": 944,
+       "note": "Handles a preparation failure by settling the frame as halted at entry (ExitHalt), matching the restore_state_gas_to_entry and forfeit_remaining_gas steps.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.haltTopFrame",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      },
+      {
+       "confidence": "medium",
+       "end_line": 831,
+       "hash": "0981dc25e14fc866",
+       "line": 716,
+       "note": "The top-level transaction driver that chooses between executeCreate and executeCall depending on contractCreation.",
+       "path": "core/state_transition.go",
+       "qualname": "stateTransition.execute",
+       "relation": "partial",
+       "repo": "go-ethereum"
+      }
+     ],
+     "model": "claude-opus-5-5",
+     "rounds": 1,
+     "spec_hash": "67c50ee180c2eb75"
+    }
+   },
+   "end_line": 321,
+   "line": 235,
+   "path": "src/ethereum/forks/amsterdam/vm/interpreter.py"
+  }
+ },
+ "repos": {
+  "alloy-evm": {
+   "sha": "d7b5ed4aaa3a88952c82be3b7acd1773d9305558",
+   "url": "https://github.com/alloy-rs/evm"
+  },
+  "execution-specs": {
+   "sha": "dc1bb6bd9a38d91a22b73f045e8feee62d166ada",
+   "url": "https://github.com/ethereum/execution-specs"
+  },
+  "go-ethereum": {
+   "sha": "d01e869d59696d915410b0b5bc374ae1a8b9418e",
+   "url": "https://github.com/ethereum/go-ethereum"
+  },
+  "nethermind": {
+   "sha": "a183d792ff710ca97d9b6ebf232d16cc5f8d32ae",
+   "url": "https://github.com/NethermindEth/nethermind"
+  },
+  "reth": {
+   "sha": "505e9c392f942b946b434b9c8aa444f0b3ef0075",
+   "url": "https://github.com/paradigmxyz/reth"
+  },
+  "revm": {
+   "sha": "ee9ab3f5b8b85a9f9f5fe60be3ac4c23370a3e36",
+   "url": "https://github.com/bluealloy/revm"
+  }
+ },
+ "spec": {
+  "fork": "amsterdam",
+  "repo": "execution-specs",
+  "sha": "dc1bb6bd9a38d91a22b73f045e8feee62d166ada",
+  "url": "https://github.com/ethereum/execution-specs"
+ }
+}

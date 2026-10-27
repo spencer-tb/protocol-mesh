@@ -89,6 +89,13 @@ fast-forwarding. Read it before saying yes.
 holds the skills. `CLAUDE.md` and `.claude/skills` link to them for Claude
 Code. `sources.md` lists where each kind of context lives.
 
+## Cross-client map
+
+`./xref.sh` maps every EELS spec function to the code that implements it in
+each execution client. `./xref.sh show charge_state_gas` reads the shared
+map, and `./xref.sh find` ranks candidates locally for free. See
+`xref/README.md`.
+
 ## Build targets
 
 | Target | Checkout | Output |
