@@ -654,13 +654,22 @@ def render_tsv(config: Config, target: Path) -> None:
         for name, where in config.checkouts.items()
     }
     target.mkdir(parents=True, exist_ok=True)
-    spec_rows = ["# eels\tstep\twhat it does"]
+    # The EIPs each EELS function's code and docstrings name, so a grep for
+    # an EIP finds its functions.
+    eips = {
+        s.id: ",".join(s.eips) or "-"
+        for s in load(index_path(config, config.spec.repo))
+    }
+    spec_rows = ["# eels\tstep\teips\twhat it does"]
     client_rows: dict[str, list[str]] = defaultdict(
         lambda: ["# eels\tsteps\trole\tlocation\tfunction"]
     )
     for spec_id, entry in sorted(data["entries"].items()):
         for step in entry.get("steps", []):
-            spec_rows.append(f"{spec_id}\t{step['id']}\t{step['text']}")
+            spec_rows.append(
+                f"{spec_id}\t{step['id']}\t{eips.get(spec_id, '-')}\t"
+                f"{step['text']}"
+            )
         for client, table in sorted(entry.get("clients", {}).items()):
             rows = client_rows[client]
             for match in table.get("matches", []):
