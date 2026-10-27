@@ -322,7 +322,7 @@ def pooled(config: Config, questions: list[str]) -> Json:
         for spec_id in questions:
             name = f"{spec_id}|{client}"
             found: dict[tuple[str, str, str], Symbol] = {}
-            for method, run in runs.items():
+            for run in runs.values():
                 for answer in run.get(name, {}).get("answers", []):
                     symbol = by_key.get(key(answer)) or resolve(
                         symbols, answer
