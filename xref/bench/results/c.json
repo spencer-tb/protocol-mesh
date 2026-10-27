@@ -20,6 +20,10 @@
   "judged": false,
   "answers": []
  },
+ "vm.gas.allocate_evm_gas|besu": {
+  "judged": false,
+  "answers": []
+ },
  "vm.gas.calculate_data_fee|geth": {
   "judged": true,
   "answers": [
@@ -41,6 +45,10 @@
   "judged": false,
   "answers": []
  },
+ "vm.gas.calculate_data_fee|besu": {
+  "judged": false,
+  "answers": []
+ },
  "vm.gas.calculate_gas_extend_memory|geth": {
   "judged": true,
   "answers": [
@@ -59,6 +67,10 @@
   "answers": []
  },
  "vm.gas.calculate_gas_extend_memory|nethermind": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.gas.calculate_gas_extend_memory|besu": {
   "judged": false,
   "answers": []
  },
@@ -97,6 +109,10 @@
   "judged": false,
   "answers": []
  },
+ "vm.gas.calculate_total_blob_gas|besu": {
+  "judged": false,
+  "answers": []
+ },
  "vm.gas.charge_gas_from_meter|geth": {
   "judged": true,
   "answers": [],
@@ -107,6 +123,10 @@
   "answers": []
  },
  "vm.gas.charge_gas_from_meter|nethermind": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.gas.charge_gas_from_meter|besu": {
   "judged": false,
   "answers": []
  },
@@ -138,6 +158,10 @@
   "judged": false,
   "answers": []
  },
+ "vm.gas.charge_state_gas_from_meter|besu": {
+  "judged": false,
+  "answers": []
+ },
  "vm.gas.check_max_fee_per_blob_gas|geth": {
   "judged": true,
   "answers": [
@@ -156,6 +180,10 @@
   "answers": []
  },
  "vm.gas.check_max_fee_per_blob_gas|nethermind": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.gas.check_max_fee_per_blob_gas|besu": {
   "judged": false,
   "answers": []
  },
@@ -187,6 +215,10 @@
   "judged": false,
   "answers": []
  },
+ "vm.gas.credit_state_gas_refund|besu": {
+  "judged": false,
+  "answers": []
+ },
  "vm.gas.forfeit_remaining_gas|geth": {
   "judged": true,
   "answers": [
@@ -215,6 +247,10 @@
   "judged": false,
   "answers": []
  },
+ "vm.gas.forfeit_remaining_gas|besu": {
+  "judged": false,
+  "answers": []
+ },
  "vm.gas.repay_state_gas_spill|geth": {
   "judged": true,
   "answers": [
@@ -233,6 +269,10 @@
   "answers": []
  },
  "vm.gas.repay_state_gas_spill|nethermind": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.gas.repay_state_gas_spill|besu": {
   "judged": false,
   "answers": []
  },
@@ -264,6 +304,10 @@
   "judged": false,
   "answers": []
  },
+ "vm.gas.restore_state_gas|besu": {
+  "judged": false,
+  "answers": []
+ },
  "vm.gas.settle_transaction_gas|geth": {
   "judged": true,
   "answers": [
@@ -282,6 +326,10 @@
   "answers": []
  },
  "vm.gas.settle_transaction_gas|nethermind": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.gas.settle_transaction_gas|besu": {
   "judged": false,
   "answers": []
  },
@@ -364,6 +412,10 @@
   "judged": false,
   "answers": []
  },
+ "transactions.calculate_effective_gas_price|besu": {
+  "judged": false,
+  "answers": []
+ },
  "transactions.calculate_max_gas_fee|geth": {
   "judged": true,
   "answers": [
@@ -401,6 +453,10 @@
   "judged": false,
   "answers": []
  },
+ "transactions.calculate_max_gas_fee|besu": {
+  "judged": false,
+  "answers": []
+ },
  "transactions.check_nonce|geth": {
   "judged": true,
   "answers": [
@@ -435,6 +491,10 @@
   "cost_usd": 0.0412
  },
  "transactions.check_nonce|nethermind": {
+  "judged": false,
+  "answers": []
+ },
+ "transactions.check_nonce|besu": {
   "judged": false,
   "answers": []
  },
@@ -482,6 +542,10 @@
   "judged": false,
   "answers": []
  },
+ "transactions.decode_transaction|besu": {
+  "judged": false,
+  "answers": []
+ },
  "transactions.has_access_list|geth": {
   "judged": true,
   "answers": [],
@@ -493,6 +557,10 @@
   "cost_usd": 0.0727
  },
  "transactions.has_access_list|nethermind": {
+  "judged": false,
+  "answers": []
+ },
+ "transactions.has_access_list|besu": {
   "judged": false,
   "answers": []
  },
@@ -525,6 +593,10 @@
   "judged": false,
   "answers": []
  },
+ "transactions.signing_hash_155|besu": {
+  "judged": false,
+  "answers": []
+ },
  "transactions.signing_hash_2930|geth": {
   "judged": true,
   "answers": [
@@ -547,6 +619,10 @@
   "judged": false,
   "answers": []
  },
+ "transactions.signing_hash_2930|besu": {
+  "judged": false,
+  "answers": []
+ },
  "transactions.signing_hash_7702|geth": {
   "judged": true,
   "answers": [
@@ -566,6 +642,10 @@
   "cost_usd": 0.0419
  },
  "transactions.signing_hash_7702|nethermind": {
+  "judged": false,
+  "answers": []
+ },
+ "transactions.signing_hash_7702|besu": {
   "judged": false,
   "answers": []
  },
@@ -620,6 +700,10 @@
   "judged": false,
   "answers": []
  },
+ "fork.apply_body|besu": {
+  "judged": false,
+  "answers": []
+ },
  "fork.calculate_base_fee_per_gas|geth": {
   "judged": true,
   "answers": [
@@ -654,6 +738,10 @@
   "cost_usd": 0.0986
  },
  "fork.calculate_base_fee_per_gas|nethermind": {
+  "judged": false,
+  "answers": []
+ },
+ "fork.calculate_base_fee_per_gas|besu": {
   "judged": false,
   "answers": []
  },
@@ -712,6 +800,10 @@
   "cost_usd": 0.1175
  },
  "fork.check_transaction|nethermind": {
+  "judged": false,
+  "answers": []
+ },
+ "fork.check_transaction|besu": {
   "judged": false,
   "answers": []
  },
@@ -780,6 +872,10 @@
   "judged": false,
   "answers": []
  },
+ "fork.execute_block|besu": {
+  "judged": false,
+  "answers": []
+ },
  "fork.make_receipt|geth": {
   "judged": true,
   "answers": [
@@ -821,6 +917,10 @@
   "cost_usd": 0.0657
  },
  "fork.make_receipt|nethermind": {
+  "judged": false,
+  "answers": []
+ },
+ "fork.make_receipt|besu": {
   "judged": false,
   "answers": []
  },
@@ -917,6 +1017,10 @@
   "judged": false,
   "answers": []
  },
+ "fork.process_general_purpose_requests|besu": {
+  "judged": false,
+  "answers": []
+ },
  "fork.process_unchecked_system_transaction|geth": {
   "judged": true,
   "answers": [
@@ -968,6 +1072,10 @@
   "judged": false,
   "answers": []
  },
+ "fork.process_unchecked_system_transaction|besu": {
+  "judged": false,
+  "answers": []
+ },
  "fork.state_transition|geth": {
   "judged": true,
   "answers": [
@@ -994,6 +1102,10 @@
   "cost_usd": 0.0927
  },
  "fork.state_transition|nethermind": {
+  "judged": false,
+  "answers": []
+ },
+ "fork.state_transition|besu": {
   "judged": false,
   "answers": []
  },
@@ -1039,6 +1151,10 @@
   "judged": false,
   "answers": []
  },
+ "vm.instructions.system.call|besu": {
+  "judged": false,
+  "answers": []
+ },
  "vm.instructions.system.create|geth": {
   "judged": true,
   "answers": [
@@ -1064,6 +1180,10 @@
   "answers": []
  },
  "vm.instructions.system.create|nethermind": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.instructions.system.create|besu": {
   "judged": false,
   "answers": []
  },
@@ -1099,6 +1219,10 @@
   "answers": []
  },
  "vm.instructions.system.delegatecall|nethermind": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.instructions.system.delegatecall|besu": {
   "judged": false,
   "answers": []
  },
@@ -1144,6 +1268,10 @@
   "judged": false,
   "answers": []
  },
+ "vm.instructions.system.generic_create|besu": {
+  "judged": false,
+  "answers": []
+ },
  "vm.instructions.system.revert|geth": {
   "judged": true,
   "answers": [
@@ -1169,6 +1297,10 @@
   "answers": []
  },
  "vm.instructions.system.revert|nethermind": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.instructions.system.revert|besu": {
   "judged": false,
   "answers": []
  },
@@ -1223,6 +1355,10 @@
   "judged": false,
   "answers": []
  },
+ "vm.eoa_delegation.calculate_delegation_cost|besu": {
+  "judged": false,
+  "answers": []
+ },
  "vm.eoa_delegation.is_valid_delegation|geth": {
   "judged": true,
   "answers": [
@@ -1242,6 +1378,10 @@
   "cost_usd": 0.1209
  },
  "vm.eoa_delegation.is_valid_delegation|nethermind": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.eoa_delegation.is_valid_delegation|besu": {
   "judged": false,
   "answers": []
  },
@@ -1289,6 +1429,10 @@
   "judged": false,
   "answers": []
  },
+ "vm.eoa_delegation.resolve_delegated_code_address|besu": {
+  "judged": false,
+  "answers": []
+ },
  "vm.interpreter.charge_value_transfer_to_non_alive_account|geth": {
   "judged": true,
   "answers": [
@@ -1314,6 +1458,10 @@
   "answers": []
  },
  "vm.interpreter.charge_value_transfer_to_non_alive_account|nethermind": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.interpreter.charge_value_transfer_to_non_alive_account|besu": {
   "judged": false,
   "answers": []
  },
@@ -1359,6 +1507,10 @@
   "judged": false,
   "answers": []
  },
+ "vm.interpreter.process_call|besu": {
+  "judged": false,
+  "answers": []
+ },
  "vm.instructions.storage.sload|geth": {
   "judged": true,
   "answers": [
@@ -1387,6 +1539,10 @@
   "judged": false,
   "answers": []
  },
+ "vm.instructions.storage.sload|besu": {
+  "judged": false,
+  "answers": []
+ },
  "vm.instructions.storage.tload|geth": {
   "judged": true,
   "answers": [
@@ -1412,6 +1568,10 @@
   "answers": []
  },
  "vm.instructions.storage.tload|nethermind": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.instructions.storage.tload|besu": {
   "judged": false,
   "answers": []
  }

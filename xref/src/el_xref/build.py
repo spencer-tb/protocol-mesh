@@ -28,10 +28,14 @@ from .index import Symbol, index_path, load, read_body
 from .link import head, select_specs
 
 MODEL = "claude-opus-5-5"
+# The search only has to surface candidates, the Opus judges decide.
+SEARCH_MODEL = "claude-sonnet-5-5"
 TREE = "tree.json"
-MAX_CANDIDATES = 30
+MAX_CANDIDATES = 20
 # Built first, and its answers seed and hint the other clients.
 REFERENCE = "geth"
+# Bumped when the build changes, so older tables are rebuilt.
+PIPELINE = 3
 
 # Functions in the fork that are not protocol behaviour, so the map skips
 # them: exception messages, arithmetic on a gas type, hex helpers and hooks
@@ -54,7 +58,7 @@ def is_spec(symbol: Symbol) -> bool:
     return not any(fnmatch.fnmatch(symbol.id, p) for p in NOT_SPEC)
 
 
-MAX_BODY = 4000
+MAX_BODY = 2500
 
 # Calls too generic to follow.
 SKIP_CALLS = {"len", "append", "make", "new", "panic", "uint64", "int"}
@@ -310,6 +314,7 @@ def search(
         SEARCH_SCHEMA,
         tools="Read,Grep,Glob",
         cwd=config.repo_cache,
+        model=SEARCH_MODEL,
     )
     return out["locations"], cost, time.monotonic() - started
 
@@ -371,7 +376,7 @@ class Client:
             if wanted & set(s.eips)
         ]
         scored.sort(key=lambda pair: -pair[0])
-        return [s for _, s in scored[:8]]
+        return [s for _, s in scored[:4]]
 
 
 def candidates(
@@ -713,6 +718,7 @@ def build(
             for s in specs
             for n in names
             if current(s, n).get("spec_hash") != s.hash
+            or current(s, n).get("pipeline") != PIPELINE
         ]
 
     def one(item: tuple[Symbol, str]) -> tuple[Symbol, str, Json]:
@@ -738,7 +744,7 @@ def build(
             )
         except RuntimeError as error:
             return spec, n, {"error": str(error)[:300]}
-        return spec, n, table | {"spec_hash": spec.hash}
+        return spec, n, table | {"spec_hash": spec.hash, "pipeline": PIPELINE}
 
     first = [item for item in todo if item[1] == REFERENCE]
     rest = [item for item in todo if item[1] != REFERENCE]

@@ -12172,5 +12172,3211 @@
    }
   ],
   "cost_usd": 0.07928779999999999
+ },
+ "vm.gas.allocate_evm_gas|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionProcessor.java",
+    "qualname": "MainnetTransactionProcessor.processTransaction",
+    "line": 201,
+    "end_line": 749,
+    "relation": "partial",
+    "note": "Computes the intrinsic execution gas and checks the gas limit covers it, the spec's precondition. The excerpt is cut off before the split; I'm assuming the gas limit minus intrinsic, capped by TX_MAX minus intrinsic, plus the reservoir, is inlined further down."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java",
+    "qualname": "AbstractMessageProcessor.runsOnEvmV2",
+    "line": 94,
+    "end_line": 96,
+    "relation": "unrelated",
+    "note": "Returns an EVM configuration flag."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.settleStateGasOnChildSuccess",
+    "line": 1217,
+    "end_line": 1226,
+    "relation": "unrelated",
+    "note": "Adjusts the existing state gas reservoir when a child call succeeds; it doesn't do the initial split."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/fluent/EVMExecutor.java",
+    "qualname": "EVMExecutor.gas",
+    "line": 219,
+    "end_line": 222,
+    "relation": "unrelated",
+    "note": "Builder setter."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/EVM.java",
+    "qualname": "EVM.getGasCalculator",
+    "line": 200,
+    "end_line": 202,
+    "relation": "unrelated",
+    "note": "Getter."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/fluent/EVMExecutor.java",
+    "qualname": "EVMExecutor.blobGasPrice",
+    "line": 289,
+    "end_line": 292,
+    "relation": "unrelated",
+    "note": "Builder setter."
+   }
+  ],
+  "cost_usd": 0.06947980000000001
+ },
+ "vm.gas.calculate_data_fee|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.calculateUpfrontGasCost",
+    "line": 693,
+    "end_line": 703,
+    "relation": "partial",
+    "note": "For blob transactions it computes blobGasPrice \u00d7 totalBlobGas, which is the spec's data fee. It then adds that to gasLimit \u00d7 gasPrice to get the upfront cost, so the data fee is built into a larger result."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.getUpfrontGasCost",
+    "line": 678,
+    "end_line": 691,
+    "relation": "unrelated",
+    "note": "Wrapper that delegates to calculateUpfrontGasCost and clamps the result to MAX_WEI. It does not do the blob-fee multiplication itself."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionProcessor.java",
+    "qualname": "MainnetTransactionProcessor.processTransaction",
+    "line": 201,
+    "end_line": 749,
+    "relation": "unrelated",
+    "note": "Transaction processing. It gets total blob gas from blobGasCost and passes it with blobGasPrice to getUpfrontGasCost, but never computes the data fee itself. It is a caller."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/feemarket/ExcessBlobGasCalculator.java",
+    "qualname": "ExcessBlobGasCalculator.calculateExcessBlobGasForParent",
+    "line": 31,
+    "end_line": 42,
+    "relation": "unrelated",
+    "note": "Computes excess blob gas for a block header, not a transaction's blob fee."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/BlockValueCalculator.java",
+    "qualname": "BlockValueCalculator.calculateBlockValue",
+    "line": 23,
+    "end_line": 39,
+    "relation": "unrelated",
+    "note": "Adds up priority-fee rewards for a block. No blob data fee is involved."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionValidator.java",
+    "qualname": "MainnetTransactionValidator.validateCostAndFee",
+    "line": 199,
+    "end_line": 291,
+    "relation": "unrelated",
+    "note": "Validation only. It checks total blob gas against the limit and max_fee_per_blob_gas against the blob base fee, and calls calculateUpfrontGasCost with a blob price of zero. It never computes the data fee."
+   }
+  ],
+  "cost_usd": 0.0899238
+ },
+ "vm.gas.calculate_gas_extend_memory|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/FrontierGasCalculator.java",
+    "qualname": "FrontierGasCalculator.memoryExpansionGasCost",
+    "line": 393,
+    "end_line": 403,
+    "relation": "equivalent",
+    "note": "Charges the memory cost after expansion minus the cost before, which is the spec's total_cost - already_paid for one (offset, length) extension. The new size comes from calculateMemoryExpansion."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/FrontierGasCalculator.java",
+    "qualname": "FrontierGasCalculator.callOperationStaticGasCost",
+    "line": 287,
+    "end_line": 312,
+    "relation": "partial",
+    "note": "Mostly CALL gas logic, but it combines two memory extensions (input and output) by taking the max of their costs, matching the spec's loop over several extensions."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.calculateMemoryExpansion",
+    "line": 724,
+    "end_line": 726,
+    "relation": "partial",
+    "note": "A thin wrapper that returns the word count after expansion, the spec's after_size, by delegating to Memory.calculateNewActiveWords."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/Memory.java",
+    "qualname": "Memory.calculateNewActiveWords",
+    "line": 96,
+    "end_line": 111,
+    "relation": "partial",
+    "note": "Works out the expanded size: skips zero-length, rounds offset+length up to words and takes the max with the current size, like the spec's ceil32 and after_size <= before_size check. It does not compute any cost."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/GasCalculator.java",
+    "qualname": "GasCalculator.calculateGasRefund",
+    "line": 735,
+    "end_line": 736,
+    "relation": "unrelated",
+    "note": "An interface method for the end-of-transaction gas refund. Not memory expansion."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/FrontierGasCalculator.java",
+    "qualname": "FrontierGasCalculator.calculateGasRefund",
+    "line": 571,
+    "end_line": 580,
+    "relation": "unrelated",
+    "note": "Works out the transaction refund from remaining gas. Not related to memory."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/PragueGasCalculator.java",
+    "qualname": "PragueGasCalculator.calculateGasRefund",
+    "line": 66,
+    "end_line": 79,
+    "relation": "unrelated",
+    "note": "Works out the refund using the calldata floor cost. Not related to memory."
+   }
+  ],
+  "cost_usd": 0.061515799999999995
+ },
+ "vm.gas.calculate_total_blob_gas|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/CancunGasCalculator.java",
+    "qualname": "CancunGasCalculator.blobGasCost",
+    "line": 63,
+    "end_line": 66,
+    "relation": "partial",
+    "note": "Does the per-blob gas times blob count multiplication. It takes a count rather than the transaction, so counting the hashes and the non-blob-transaction branch happen elsewhere."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/GasCalculator.java",
+    "qualname": "GasCalculator.blobGasCost",
+    "line": 702,
+    "end_line": 704,
+    "relation": "unrelated",
+    "note": "Default for forks before Cancun that always returns 0. It is a fork-level fallback, not the spec's branch for non-blob transactions."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.getBlobCount",
+    "line": 377,
+    "end_line": 379,
+    "relation": "partial",
+    "note": "Supplies len(tx.blob_versioned_hashes) and returns 0 when there are no versioned hashes. This is the counting half of the spec function."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.calculateUpfrontGasCost",
+    "line": 693,
+    "end_line": 703,
+    "relation": "unrelated",
+    "note": "Calculates upfront wei cost from a total blob gas it is given; it uses that total but does not compute it."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.getUpfrontGasCost",
+    "line": 678,
+    "end_line": 691,
+    "relation": "unrelated",
+    "note": "Wraps the upfront gas cost calculation and caps it at the maximum wei value; it does not compute blob gas."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.getUpfrontCost",
+    "line": 714,
+    "end_line": 718,
+    "relation": "unrelated",
+    "note": "Adds the transaction value to the max upfront cost; it is given total blob gas and does not compute it."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionValidator.java",
+    "qualname": "MainnetTransactionValidator.validateCostAndFee",
+    "line": 199,
+    "end_line": 291,
+    "relation": "partial",
+    "note": "Inlines the spec logic: when the transaction type supports blobs, it computes blobGasCost(getBlobCount()), then uses the result in a larger validation function."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/feemarket/ExcessBlobGasCalculator.java",
+    "qualname": "ExcessBlobGasCalculator.calculateExcessBlobGasForParent",
+    "line": 31,
+    "end_line": 42,
+    "relation": "unrelated",
+    "note": "Calculates the header's excess blob gas from the parent block, which is a different spec function."
+   }
+  ],
+  "cost_usd": 0.07328380000000001
+ },
+ "vm.gas.charge_gas_from_meter|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.decrementRemainingGas",
+    "line": 350,
+    "end_line": 353,
+    "relation": "partial",
+    "note": "Subtracts the amount from gasRemaining but has no out-of-gas check. Callers in the interpreter loop do the check."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/EVM.java",
+    "qualname": "EVM.runToHalt",
+    "line": 265,
+    "end_line": 504,
+    "relation": "partial",
+    "note": "Not in the snippet, which is cut off: assumed from besu's usual loop that after each operation it halts with INSUFFICIENT_GAS if gas left is below the cost, otherwise calls decrementRemainingGas. That would be the charge check inlined in a larger function."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/EVM.java",
+    "qualname": "EVM.runToHaltV2",
+    "line": 511,
+    "end_line": 684,
+    "relation": "partial",
+    "note": "Not in the snippet, which is cut off: assumed from besu's usual V2 loop that it checks gas left against the cost and decrements or halts after each operation. That would be the charge logic inlined."
+   },
+   {
+    "repo": "besu",
+    "path": "datatypes/src/main/java/org/hyperledger/besu/datatypes/BlobGas.java",
+    "qualname": "BlobGas.fromHexString",
+    "line": 114,
+    "end_line": 117,
+    "relation": "unrelated",
+    "note": "Parses a BlobGas value from hex. Not a gas charge."
+   },
+   {
+    "repo": "besu",
+    "path": "datatypes/src/main/java/org/hyperledger/besu/datatypes/BlobGas.java",
+    "qualname": "BlobGas.fromQuantity",
+    "line": 141,
+    "end_line": 143,
+    "relation": "unrelated",
+    "note": "Builds a BlobGas value from a Quantity. Not a gas charge."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionProcessor.java",
+    "qualname": "MainnetTransactionProcessor.refundRolledBackStateGas",
+    "line": 824,
+    "end_line": 836,
+    "relation": "unrelated",
+    "note": "Refunds rolled-back state gas, the opposite of a charge."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.settleStateGasOnChildSuccess",
+    "line": 1217,
+    "end_line": 1226,
+    "relation": "unrelated",
+    "note": "Gives spilled state gas back to gasRemaining when a child call succeeds. That is a refund, not a charge."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionProcessor.java",
+    "qualname": "MainnetTransactionProcessor.StateGasMark.chargeSince",
+    "line": 799,
+    "end_line": 801,
+    "relation": "unrelated",
+    "note": "Computes the difference in state gas used since a mark, for bookkeeping. It does not charge anything."
+   }
+  ],
+  "cost_usd": 0.0896358
+ },
+ "vm.gas.charge_state_gas_from_meter|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.consumeStateGas",
+    "line": 1143,
+    "end_line": 1166,
+    "relation": "equivalent",
+    "note": "Takes the charge from the reservoir first and the rest from gasRemaining. It counts the spill and fails when there isn't enough gas. That matches the spec function. The extra stateGasUsed bookkeeping and the tracing are on top of it."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.settleStateGasOnChildSuccess",
+    "line": 1217,
+    "end_line": 1226,
+    "relation": "unrelated",
+    "note": "When a child call succeeds, this moves spilled gas back from the reservoir to gasRemaining. It is a settlement step, not a charge."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionProcessor.java",
+    "qualname": "MainnetTransactionProcessor.refundRolledBackStateGas",
+    "line": 824,
+    "end_line": 836,
+    "relation": "unrelated",
+    "note": "Puts rolled-back state gas back into the reservoir. That is a refund, the opposite of a charge."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.refillStateGasReservoir",
+    "line": 1195,
+    "end_line": 1206,
+    "relation": "unrelated",
+    "note": "Refills the reservoir and gas_left, unwinding the spill. That is the opposite of a charge."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionProcessor.java",
+    "qualname": "MainnetTransactionProcessor.chargeTopFrame",
+    "line": 844,
+    "end_line": 898,
+    "relation": "unrelated",
+    "note": "Only calls consumeStateGas to charge transaction-level state gas. It does not implement the reservoir/gas_left split itself."
+   }
+  ],
+  "cost_usd": 0.0552918
+ },
+ "vm.gas.check_max_fee_per_blob_gas|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionValidator.java",
+    "qualname": "MainnetTransactionValidator.validateCostAndFee",
+    "line": 199,
+    "end_line": 291,
+    "relation": "partial",
+    "note": "Inlined among other cost/fee checks: for blob tx types, rejects with BLOB_GAS_PRICE_BELOW_CURRENT_BLOB_BASE_FEE if the block blob fee is above maxFeePerBlobGas. The price from excess blob gas is computed by the caller and passed in."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.Builder.maxFeePerBlobGas",
+    "line": 1426,
+    "end_line": 1429,
+    "relation": "unrelated",
+    "note": "Builder setter for the field; no check."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.getMaxFeePerBlobGas",
+    "line": 331,
+    "end_line": 334,
+    "relation": "unrelated",
+    "note": "Field getter only."
+   },
+   {
+    "repo": "besu",
+    "path": "datatypes/src/main/java/org/hyperledger/besu/datatypes/Transaction.java",
+    "qualname": "Transaction.getMaxFeePerBlobGas",
+    "line": 82,
+    "end_line": 84,
+    "relation": "unrelated",
+    "note": "Default interface getter returning empty."
+   },
+   {
+    "repo": "besu",
+    "path": "datatypes/src/main/java/org/hyperledger/besu/datatypes/CallParameter.java",
+    "qualname": "CallParameter.getMaxFeePerBlobGas",
+    "line": 93,
+    "end_line": 93,
+    "relation": "unrelated",
+    "note": "Interface accessor for call parameters."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.equals",
+    "line": 1086,
+    "end_line": 1103,
+    "relation": "unrelated",
+    "note": "Equality comparison of transaction fields."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/AbstractBlockProcessor.java",
+    "qualname": "AbstractBlockProcessor.processBlock",
+    "line": 151,
+    "end_line": 537,
+    "relation": "unrelated",
+    "note": "Computes the blob gas price from the parent's excess blob gas and passes it to transaction processing; does not compare it to the tx fee cap."
+   }
+  ],
+  "cost_usd": 0.0859998
+ },
+ "vm.gas.credit_state_gas_refund|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.refillStateGasReservoir",
+    "line": 1195,
+    "end_line": 1206,
+    "relation": "equivalent",
+    "note": "Same LIFO split: min(amount, spilled) goes back to gas left and reduces the spill, the rest goes to the reservoir. Also lowers besu's state-gas-used count, which is extra bookkeeping."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionProcessor.java",
+    "qualname": "MainnetTransactionProcessor.refundRolledBackStateGas",
+    "line": 824,
+    "end_line": 836,
+    "relation": "unrelated",
+    "note": "Transaction-level rollback refund. Puts the whole credit into the reservoir, minus the burned spill, and never credits gas left first. Different logic."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/AmsterdamGasCalculator.java",
+    "qualname": "AmsterdamGasCalculator.calculateGasRefund",
+    "line": 412,
+    "end_line": 435,
+    "relation": "unrelated",
+    "note": "Works out the transaction's final gas refund with the 1/5 cap and floor cost. Not the per-frame state-gas credit."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/tracing/TraceFrame.java",
+    "qualname": "TraceFrame.Builder.setGasRefund",
+    "line": 270,
+    "end_line": 273,
+    "relation": "unrelated",
+    "note": "Tracing setter."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/tracing/TraceFrame.java",
+    "qualname": "TraceFrame.getGasRefund",
+    "line": 657,
+    "end_line": 659,
+    "relation": "unrelated",
+    "note": "Tracing getter."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java",
+    "qualname": "AbstractCallOperation.refundCallNewAccountStateGas",
+    "line": 383,
+    "end_line": 388,
+    "relation": "unrelated",
+    "note": "Only calls refillStateGasReservoir with the new-account state gas."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.incrementStateGasReservoir",
+    "line": 1095,
+    "end_line": 1107,
+    "relation": "unrelated",
+    "note": "Generic helper that adds to the reservoir. No spill or LIFO logic."
+   }
+  ],
+  "cost_usd": 0.0627318
+ },
+ "vm.gas.forfeit_remaining_gas|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.clearGasRemaining",
+    "line": 340,
+    "end_line": 342,
+    "relation": "equivalent",
+    "note": "Sets the frame's remaining gas to 0, which is exactly the forfeit. The spec's assert that spill is zero is only a precondition."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java",
+    "qualname": "AbstractMessageProcessor.exceptionalHalt",
+    "line": 164,
+    "end_line": 171,
+    "relation": "partial",
+    "note": "Includes the forfeit inline (clearGasRemaining) inside a larger halt handler. That handler also restores spilled state gas, sets the frame state, traces and clears output."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/TransactionGasAccounting.java",
+    "qualname": "TransactionGasAccounting.remainingGas",
+    "line": 54,
+    "end_line": 54,
+    "relation": "unrelated",
+    "note": "Abstract getter for remaining gas at transaction level. It does not zero anything."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.getRemainingGas",
+    "line": 360,
+    "end_line": 362,
+    "relation": "unrelated",
+    "note": "Plain getter for remaining gas."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.decrementRemainingGas",
+    "line": 350,
+    "end_line": 353,
+    "relation": "unrelated",
+    "note": "Subtracts an amount from remaining gas. This is general charging, not burning all of it."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.incrementRemainingGas",
+    "line": 369,
+    "end_line": 371,
+    "relation": "unrelated",
+    "note": "Adds gas back to the frame, the opposite of forfeiting."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/TStoreOperation.java",
+    "qualname": "TStoreOperation.execute",
+    "line": 36,
+    "end_line": 53,
+    "relation": "unrelated",
+    "note": "TSTORE opcode. It only returns halt results and leaves the gas burn to the caller."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java",
+    "qualname": "AbstractMessageProcessor.handleStateGasOnFrameFailure",
+    "line": 155,
+    "end_line": 162,
+    "relation": "unrelated",
+    "note": "Restores spilled state gas into remaining gas so the spec's precondition holds. It adds gas back rather than forfeiting it."
+   }
+  ],
+  "cost_usd": 0.04748379999999999
+ },
+ "vm.gas.repay_state_gas_spill|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.settleStateGasOnChildSuccess",
+    "line": 1217,
+    "end_line": 1226,
+    "relation": "equivalent",
+    "note": "Takes min(reservoir, spilled), adds it to gasRemaining and subtracts it from both the reservoir and the spill. That is the same repayment the spec does after a successful child merges. It leaves out the spec's assert."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.refillStateGasReservoir",
+    "line": 1195,
+    "end_line": 1206,
+    "relation": "unrelated",
+    "note": "Handles a refund: the refund first pays back the spill into gas_left, any excess goes to the reservoir, and stateGasUsed drops. That is the refund path, not the repayment of outstanding spill from the reservoir after a merge."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.incrementStateGasSpilled",
+    "line": 1125,
+    "end_line": 1127,
+    "relation": "unrelated",
+    "note": "Only adds to the spill counter, which is the charge side, not the repayment."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionProcessor.java",
+    "qualname": "MainnetTransactionProcessor.refundRolledBackStateGas",
+    "line": 824,
+    "end_line": 836,
+    "relation": "unrelated",
+    "note": "Credits the reservoir and lowers stateGasUsed for a rolled-back state charge. That is a rollback refund, not a repayment of the spill."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.resetStateGasSpilled",
+    "line": 1130,
+    "end_line": 1132,
+    "relation": "unrelated",
+    "note": "Only sets the spill counter to zero. It does no min-based transfer between the reservoir and gas_left."
+   }
+  ],
+  "cost_usd": 0.0432038
+ },
+ "vm.gas.restore_state_gas|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java",
+    "qualname": "AbstractMessageProcessor.handleStateGasOnFrameFailure",
+    "line": 155,
+    "end_line": 162,
+    "relation": "equivalent",
+    "note": "Covers the full spec routine on frame revert or halt. It adds the spill back to remaining gas, zeroes the spill, and calls clearAccumulatedStateBesidesGasAndOutput. That call clears the gas refund and runs rollback(), which undoes the tx values, including the state gas reservoir, back to the frame's undo mark (the baseline)."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java",
+    "qualname": "AbstractMessageProcessor.clearAccumulatedStateBesidesGasAndOutput",
+    "line": 114,
+    "end_line": 149,
+    "relation": "partial",
+    "note": "Covers part of the routine. Besides reverting world state and clearing logs, it zeroes the refund counter (clearGasRefund) and calls rollback(), which resets the reservoir to the frame's baseline. It does not return the spill to gas_left."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.rollback",
+    "line": 1672,
+    "end_line": 1674,
+    "relation": "partial",
+    "note": "Covers one step. It undoes txValues changes back to the frame's undo mark, which puts the state gas reservoir back to its baseline (the spec's state_gas_left = state_gas_baseline). It does nothing with the spill or refunds."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionProcessor.java",
+    "qualname": "MainnetTransactionProcessor.refundRolledBackStateGas",
+    "line": 824,
+    "end_line": 836,
+    "relation": "unrelated",
+    "note": "Different mechanism. At transaction level it credits back one specific rolled-back state charge to the initial frame's reservoir and lowers stateGasUsed. It is not the per-frame rollback to a baseline."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.refillStateGasReservoir",
+    "line": 1195,
+    "end_line": 1206,
+    "relation": "unrelated",
+    "note": "A different operation: it refills the reservoir by a given amount (spill first, LIFO) and lowers stateGasUsed. That is the state-gas refill/refund path, not resetting to a baseline on revert."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.consumeStateGas",
+    "line": 1143,
+    "end_line": 1166,
+    "relation": "unrelated",
+    "note": "The opposite direction: it charges state gas from the reservoir, then from gas_left."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/StateGasCostCalculator.java",
+    "qualname": "StateGasCostCalculator.newContractStateGas",
+    "line": 125,
+    "end_line": 128,
+    "relation": "unrelated",
+    "note": "A gas-cost constant getter that returns 0."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.resetStateGasSpilled",
+    "line": 1130,
+    "end_line": 1132,
+    "relation": "partial",
+    "note": "A one-line setter, so this is a borderline call. It zeroes stateGasSpilled, which is one step of the spec routine (state_gas_spilled = 0)."
+   }
+  ],
+  "cost_usd": 0.06850780000000001
+ },
+ "vm.gas.settle_transaction_gas|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/TransactionGasAccounting.java",
+    "qualname": "TransactionGasAccounting.calculate",
+    "line": 82,
+    "end_line": 107,
+    "relation": "partial",
+    "note": "Computes gas used before refunds (limit minus remaining minus reservoir) and the execution dimension as max(consumed minus state gas, floor), plus state gas. This is the spec's per-dimension block accounting. The refund comes in from refundedGas(), which is computed elsewhere."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/AmsterdamGasCalculator.java",
+    "qualname": "AmsterdamGasCalculator.calculateGasRefund",
+    "line": 412,
+    "end_line": 435,
+    "relation": "partial",
+    "note": "Covers the sender-facing half of settlement: total consumed includes the reservoir, the refund is capped at consumed/5, gas used is max(consumed minus refund, floor), and it returns gas left. It does not compute the block-level dimensions."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionProcessor.java",
+    "qualname": "MainnetTransactionProcessor.processTransaction",
+    "line": 201,
+    "end_line": 749,
+    "relation": "unrelated",
+    "note": "Top-level transaction processing. The visible code covers validation, upfront charge, intrinsic gas and delegation. No settlement logic appears; it presumably calls the gas accounting."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/TransactionGasAccounting.java",
+    "qualname": "TransactionGasAccounting.remainingGas",
+    "line": 54,
+    "end_line": 54,
+    "relation": "unrelated",
+    "note": "Abstract accessor for remaining gas. It only supplies an input."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/MiningConfiguration.java",
+    "qualname": "MiningConfiguration.setMinTransactionGasPrice",
+    "line": 85,
+    "end_line": 88,
+    "relation": "unrelated",
+    "note": "Mining configuration setter for the minimum gas price."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/TransactionGasAccounting.java",
+    "qualname": "TransactionGasAccounting.stateGasUsed",
+    "line": 60,
+    "end_line": 60,
+    "relation": "unrelated",
+    "note": "Abstract accessor for state gas used. It only supplies an input."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/MiningConfiguration.java",
+    "qualname": "MiningConfiguration.getMinTransactionGasPrice",
+    "line": 81,
+    "end_line": 83,
+    "relation": "unrelated",
+    "note": "Mining configuration getter for the minimum gas price."
+   }
+  ],
+  "cost_usd": 0.0828598
+ },
+ "transactions.calculate_effective_gas_price|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/feemarket/TransactionPriceCalculator.java",
+    "qualname": "TransactionPriceCalculator.eip1559",
+    "line": 30,
+    "end_line": 44,
+    "relation": "partial",
+    "note": "Calculates the effective gas price. For fee-market transactions it takes min(maxPriority + baseFee, maxFee), which equals the spec's min(priority, maxFee - base) + base; legacy transactions pay their gas price. It does not reject a fee cap below the base fee, which is checked in the validators."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionValidator.java",
+    "qualname": "MainnetTransactionValidator.validateCostAndFee",
+    "line": 199,
+    "end_line": 291,
+    "relation": "partial",
+    "note": "Includes the spec's base-fee check: gets the calculated price and rejects it if it is below the base fee. Most of the function is unrelated validation (tip above fee cap, blob fees, intrinsic gas, upfront cost)."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.getEffectiveGasPrice",
+    "line": 746,
+    "end_line": 748,
+    "relation": "partial",
+    "note": "Returns the effective priority fee plus the base fee, which is the spec's return value for both transaction kinds. It does not raise when the fee cap or gas price is below the base fee."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/BaseFeeBlockBodyValidator.java",
+    "qualname": "BaseFeeBlockBodyValidator.validateTransactionGasPrice",
+    "line": 53,
+    "end_line": 76,
+    "relation": "partial",
+    "note": "Does the spec's rejection step at block level: for each transaction it calculates the price and marks the block invalid if the price is below the base fee. The arithmetic itself is delegated to the price calculator."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.getEffectivePriorityFeePerGas",
+    "line": 342,
+    "end_line": 360,
+    "relation": "partial",
+    "note": "Calculates min(maxPriority, maxFee - baseFee), the priority-fee part of the spec. It returns zero where the spec would raise, and does not add the base fee back."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/BlockGasAccountingStrategy.java",
+    "qualname": "BlockGasAccountingStrategy.effectiveGasUsed",
+    "line": 121,
+    "end_line": 125,
+    "relation": "unrelated",
+    "note": "Block gas accounting: takes the max of cumulative execution gas and state gas. Nothing to do with gas price."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.getMaxGasPrice",
+    "line": 725,
+    "end_line": 732,
+    "relation": "unrelated",
+    "note": "Only returns the maximum fee or the gas price field. No effective-price calculation and no base-fee check."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.calculateUpfrontGasCost",
+    "line": 693,
+    "end_line": 703,
+    "relation": "unrelated",
+    "note": "Calculates the upfront cost (gas limit times price, plus blob cost), not the effective gas price."
+   }
+  ],
+  "cost_usd": 0.07996779999999999
+ },
+ "transactions.calculate_max_gas_fee|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.calculateUpfrontGasCost",
+    "line": 693,
+    "end_line": 703,
+    "relation": "partial",
+    "note": "Computes gas_limit * gasPrice, which is the spec's multiplication. But the price is passed in rather than chosen by transaction type, and blob-transaction cost is added on top."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.getMaxUpfrontGasCost",
+    "line": 666,
+    "end_line": 669,
+    "relation": "unlabelled",
+    "note": ""
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.getMaxGasPrice",
+    "line": 725,
+    "end_line": 732,
+    "relation": "unlabelled",
+    "note": ""
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionValidator.java",
+    "qualname": "MainnetTransactionValidator.validateCostAndFee",
+    "line": 199,
+    "end_line": 291,
+    "relation": "unlabelled",
+    "note": ""
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/LondonTargetingGasLimitCalculator.java",
+    "qualname": "LondonTargetingGasLimitCalculator.LondonTargetingGasLimitCalculator",
+    "line": 33,
+    "end_line": 41,
+    "relation": "unlabelled",
+    "note": ""
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/headervalidationrules/GasLimitRangeAndDeltaValidationRule.java",
+    "qualname": "GasLimitRangeAndDeltaValidationRule.GasLimitRangeAndDeltaValidationRule",
+    "line": 46,
+    "end_line": 48,
+    "relation": "unlabelled",
+    "note": ""
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/BlockValueCalculator.java",
+    "qualname": "BlockValueCalculator.calculateBlockValue",
+    "line": 23,
+    "end_line": 39,
+    "relation": "unlabelled",
+    "note": ""
+   }
+  ],
+  "cost_usd": 0.0654878
+ },
+ "transactions.check_nonce|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionValidator.java",
+    "qualname": "MainnetTransactionValidator.validateForSender",
+    "line": 293,
+    "end_line": 365,
+    "relation": "partial",
+    "note": "Has the nonce check inline (below sender nonce -> NONCE_TOO_LOW, any other mismatch -> NONCE_TOO_HIGH), next to balance and sender-code checks; the nonce checks can be skipped by validation params."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/TransactionValidationParams.java",
+    "qualname": "TransactionValidationParams.isAllowPastNonce",
+    "line": 147,
+    "end_line": 150,
+    "relation": "unrelated",
+    "note": "Default flag accessor; does no nonce check."
+   },
+   {
+    "repo": "besu",
+    "path": "datatypes/src/main/java/org/hyperledger/besu/datatypes/Transaction.java",
+    "qualname": "Transaction.getNonce",
+    "line": 47,
+    "end_line": 47,
+    "relation": "unrelated",
+    "note": "Interface getter for the tx nonce."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/parallelization/TransactionCollisionDetector.java",
+    "qualname": "TransactionCollisionDetector.areAccountDetailsEqualExcludingStorage",
+    "line": 177,
+    "end_line": 185,
+    "relation": "unrelated",
+    "note": "Compares account states for parallel-execution collision detection."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/BlockHeaderBuilder.java",
+    "qualname": "BlockHeaderBuilder.validateBlockHeader",
+    "line": 356,
+    "end_line": 361,
+    "relation": "unrelated",
+    "note": "Checks the block header nonce field is present; not a tx nonce check."
+   }
+  ],
+  "cost_usd": 0.0545518
+ },
+ "transactions.decode_transaction|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/TransactionDecoder.java",
+    "qualname": "TransactionDecoder.decodeOpaqueBytes",
+    "line": 122,
+    "end_line": 136,
+    "relation": "equivalent",
+    "note": "Does the spec's job. Rejects empty input, uses the first byte to find a typed transaction and calls that type's decoder, otherwise decodes the bytes as a legacy RLP list."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/TransactionDecoder.java",
+    "qualname": "TransactionDecoder.decodeRLP",
+    "line": 56,
+    "end_line": 63,
+    "relation": "partial",
+    "note": "Decodes from the RLP-wrapped form used on the network. Picks typed or legacy and sends it to the right decoder, so it covers the legacy/typed split."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/TransactionDecoder.java",
+    "qualname": "TransactionDecoder.decodeTransaction",
+    "line": 97,
+    "end_line": 104,
+    "relation": "partial",
+    "note": "Hands the bytes to the decoder for an already known type. This is the dispatch step of the spec's if/elif chain."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/receipt/TransactionReceiptDecoder.java",
+    "qualname": "TransactionReceiptDecoder.decodeTypedReceiptComponents",
+    "line": 102,
+    "end_line": 128,
+    "relation": "unrelated",
+    "note": "Decodes typed receipts, not transactions."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/AccessListTransactionDecoder.java",
+    "qualname": "AccessListTransactionDecoder.decode",
+    "line": 40,
+    "end_line": 81,
+    "relation": "partial",
+    "note": "Decodes the type 1 (access list) body. Matches decode_to(AccessListTransaction, tx[1:])."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/EIP1559TransactionDecoder.java",
+    "qualname": "EIP1559TransactionDecoder.decode",
+    "line": 40,
+    "end_line": 81,
+    "relation": "partial",
+    "note": "Decodes the type 2 (EIP-1559) body. Matches decode_to(FeeMarketTransaction, tx[1:])."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/CodeDelegationTransactionDecoder.java",
+    "qualname": "CodeDelegationTransactionDecoder.decode",
+    "line": 42,
+    "end_line": 81,
+    "relation": "partial",
+    "note": "Decodes the type 4 (set-code) body. Matches decode_to(SetCodeTransaction, tx[1:])."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/BlobTransactionDecoder.java",
+    "qualname": "BlobTransactionDecoder.decode",
+    "line": 45,
+    "end_line": 49,
+    "relation": "partial",
+    "note": "Decodes the type 3 (blob) body. Matches decode_to(BlobTransaction, tx[1:])."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/FrontierTransactionDecoder.java",
+    "qualname": "FrontierTransactionDecoder.decode",
+    "line": 48,
+    "end_line": 91,
+    "relation": "partial",
+    "note": "Decodes the legacy RLP list. Matches the decode_to(LegacyTransaction, tx) branch."
+   },
+   {
+    "repo": "besu",
+    "path": "datatypes/src/main/java/org/hyperledger/besu/datatypes/TransactionType.java",
+    "qualname": "TransactionType.fromOpaque",
+    "line": 122,
+    "end_line": 128,
+    "relation": "partial",
+    "note": "Maps the first byte to a transaction type and returns empty for unknown bytes. This is part of the spec's type dispatch."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/TransactionDecoder.java",
+    "qualname": "TransactionDecoder.getTransactionType",
+    "line": 147,
+    "end_line": 150,
+    "relation": "partial",
+    "note": "Reads the first byte and looks up its type. This is the type check in the spec."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/TransactionDecoder.java",
+    "qualname": "TransactionDecoder.isTypedTransaction",
+    "line": 164,
+    "end_line": 166,
+    "relation": "partial",
+    "note": "Tells typed from legacy by checking whether the next item is an RLP list. This is the spec's legacy-prefix check."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/TransactionDecoder.java",
+    "qualname": "TransactionDecoder.getDecoder",
+    "line": 177,
+    "end_line": 188,
+    "relation": "partial",
+    "note": "Picks the decoder for each type. This is the dispatch table behind the spec's branches."
+   }
+  ],
+  "cost_usd": 0.10326379999999999
+ },
+ "transactions.has_access_list|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "datatypes/src/main/java/org/hyperledger/besu/datatypes/TransactionType.java",
+    "qualname": "TransactionType.supportsAccessList",
+    "line": 149,
+    "end_line": 151,
+    "relation": "equivalent",
+    "note": "Returns whether the transaction type can carry an EIP-2930 access list, which is the same check as isinstance(tx, AccessListCapableTransaction)."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.Builder.eip2930AccessListWarmAddresses",
+    "line": 1997,
+    "end_line": 2000,
+    "relation": "unrelated",
+    "note": "Builder setter that stores the pre-warmed addresses on a message frame. It does not check whether a transaction has an access list."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.Builder.eip2930AccessListWarmStorage",
+    "line": 2008,
+    "end_line": 2012,
+    "relation": "unrelated",
+    "note": "Builder setter that stores the pre-warmed storage slots on a message frame. It does not check whether a transaction has an access list."
+   },
+   {
+    "repo": "besu",
+    "path": "datatypes/src/main/java/org/hyperledger/besu/datatypes/Transaction.java",
+    "qualname": "Transaction.getAccessList",
+    "line": 229,
+    "end_line": 229,
+    "relation": "unrelated",
+    "note": "Getter that returns the access list itself. It does not check whether the transaction type supports one."
+   },
+   {
+    "repo": "besu",
+    "path": "datatypes/src/main/java/org/hyperledger/besu/datatypes/CallParameter.java",
+    "qualname": "CallParameter.getAccessList",
+    "line": 119,
+    "end_line": 119,
+    "relation": "unrelated",
+    "note": "Getter that returns the access list on call parameters. It does not check the transaction type."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/block/access/list/BlockAccessList.java",
+    "qualname": "BlockAccessList.BlockAccessListBuilder.AccountBuilder.hasSlot",
+    "line": 436,
+    "end_line": 438,
+    "relation": "unrelated",
+    "note": "Checks whether a storage slot was read or written for an account in an EIP-7928 block-level access list. This has nothing to do with EIP-2930 transaction access lists."
+   }
+  ],
+  "cost_usd": 0.0478158
+ },
+ "transactions.signing_hash_155|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.frontierPreimage",
+    "line": 920,
+    "end_line": 944,
+    "relation": "partial",
+    "note": "Builds the EIP-155 RLP preimage (nonce, gasPrice, gas, to, value, data, chainId, 0, 0) when chainId is present, but does not apply the keccak256 hash, which is done by the caller."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.computeSenderRecoveryHash",
+    "line": 790,
+    "end_line": 825,
+    "relation": "partial",
+    "note": "Applies keccak256 to the preimage from getPreimage, which uses frontierPreimage for legacy txs. Together with [0] it does the spec's job; it is generic across all tx types."
+   },
+   {
+    "repo": "besu",
+    "path": "datatypes/src/main/java/org/hyperledger/besu/datatypes/Address.java",
+    "qualname": "Address.extract",
+    "line": 157,
+    "end_line": 159,
+    "relation": "unrelated",
+    "note": "Derives an address from a public key."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/FrontierTransactionDecoder.java",
+    "qualname": "FrontierTransactionDecoder.decode",
+    "line": 48,
+    "end_line": 91,
+    "relation": "unrelated",
+    "note": "Decodes a legacy tx from RLP and pulls chainId and recId out of v. It never computes a signing hash."
+   },
+   {
+    "repo": "besu",
+    "path": "datatypes/src/main/java/org/hyperledger/besu/datatypes/Hash.java",
+    "qualname": "Hash.hash",
+    "line": 79,
+    "end_line": 81,
+    "relation": "unrelated",
+    "note": "Generic keccak256 wrapper."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/BodyValidation.java",
+    "qualname": "BodyValidation.ommersHash",
+    "line": 121,
+    "end_line": 123,
+    "relation": "unrelated",
+    "note": "Hashes the ommers list."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/BodyValidation.java",
+    "qualname": "BodyValidation.balHash",
+    "line": 157,
+    "end_line": 159,
+    "relation": "unrelated",
+    "note": "Hashes the block access list RLP."
+   }
+  ],
+  "cost_usd": 0.06332779999999999
+ },
+ "transactions.signing_hash_2930|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.accessListPreimage",
+    "line": 1033,
+    "end_line": 1051,
+    "relation": "partial",
+    "note": "Builds the 0x01 + RLP(chain_id, nonce, gas_price, gas, to, value, data, access_list) preimage but doesn't hash it. The keccak is done in computeSenderRecoveryHash."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.computeSenderRecoveryHash",
+    "line": 790,
+    "end_line": 825,
+    "relation": "partial",
+    "note": "Applies keccak256 to the preimage from getPreimage for every tx type. For ACCESS_LIST this gives the 2930 signing hash, but the preimage itself is built elsewhere."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.getPreimage",
+    "line": 846,
+    "end_line": 918,
+    "relation": "unrelated",
+    "note": "Borderline. A switch that only sends ACCESS_LIST to accessListPreimage, with no hashing or encoding of its own, so it counts as only calling the real logic."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/AccessListTransactionEncoder.java",
+    "qualname": "AccessListTransactionEncoder.encodeAccessListInner",
+    "line": 56,
+    "end_line": 90,
+    "relation": "partial",
+    "note": "Writes the RLP fields chain_id, nonce, gas_price, gas_limit, to, value, data and access_list in the order the spec encodes them. The list wrapper, type prefix and hash happen elsewhere."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.Builder.eip2930AccessListWarmAddresses",
+    "line": 1997,
+    "end_line": 2000,
+    "relation": "unrelated",
+    "note": "Builder setter for the warm addresses from the access list (execution-time EIP-2930 warming), not signing."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.Builder.eip2930AccessListWarmStorage",
+    "line": 2008,
+    "end_line": 2012,
+    "relation": "unrelated",
+    "note": "Builder setter for the warm storage slots from the access list. Execution only."
+   },
+   {
+    "repo": "besu",
+    "path": "datatypes/src/main/java/org/hyperledger/besu/datatypes/Transaction.java",
+    "qualname": "Transaction.getAccessList",
+    "line": 229,
+    "end_line": 229,
+    "relation": "unrelated",
+    "note": "Interface getter for the transaction's access list."
+   },
+   {
+    "repo": "besu",
+    "path": "datatypes/src/main/java/org/hyperledger/besu/datatypes/CallParameter.java",
+    "qualname": "CallParameter.getAccessList",
+    "line": 119,
+    "end_line": 119,
+    "relation": "unrelated",
+    "note": "Interface getter on call parameters."
+   },
+   {
+    "repo": "besu",
+    "path": "datatypes/src/main/java/org/hyperledger/besu/datatypes/Address.java",
+    "qualname": "Address.extract",
+    "line": 157,
+    "end_line": 159,
+    "relation": "unrelated",
+    "note": "Derives an address from a public key, not the transaction signing hash."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/AccessListTransactionEncoder.java",
+    "qualname": "AccessListTransactionEncoder.writeAccessList",
+    "line": 92,
+    "end_line": 109,
+    "relation": "partial",
+    "note": "RLP-encodes the access_list field, one part of the 2930 signing preimage. The same helper is used for other tx types."
+   }
+  ],
+  "cost_usd": 0.0843718
+ },
+ "transactions.signing_hash_7702|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.codeDelegationPreimage",
+    "line": 1053,
+    "end_line": 1084,
+    "relation": "partial",
+    "note": "Builds the 0x04 + RLP(chain_id..access_list, authorizations) preimage, which is exactly the spec's input, but does not apply keccak256."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.computeSenderRecoveryHash",
+    "line": 790,
+    "end_line": 825,
+    "relation": "partial",
+    "note": "Takes keccak256 of the type-specific preimage. For DELEGATE_CODE this gives the 7702 signing hash, but the function is a general dispatcher over all transaction types."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.getPreimage",
+    "line": 846,
+    "end_line": 918,
+    "relation": "partial",
+    "note": "Type dispatcher whose DELEGATE_CODE branch picks the 7702 preimage builder; it does not hash."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/processing/TransactionProcessingResult.java",
+    "qualname": "TransactionProcessingResult.getStateGasUsed",
+    "line": 360,
+    "end_line": 362,
+    "relation": "unrelated",
+    "note": "Getter for stateGasUsed."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/worldstate/CodeDelegationHelper.java",
+    "qualname": "CodeDelegationHelper.getTargetAddress",
+    "line": 69,
+    "end_line": 71,
+    "relation": "unrelated",
+    "note": "Pulls the delegation target out of the account code; nothing to do with the signing hash."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/CodeDelegation.java",
+    "qualname": "CodeDelegation.CodeDelegation",
+    "line": 62,
+    "end_line": 71,
+    "relation": "unrelated",
+    "note": "Constructor for a CodeDelegation."
+   },
+   {
+    "repo": "besu",
+    "path": "datatypes/src/main/java/org/hyperledger/besu/datatypes/Address.java",
+    "qualname": "Address.extract",
+    "line": 157,
+    "end_line": 159,
+    "relation": "unrelated",
+    "note": "Derives an address from a public key."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/GasCalculator.java",
+    "qualname": "GasCalculator.getAccountWriteGasCost",
+    "line": 538,
+    "end_line": 540,
+    "relation": "unrelated",
+    "note": "Gas cost default."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/CodeDelegationTransactionEncoder.java",
+    "qualname": "CodeDelegationTransactionEncoder.encodeCodeDelegationInner",
+    "line": 35,
+    "end_line": 40,
+    "relation": "partial",
+    "note": "RLP-encodes the authorizations list, the final field of the 7702 signing payload."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/CodeDelegationTransactionEncoder.java",
+    "qualname": "CodeDelegationTransactionEncoder.encodeSingleCodeDelegation",
+    "line": 49,
+    "end_line": 57,
+    "relation": "unrelated",
+    "note": "Encodes a single authorization tuple; generic serialization of one list element."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/CodeDelegationTransactionEncoder.java",
+    "qualname": "CodeDelegationTransactionEncoder.encodeAuthorizationDetails",
+    "line": 59,
+    "end_line": 64,
+    "relation": "unrelated",
+    "note": "Writes the chain_id/address/nonce of one authorization; this belongs to authority signing, not the tx signing hash."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/AccessListTransactionEncoder.java",
+    "qualname": "AccessListTransactionEncoder.writeAccessList",
+    "line": 92,
+    "end_line": 109,
+    "relation": "unrelated",
+    "note": "Generic access-list RLP writer shared by all typed transactions."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.eip1559PreimageFields",
+    "line": 976,
+    "end_line": 996,
+    "relation": "partial",
+    "note": "Writes the first nine fields of the 7702 signing payload (chain_id through access_list) in spec order."
+   }
+  ],
+  "cost_usd": 0.0906318
+ },
+ "fork.apply_body|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/AbstractBlockProcessor.java",
+    "qualname": "AbstractBlockProcessor.processBlock",
+    "line": 151,
+    "end_line": 537,
+    "relation": "equivalent",
+    "note": "Executes the whole block: the pre-execution system calls, then the per-transaction loop. The excerpt is cut off; the code that follows presumably does withdrawals, requests and the access list. This is besu's apply_body."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/WithdrawalsProcessor.java",
+    "qualname": "WithdrawalsProcessor.processWithdrawals",
+    "line": 28,
+    "end_line": 46,
+    "relation": "unrelated",
+    "note": "Matches the separate spec function process_withdrawals, which apply_body only calls."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/blockhash/CancunPreExecutionProcessor.java",
+    "qualname": "CancunPreExecutionProcessor.process",
+    "line": 43,
+    "end_line": 52,
+    "relation": "partial",
+    "note": "Makes the EIP-4788 beacon-roots system call that apply_body makes inline at the start of the block."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/systemcall/SystemCallProcessor.java",
+    "qualname": "SystemCallProcessor.processUnchecked",
+    "line": 118,
+    "end_line": 134,
+    "relation": "unrelated",
+    "note": "Matches the separate spec function process_unchecked_system_transaction, which apply_body only calls."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/block/access/list/BlockAccessListOverlay.java",
+    "qualname": "BlockAccessListOverlay.applyToStorage",
+    "line": 157,
+    "end_line": 172,
+    "relation": "unrelated",
+    "note": "Reads storage values back from the block access list (BAL) overlay. It does not execute the block or build the BAL."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/block/access/list/BlockAccessListOverlay.java",
+    "qualname": "BlockAccessListOverlay.applyToCode",
+    "line": 145,
+    "end_line": 155,
+    "relation": "unrelated",
+    "note": "Reads code changes back from the BAL overlay. It does not execute the block."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/blockhash/PraguePreExecutionProcessor.java",
+    "qualname": "PraguePreExecutionProcessor.process",
+    "line": 54,
+    "end_line": 66,
+    "relation": "partial",
+    "note": "Runs the pre-execution system calls from apply_body: the beacon roots call (via super) and the EIP-2935 history storage call with the parent hash."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/block/access/list/BlockAccessList.java",
+    "qualname": "BlockAccessList.BlockAccessListBuilder.createPostExecutionAccessLocationTracker",
+    "line": 200,
+    "end_line": 203,
+    "relation": "partial",
+    "note": "Sets the post-execution access index to the transaction count + 1, the EIP-7928 step that apply_body does inline."
+   }
+  ],
+  "cost_usd": 0.08816379999999999
+ },
+ "fork.calculate_base_fee_per_gas|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/feemarket/LondonFeeMarket.java",
+    "qualname": "LondonFeeMarket.computeBaseFee",
+    "line": 86,
+    "end_line": 121,
+    "relation": "equivalent",
+    "note": "Core EIP-1559 base fee formula with the same three branches (equal, increase with min 1, decrease). Takes the target as a parameter; the gas limit check is done elsewhere."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/feemarket/BaseFeeMarket.java",
+    "qualname": "BaseFeeMarket.targetGasUsed",
+    "line": 46,
+    "end_line": 48,
+    "relation": "partial",
+    "note": "Computes parent_gas_target = gas_limit // elasticity (slack coefficient), one step of the spec function."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/headervalidationrules/BaseFeeMarketBlockHeaderGasPriceValidationRule.java",
+    "qualname": "BaseFeeMarketBlockHeaderGasPriceValidationRule.validate",
+    "line": 38,
+    "end_line": 76,
+    "relation": "unrelated",
+    "note": "Header validation rule: calls targetGasUsed/computeBaseFee and compares the result with the header's base fee. A caller, not the computation."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.getEffectiveGasPrice",
+    "line": 746,
+    "end_line": 748,
+    "relation": "unrelated",
+    "note": "Effective gas price of a transaction, given an existing base fee."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.getEffectivePriorityFeePerGas",
+    "line": 342,
+    "end_line": 360,
+    "relation": "unrelated",
+    "note": "Effective priority fee of a transaction; does not compute the block base fee."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/feemarket/TransactionPriceCalculator.java",
+    "qualname": "TransactionPriceCalculator.eip1559",
+    "line": 30,
+    "end_line": 44,
+    "relation": "unrelated",
+    "note": "Transaction price calculator (min(maxFee, priority + baseFee)); not the base fee update."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/feemarket/FeeMarket.java",
+    "qualname": "FeeMarket.london",
+    "line": 98,
+    "end_line": 102,
+    "relation": "unrelated",
+    "note": "Factory that builds a LondonFeeMarket instance."
+   }
+  ],
+  "cost_usd": 0.0760998
+ },
+ "fork.check_transaction|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionProcessor.java",
+    "qualname": "MainnetTransactionProcessor.processTransaction",
+    "line": 201,
+    "end_line": 749,
+    "relation": "partial",
+    "note": "Runs both validators, then builds the access lists and checks price, upfront cost and intrinsic gas itself. It also executes the transaction, so it is broader than the spec function."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionValidator.java",
+    "qualname": "MainnetTransactionValidator.validateForSender",
+    "line": 293,
+    "end_line": 365,
+    "relation": "partial",
+    "note": "The checks against the sender's account: balance against max fee plus value, nonce match, and code that is not a delegation (not EOA)."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionValidator.java",
+    "qualname": "MainnetTransactionValidator.validate",
+    "line": 86,
+    "end_line": 155,
+    "relation": "partial",
+    "note": "Signature check, the cap on a transaction's gas limit, blob checks, and the fee and cost checks through validateCostAndFee."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.Transaction",
+    "line": 197,
+    "end_line": 284,
+    "relation": "unrelated",
+    "note": "Constructor that builds the transaction object."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.computeSenderRecoveryHash",
+    "line": 790,
+    "end_line": 825,
+    "relation": "unrelated",
+    "note": "Computes the signing hash used for sender recovery. That belongs to recover_sender, a callee."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionValidator.java",
+    "qualname": "MainnetTransactionValidator.validateCostAndFee",
+    "line": 199,
+    "end_line": 291,
+    "relation": "partial",
+    "note": "Max fee checks against the base fee, the blob gas limit, the max fee per blob gas, and the intrinsic gas check. These are parts of the spec's admission checks."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.getPreimage",
+    "line": 846,
+    "end_line": 918,
+    "relation": "unrelated",
+    "note": "Builds the RLP preimage for signing."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.Builder.build",
+    "line": 1518,
+    "end_line": 1543,
+    "relation": "unrelated",
+    "note": "Builder that constructs a Transaction."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionValidator.java",
+    "qualname": "MainnetTransactionValidator.canSendTransaction",
+    "line": 367,
+    "end_line": 369,
+    "relation": "partial",
+    "note": "The sender-is-EOA-or-delegated check, which the spec writes inline in check_transaction."
+   }
+  ],
+  "cost_usd": 0.1488518
+ },
+ "fork.execute_block|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetBlockBodyValidator.java",
+    "qualname": "MainnetBlockBodyValidator.validateBody",
+    "line": 48,
+    "end_line": 74,
+    "relation": "partial",
+    "note": "Post-execution body validation: gas used, bloom, ommers, withdrawals, tx/receipt/state roots vs header."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/AbstractBlockProcessor.java",
+    "qualname": "AbstractBlockProcessor.processBlock",
+    "line": 151,
+    "end_line": 537,
+    "relation": "partial",
+    "note": "Executes the block (pre-execution system calls, transactions, gas accounting, BAL building); covers the apply_body side of execute_block."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/SealableBlockHeader.java",
+    "qualname": "SealableBlockHeader.SealableBlockHeader",
+    "line": 54,
+    "end_line": 100,
+    "relation": "unrelated",
+    "note": "Header data constructor."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetBlockAccessListValidator.java",
+    "qualname": "MainnetBlockAccessListValidator.validate",
+    "line": 121,
+    "end_line": 163,
+    "relation": "unrelated",
+    "note": "Validates an access list supplied with the block against the header; the spec only checks the hash of the list built during execution."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetBlockBodyValidator.java",
+    "qualname": "MainnetBlockBodyValidator.validateBodyRoots",
+    "line": 76,
+    "end_line": 106,
+    "relation": "partial",
+    "note": "Computes and checks transactions root, receipts root and state root against the header."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/BlockHeader.java",
+    "qualname": "BlockHeader.toString",
+    "line": 473,
+    "end_line": 514,
+    "relation": "unrelated",
+    "note": "String formatting."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/BodyValidation.java",
+    "qualname": "BodyValidation.transactionsRoot",
+    "line": 54,
+    "end_line": 60,
+    "relation": "unrelated",
+    "note": "Trie root helper for transactions; the spec computes this in a separate function that execute_block calls."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/BodyValidation.java",
+    "qualname": "BodyValidation.withdrawalsRoot",
+    "line": 68,
+    "end_line": 73,
+    "relation": "unrelated",
+    "note": "Trie root helper for withdrawals; a callee, not the block-level check."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/WithdrawalsValidator.java",
+    "qualname": "WithdrawalsValidator.AllowedWithdrawals.validateWithdrawalsRoot",
+    "line": 76,
+    "end_line": 97,
+    "relation": "partial",
+    "note": "Checks the computed withdrawals root equals header.withdrawals_root."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetBlockAccessListValidator.java",
+    "qualname": "MainnetBlockAccessListValidator.validateExecutedBlockAccessListAfterBuild",
+    "line": 93,
+    "end_line": 119,
+    "relation": "partial",
+    "note": "Checks the hash of the access list built during execution against the header's block access list hash (plus size check)."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/BodyValidation.java",
+    "qualname": "BodyValidation.receiptsRoot",
+    "line": 100,
+    "end_line": 113,
+    "relation": "unrelated",
+    "note": "Trie root helper for receipts; a callee."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetBlockBodyValidator.java",
+    "qualname": "MainnetBlockBodyValidator.validateBodyLight",
+    "line": 108,
+    "end_line": 145,
+    "relation": "partial",
+    "note": "Checks gas used, logs bloom, ommers and withdrawals against the header."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetBlockAccessListValidator.java",
+    "qualname": "MainnetBlockAccessListValidator.balHashMismatchAgainstHeaderIfAny",
+    "line": 188,
+    "end_line": 213,
+    "relation": "partial",
+    "note": "Computes the BAL hash and compares it to the header hash; the spec's final BAL hash check."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetBlockBodyValidator.java",
+    "qualname": "MainnetBlockBodyValidator.validateStateRoot",
+    "line": 189,
+    "end_line": 201,
+    "relation": "partial",
+    "note": "State root comparison against the header."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetBlockBodyValidator.java",
+    "qualname": "MainnetBlockBodyValidator.validateEthHash",
+    "line": 203,
+    "end_line": 220,
+    "relation": "partial",
+    "note": "Ommers hash/ommers validation, matching the spec's ommers == () check."
+   }
+  ],
+  "cost_usd": 0.1477518
+ },
+ "fork.make_receipt|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetProtocolSpecs.java",
+    "qualname": "MainnetProtocolSpecs.BerlinTransactionReceiptFactory.create",
+    "line": 1473,
+    "end_line": 1484,
+    "relation": "equivalent",
+    "note": "Builds the receipt for an executed tx: status from success, cumulative gas, logs and tx type; bloom presumably built by the public constructor. Encoding happens elsewhere in besu."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/TransactionReceipt.java",
+    "qualname": "TransactionReceipt.TransactionReceipt",
+    "line": 144,
+    "end_line": 161,
+    "relation": "unrelated",
+    "note": "Private constructor that only stores fields, with the bloom passed in already built. Matches the Receipt data structure, not make_receipt."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/TransactionReceipt.java",
+    "qualname": "TransactionReceipt.getBloomFilter",
+    "line": 215,
+    "end_line": 218,
+    "relation": "unrelated",
+    "note": "Plain getter for the bloom filter."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/receipt/SyncTransactionReceiptDecoder.java",
+    "qualname": "SyncTransactionReceiptDecoder.requireDefinedTransactionType",
+    "line": 88,
+    "end_line": 104,
+    "relation": "unrelated",
+    "note": "Checks the type prefix when decoding a receipt from the wire, the opposite direction."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/receipt/SyncTransactionReceiptDecoder.java",
+    "qualname": "SyncTransactionReceiptDecoder.decodeLegacyReceipt",
+    "line": 177,
+    "end_line": 199,
+    "relation": "unrelated",
+    "note": "Decodes legacy receipts received for sync; not making a receipt for an executed tx."
+   }
+  ],
+  "cost_usd": 0.06316379999999999
+ },
+ "fork.process_general_purpose_requests|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/requests/RequestProcessorCoordinator.java",
+    "qualname": "RequestProcessorCoordinator.process",
+    "line": 44,
+    "end_line": 50,
+    "relation": "partial",
+    "note": "Orchestrates all request processors (deposit, withdrawal, consolidation, builder deposit/exit) and collects their outputs; empty-filtering and ordering happen elsewhere (asCanonicalList)."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/requests/SystemCallRequestProcessor.java",
+    "qualname": "SystemCallRequestProcessor.process",
+    "line": 49,
+    "end_line": 61,
+    "relation": "partial",
+    "note": "Performs a single system call to a request contract with empty calldata and wraps the output with its request type \u2014 one of the spec's per-contract steps."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/requests/DepositRequestProcessor.java",
+    "qualname": "DepositRequestProcessor.process",
+    "line": 45,
+    "end_line": 54,
+    "relation": "partial",
+    "note": "Parses deposit requests from receipts and tags them DEPOSIT \u2014 the parse_deposit_requests step of the spec."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/AbstractBlockProcessor.java",
+    "qualname": "AbstractBlockProcessor.processBlock",
+    "line": 151,
+    "end_line": 537,
+    "relation": "unrelated",
+    "note": "General block processing; shown code doesn't contain request logic, at most it invokes it."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/requests/MainnetRequestsProcessor.java",
+    "qualname": "MainnetRequestsProcessor.amsterdamRequestsProcessors",
+    "line": 31,
+    "end_line": 50,
+    "relation": "partial",
+    "note": "Defines the Amsterdam request set, adding builder deposit/exit system-call processors with their addresses and types, mirroring the spec's additional system calls."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/requests/MainnetRequestsProcessor.java",
+    "qualname": "MainnetRequestsProcessor.pragueRequestsProcessorsBuilder",
+    "line": 52,
+    "end_line": 70,
+    "relation": "partial",
+    "note": "Configures withdrawal, consolidation and deposit processors with their target addresses and types \u2014 the Prague portion of the spec's request set."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/requests/RequestContractAddresses.java",
+    "qualname": "RequestContractAddresses.RequestContractAddresses",
+    "line": 45,
+    "end_line": 56,
+    "relation": "unrelated",
+    "note": "Plain constructor storing addresses."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/requests/RequestContractAddresses.java",
+    "qualname": "RequestContractAddresses.fromGenesis",
+    "line": 58,
+    "end_line": 77,
+    "relation": "unrelated",
+    "note": "Loads contract addresses from genesis config; configuration only."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Request.java",
+    "qualname": "Request.asCanonicalList",
+    "line": 70,
+    "end_line": 75,
+    "relation": "partial",
+    "note": "Sorts requests by type and drops empty ones, implementing the spec's ascending-type ordering and 'only append if non-empty' checks."
+   }
+  ],
+  "cost_usd": 0.09915979999999999
+ },
+ "fork.process_unchecked_system_transaction|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/systemcall/SystemCallProcessor.java",
+    "qualname": "SystemCallProcessor.processUnchecked",
+    "line": 118,
+    "end_line": 134,
+    "relation": "equivalent",
+    "note": "Unchecked entry point: runs the system call through execute and only logs a warning if there is no code or the call fails, matching the spec's no-check behaviour."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/systemcall/SystemCallProcessor.java",
+    "qualname": "SystemCallProcessor.execute",
+    "line": 141,
+    "end_line": 189,
+    "relation": "partial",
+    "note": "Core of the system call. Sets up a child state, builds the frame, runs it, updates the block access list and commits on success. It is shared with the checked path and leaves failure handling to the caller."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/systemcall/SystemCallProcessor.java",
+    "qualname": "SystemCallProcessor.createMessageFrame",
+    "line": 202,
+    "end_line": 248,
+    "relation": "partial",
+    "note": "Builds the call environment (origin SYSTEM_ADDRESS, system gas limit, zero value, state-gas reservoir), which matches the spec's TransactionEnvironment setup."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/blockhash/CancunPreExecutionProcessor.java",
+    "qualname": "CancunPreExecutionProcessor.process",
+    "line": 43,
+    "end_line": 52,
+    "relation": "unrelated",
+    "note": "Caller (EIP-4788 beacon roots pre-execution) that invokes processUnchecked."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/blockhash/PraguePreExecutionProcessor.java",
+    "qualname": "PraguePreExecutionProcessor.process",
+    "line": 54,
+    "end_line": 66,
+    "relation": "unrelated",
+    "note": "Caller (EIP-2935 history storage) that invokes processUnchecked."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/requests/SystemCallRequestProcessor.java",
+    "qualname": "SystemCallRequestProcessor.process",
+    "line": 49,
+    "end_line": 61,
+    "relation": "unrelated",
+    "note": "Uses the checked process path for request system calls, not the unchecked one."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/systemcall/SystemCallProcessor.java",
+    "qualname": "SystemCallProcessor.systemCallStateGasReservoir",
+    "line": 250,
+    "end_line": 254,
+    "relation": "partial",
+    "note": "Computes the state_gas_reservoir field (STORAGE_SET * SYSTEM_MAX_SSTORES_PER_CALL) of the system transaction environment."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/systemcall/SystemCallProcessor.java",
+    "qualname": "SystemCallProcessor.applyAccessLocationTracker",
+    "line": 191,
+    "end_line": 200,
+    "relation": "partial",
+    "note": "Adds the system call's accesses to the block access list builder, which matches incorporate_tx_into_block's block access list update."
+   }
+  ],
+  "cost_usd": 0.0814238
+ },
+ "fork.state_transition|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetBlockImporter.java",
+    "qualname": "MainnetBlockImporter.importBlock",
+    "line": 46,
+    "end_line": 85,
+    "relation": "equivalent",
+    "note": "Validates and executes the block (validateAndProcessBlock), appends it to the blockchain, and moves the head world state forward. This matches state_transition's execute_block, apply_changes_to_state and chain.blocks.append."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/StorageTransition.java",
+    "qualname": "StorageTransition.isStorageSet",
+    "line": 53,
+    "end_line": 55,
+    "relation": "unrelated",
+    "note": "A predicate for the SSTORE 0\u21920\u2192nonzero storage transition, used for gas accounting. It plays no part in applying a block."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/StorageTransition.java",
+    "qualname": "StorageTransition.isUnwoundSet",
+    "line": 62,
+    "end_line": 64,
+    "relation": "unrelated",
+    "note": "A predicate for the SSTORE 0\u2192X\u21920 storage transition, used for state-gas refunds. It plays no part in applying a block."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/BlockExecutionContext.java",
+    "qualname": "BlockExecutionContext.getWorldState",
+    "line": 81,
+    "end_line": 83,
+    "relation": "unrelated",
+    "note": "A getter for the world state on the execution context. It contains no state transition logic."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/BlockExecutionContext.java",
+    "qualname": "BlockExecutionContext.Builder.worldState",
+    "line": 195,
+    "end_line": 198,
+    "relation": "unrelated",
+    "note": "A builder setter for the world state. It contains no state transition logic."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/v2/operation/SStoreOperationV2.java",
+    "qualname": "SStoreOperationV2.execute",
+    "line": 61,
+    "end_line": 138,
+    "relation": "unrelated",
+    "note": "Implements the SSTORE opcode. This is opcode-level execution, not block application to the chain."
+   }
+  ],
+  "cost_usd": 0.057587799999999995
+ },
+ "vm.instructions.system.call|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java",
+    "qualname": "AbstractCallOperation.execute",
+    "line": 182,
+    "end_line": 316,
+    "relation": "partial",
+    "note": "Shared CALL-family body. It covers stack reads, warm-up, the static and dynamic gas checks, delegation cost, the new-account state-gas charge, the balance and depth soft-fail, and building the child frame. The static-context value check is not here; it lives in CallOperation.execute."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/CallOperation.java",
+    "qualname": "CallOperation.execute",
+    "line": 89,
+    "end_line": 96,
+    "relation": "partial",
+    "note": "Does the CALL-specific check (static context with non-zero value raises an illegal state change), then hands everything else to the shared AbstractCallOperation.execute."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java",
+    "qualname": "AbstractCallOperation.complete",
+    "line": 324,
+    "end_line": 369,
+    "relation": "partial",
+    "note": "Continuation after the child frame finishes. It writes output to memory, returns leftover gas, pushes the result and does the pc += 1 step from the spec's call. Most of the rest belongs to generic_call."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/AmsterdamGasCalculator.java",
+    "qualname": "AmsterdamGasCalculator.callOperationGasCost",
+    "line": 347,
+    "end_line": 362,
+    "relation": "partial",
+    "note": "Amsterdam's dynamic CALL gas. It just returns the static cost, because new-account gas has moved to state gas. A small piece of the call's pricing."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/CallOperation.java",
+    "qualname": "CallOperation.gasAvailableForChildCall",
+    "line": 84,
+    "end_line": 87,
+    "relation": "unrelated",
+    "note": "Works out the child gas grant, which is the job of calculate_message_call_gas (a separate spec helper that call uses)."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java",
+    "qualname": "AbstractCallOperation.refundCallNewAccountStateGas",
+    "line": 383,
+    "end_line": 388,
+    "relation": "unrelated",
+    "note": "Refunds the new-account state gas by refilling the reservoir. This is the opposite of the charge and happens on the failure path (generic_call's refill)."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractCallOperationV2.java",
+    "qualname": "AbstractCallOperationV2.refundCallNewAccountStateGas",
+    "line": 370,
+    "end_line": 375,
+    "relation": "unrelated",
+    "note": "V2 copy of the state-gas refund. It is a refund, not part of the charge."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/systemcall/SystemCallProcessor.java",
+    "qualname": "SystemCallProcessor.systemCallStateGasReservoir",
+    "line": 250,
+    "end_line": 254,
+    "relation": "unrelated",
+    "note": "Sizes the state-gas reservoir for system calls. Not the CALL opcode."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/systemcall/SystemCallProcessor.java",
+    "qualname": "SystemCallProcessor.createMessageFrame",
+    "line": 202,
+    "end_line": 248,
+    "relation": "unrelated",
+    "note": "Builds the message frame for system contract calls. Not the CALL opcode."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/SpuriousDragonGasCalculator.java",
+    "qualname": "SpuriousDragonGasCalculator.callOperationStaticGasCost",
+    "line": 32,
+    "end_line": 57,
+    "relation": "partial",
+    "note": "State-independent CALL gas: memory expansion, base cost and the value-transfer cost."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/BerlinGasCalculator.java",
+    "qualname": "BerlinGasCalculator.callOperationStaticGasCost",
+    "line": 147,
+    "end_line": 171,
+    "relation": "partial",
+    "note": "Adds the warm or cold account access cost to the static CALL gas, matching the spec's access_gas_cost."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractCallOperationV2.java",
+    "qualname": "AbstractCallOperationV2.callCreatesNewAccount",
+    "line": 359,
+    "end_line": 367,
+    "relation": "partial",
+    "note": "Works out new_account_charged (value is non-zero and the recipient is missing or empty) for the CALL state-gas charge, in the V2 EVM."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java",
+    "qualname": "AbstractCallOperation.callCreatesNewAccount",
+    "line": 372,
+    "end_line": 380,
+    "relation": "partial",
+    "note": "Works out new_account_charged (value is non-zero and the recipient is missing or empty), which decides whether the NEW_ACCOUNT state gas is charged."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java",
+    "qualname": "AbstractCallOperation.getCode",
+    "line": 406,
+    "end_line": 448,
+    "relation": "partial",
+    "note": "Loads the target's code and resolves an EIP-7702 delegation to the delegated code. This matches the spec's code_address and get_code steps."
+   }
+  ],
+  "cost_usd": 0.1318278
+ },
+ "vm.instructions.system.create|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCreateOperation.java",
+    "qualname": "AbstractCreateOperation.execute",
+    "line": 70,
+    "end_line": 146,
+    "relation": "partial",
+    "note": "This is the main CREATE/CREATE2 flow: static check, gas charge, initcode size check, nonce increment, child spawn (the generic_create role). It relies on subclass overrides for the CREATE-specific cost and address, and complete() finishes the opcode."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/CreateOperation.java",
+    "qualname": "CreateOperation.cost",
+    "line": 44,
+    "end_line": 53,
+    "relation": "partial",
+    "note": "Works out CREATE's gas: create cost plus memory expansion plus initcode cost. This is the spec's GAS step."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/CreateOperation.java",
+    "qualname": "CreateOperation.generateTargetContractAddress",
+    "line": 55,
+    "end_line": 60,
+    "relation": "partial",
+    "note": "Computes the CREATE address from the sender and nonce, matching compute_contract_address(current_target, nonce). The -1 undoes the nonce increment that execute() has already done."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/CreateOperation.java",
+    "qualname": "CreateOperation.getInitCode",
+    "line": 62,
+    "end_line": 70,
+    "relation": "partial",
+    "note": "Reads the initcode from memory at the stack offset and size, which also grows memory. This covers the spec's memory-extension step and the initcode read."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/GasCalculator.java",
+    "qualname": "GasCalculator.createKeccakCost",
+    "line": 270,
+    "end_line": 270,
+    "relation": "unrelated",
+    "note": "CREATE2-only keccak hashing cost. CREATE never charges it."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/Create2Operation.java",
+    "qualname": "Create2Operation.getInitCode",
+    "line": 69,
+    "end_line": 77,
+    "relation": "unrelated",
+    "note": "CREATE2's initcode reader, not CREATE's."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractCreateOperationV2.java",
+    "qualname": "AbstractCreateOperationV2.getInitCode",
+    "line": 162,
+    "end_line": 167,
+    "relation": "partial",
+    "note": "Initcode memory read in the V2 base class, assumed to be shared by CREATE and CREATE2 (not checked). It does the memory read and growth step of create."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/GasCalculator.java",
+    "qualname": "GasCalculator.initcodeCost",
+    "line": 279,
+    "end_line": 279,
+    "relation": "unrelated",
+    "note": "Only the interface declaration of the initcode-cost helper that create calls."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCreateOperation.java",
+    "qualname": "AbstractCreateOperation.complete",
+    "line": 256,
+    "end_line": 290,
+    "relation": "partial",
+    "note": "Finishes the CREATE opcode after the child frame returns: pops the stack items, pushes the new address or zero, sets return data and moves the PC forward. That is the tail of create/generic_create."
+   }
+  ],
+  "cost_usd": 0.0861798
+ },
+ "vm.instructions.system.delegatecall|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/DelegateCallOperation.java",
+    "qualname": "DelegateCallOperation.DelegateCallOperation",
+    "line": 33,
+    "end_line": 35,
+    "relation": "unrelated",
+    "note": "Constructor only registers opcode 0xF4 with its stack in/out counts. It does none of the call's work."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java",
+    "qualname": "AbstractCallOperation.execute",
+    "line": 182,
+    "end_line": 316,
+    "relation": "partial",
+    "note": "Shared CALL-family body. It does the access warming, static and dynamic gas checks, delegation resolution cost, charge, depth and balance checks, and child frame construction. The DELEGATECALL semantics come from the subclass overrides."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/DelegateCallOperation.java",
+    "qualname": "DelegateCallOperation.gasAvailableForChildCall",
+    "line": 82,
+    "end_line": 85,
+    "relation": "partial",
+    "note": "Child gas grant for DELEGATECALL with no value stipend, matching message_call_gas.sub_call with value 0."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/v2/operation/DelegateCallOperationV2.java",
+    "qualname": "DelegateCallOperationV2.DelegateCallOperationV2",
+    "line": 33,
+    "end_line": 35,
+    "relation": "unrelated",
+    "note": "V2 constructor, only registers the opcode."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/v2/operation/DelegateCallOperationV2.java",
+    "qualname": "DelegateCallOperationV2.gasAvailableForChildCall",
+    "line": 82,
+    "end_line": 85,
+    "relation": "partial",
+    "note": "V2 version of the DELEGATECALL child gas grant with no stipend."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/DelegateCallOperation.java",
+    "qualname": "DelegateCallOperation.to",
+    "line": 37,
+    "end_line": 40,
+    "relation": "partial",
+    "note": "Reads code_address from stack slot 1, matching the spec's to_address_masked(pop)."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/DelegateCallOperation.java",
+    "qualname": "DelegateCallOperation.value",
+    "line": 42,
+    "end_line": 45,
+    "relation": "partial",
+    "note": "No value transfer for DELEGATECALL, matching should_transfer_value=False and the value-0 gas calculation."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/DelegateCallOperation.java",
+    "qualname": "DelegateCallOperation.apparentValue",
+    "line": 47,
+    "end_line": 50,
+    "relation": "partial",
+    "note": "Passes the parent's value to the child, matching value=evm.value."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/DelegateCallOperation.java",
+    "qualname": "DelegateCallOperation.inputDataOffset",
+    "line": 52,
+    "end_line": 55,
+    "relation": "partial",
+    "note": "Reads memory_input_start_position from stack slot 2."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/DelegateCallOperation.java",
+    "qualname": "DelegateCallOperation.inputDataLength",
+    "line": 57,
+    "end_line": 60,
+    "relation": "partial",
+    "note": "Reads memory_input_size from stack slot 3."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/TangerineWhistleGasCalculator.java",
+    "qualname": "TangerineWhistleGasCalculator.callOperationStaticGasCost",
+    "line": 60,
+    "end_line": 85,
+    "relation": "partial",
+    "note": "Static call cost: base cost plus memory expansion over the input and output regions. This is part of the delegatecall charge computation."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/DelegateCallOperation.java",
+    "qualname": "DelegateCallOperation.outputDataOffset",
+    "line": 62,
+    "end_line": 65,
+    "relation": "partial",
+    "note": "Reads memory_output_start_position from stack slot 4."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/DelegateCallOperation.java",
+    "qualname": "DelegateCallOperation.outputDataLength",
+    "line": 67,
+    "end_line": 70,
+    "relation": "partial",
+    "note": "Reads memory_output_size from stack slot 5."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/DelegateCallOperation.java",
+    "qualname": "DelegateCallOperation.address",
+    "line": 72,
+    "end_line": 75,
+    "relation": "partial",
+    "note": "Child target is the current frame's address, matching to=evm.current_target."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/DelegateCallOperation.java",
+    "qualname": "DelegateCallOperation.sender",
+    "line": 77,
+    "end_line": 80,
+    "relation": "partial",
+    "note": "Child caller is the parent's caller, matching caller=evm.caller."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java",
+    "qualname": "AbstractCallOperation.gas",
+    "line": 79,
+    "end_line": 81,
+    "relation": "partial",
+    "note": "Reads the gas argument from stack slot 0, matching the first stack pop."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/BerlinGasCalculator.java",
+    "qualname": "BerlinGasCalculator.callOperationStaticGasCost",
+    "line": 147,
+    "end_line": 171,
+    "relation": "partial",
+    "note": "Adds the cold or warm account access cost to the static cost. The spec delegatecall does this inline."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java",
+    "qualname": "AbstractCallOperation.complete",
+    "line": 324,
+    "end_line": 369,
+    "relation": "partial",
+    "note": "Call completion. It writes output to memory, returns the child's leftover gas, pushes the result and does pc+1. This is mostly generic_call's tail plus the spec's pc increment."
+   }
+  ],
+  "cost_usd": 0.11982380000000001
+ },
+ "vm.instructions.system.generic_create|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCreateOperation.java",
+    "qualname": "AbstractCreateOperation.execute",
+    "line": 70,
+    "end_line": 146,
+    "relation": "partial",
+    "note": "Handles one part of the spec function: preflight checks (balance, depth, nonce), clearing return data, incrementing the nonce, checking whether the target exists and charging NEW_ACCOUNT state gas, then handing off to spawnChildMessage. It also prices the opcode, which the spec does before calling generic_create. The child grant and outcome happen elsewhere."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCreateOperation.java",
+    "qualname": "AbstractCreateOperation.spawnChildMessage",
+    "line": 209,
+    "end_line": 243,
+    "relation": "partial",
+    "note": "The child-grant and dispatch steps: sets aside the gas the child may use under the 63/64 rule, builds the CONTRACT_CREATION child frame (caller, value, init code) and registers complete() to run when it finishes."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCreateOperation.java",
+    "qualname": "AbstractCreateOperation.complete",
+    "line": 256,
+    "end_line": 290,
+    "relation": "partial",
+    "note": "The outcome step: takes back the child's leftover gas, logs and creates. On success it pushes the new address and clears return data. On failure it refills NEW_ACCOUNT state gas if it was charged, sets return data to the child's output and pushes 0."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCreateOperation.java",
+    "qualname": "AbstractCreateOperation.fail",
+    "line": 201,
+    "end_line": 207,
+    "relation": "partial",
+    "note": "The preflight abort path: touches memory for the init code, pops the arguments and pushes 0, the spec's early push(0)/return."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/processor/ContractCreationProcessor.java",
+    "qualname": "ContractCreationProcessor.start",
+    "line": 126,
+    "end_line": 169,
+    "relation": "partial",
+    "note": "Holds the collision check (an existing account makes the create fail, as account_deployable does in the spec) inside the child's start. It also moves the value and sets the new account's nonce, which belongs to process_create in the spec."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractCreateOperationV2.java",
+    "qualname": "AbstractCreateOperationV2.complete",
+    "line": 229,
+    "end_line": 259,
+    "relation": "partial",
+    "note": "V2 version of the outcome step: takes back the child's results, keeps the state gas charge on success and refills it on failure, then sets return data and pushes the address or 0."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractCreateOperationV2.java",
+    "qualname": "AbstractCreateOperationV2.execute",
+    "line": 63,
+    "end_line": 137,
+    "relation": "partial",
+    "note": "V2 version of execute: preflight checks, nonce increment, target existence check and NEW_ACCOUNT state gas charge, then hands off to spawnChildMessage. It also prices the opcode."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionProcessor.java",
+    "qualname": "MainnetTransactionProcessor.chargeTopFrame",
+    "line": 844,
+    "end_line": 898,
+    "relation": "unrelated",
+    "note": "Charges state gas for the top-level frame of a creation transaction (and for delegations and the recipient). It does not run the CREATE opcode's child-frame lifecycle."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractCreateOperationV2.java",
+    "qualname": "AbstractCreateOperationV2.fail",
+    "line": 189,
+    "end_line": 192,
+    "relation": "partial",
+    "note": "V2 preflight abort path: touches memory for the init code and pushes 0 in place of the arguments."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractCreateOperationV2.java",
+    "qualname": "AbstractCreateOperationV2.spawnChildMessage",
+    "line": 194,
+    "end_line": 227,
+    "relation": "partial",
+    "note": "V2 child grant and dispatch: sets aside the 63/64 gas and builds the CONTRACT_CREATION child frame with complete() to run when it finishes."
+   }
+  ],
+  "cost_usd": 0.12904780000000002
+ },
+ "vm.instructions.system.revert|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/RevertOperation.java",
+    "qualname": "RevertOperation.execute",
+    "line": 41,
+    "end_line": 56,
+    "relation": "equivalent",
+    "note": "Pops offset and size, charges memory expansion gas, reads memory into the output and sets the frame to REVERT, which matches the spec opcode."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/v2/operation/RevertOperationV2.java",
+    "qualname": "RevertOperationV2.execute",
+    "line": 41,
+    "end_line": 61,
+    "relation": "equivalent",
+    "note": "Variant of the same opcode on the V2 stack, with the same pops, memory gas, output read and REVERT state."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/receipt/TransactionReceiptDecoder.java",
+    "qualname": "TransactionReceiptDecoder.readMaybeRevertReason",
+    "line": 271,
+    "end_line": 280,
+    "relation": "unrelated",
+    "note": "Decodes the revert reason from receipt RLP and does none of the opcode's work."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/RevertOperation.java",
+    "qualname": "RevertOperation.RevertOperation",
+    "line": 37,
+    "end_line": 39,
+    "relation": "unrelated",
+    "note": "Constructor that only registers the opcode metadata."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.setRevertReason",
+    "line": 770,
+    "end_line": 772,
+    "relation": "unrelated",
+    "note": "Plain setter for the revert reason field."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java",
+    "qualname": "AbstractMessageProcessor.clearAccumulatedStateBesidesGasAndOutput",
+    "line": 114,
+    "end_line": 149,
+    "relation": "unrelated",
+    "note": "Rolls back state after a frame ends, which is the caller's handling of a revert, not the opcode."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java",
+    "qualname": "AbstractMessageProcessor.revert",
+    "line": 178,
+    "end_line": 183,
+    "relation": "unrelated",
+    "note": "Message processor's handling of a failed frame, which runs after the opcode, not the REVERT opcode itself."
+   }
+  ],
+  "cost_usd": 0.0486318
+ },
+ "vm.eoa_delegation.calculate_delegation_cost|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/PragueGasCalculator.java",
+    "qualname": "PragueGasCalculator.calculateCodeDelegationResolutionGas",
+    "line": 108,
+    "end_line": 128,
+    "relation": "equivalent",
+    "note": "Checks the code for a delegation, pulls out the target address and returns warm or cold access cost (0 if none). Returns only the gas, not the full tuple. Also marks the address as accessed and treats precompiles as warm."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/worldstate/CodeDelegationHelper.java",
+    "qualname": "CodeDelegationHelper.getTargetAddress",
+    "line": 69,
+    "end_line": 71,
+    "relation": "partial",
+    "note": "Only pulls the delegated address out of the code, which is one step of the spec function."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/GasCalculator.java",
+    "qualname": "GasCalculator.calculateCodeDelegationResolutionGas",
+    "line": 745,
+    "end_line": 748,
+    "relation": "unrelated",
+    "note": "Default for forks before Prague that always returns 0. Does none of the spec's logic."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/CodeDelegation.java",
+    "qualname": "CodeDelegation.CodeDelegation",
+    "line": 62,
+    "end_line": 71,
+    "relation": "unrelated",
+    "note": "Constructor for an authorization tuple."
+   },
+   {
+    "repo": "besu",
+    "path": "datatypes/src/main/java/org/hyperledger/besu/datatypes/CodeDelegation.java",
+    "qualname": "CodeDelegation.authorizer",
+    "line": 56,
+    "end_line": 56,
+    "relation": "unrelated",
+    "note": "Interface getter for the authorizer address."
+   },
+   {
+    "repo": "besu",
+    "path": "datatypes/src/main/java/org/hyperledger/besu/datatypes/CallParameter.java",
+    "qualname": "CallParameter.getCodeDelegationAuthorizations",
+    "line": 172,
+    "end_line": 172,
+    "relation": "unrelated",
+    "note": "Getter for the authorization list in call parameters."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/worldstate/CodeDelegationHelper.java",
+    "qualname": "CodeDelegationHelper.getTarget",
+    "line": 83,
+    "end_line": 103,
+    "relation": "partial",
+    "note": "Checks for a delegation and finds the target address, the address half of the spec. Also loads the target's code. Computes no gas."
+   }
+  ],
+  "cost_usd": 0.057291800000000004
+ },
+ "vm.eoa_delegation.is_valid_delegation|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/worldstate/CodeDelegationHelper.java",
+    "qualname": "CodeDelegationHelper.hasCodeDelegation",
+    "line": 56,
+    "end_line": 60,
+    "relation": "equivalent",
+    "note": "Checks that the code is exactly the delegated code size and starts with the delegation prefix, which is the spec check. The extra null guard doesn't change the result."
+   },
+   {
+    "repo": "besu",
+    "path": "datatypes/src/main/java/org/hyperledger/besu/datatypes/CallParameter.java",
+    "qualname": "CallParameter.getCodeDelegationAuthorizations",
+    "line": 172,
+    "end_line": 172,
+    "relation": "unrelated",
+    "note": "Interface getter that returns the authorization list. It doesn't inspect any code."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/CodeDelegation.java",
+    "qualname": "CodeDelegation.CodeDelegation",
+    "line": 62,
+    "end_line": 71,
+    "relation": "unrelated",
+    "note": "Constructor for an authorization tuple."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/CodeDelegationProcessor.java",
+    "qualname": "CodeDelegationProcessor.isCodeDelegationValid",
+    "line": 168,
+    "end_line": 191,
+    "relation": "unrelated",
+    "note": "Checks an authorization tuple's chain id, nonce and signature s value. It never looks at delegation designation code."
+   },
+   {
+    "repo": "besu",
+    "path": "datatypes/src/main/java/org/hyperledger/besu/datatypes/CodeDelegation.java",
+    "qualname": "CodeDelegation.authorizer",
+    "line": 56,
+    "end_line": 56,
+    "relation": "unrelated",
+    "note": "Interface getter for the authority address recovered from the signature."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/ValidationResult.java",
+    "qualname": "ValidationResult.isValid",
+    "line": 35,
+    "end_line": 37,
+    "relation": "unrelated",
+    "note": "Generic validation-result helper with no link to delegation code."
+   }
+  ],
+  "cost_usd": 0.0394798
+ },
+ "vm.eoa_delegation.resolve_delegated_code_address|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/PragueGasCalculator.java",
+    "qualname": "PragueGasCalculator.calculateCodeDelegationResolutionGas",
+    "line": 108,
+    "end_line": 128,
+    "relation": "partial",
+    "note": "Does the gas half of the spec. It checks for a delegation designation, reads the delegated address, warms it and returns the warm cost if it was already accessed, otherwise the cold cost. It does not return the resolved address or the precompiles-disabled flag. A precompile target counts as warm without being added to the warm set."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/worldstate/CodeDelegationHelper.java",
+    "qualname": "CodeDelegationHelper.getTarget",
+    "line": 83,
+    "end_line": 103,
+    "relation": "partial",
+    "note": "Reads the delegated address out of the designation and loads that address's code, which is the address-resolution half. It charges no gas, does not warm the address in the accessed set, and throws instead of returning the original address when there is no delegation."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java",
+    "qualname": "AbstractCallOperation.getCode",
+    "line": 406,
+    "end_line": 448,
+    "relation": "partial",
+    "note": "Call-path resolution: if the target account's code is a delegation designation, it returns the delegated address's code instead. No warm/cold gas charge and no access-set update; the gas is charged separately, in calculateCodeDelegationResolutionGas."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractCallOperationV2.java",
+    "qualname": "AbstractCallOperationV2.getCode",
+    "line": 385,
+    "end_line": 427,
+    "relation": "partial",
+    "note": "The v2 copy of the same call-path code resolution, line for line. Like [2], it swaps in the delegated code but charges no gas and does not warm the address."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/worldstate/CodeDelegationHelper.java",
+    "qualname": "CodeDelegationHelper.hasCodeDelegation",
+    "line": 56,
+    "end_line": 60,
+    "relation": "unrelated",
+    "note": "Only checks whether code has the delegation prefix and length. That belongs to the spec helper get_delegated_code_address, not to the resolve-and-charge logic."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/worldstate/CodeDelegationService.java",
+    "qualname": "CodeDelegationService.processCodeDelegation",
+    "line": 40,
+    "end_line": 49,
+    "relation": "unrelated",
+    "note": "Writes or clears the delegation designation on an account, which sets a delegation rather than resolving one."
+   },
+   {
+    "repo": "besu",
+    "path": "datatypes/src/main/java/org/hyperledger/besu/datatypes/TransactionType.java",
+    "qualname": "TransactionType.supportsDelegateCode",
+    "line": 185,
+    "end_line": 187,
+    "relation": "unrelated",
+    "note": "Getter that says whether a transaction type supports delegated code."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/CodeDelegationProcessor.java",
+    "qualname": "CodeDelegationProcessor.processCodeDelegation",
+    "line": 99,
+    "end_line": 166,
+    "relation": "unrelated",
+    "note": "Applies EIP-7702 authorizations during transaction setup. It sets delegations and does not resolve call targets."
+   }
+  ],
+  "cost_usd": 0.0832958
+ },
+ "vm.interpreter.charge_value_transfer_to_non_alive_account|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java",
+    "qualname": "AbstractCallOperation.callCreatesNewAccount",
+    "line": 372,
+    "end_line": 380,
+    "relation": "partial",
+    "note": "Only the condition check: a non-zero value and a recipient that is missing or empty, gated on state gas being active. It charges nothing; the charge happens in the caller, execute."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java",
+    "qualname": "AbstractCallOperation.execute",
+    "line": 182,
+    "end_line": 316,
+    "relation": "partial",
+    "note": "Does the spec's charge inline for CALL: if callCreatesNewAccount, it consumes newAccountStateGas, inside a much larger opcode body."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionProcessor.java",
+    "qualname": "MainnetTransactionProcessor.chargeTransactionEntry",
+    "line": 943,
+    "end_line": 976,
+    "relation": "partial",
+    "note": "Does the same check and charge for the transaction's top-level recipient: positive value to a missing or empty account consumes newAccountStateGas. It also charges the access cost for a 7702 delegation target, which is outside the spec function."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractCallOperationV2.java",
+    "qualname": "AbstractCallOperationV2.callCreatesNewAccount",
+    "line": 359,
+    "end_line": 367,
+    "relation": "partial",
+    "note": "The V2 copy of the condition helper. It only checks; it does not charge."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractCallOperationV2.java",
+    "qualname": "AbstractCallOperationV2.execute",
+    "line": 167,
+    "end_line": 301,
+    "relation": "partial",
+    "note": "The V2 CALL body, which does the new-account state-gas charge inline, like candidate 1."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/SelfDestructOperation.java",
+    "qualname": "SelfDestructOperation.execute",
+    "line": 71,
+    "end_line": 160,
+    "relation": "partial",
+    "note": "SELFDESTRUCT does the same check and charge inline: the originator's balance is the value, and an empty beneficiary means newAccountStateGas is consumed. It sits inside the larger opcode."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionProcessor.java",
+    "qualname": "MainnetTransactionProcessor.chargeTopFrame",
+    "line": 844,
+    "end_line": 898,
+    "relation": "unrelated",
+    "note": "Only calls chargeTransactionEntry and handles the other top-frame charges and the bookkeeping. It does not do the check or the charge itself."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/AmsterdamGasCalculator.java",
+    "qualname": "AmsterdamGasCalculator.callValueTransferGasCost",
+    "line": 306,
+    "end_line": 311,
+    "relation": "unrelated",
+    "note": "The regular gas cost of a value transfer (ACCOUNT_WRITE plus the stipend). It does not check whether the recipient is alive and charges no state gas."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java",
+    "qualname": "AbstractCallOperation.refundCallNewAccountStateGas",
+    "line": 383,
+    "end_line": 388,
+    "relation": "unrelated",
+    "note": "A refund: it gives back the new-account state gas when the call fails softly. That is the opposite of the charge."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractCallOperationV2.java",
+    "qualname": "AbstractCallOperationV2.refundCallNewAccountStateGas",
+    "line": 370,
+    "end_line": 375,
+    "relation": "unrelated",
+    "note": "The V2 copy of the refund, the opposite of the charge."
+   }
+  ],
+  "cost_usd": 0.1257598
+ },
+ "vm.interpreter.process_call|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/processor/MessageCallProcessor.java",
+    "qualname": "MessageCallProcessor.start",
+    "line": 91,
+    "end_line": 109,
+    "relation": "partial",
+    "note": "Value transfer and dispatch to a precompile or to code execution: the opening part of process_call."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java",
+    "qualname": "AbstractMessageProcessor.process",
+    "line": 243,
+    "end_line": 296,
+    "relation": "partial",
+    "note": "Orchestrates the frame (start, code loop, halt and revert settlement), but the depth check and snapshot happen elsewhere."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/EVM.java",
+    "qualname": "EVM.runToHalt",
+    "line": 265,
+    "end_line": 504,
+    "relation": "partial",
+    "note": "The opcode interpreter loop, one part of process_call."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/processor/MessageCallProcessor.java",
+    "qualname": "MessageCallProcessor.transferValue",
+    "line": 127,
+    "end_line": 173,
+    "relation": "partial",
+    "note": "move_ether plus emit_transfer_log for nonzero-value calls."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java",
+    "qualname": "AbstractMessageProcessor.exceptionalHalt",
+    "line": 164,
+    "end_line": 171,
+    "relation": "partial",
+    "note": "ExceptionalHalt handler: restores state gas, forfeits remaining gas, clears output."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java",
+    "qualname": "AbstractMessageProcessor.revert",
+    "line": 178,
+    "end_line": 183,
+    "relation": "partial",
+    "note": "Revert handler: restores state gas, keeps remaining gas."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/systemcall/SystemCallProcessor.java",
+    "qualname": "SystemCallProcessor.process",
+    "line": 78,
+    "end_line": 106,
+    "relation": "unrelated",
+    "note": "System call wrapper that only calls into the processor."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/processor/MessageCallProcessor.java",
+    "qualname": "MessageCallProcessor.executePrecompile",
+    "line": 180,
+    "end_line": 207,
+    "relation": "partial",
+    "note": "Precompile execution branch of process_call."
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/systemcall/SystemCallProcessor.java",
+    "qualname": "SystemCallProcessor.processUnchecked",
+    "line": 118,
+    "end_line": 134,
+    "relation": "unrelated",
+    "note": "System call wrapper."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java",
+    "qualname": "AbstractMessageProcessor.handleStateGasOnFrameFailure",
+    "line": 155,
+    "end_line": 162,
+    "relation": "partial",
+    "note": "Rolls back state changes (restore_tx_state) and refills spilled state gas on failure."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java",
+    "qualname": "AbstractCallOperation.execute",
+    "line": 182,
+    "end_line": 316,
+    "relation": "unrelated",
+    "note": "CALL opcode: sets up the child frame and only leads into process_call."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.Builder.build",
+    "line": 2088,
+    "end_line": 2147,
+    "relation": "unrelated",
+    "note": "Frame construction only."
+   }
+  ],
+  "cost_usd": 0.1346678
+ },
+ "vm.instructions.storage.sload|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/SLoadOperation.java",
+    "qualname": "SLoadOperation.execute",
+    "line": 53,
+    "end_line": 72,
+    "relation": "equivalent",
+    "note": "Full SLOAD: pops the key, warms the slot and picks the warm or cold cost, checks gas, reads storage and pushes the value."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/v2/operation/SLoadOperationV2.java",
+    "qualname": "SLoadOperationV2.execute",
+    "line": 56,
+    "end_line": 72,
+    "relation": "equivalent",
+    "note": "V2 stack version of the full SLOAD: reads the key, picks the warm or cold cost via warmUpStorage, checks gas, writes the storage value to the stack."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/GasCalculator.java",
+    "qualname": "GasCalculator.getColdSloadCost",
+    "line": 507,
+    "end_line": 509,
+    "relation": "unrelated",
+    "note": "Default getter that returns 0 for the cold sload cost. A constant with no SLOAD logic."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/SLoadOperation.java",
+    "qualname": "SLoadOperation.SLoadOperation",
+    "line": 43,
+    "end_line": 51,
+    "relation": "partial",
+    "note": "Constructor that works out the warm and cold gas costs SLOAD charges (base + warm read, base + cold sload)."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/v2/operation/SLoadOperationV2.java",
+    "qualname": "SLoadOperationV2.SLoadOperationV2",
+    "line": 44,
+    "end_line": 54,
+    "relation": "partial",
+    "note": "V2 constructor that works out the warm and cold costs SLOAD charges. Same as [3]."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/BerlinGasCalculator.java",
+    "qualname": "BerlinGasCalculator.getWarmStorageReadCost",
+    "line": 115,
+    "end_line": 118,
+    "relation": "unrelated",
+    "note": "Only returns the constant warm storage read cost."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/AmsterdamGasCalculator.java",
+    "qualname": "AmsterdamGasCalculator.getColdSloadCost",
+    "line": 289,
+    "end_line": 292,
+    "relation": "unrelated",
+    "note": "Only returns the COLD_STORAGE_ACCESS constant."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.warmUpStorage",
+    "line": 1346,
+    "end_line": 1348,
+    "relation": "partial",
+    "note": "Does the accessed_storage_keys membership check and add: returns whether the slot was already warm and marks it accessed."
+   }
+  ],
+  "cost_usd": 0.0629278
+ },
+ "vm.instructions.storage.tload|besu": {
+  "candidates": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/TLoadOperation.java",
+    "qualname": "TLoadOperation.execute",
+    "line": 37,
+    "end_line": 52,
+    "relation": "equivalent",
+    "note": "Full TLOAD: pops the key, checks gas, pushes the transient storage value for the recipient address."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/v2/operation/TLoadOperationV2.java",
+    "qualname": "TLoadOperationV2.execute",
+    "line": 39,
+    "end_line": 54,
+    "relation": "equivalent",
+    "note": "V2-stack version of the full TLOAD: checks the stack, checks gas, reads the slot and writes the value back in place."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.getTransientStorageValue",
+    "line": 1654,
+    "end_line": 1657,
+    "relation": "unrelated",
+    "note": "Matches the separate get_transient_storage spec function, which tload only calls."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/TLoadOperation.java",
+    "qualname": "TLoadOperation.TLoadOperation",
+    "line": 33,
+    "end_line": 35,
+    "relation": "unrelated",
+    "note": "Constructor that only registers the opcode metadata."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/v2/operation/TLoadOperationV2.java",
+    "qualname": "TLoadOperationV2.TLoadOperationV2",
+    "line": 35,
+    "end_line": 37,
+    "relation": "unrelated",
+    "note": "Constructor that only registers the opcode metadata."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/GasCalculator.java",
+    "qualname": "GasCalculator.getTransientLoadOperationGasCost",
+    "line": 663,
+    "end_line": 665,
+    "relation": "unrelated",
+    "note": "Default gas cost getter that returns 0; a constant, not the opcode logic."
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/CancunGasCalculator.java",
+    "qualname": "CancunGasCalculator.getTransientLoadOperationGasCost",
+    "line": 53,
+    "end_line": 56,
+    "relation": "unrelated",
+    "note": "Returns the TLOAD_GAS constant, which matches GasCosts.OPCODE_TLOAD, not the tload function."
+   }
+  ],
+  "cost_usd": 0.05976379999999999
  }
 }

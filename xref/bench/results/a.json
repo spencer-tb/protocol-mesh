@@ -3171,5 +3171,1083 @@
   "seconds": 18.691444125026464,
   "turns": 6,
   "cost_usd": 0.0977238
+ },
+ "vm.gas.allocate_evm_gas|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionProcessor.java",
+    "qualname": "MainnetTransactionProcessor.processTransaction",
+    "line": 201,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 21.344062790973112,
+  "turns": 7,
+  "cost_usd": 0.0894628
+ },
+ "vm.gas.calculate_data_fee|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.calculateUpfrontGasCost",
+    "line": 693,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.getUpfrontGasCost",
+    "line": 678,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionProcessor.java",
+    "qualname": "MainnetTransactionProcessor.processTransaction",
+    "line": 201,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 18.265486667049117,
+  "turns": 8,
+  "cost_usd": 0.1087536
+ },
+ "vm.gas.calculate_gas_extend_memory|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/FrontierGasCalculator.java",
+    "qualname": "FrontierGasCalculator.memoryExpansionGasCost",
+    "line": 394,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/FrontierGasCalculator.java",
+    "qualname": "FrontierGasCalculator.callOperationStaticGasCost",
+    "line": 288,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.calculateMemoryExpansion",
+    "line": 724,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/Memory.java",
+    "qualname": "Memory.calculateNewActiveWords",
+    "line": 96,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 20.41492295905482,
+  "turns": 7,
+  "cost_usd": 0.1099404
+ },
+ "vm.gas.calculate_total_blob_gas|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/CancunGasCalculator.java",
+    "qualname": "CancunGasCalculator.blobGasCost",
+    "line": 64,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/GasCalculator.java",
+    "qualname": "GasCalculator.blobGasCost",
+    "line": 702,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.getBlobCount",
+    "line": 377,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 14.765225708018988,
+  "turns": 6,
+  "cost_usd": 0.08600060000000001
+ },
+ "vm.gas.charge_gas_from_meter|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.decrementRemainingGas",
+    "line": 350,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/EVM.java",
+    "qualname": "EVM.runToHalt",
+    "line": 265,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/EVM.java",
+    "qualname": "EVM.runToHaltV2",
+    "line": 511,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 11.432526916032657,
+  "turns": 6,
+  "cost_usd": 0.0804536
+ },
+ "vm.gas.charge_state_gas_from_meter|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.consumeStateGas",
+    "line": 1143,
+    "relation": "equivalent"
+   }
+  ],
+  "seconds": 8.499309916980565,
+  "turns": 4,
+  "cost_usd": 0.08619180000000001
+ },
+ "vm.gas.check_max_fee_per_blob_gas|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionValidator.java",
+    "qualname": "MainnetTransactionValidator.validateCostAndFee",
+    "line": 199,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 10.419024083996192,
+  "turns": 5,
+  "cost_usd": 0.07754
+ },
+ "vm.gas.credit_state_gas_refund|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.refillStateGasReservoir",
+    "line": 1195,
+    "relation": "equivalent"
+   }
+  ],
+  "seconds": 9.411235417006537,
+  "turns": 5,
+  "cost_usd": 0.0848094
+ },
+ "vm.gas.forfeit_remaining_gas|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.clearGasRemaining",
+    "line": 340,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java",
+    "qualname": "AbstractMessageProcessor.exceptionalHalt",
+    "line": 164,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 10.121764624956995,
+  "turns": 6,
+  "cost_usd": 0.067246
+ },
+ "vm.gas.repay_state_gas_spill|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.settleStateGasOnChildSuccess",
+    "line": 1217,
+    "relation": "equivalent"
+   }
+  ],
+  "seconds": 10.82940287492238,
+  "turns": 5,
+  "cost_usd": 0.082
+ },
+ "vm.gas.restore_state_gas|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java",
+    "qualname": "AbstractMessageProcessor.handleStateGasOnFrameFailure",
+    "line": 155,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java",
+    "qualname": "AbstractMessageProcessor.clearAccumulatedStateBesidesGasAndOutput",
+    "line": 114,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.rollback",
+    "line": 1672,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 17.06997433293145,
+  "turns": 7,
+  "cost_usd": 0.13616240000000002
+ },
+ "vm.gas.settle_transaction_gas|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/TransactionGasAccounting.java",
+    "qualname": "TransactionGasAccounting.calculate",
+    "line": 82,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/AmsterdamGasCalculator.java",
+    "qualname": "AmsterdamGasCalculator.calculateGasRefund",
+    "line": 413,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionProcessor.java",
+    "qualname": "MainnetTransactionProcessor.processTransaction",
+    "line": 201,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 22.197790042031556,
+  "turns": 7,
+  "cost_usd": 0.1637188
+ },
+ "transactions.calculate_effective_gas_price|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/feemarket/TransactionPriceCalculator.java",
+    "qualname": "TransactionPriceCalculator.eip1559",
+    "line": 30,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionValidator.java",
+    "qualname": "MainnetTransactionValidator.validateCostAndFee",
+    "line": 199,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.getEffectiveGasPrice",
+    "line": 746,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/BaseFeeBlockBodyValidator.java",
+    "qualname": "BaseFeeBlockBodyValidator.validateTransactionGasPrice",
+    "line": 54,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 27.847125000087544,
+  "turns": 10,
+  "cost_usd": 0.1333926
+ },
+ "transactions.calculate_max_gas_fee|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.calculateUpfrontGasCost",
+    "line": 693,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.getMaxUpfrontGasCost",
+    "line": 666,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.getMaxGasPrice",
+    "line": 725,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 10.702974625048228,
+  "turns": 6,
+  "cost_usd": 0.0936156
+ },
+ "transactions.check_nonce|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionValidator.java",
+    "qualname": "MainnetTransactionValidator.validateForSender",
+    "line": 294,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 12.905720665934496,
+  "turns": 5,
+  "cost_usd": 0.06483480000000001
+ },
+ "transactions.decode_transaction|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/TransactionDecoder.java",
+    "qualname": "TransactionDecoder.decodeOpaqueBytes",
+    "line": 122,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/TransactionDecoder.java",
+    "qualname": "TransactionDecoder.decodeRLP",
+    "line": 56,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/TransactionDecoder.java",
+    "qualname": "TransactionDecoder.decodeTransaction",
+    "line": 72,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/TransactionDecoder.java",
+    "qualname": "TransactionDecoder.decodeTransaction",
+    "line": 97,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 9.581003915984184,
+  "turns": 4,
+  "cost_usd": 0.08804000000000001
+ },
+ "transactions.has_access_list|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "datatypes/src/main/java/org/hyperledger/besu/datatypes/TransactionType.java",
+    "qualname": "TransactionType.supportsAccessList",
+    "line": 149,
+    "relation": "equivalent"
+   }
+  ],
+  "seconds": 7.11645862495061,
+  "turns": 4,
+  "cost_usd": 0.0663582
+ },
+ "transactions.signing_hash_155|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.frontierPreimage",
+    "line": 920,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.computeSenderRecoveryHash",
+    "line": 790,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 13.79422933398746,
+  "turns": 5,
+  "cost_usd": 0.07984820000000001
+ },
+ "transactions.signing_hash_2930|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.accessListPreimage",
+    "line": 1033,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.computeSenderRecoveryHash",
+    "line": 790,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.getPreimage",
+    "line": 846,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/AccessListTransactionEncoder.java",
+    "qualname": "AccessListTransactionEncoder.encodeAccessListInner",
+    "line": 56,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 14.773394584073685,
+  "turns": 5,
+  "cost_usd": 0.1017046
+ },
+ "transactions.signing_hash_7702|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.codeDelegationPreimage",
+    "line": 1053,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.computeSenderRecoveryHash",
+    "line": 790,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java",
+    "qualname": "Transaction.getPreimage",
+    "line": 846,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 8.382315375027247,
+  "turns": 4,
+  "cost_usd": 0.0895986
+ },
+ "fork.apply_body|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/AbstractBlockProcessor.java",
+    "qualname": "AbstractBlockProcessor.processBlock",
+    "line": 152,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 14.665133042028174,
+  "turns": 6,
+  "cost_usd": 0.1373892
+ },
+ "fork.calculate_base_fee_per_gas|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/feemarket/LondonFeeMarket.java",
+    "qualname": "LondonFeeMarket.computeBaseFee",
+    "line": 87,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/feemarket/BaseFeeMarket.java",
+    "qualname": "BaseFeeMarket.targetGasUsed",
+    "line": 46,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/headervalidationrules/BaseFeeMarketBlockHeaderGasPriceValidationRule.java",
+    "qualname": "BaseFeeMarketBlockHeaderGasPriceValidationRule.validate",
+    "line": 38,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 13.963964499998838,
+  "turns": 7,
+  "cost_usd": 0.09666620000000001
+ },
+ "fork.check_transaction|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionProcessor.java",
+    "qualname": "MainnetTransactionProcessor.processTransaction",
+    "line": 201,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionValidator.java",
+    "qualname": "MainnetTransactionValidator.validateForSender",
+    "line": 294,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionValidator.java",
+    "qualname": "MainnetTransactionValidator.validate",
+    "line": 87,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 11.629261957947165,
+  "turns": 6,
+  "cost_usd": 0.133787
+ },
+ "fork.execute_block|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/MainnetBlockValidator.java",
+    "qualname": "MainnetBlockValidator.validateAndProcessBlock",
+    "line": 137,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/MainnetBlockValidator.java",
+    "qualname": "MainnetBlockValidator.processOnParentWorldState",
+    "line": 226,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetBlockBodyValidator.java",
+    "qualname": "MainnetBlockBodyValidator.validateBody",
+    "line": 49,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/AbstractBlockProcessor.java",
+    "qualname": "AbstractBlockProcessor.processBlock",
+    "line": 152,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 13.576996667077765,
+  "turns": 5,
+  "cost_usd": 0.1215658
+ },
+ "fork.make_receipt|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetProtocolSpecs.java",
+    "qualname": "BerlinTransactionReceiptFactory.create",
+    "line": 1474,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/TransactionReceipt.java",
+    "qualname": "TransactionReceipt.TransactionReceipt",
+    "line": 128,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 10.3810074160574,
+  "turns": 5,
+  "cost_usd": 0.0954292
+ },
+ "fork.process_general_purpose_requests|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/requests/RequestProcessorCoordinator.java",
+    "qualname": "RequestProcessorCoordinator.process",
+    "line": 44,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/requests/SystemCallRequestProcessor.java",
+    "qualname": "SystemCallRequestProcessor.process",
+    "line": 50,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/requests/DepositRequestProcessor.java",
+    "qualname": "DepositRequestProcessor.process",
+    "line": 46,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/AbstractBlockProcessor.java",
+    "qualname": "AbstractBlockProcessor.processBlock",
+    "line": 152,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 16.26046329201199,
+  "turns": 9,
+  "cost_usd": 0.1253848
+ },
+ "fork.process_unchecked_system_transaction|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/systemcall/SystemCallProcessor.java",
+    "qualname": "SystemCallProcessor.processUnchecked",
+    "line": 118,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/systemcall/SystemCallProcessor.java",
+    "qualname": "SystemCallProcessor.execute",
+    "line": 141,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/systemcall/SystemCallProcessor.java",
+    "qualname": "SystemCallProcessor.createMessageFrame",
+    "line": 202,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 7.403531583957374,
+  "turns": 4,
+  "cost_usd": 0.0834932
+ },
+ "fork.state_transition|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetBlockImporter.java",
+    "qualname": "MainnetBlockImporter.importBlock",
+    "line": 47,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/MainnetBlockValidator.java",
+    "qualname": "MainnetBlockValidator.validateAndProcessBlock",
+    "line": 137,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/MainnetBlockValidator.java",
+    "qualname": "MainnetBlockValidator.processOnParentWorldState",
+    "line": 226,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 12.371319166966714,
+  "turns": 7,
+  "cost_usd": 0.1114618
+ },
+ "vm.instructions.system.call|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java",
+    "qualname": "AbstractCallOperation.execute",
+    "line": 183,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/CallOperation.java",
+    "qualname": "CallOperation.execute",
+    "line": 90,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java",
+    "qualname": "AbstractCallOperation.complete",
+    "line": 324,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/AmsterdamGasCalculator.java",
+    "qualname": "AmsterdamGasCalculator.callOperationGasCost",
+    "line": 348,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/CallOperation.java",
+    "qualname": "CallOperation.gasAvailableForChildCall",
+    "line": 85,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 30.574735042057,
+  "turns": 7,
+  "cost_usd": 0.13834239999999998
+ },
+ "vm.instructions.system.create|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCreateOperation.java",
+    "qualname": "AbstractCreateOperation.execute",
+    "line": 71,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/CreateOperation.java",
+    "qualname": "CreateOperation.cost",
+    "line": 45,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/CreateOperation.java",
+    "qualname": "CreateOperation.generateTargetContractAddress",
+    "line": 56,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/CreateOperation.java",
+    "qualname": "CreateOperation.getInitCode",
+    "line": 63,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 12.238843332976103,
+  "turns": 6,
+  "cost_usd": 0.08732460000000002
+ },
+ "vm.instructions.system.delegatecall|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/DelegateCallOperation.java",
+    "qualname": "DelegateCallOperation",
+    "line": 26,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java",
+    "qualname": "AbstractCallOperation.execute",
+    "line": 183,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/DelegateCallOperation.java",
+    "qualname": "DelegateCallOperation.gasAvailableForChildCall",
+    "line": 83,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 11.484648333047517,
+  "turns": 6,
+  "cost_usd": 0.106155
+ },
+ "vm.instructions.system.generic_create|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCreateOperation.java",
+    "qualname": "AbstractCreateOperation.execute",
+    "line": 71,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCreateOperation.java",
+    "qualname": "AbstractCreateOperation.spawnChildMessage",
+    "line": 209,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCreateOperation.java",
+    "qualname": "AbstractCreateOperation.complete",
+    "line": 256,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCreateOperation.java",
+    "qualname": "AbstractCreateOperation.fail",
+    "line": 201,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/processor/ContractCreationProcessor.java",
+    "qualname": "ContractCreationProcessor.start",
+    "line": 127,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 13.308315375004895,
+  "turns": 5,
+  "cost_usd": 0.1100608
+ },
+ "vm.instructions.system.revert|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/RevertOperation.java",
+    "qualname": "RevertOperation.execute",
+    "line": 42,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/v2/operation/RevertOperationV2.java",
+    "qualname": "RevertOperationV2.execute",
+    "line": 42,
+    "relation": "equivalent"
+   }
+  ],
+  "seconds": 9.445507582975551,
+  "turns": 6,
+  "cost_usd": 0.0731164
+ },
+ "vm.eoa_delegation.calculate_delegation_cost|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/PragueGasCalculator.java",
+    "qualname": "PragueGasCalculator.calculateCodeDelegationResolutionGas",
+    "line": 109,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/worldstate/CodeDelegationHelper.java",
+    "qualname": "CodeDelegationHelper.getTargetAddress",
+    "line": 69,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 9.94650854205247,
+  "turns": 6,
+  "cost_usd": 0.07786180000000001
+ },
+ "vm.eoa_delegation.is_valid_delegation|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/worldstate/CodeDelegationHelper.java",
+    "qualname": "CodeDelegationHelper.hasCodeDelegation",
+    "line": 56,
+    "relation": "equivalent"
+   }
+  ],
+  "seconds": 10.522878957912326,
+  "turns": 5,
+  "cost_usd": 0.0759008
+ },
+ "vm.eoa_delegation.resolve_delegated_code_address|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/gascalculator/PragueGasCalculator.java",
+    "qualname": "PragueGasCalculator.calculateCodeDelegationResolutionGas",
+    "line": 109,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/worldstate/CodeDelegationHelper.java",
+    "qualname": "CodeDelegationHelper.getTarget",
+    "line": 83,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java",
+    "qualname": "AbstractCallOperation.getCode",
+    "line": 406,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractCallOperationV2.java",
+    "qualname": "AbstractCallOperationV2.getCode",
+    "line": 385,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 31.43187745893374,
+  "turns": 9,
+  "cost_usd": 0.1342388
+ },
+ "vm.interpreter.charge_value_transfer_to_non_alive_account|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java",
+    "qualname": "AbstractCallOperation.callCreatesNewAccount",
+    "line": 372,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java",
+    "qualname": "AbstractCallOperation.execute",
+    "line": 183,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionProcessor.java",
+    "qualname": "MainnetTransactionProcessor.chargeTransactionEntry",
+    "line": 943,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractCallOperationV2.java",
+    "qualname": "AbstractCallOperationV2.callCreatesNewAccount",
+    "line": 359,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractCallOperationV2.java",
+    "qualname": "AbstractCallOperationV2.execute",
+    "line": 168,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/SelfDestructOperation.java",
+    "qualname": "SelfDestructOperation.execute",
+    "line": 72,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 17.868429166032,
+  "turns": 8,
+  "cost_usd": 0.1539728
+ },
+ "vm.interpreter.process_call|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/processor/MessageCallProcessor.java",
+    "qualname": "MessageCallProcessor.start",
+    "line": 92,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java",
+    "qualname": "AbstractMessageProcessor.process",
+    "line": 243,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/EVM.java",
+    "qualname": "EVM.runToHalt",
+    "line": 265,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/processor/MessageCallProcessor.java",
+    "qualname": "MessageCallProcessor.transferValue",
+    "line": 127,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java",
+    "qualname": "AbstractMessageProcessor.exceptionalHalt",
+    "line": 164,
+    "relation": "partial"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java",
+    "qualname": "AbstractMessageProcessor.revert",
+    "line": 178,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 12.110051000025123,
+  "turns": 5,
+  "cost_usd": 0.10535939999999999
+ },
+ "vm.instructions.storage.sload|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/SLoadOperation.java",
+    "qualname": "SLoadOperation.execute",
+    "line": 54,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/v2/operation/SLoadOperationV2.java",
+    "qualname": "SLoadOperationV2.execute",
+    "line": 57,
+    "relation": "equivalent"
+   }
+  ],
+  "seconds": 10.4870517909294,
+  "turns": 7,
+  "cost_usd": 0.0914972
+ },
+ "vm.instructions.storage.tload|besu": {
+  "answers": [
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/operation/TLoadOperation.java",
+    "qualname": "TLoadOperation.execute",
+    "line": 38,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/v2/operation/TLoadOperationV2.java",
+    "qualname": "TLoadOperationV2.execute",
+    "line": 40,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "besu",
+    "path": "evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java",
+    "qualname": "MessageFrame.getTransientStorageValue",
+    "line": 1654,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 11.545574584044516,
+  "turns": 7,
+  "cost_usd": 0.0729418
  }
 }

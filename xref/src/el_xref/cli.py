@@ -98,7 +98,7 @@ def main() -> None:
     )
     builder.add_argument("--modules", default="", help="spec module prefixes")
     builder.add_argument("--clients", default="", help="comma separated")
-    builder.add_argument("--workers", type=int, default=4)
+    builder.add_argument("--workers", type=int, default=16)
     builder.add_argument(
         "--rejudge",
         action="store_true",
