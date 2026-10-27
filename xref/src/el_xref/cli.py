@@ -11,6 +11,7 @@ from .build import tag as tag_eips
 from .evaluate import evaluate
 from .link import Settings, link
 from .lookup import diff, find
+from .refresh import refresh
 from .render import render_markdown, show, where
 from .sync import sync_all
 from .touch import touch
@@ -111,6 +112,17 @@ def main() -> None:
         help="start no new pair once this much is spent, 0 = no cap",
     )
     commands.add_parser("tsv", help="write map/ from data/tree.json")
+    refresher = commands.add_parser(
+        "refresh",
+        help="sync, move rows that moved, recheck changed code, rebuild stale",
+    )
+    refresher.add_argument("--workers", type=int, default=16)
+    refresher.add_argument(
+        "--max-usd",
+        type=float,
+        default=0.0,
+        help="cap on rebuilding stale pairs, 0 = no cap",
+    )
     tagger = commands.add_parser(
         "tag", help="tag spec functions with the EIPs they implement"
     )
@@ -175,6 +187,8 @@ def main() -> None:
         )
     elif args.command == "tsv":
         render_tsv(config, tsv_target(config))
+    elif args.command == "refresh":
+        refresh(config, args.workers, args.max_usd)
     elif args.command == "tag":
         tag_eips(config, split(args.only), split(args.modules), args.workers)
 
