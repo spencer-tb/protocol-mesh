@@ -39,9 +39,9 @@ repos = ["hive", "hive-tests", "clive", "clients/go-ethereum"]
 build = ["eels", "hive", "clive", "geth"]
 
 [teams.reth]
-title = "reth, revm and alloy-evm"
-owns = ["clients/reth", "clients/revm", "clients/alloy-evm"]
-repos = ["hive", "hive-tests", "clive", "clients/reth", "clients/revm", "clients/alloy-evm"]
+title = "reth and evm2"
+owns = ["clients/reth", "clients/evm2"]
+repos = ["hive", "hive-tests", "clive", "clients/reth", "clients/evm2"]
 build = ["eels", "hive", "clive"]
 
 [teams.nethermind]
