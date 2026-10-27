@@ -1,0 +1,1258 @@
+{
+ "vm.gas.allocate_evm_gas|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.initRuntimeGasBudget",
+    "line": 531,
+    "end_line": 543
+   }
+  ],
+  "cost_usd": 0.1106
+ },
+ "vm.gas.allocate_evm_gas|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.gas.calculate_data_fee|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.buyGas",
+    "line": 464,
+    "end_line": 519
+   }
+  ],
+  "cost_usd": 0.0923
+ },
+ "vm.gas.calculate_data_fee|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.gas.calculate_gas_extend_memory|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gas_table.go",
+    "qualname": "memoryGasCost",
+    "line": 29,
+    "end_line": 56
+   }
+  ],
+  "cost_usd": 0.066
+ },
+ "vm.gas.calculate_gas_extend_memory|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.gas.calculate_total_blob_gas|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction.go",
+    "qualname": "Transaction.BlobGas",
+    "line": 475,
+    "end_line": 480
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/tx_blob.go",
+    "qualname": "BlobTx.blobGas",
+    "line": 306,
+    "end_line": 306
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.blobGasUsed",
+    "line": 1251,
+    "end_line": 1253
+   }
+  ],
+  "cost_usd": 0.046
+ },
+ "vm.gas.calculate_total_blob_gas|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.gas.charge_gas_from_meter|geth": {
+  "judged": true,
+  "answers": [],
+  "cost_usd": 0.0979
+ },
+ "vm.gas.charge_gas_from_meter|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.gas.charge_state_gas_from_meter|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.charge",
+    "line": 112,
+    "end_line": 137
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.ChargeState",
+    "line": 150,
+    "end_line": 152
+   }
+  ],
+  "cost_usd": 0.0736
+ },
+ "vm.gas.charge_state_gas_from_meter|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.gas.check_max_fee_per_blob_gas|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.preCheck",
+    "line": 573,
+    "end_line": 703
+   }
+  ],
+  "cost_usd": 0.1161
+ },
+ "vm.gas.check_max_fee_per_blob_gas|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.gas.credit_state_gas_refund|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.RefundState",
+    "line": 160,
+    "end_line": 166
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/contract.go",
+    "qualname": "Contract.refundState",
+    "line": 156,
+    "end_line": 163
+   }
+  ],
+  "cost_usd": 0.0709
+ },
+ "vm.gas.credit_state_gas_refund|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.gas.forfeit_remaining_gas|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.DrainExecution",
+    "line": 169,
+    "end_line": 172
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.ExitHalt",
+    "line": 235,
+    "end_line": 250
+   }
+  ],
+  "cost_usd": 0.0615
+ },
+ "vm.gas.forfeit_remaining_gas|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.gas.repay_state_gas_spill|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.Absorb",
+    "line": 273,
+    "end_line": 303
+   }
+  ],
+  "cost_usd": 0.0584
+ },
+ "vm.gas.repay_state_gas_spill|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.gas.restore_state_gas|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.ExitRevert",
+    "line": 212,
+    "end_line": 227
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gascosts.go",
+    "qualname": "GasBudget.ExitHalt",
+    "line": 235,
+    "end_line": 250
+   }
+  ],
+  "cost_usd": 0.0638
+ },
+ "vm.gas.restore_state_gas|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.gas.settle_transaction_gas|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.settleGas",
+    "line": 1046,
+    "end_line": 1109
+   }
+  ],
+  "cost_usd": 0.0646
+ },
+ "vm.gas.settle_transaction_gas|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "transactions.calculate_effective_gas_price|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/tx_dynamic_fee.go",
+    "qualname": "DynamicFeeTx.effectiveGasPrice",
+    "line": 100,
+    "end_line": 109
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/tx_blob.go",
+    "qualname": "BlobTx.effectiveGasPrice",
+    "line": 308,
+    "end_line": 317
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/tx_setcode.go",
+    "qualname": "SetCodeTx.effectiveGasPrice",
+    "line": 224,
+    "end_line": 233
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/tx_legacy.go",
+    "qualname": "LegacyTx.effectiveGasPrice",
+    "line": 107,
+    "end_line": 109
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/tx_access_list.go",
+    "qualname": "AccessListTx.effectiveGasPrice",
+    "line": 111,
+    "end_line": 113
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "TransactionToMessage",
+    "line": 330,
+    "end_line": 387
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction.go",
+    "qualname": "Transaction.calcEffectiveGasTip",
+    "line": 398,
+    "end_line": 420
+   }
+  ],
+  "cost_usd": 0.0835
+ },
+ "transactions.calculate_effective_gas_price|reth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/transaction.rs",
+    "qualname": "Transaction.effective_gas_price",
+    "line": 147,
+    "end_line": 160
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/validation.rs",
+    "qualname": "validate_priority_fee_tx",
+    "line": 43,
+    "end_line": 63
+   }
+  ],
+  "cost_usd": 0.0563
+ },
+ "transactions.calculate_max_gas_fee|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.buyGas",
+    "line": 464,
+    "end_line": 519
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction.go",
+    "qualname": "Transaction.Cost",
+    "line": 341,
+    "end_line": 352
+   }
+  ],
+  "cost_usd": 0.1369
+ },
+ "transactions.calculate_max_gas_fee|reth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "revm",
+    "path": "crates/context/interface/src/transaction.rs",
+    "qualname": "Transaction.max_balance_spending",
+    "line": 165,
+    "end_line": 180
+   }
+  ],
+  "cost_usd": 0.0631
+ },
+ "transactions.check_nonce|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.preCheck",
+    "line": 573,
+    "end_line": 703
+   }
+  ],
+  "cost_usd": 0.0761
+ },
+ "transactions.check_nonce|reth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/pre_execution.rs",
+    "qualname": "validate_account_nonce_and_code",
+    "line": 84,
+    "end_line": 123
+   },
+   {
+    "repo": "reth",
+    "path": "crates/transaction-pool/src/validate/eth.rs",
+    "qualname": "EthTransactionValidator.validate_sender_nonce",
+    "line": 773,
+    "end_line": 788
+   }
+  ],
+  "cost_usd": 0.0412
+ },
+ "transactions.decode_transaction|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction.go",
+    "qualname": "Transaction.UnmarshalBinary",
+    "line": 184,
+    "end_line": 204
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction.go",
+    "qualname": "Transaction.decodeTyped",
+    "line": 207,
+    "end_line": 231
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction.go",
+    "qualname": "Transaction.DecodeRLP",
+    "line": 144,
+    "end_line": 180
+   }
+  ],
+  "cost_usd": 0.0519
+ },
+ "transactions.decode_transaction|reth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/evm/src/lib.rs",
+    "qualname": "EthEvmConfig.tx_iterator_for_payload",
+    "line": 571,
+    "end_line": 589
+   }
+  ],
+  "cost_usd": 0.1226
+ },
+ "transactions.has_access_list|geth": {
+  "judged": true,
+  "answers": [],
+  "cost_usd": 0.0896
+ },
+ "transactions.has_access_list|reth": {
+  "judged": true,
+  "answers": [],
+  "cost_usd": 0.0727
+ },
+ "transactions.signing_hash_155|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/tx_legacy.go",
+    "qualname": "LegacyTx.sigHash",
+    "line": 128,
+    "end_line": 138
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/transaction_signing.go",
+    "qualname": "EIP155Signer.Hash",
+    "line": 393,
+    "end_line": 395
+   }
+  ],
+  "cost_usd": 0.0323
+ },
+ "transactions.signing_hash_155|reth": {
+  "judged": true,
+  "answers": [],
+  "cost_usd": 0.0499
+ },
+ "transactions.signing_hash_2930|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/tx_access_list.go",
+    "qualname": "AccessListTx.sigHash",
+    "line": 131,
+    "end_line": 144
+   }
+  ],
+  "cost_usd": 0.0718
+ },
+ "transactions.signing_hash_2930|reth": {
+  "judged": true,
+  "answers": [],
+  "cost_usd": 0.0485
+ },
+ "transactions.signing_hash_7702|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/tx_setcode.go",
+    "qualname": "SetCodeTx.sigHash",
+    "line": 254,
+    "end_line": 269
+   }
+  ],
+  "cost_usd": 0.0905
+ },
+ "transactions.signing_hash_7702|reth": {
+  "judged": true,
+  "answers": [],
+  "cost_usd": 0.0419
+ },
+ "fork.apply_body|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "StateProcessor.Process",
+    "line": 68,
+    "end_line": 165
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "PostExecution",
+    "line": 190,
+    "end_line": 230
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor_parallel.go",
+    "qualname": "StateProcessor.processParallel",
+    "line": 133,
+    "end_line": 335
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/bal/bal_encoding.go",
+    "qualname": "BlockAccessList.ValidateSize",
+    "line": 112,
+    "end_line": 120
+   }
+  ],
+  "cost_usd": 0.0941
+ },
+ "fork.apply_body|reth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/evm/src/executor.rs",
+    "qualname": "EthBlockExecutor.finish_with_prepared_block_access_list",
+    "line": 399,
+    "end_line": 464
+   }
+  ],
+  "cost_usd": 0.0684
+ },
+ "fork.calculate_base_fee_per_gas|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "consensus/misc/eip1559/eip1559.go",
+    "qualname": "CalcBaseFee",
+    "line": 60,
+    "end_line": 102
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "consensus/misc/eip1559/eip1559.go",
+    "qualname": "VerifyEIP1559Header",
+    "line": 33,
+    "end_line": 57
+   }
+  ],
+  "cost_usd": 0.1224
+ },
+ "fork.calculate_base_fee_per_gas|reth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "reth",
+    "path": "crates/consensus/common/src/validation.rs",
+    "qualname": "validate_against_parent_eip1559_base_fee",
+    "line": 326,
+    "end_line": 353
+   }
+  ],
+  "cost_usd": 0.0986
+ },
+ "fork.check_transaction|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.preCheck",
+    "line": 573,
+    "end_line": 703
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "TransactionToMessage",
+    "line": 330,
+    "end_line": 387
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.buyGas",
+    "line": 464,
+    "end_line": 519
+   }
+  ],
+  "cost_usd": 0.1826
+ },
+ "fork.check_transaction|reth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/validation.rs",
+    "qualname": "validate_tx_env",
+    "line": 121,
+    "end_line": 237
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/pre_execution.rs",
+    "qualname": "calculate_caller_fee",
+    "line": 129,
+    "end_line": 164
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/validation.rs",
+    "qualname": "validate_eip4844_tx",
+    "line": 81,
+    "end_line": 118
+   }
+  ],
+  "cost_usd": 0.1175
+ },
+ "fork.execute_block|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/block_validator.go",
+    "qualname": "BlockValidator.ValidateState",
+    "line": 148,
+    "end_line": 204
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/block_validator.go",
+    "qualname": "BlockValidator.ValidateBody",
+    "line": 51,
+    "end_line": 144
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "StateProcessor.Process",
+    "line": 68,
+    "end_line": 165
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/stateless.go",
+    "qualname": "ExecuteStateless",
+    "line": 45,
+    "end_line": 82
+   }
+  ],
+  "cost_usd": 0.1493
+ },
+ "fork.execute_block|reth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/consensus/src/validation.rs",
+    "qualname": "validate_block_post_execution_with_bal_hashes",
+    "line": 43,
+    "end_line": 130
+   },
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/block/mod.rs",
+    "qualname": "BlockExecutor.execute_block",
+    "line": 449,
+    "end_line": 463
+   },
+   {
+    "repo": "reth",
+    "path": "crates/consensus/common/src/validation.rs",
+    "qualname": "post_merge_hardfork_fields",
+    "line": 195,
+    "end_line": 238
+   }
+  ],
+  "cost_usd": 0.0955
+ },
+ "fork.make_receipt|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "MakeReceipt",
+    "line": 303,
+    "end_line": 307
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "makeReceipt",
+    "line": 311,
+    "end_line": 345
+   }
+  ],
+  "cost_usd": 0.0724
+ },
+ "fork.make_receipt|reth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/evm/src/receipt.rs",
+    "qualname": "RethReceiptBuilder.build_receipt",
+    "line": 15,
+    "end_line": 25
+   },
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/eth/receipt_builder.rs",
+    "qualname": "AlloyReceiptBuilder.build_receipt",
+    "line": 48,
+    "end_line": 63
+   }
+  ],
+  "cost_usd": 0.0657
+ },
+ "fork.process_general_purpose_requests|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "PostExecution",
+    "line": 190,
+    "end_line": 230
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "processRequestsSystemCall",
+    "line": 469,
+    "end_line": 512
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "ParseDepositLogs",
+    "line": 518,
+    "end_line": 533
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "ProcessBuilderDepositQueue",
+    "line": 459,
+    "end_line": 461
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "ProcessBuilderExitQueue",
+    "line": 465,
+    "end_line": 467
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "ProcessWithdrawalQueue",
+    "line": 447,
+    "end_line": 449
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "ProcessConsolidationQueue",
+    "line": 453,
+    "end_line": 455
+   }
+  ],
+  "cost_usd": 0.08
+ },
+ "fork.process_general_purpose_requests|reth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/evm/src/execution.rs",
+    "qualname": "post_execution_system_call_state_changes",
+    "line": 351,
+    "end_line": 419
+   },
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/evm/src/execution.rs",
+    "qualname": "block_requests_from_receipts",
+    "line": 297,
+    "end_line": 317
+   },
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/block/system_calls/mod.rs",
+    "qualname": "SystemCaller.append_post_execution_changes",
+    "line": 66,
+    "end_line": 103
+   },
+   {
+    "repo": "alloy-evm",
+    "path": "crates/evm/src/eth/block.rs",
+    "qualname": "EthBlockExecutor.finish",
+    "line": 283,
+    "end_line": 354
+   }
+  ],
+  "cost_usd": 0.0945
+ },
+ "fork.process_unchecked_system_transaction|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "ProcessBeaconBlockRoot",
+    "line": 377,
+    "end_line": 408
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "ProcessParentBlockHash",
+    "line": 412,
+    "end_line": 443
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_processor.go",
+    "qualname": "systemCallGasBudget",
+    "line": 361,
+    "end_line": 373
+   }
+  ],
+  "cost_usd": 0.1001
+ },
+ "fork.process_unchecked_system_transaction|reth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "reth",
+    "path": "crates/ethereum/evm/src/execution.rs",
+    "qualname": "execute_system_call",
+    "line": 421,
+    "end_line": 451
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/system_call.rs",
+    "qualname": "TxEnv.new_system_tx_with_caller",
+    "line": 70,
+    "end_line": 82
+   }
+  ],
+  "cost_usd": 0.0637
+ },
+ "fork.state_transition|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/blockchain.go",
+    "qualname": "BlockChain.insertChain",
+    "line": 1917,
+    "end_line": 2146
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/blockchain.go",
+    "qualname": "BlockChain.ProcessBlock",
+    "line": 2320,
+    "end_line": 2501
+   }
+  ],
+  "cost_usd": 0.1264
+ },
+ "fork.state_transition|reth": {
+  "judged": true,
+  "answers": [],
+  "cost_usd": 0.0927
+ },
+ "vm.instructions.system.call|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/instructions.go",
+    "qualname": "opCall",
+    "line": 736,
+    "end_line": 780
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/operations_acl.go",
+    "qualname": "makeCallVariantGasCallEIP8037",
+    "line": 471,
+    "end_line": 558
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gas_table.go",
+    "qualname": "executionGasCall8038",
+    "line": 601,
+    "end_line": 622
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gas_table.go",
+    "qualname": "stateGasCall8037",
+    "line": 628,
+    "end_line": 644
+   }
+  ],
+  "cost_usd": 0.1119
+ },
+ "vm.instructions.system.call|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.instructions.system.create|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/instructions.go",
+    "qualname": "opCreate",
+    "line": 635,
+    "end_line": 687
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gas_table.go",
+    "qualname": "gasCreateEip8037",
+    "line": 544,
+    "end_line": 567
+   }
+  ],
+  "cost_usd": 0.0853
+ },
+ "vm.instructions.system.create|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.instructions.system.delegatecall|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/instructions.go",
+    "qualname": "opDelegateCall",
+    "line": 818,
+    "end_line": 848
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/operations_acl.go",
+    "qualname": "makeCallVariantGasCallEIP8037",
+    "line": 471,
+    "end_line": 558
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/evm.go",
+    "qualname": "EVM.DelegateCall",
+    "line": 409,
+    "end_line": 441
+   }
+  ],
+  "cost_usd": 0.0904
+ },
+ "vm.instructions.system.delegatecall|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.instructions.system.generic_create|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/evm.go",
+    "qualname": "EVM.create",
+    "line": 550,
+    "end_line": 652
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/evm.go",
+    "qualname": "EVM.chargeAccountCreation",
+    "line": 530,
+    "end_line": 547
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/instructions.go",
+    "qualname": "opCreate",
+    "line": 635,
+    "end_line": 687
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/instructions.go",
+    "qualname": "opCreate2",
+    "line": 689,
+    "end_line": 734
+   }
+  ],
+  "cost_usd": 0.1114
+ },
+ "vm.instructions.system.generic_create|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.instructions.system.revert|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/instructions.go",
+    "qualname": "opRevert",
+    "line": 890,
+    "end_line": 896
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/memory_table.go",
+    "qualname": "memoryRevert",
+    "line": 116,
+    "end_line": 118
+   }
+  ],
+  "cost_usd": 0.0332
+ },
+ "vm.instructions.system.revert|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.eoa_delegation.calculate_delegation_cost|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/operations_acl.go",
+    "qualname": "makeCallVariantGasCallEIP8037",
+    "line": 471,
+    "end_line": 558
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.chargeCallRecipientEIP2780",
+    "line": 1009,
+    "end_line": 1036
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/operations_acl.go",
+    "qualname": "makeCallVariantGasCallEIP7702",
+    "line": 371,
+    "end_line": 465
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/tx_setcode.go",
+    "qualname": "ParseDelegation",
+    "line": 37,
+    "end_line": 42
+   }
+  ],
+  "cost_usd": 0.0854
+ },
+ "vm.eoa_delegation.calculate_delegation_cost|reth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/instructions/contract/call_helpers.rs",
+    "qualname": "load_account_delegated",
+    "line": 145,
+    "end_line": 200
+   }
+  ],
+  "cost_usd": 0.0924
+ },
+ "vm.eoa_delegation.is_valid_delegation|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/types/tx_setcode.go",
+    "qualname": "ParseDelegation",
+    "line": 37,
+    "end_line": 42
+   }
+  ],
+  "cost_usd": 0.0637
+ },
+ "vm.eoa_delegation.is_valid_delegation|reth": {
+  "judged": true,
+  "answers": [],
+  "cost_usd": 0.1209
+ },
+ "vm.eoa_delegation.resolve_delegated_code_address|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/operations_acl.go",
+    "qualname": "makeCallVariantGasCallEIP7702",
+    "line": 371,
+    "end_line": 465
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.chargeCallRecipientEIP2780",
+    "line": 1009,
+    "end_line": 1036
+   }
+  ],
+  "cost_usd": 0.1012
+ },
+ "vm.eoa_delegation.resolve_delegated_code_address|reth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "revm",
+    "path": "crates/interpreter/src/instructions/contract/call_helpers.rs",
+    "qualname": "load_account_delegated",
+    "line": 145,
+    "end_line": 200
+   },
+   {
+    "repo": "revm",
+    "path": "crates/handler/src/execution.rs",
+    "qualname": "create_init_frame",
+    "line": 46,
+    "end_line": 154
+   }
+  ],
+  "cost_usd": 0.088
+ },
+ "vm.interpreter.charge_value_transfer_to_non_alive_account|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/gas_table.go",
+    "qualname": "stateGasCall8037",
+    "line": 628,
+    "end_line": 644
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/state_transition.go",
+    "qualname": "stateTransition.chargeCallRecipientEIP2780",
+    "line": 1009,
+    "end_line": 1036
+   }
+  ],
+  "cost_usd": 0.0834
+ },
+ "vm.interpreter.charge_value_transfer_to_non_alive_account|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.interpreter.process_call|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/evm.go",
+    "qualname": "EVM.Call",
+    "line": 283,
+    "end_line": 356
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/evm.go",
+    "qualname": "EVM.CallCode",
+    "line": 365,
+    "end_line": 402
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/evm.go",
+    "qualname": "EVM.DelegateCall",
+    "line": 409,
+    "end_line": 441
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/evm.go",
+    "qualname": "EVM.StaticCall",
+    "line": 447,
+    "end_line": 488
+   }
+  ],
+  "cost_usd": 0.1197
+ },
+ "vm.interpreter.process_call|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.instructions.storage.sload|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/operations_acl.go",
+    "qualname": "gasSLoad8038",
+    "line": 113,
+    "end_line": 121
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/instructions.go",
+    "qualname": "opSload",
+    "line": 491,
+    "end_line": 497
+   }
+  ],
+  "cost_usd": 0.0939
+ },
+ "vm.instructions.storage.sload|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.instructions.storage.tload|geth": {
+  "judged": true,
+  "answers": [
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/eips.go",
+    "qualname": "opTload",
+    "line": 203,
+    "end_line": 209
+   },
+   {
+    "repo": "go-ethereum",
+    "path": "core/vm/eips.go",
+    "qualname": "enable1153",
+    "line": 186,
+    "end_line": 200
+   }
+  ],
+  "cost_usd": 0.0284
+ },
+ "vm.instructions.storage.tload|reth": {
+  "judged": false,
+  "answers": []
+ }
+}
