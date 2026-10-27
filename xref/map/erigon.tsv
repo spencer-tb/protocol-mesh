@@ -119,14 +119,96 @@ vm.eoa_delegation.calculate_delegation_cost	0,3,4	inlined	2/2	repos/clients/erig
 vm.eoa_delegation.calculate_delegation_cost	1,2	part	2/2	repos/clients/erigon/execution/types/set_code_tx.go:371-378	ParseDelegation
 vm.eoa_delegation.is_valid_delegation	0	entry	2/2	repos/clients/erigon/execution/types/set_code_tx.go:371-378	ParseDelegation
 vm.eoa_delegation.resolve_delegated_code_address	0,1,2,3	inlined	2/2	repos/clients/erigon/execution/vm/operations_acl.go:323-425	makeCallVariantGasCallEIP7702
+vm.gas.allocate_evm_gas	0,1,2	entry	2/2	repos/clients/erigon/execution/protocol/mdgas/md_gas.go:158-171	SplitTxnGasLimit
+vm.gas.calculate_data_fee	0	inlined	2/2	repos/clients/erigon/execution/protocol/txn_executor.go:249-423	TxnExecutor.preCheck
+vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	GetBlobGasPrice
+vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_total_blob_gas	Message.BlobGas
+vm.gas.calculate_gas_extend_memory	1,3,4,5	entry	2/2	repos/clients/erigon/execution/vm/gas_table.go:59-86	memoryGasCost
+vm.gas.calculate_gas_extend_memory	1	part	2/2	repos/clients/erigon/execution/vm/common.go:45-58	calcMemSize64WithUint
+vm.gas.calculate_gas_extend_memory	0,2	missing	-	-	-
+vm.gas.calculate_total_blob_gas	0	entry	2/2	repos/clients/erigon/execution/types/transaction.go:517-517	Message.BlobGas
 vm.gas.charge_gas_from_meter	0,1	entry	2/2	repos/clients/erigon/execution/protocol/mdgas/md_gas.go:92-115	Consume
 vm.gas.charge_gas_from_meter	1	part	2/2	repos/clients/erigon/execution/vm/interpreter.go:256-264	CallContext.useMdGas
 vm.gas.charge_state_gas_from_meter	0,1,2	entry	2/2	repos/clients/erigon/execution/protocol/mdgas/md_gas.go:92-115	Consume
 vm.gas.charge_state_gas_from_meter	1	part	2/2	repos/clients/erigon/execution/vm/interpreter.go:256-264	CallContext.useMdGas
+vm.gas.check_max_fee_per_blob_gas	0,2	entry	2/2	repos/clients/erigon/execution/protocol/txn_executor.go:249-423	TxnExecutor.preCheck
+vm.gas.check_max_fee_per_blob_gas	1	part	2/2	repos/clients/erigon/execution/protocol/evm.go:41-102	NewEVMBlockContext
+vm.gas.check_max_fee_per_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	GetBlobGasPrice
 vm.gas.credit_state_gas_refund	0,1	entry	2/2	repos/clients/erigon/execution/vm/interpreter.go:286-301	CallContext.refillStateGas
 vm.gas.credit_state_gas_refund	0,1	part	2/2	repos/clients/erigon/execution/protocol/mdgas/md_gas.go:118-132	Refill
+vm.gas.forfeit_remaining_gas	0,1	inlined	2/2	repos/clients/erigon/execution/vm/evm.go:191-218	EVM.handleFrameRevert
 vm.gas.repay_state_gas_spill	0,1,2	entry	2/2	repos/clients/erigon/execution/vm/interpreter.go:268-284	CallContext.mergeChildStateGas
 vm.gas.repay_state_gas_spill	1,2	part	2/2	repos/clients/erigon/execution/protocol/mdgas/md_gas.go:118-132	Refill
 vm.gas.repay_state_gas_spill	1,2	part	2/2	repos/clients/erigon/execution/vm/interpreter.go:286-301	CallContext.refillStateGas
 vm.gas.repay_state_gas_spill	3	missing	-	-	-
 vm.gas.restore_state_gas	0,1,2	entry	2/2	repos/clients/erigon/execution/vm/evm.go:191-218	EVM.handleFrameRevert
+vm.gas.settle_transaction_gas	3	part	2/2	repos/clients/erigon/execution/protocol/mdgas/md_gas.go:83-85	MdGasUsage.StateClamped
+vm.instructions.storage.sload	0,2	entry	2/2	repos/clients/erigon/execution/vm/instructions.go:838-859	opSload
+vm.instructions.storage.sload	1	part	2/2	repos/clients/erigon/execution/vm/gas_table.go:50-55	coldStorageAccessCost
+vm.instructions.storage.sload	1	part	2/2	repos/clients/erigon/execution/vm/operations_acl.go:139-153	gasSLoadEIP2929
+vm.instructions.storage.sload	1	part	2/2	repos/clients/erigon/execution/state/intra_block_state.go:3061-3074	IntraBlockState.AddSlotToAccessList
+vm.instructions.storage.sload	1	part	2/2	repos/clients/erigon/execution/state/intra_block_state.go:3088-3090	IntraBlockState.SlotKnownWarm
+vm.instructions.storage.sload	-	delegated	2/2	-> state_tracker.get_storage	IntraBlockState.GetState
+vm.instructions.storage.sload	-	delegated	2/2	-> state_tracker.get_storage	stateObject.GetState
+vm.instructions.storage.sload	3	missing	-	-	-
+vm.instructions.storage.tload	0,2	entry	2/2	repos/clients/erigon/execution/vm/eips.go:209-213	opTload
+vm.instructions.storage.tload	1	part	2/2	repos/clients/erigon/execution/vm/eips.go:192-206	enable1153
+vm.instructions.storage.tload	-	delegated	2/2	-> state_tracker.get_transient_storage	IntraBlockState.GetTransientState
+vm.instructions.storage.tload	3	missing	-	-	-
+vm.instructions.system.call	0,4,5	entry	2/2	repos/clients/erigon/execution/vm/instructions.go:1182-1231	opCall
+vm.instructions.system.call	1	part	1/2	repos/clients/erigon/execution/vm/memory_table.go:71-81	memoryCall
+vm.instructions.system.call	0,1,2,3,4	part	2/2	repos/clients/erigon/execution/vm/operations_acl.go:323-425	makeCallVariantGasCallEIP7702
+vm.instructions.system.call	0,1	part	2/2	repos/clients/erigon/execution/vm/gas_table.go:478-534	statelessGasCall
+vm.instructions.system.call	3	part	2/2	repos/clients/erigon/execution/vm/gas_table.go:536-584	statefulGasCall
+vm.instructions.system.call	-	delegated	2/2	-> vm.gas.calculate_message_call_gas	calcCallGas
+vm.instructions.system.call	-	delegated	2/2	-> vm.gas.calculate_message_call_gas	callGas
+vm.instructions.system.call	-	delegated	2/2	-> vm.stack.pop	Stack.drop
+vm.instructions.system.call	-	delegated	2/2	-> vm.stack.pop	Stack.pop2
+vm.instructions.system.call	-	delegated	2/2	-> vm.stack.pop	Stack.pop2Uint64
+vm.instructions.system.call	-	delegated	2/2	-> utils.address.to_address_masked	IntraBlockState.InternAddress
+vm.instructions.system.call	-	delegated	1/2	-> state_tracker.is_account_alive	Account.Empty
+vm.instructions.system.call	-	delegated	2/2	-> state_tracker.is_account_alive	IntraBlockState.Empty
+vm.instructions.system.create	1,5	entry	2/2	repos/clients/erigon/execution/vm/instructions.go:1032-1040	opCreate
+vm.instructions.system.create	2	part	2/2	repos/clients/erigon/execution/vm/memory_table.go:63-65	memoryCreate
+vm.instructions.system.create	3	part	2/2	repos/clients/erigon/execution/vm/common.go:104-118	CheckMaxInitCodeSize
+vm.instructions.system.create	0,2,3	part	2/2	repos/clients/erigon/execution/vm/gas_table.go:356-379	gasCreateEip3860
+vm.instructions.system.create	2	part	2/2	repos/clients/erigon/execution/vm/eips.go:378-383	enable8038
+vm.instructions.system.create	4	part	2/2	repos/clients/erigon/execution/vm/gas_table.go:414-445	gasCreateAccount
+vm.instructions.system.create	4	part	1/2	repos/clients/erigon/execution/vm/instructions.go:1070-1168	execCreate
+vm.instructions.system.create	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	memoryGasCost
+vm.instructions.system.create	-	delegated	2/2	-> vm.stack.pop	Stack.pop3
+vm.instructions.system.create	-	delegated	2/2	-> utils.address.compute_contract_address	CreateAddress
+vm.instructions.system.delegatecall	0,4,5	entry	2/2	repos/clients/erigon/execution/vm/instructions.go:1282-1315	opDelegateCall
+vm.instructions.system.delegatecall	1	part	2/2	repos/clients/erigon/execution/vm/memory_table.go:83-93	memoryDelegateCall
+vm.instructions.system.delegatecall	1,2,4	part	2/2	repos/clients/erigon/execution/vm/operations_acl.go:323-425	makeCallVariantGasCallEIP7702
+vm.instructions.system.delegatecall	3,5	part	2/2	repos/clients/erigon/execution/vm/evm.go:460-512	EVM.DelegateCall
+vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.stack.pop	Stack.drop
+vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.calculate_message_call_gas	callGas
+vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.stack.pop	Stack.pop
+vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.stack.pop	Stack.pop2Uint64
+vm.instructions.system.delegatecall	-	delegated	2/2	-> utils.address.to_address_masked	IntraBlockState.InternAddress
+vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.drain_state_gas_reservoir	CallContext.forwardStateGas
+vm.instructions.system.delegatecall	-	delegated	1/2	-> vm.instructions.system.generic_call	CallContext.restoreChildGas
+vm.instructions.system.delegatecall	-	delegated	1/2	-> vm.instructions.system.generic_call	CallContext.mergeChildStateGas
+vm.instructions.system.generic_create	1,3,4,5	entry	2/2	repos/clients/erigon/execution/vm/instructions.go:1070-1168	execCreate
+vm.instructions.system.generic_create	1,2	part	2/2	repos/clients/erigon/execution/vm/evm.go:608-645	EVM.prepareCreate
+vm.instructions.system.generic_create	3,4	part	2/2	repos/clients/erigon/execution/vm/evm.go:677-827	EVM.createWithPreparation
+vm.instructions.system.generic_create	0	part	2/2	repos/clients/erigon/execution/vm/instructions.go:1032-1040	opCreate
+vm.instructions.system.generic_create	0	part	2/2	repos/clients/erigon/execution/vm/instructions.go:1054-1067	opCreate2
+vm.instructions.system.revert	0,2,3	entry	2/2	repos/clients/erigon/execution/vm/instructions.go:1403-1408	opRevert
+vm.instructions.system.revert	1	part	2/2	repos/clients/erigon/execution/vm/memory_table.go:101-103	memoryRevert
+vm.instructions.system.revert	2	part	2/2	repos/clients/erigon/execution/vm/memory.go:106-122	Memory.Resize
+vm.instructions.system.revert	2	part	2/2	repos/clients/erigon/execution/vm/instructions.go:1371-1377	EVM.output
+vm.instructions.system.revert	-	delegated	2/2	-> vm.stack.pop	Stack.pop2Uint64
+vm.instructions.system.revert	-	delegated	1/2	-> vm.gas.calculate_gas_extend_memory	calcMemSize64
+vm.instructions.system.revert	-	delegated	2/2	-> vm.memory.memory_read_bytes	Memory.GetPtr
+vm.instructions.system.revert	-	delegated	2/2	-> vm.memory.memory_read_bytes	Memory.GetCopy
+vm.instructions.system.revert	-	delegated	1/2	-> vm.gas.calculate_gas_extend_memory	calcMemSize64WithUint
+vm.interpreter.charge_value_transfer_to_non_alive_account	0	entry	2/2	repos/clients/erigon/execution/vm/gas_table.go:536-584	statefulGasCall
+vm.interpreter.charge_value_transfer_to_non_alive_account	0	inlined	2/2	repos/clients/erigon/execution/protocol/runtime_gas.go:61-103	HandleRuntimeCall
+vm.interpreter.charge_value_transfer_to_non_alive_account	0	part	2/2	repos/clients/erigon/execution/vm/operations_acl.go:323-425	makeCallVariantGasCallEIP7702
+vm.interpreter.charge_value_transfer_to_non_alive_account	-	delegated	2/2	-> state_tracker.is_account_alive	IntraBlockState.Empty
+vm.interpreter.process_call	0,1,2,3,4,5	entry	2/2	repos/clients/erigon/execution/vm/evm.go:260-383	EVM.Call
+vm.interpreter.process_call	0,1,3,4,5	part	2/2	repos/clients/erigon/execution/vm/evm.go:392-453	EVM.CallCode
+vm.interpreter.process_call	0,1,3,4,5	part	2/2	repos/clients/erigon/execution/vm/evm.go:460-512	EVM.DelegateCall
+vm.interpreter.process_call	0,1,3,4,5	part	2/2	repos/clients/erigon/execution/vm/evm.go:518-584	EVM.StaticCall

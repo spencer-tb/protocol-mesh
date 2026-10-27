@@ -95,10 +95,77 @@ vm.eoa_delegation.resolve_delegated_code_address	2	part	1/2	repos/clients/evmone
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	1/2	-> vm.eoa_delegation.get_delegated_code_address	get_delegate_address
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	1/2	-> vm.eoa_delegation.get_delegated_code_address	is_code_delegated
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> state_tracker.get_code	State.get_code
+vm.gas.calculate_data_fee	0	inlined	2/2	repos/clients/evmone/test/state/state.cpp:810-902	transition
+vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	compute_blob_gas_price
+vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_total_blob_gas	Transaction.blob_gas_used
+vm.gas.calculate_gas_extend_memory	0,3,4,5	entry	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:118-136	grow_memory_general
+vm.gas.calculate_gas_extend_memory	4	part	1/2	repos/clients/evmone/lib/evmone/execution_state.hpp:105-127	Memory.grow
+vm.gas.calculate_gas_extend_memory	3,4	part	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:150-173	grow_memory
+vm.gas.calculate_gas_extend_memory	1	part	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:197-210	check_memory
+vm.gas.calculate_gas_extend_memory	2	missing	-	-	-
+vm.gas.calculate_total_blob_gas	0	entry	2/2	repos/clients/evmone/test/state/transaction.hpp:59-59	Transaction.blob_gas_used
 vm.gas.charge_gas_from_meter	0,1	inlined	2/2	repos/clients/evmone/lib/evmone/state_gas.hpp:18-34	StateGas.charge
 vm.gas.charge_state_gas_from_meter	0,1,2	entry	2/2	repos/clients/evmone/lib/evmone/state_gas.hpp:18-34	StateGas.charge
+vm.gas.check_max_fee_per_blob_gas	0,2	inlined	2/2	repos/clients/evmone/test/state/state.cpp:648-781	validate_transaction
+vm.gas.check_max_fee_per_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	compute_blob_gas_price
+vm.gas.check_max_fee_per_blob_gas	1	missing	-	-	-
 vm.gas.credit_state_gas_refund	0,1	entry	2/2	repos/clients/evmone/lib/evmone/state_gas.hpp:39-46	StateGas.refill
+vm.gas.forfeit_remaining_gas	1	inlined	2/2	repos/clients/evmone/lib/evmone/execution_state.hpp:212-232	make_execution_result
+vm.gas.forfeit_remaining_gas	0	missing	-	-	-
 vm.gas.repay_state_gas_spill	2	entry	2/2	repos/clients/evmone/lib/evmone/instructions_calls.cpp:51-72	absorb_child_state_gas
 vm.gas.repay_state_gas_spill	0,1,2	part	2/2	repos/clients/evmone/lib/evmone/state_gas.hpp:39-46	StateGas.refill
 vm.gas.repay_state_gas_spill	3	missing	-	-	-
 vm.gas.restore_state_gas	0,1,2	inlined	2/2	repos/clients/evmone/lib/evmone/execution_state.hpp:212-232	make_execution_result
+vm.gas.settle_transaction_gas	0,1,2,3,4,5	inlined	2/2	repos/clients/evmone/test/state/state.cpp:810-902	transition
+vm.instructions.storage.sload	0,1,2	entry	2/2	repos/clients/evmone/lib/evmone/instructions_storage.cpp:105-122	sload
+vm.instructions.storage.sload	1	part	2/2	repos/clients/evmone/test/state/host.cpp:405-413	Host.access_storage
+vm.instructions.storage.sload	-	delegated	2/2	-> state_tracker.get_storage	Host.get_storage
+vm.instructions.storage.sload	3	missing	-	-	-
+vm.instructions.storage.tload	0,2	entry	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:851-857	tload
+vm.instructions.storage.tload	1	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.storage.tload	3	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:123-128	invoke
+vm.instructions.storage.tload	-	delegated	2/2	-> state_tracker.get_transient_storage	Host.get_transient_storage
+vm.instructions.system.call	0,1,2,3,4,5	entry	2/2	repos/clients/evmone/lib/evmone/instructions_calls.cpp:98-245	call_impl
+vm.instructions.system.call	2	part	1/2	repos/clients/evmone/lib/evmone/instructions_calls.cpp:23-48	get_target_address
+vm.instructions.system.call	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	check_memory
+vm.instructions.system.call	-	delegated	2/2	-> vm.gas.charge_state_gas	StateGas.charge
+vm.instructions.system.call	-	delegated	1/2	-> vm.instructions.system.generic_call	absorb_child_state_gas
+vm.instructions.system.call	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	check_memory
+vm.instructions.system.call	-	delegated	2/2	-> state_tracker.is_account_alive	Host.account_exists
+vm.instructions.system.create	0,1,2,3,4,5	entry	2/2	repos/clients/evmone/lib/evmone/instructions_calls.cpp:257-344	create_impl
+vm.instructions.system.create	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	check_memory
+vm.instructions.system.create	-	delegated	2/2	-> utils.address.compute_contract_address	compute_create_address
+vm.instructions.system.create	-	delegated	1/2	-> vm.instructions.system.generic_create	Host.create
+vm.instructions.system.create	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	check_memory
+vm.instructions.system.create	-	delegated	2/2	-> state_tracker.get_account	Host.get_nonce
+vm.instructions.system.delegatecall	0,1,2,4,5	entry	2/2	repos/clients/evmone/lib/evmone/instructions_calls.cpp:98-245	call_impl
+vm.instructions.system.delegatecall	2	part	1/2	repos/clients/evmone/lib/evmone/instructions_calls.cpp:23-48	get_target_address
+vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.eoa_delegation.calculate_delegation_cost	get_delegate_address
+vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	check_memory
+vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.instructions.system.generic_call	absorb_child_state_gas
+vm.instructions.system.delegatecall	-	delegated	2/2	-> state_tracker.get_code	State.get_code
+vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	check_memory
+vm.instructions.system.generic_create	0,1,2,3,4,5	entry	2/2	repos/clients/evmone/lib/evmone/instructions_calls.cpp:257-344	create_impl
+vm.instructions.system.generic_create	3	inlined	2/2	repos/clients/evmone/test/state/host.cpp:179-265	Host.create
+vm.instructions.system.generic_create	3,4	inlined	2/2	repos/clients/evmone/test/state/host.cpp:313-349	Host.call
+vm.instructions.system.generic_create	-	delegated	2/2	-> state_tracker.account_deployable	is_create_collision
+vm.instructions.system.generic_create	-	delegated	2/2	-> vm.gas.charge_state_gas	StateGas.charge
+vm.instructions.system.revert	0,1,2,3	entry	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:1092-1104	return_impl
+vm.instructions.system.revert	2	part	2/2	repos/clients/evmone/lib/evmone/execution_state.hpp:105-127	Memory.grow
+vm.instructions.system.revert	1,2	part	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:118-136	grow_memory_general
+vm.instructions.system.revert	1,2	part	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:150-173	grow_memory
+vm.instructions.system.revert	1	part	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:176-194	check_memory
+vm.instructions.system.revert	1	part	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:197-210	check_memory
+vm.interpreter.charge_value_transfer_to_non_alive_account	0	inlined	2/2	repos/clients/evmone/lib/evmone/instructions_calls.cpp:98-245	call_impl
+vm.interpreter.charge_value_transfer_to_non_alive_account	0	inlined	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:1108-1153	selfdestruct
+vm.interpreter.charge_value_transfer_to_non_alive_account	-	delegated	2/2	-> state_tracker.is_account_alive	Host.account_exists
+vm.interpreter.charge_value_transfer_to_non_alive_account	-	delegated	2/2	-> vm.gas.charge_state_gas_from_meter	StateGas.charge
+vm.interpreter.process_call	1,5	entry	2/2	repos/clients/evmone/test/state/host.cpp:313-349	Host.call
+vm.interpreter.process_call	3	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:165-212	dispatch
+vm.interpreter.process_call	4	part	2/2	repos/clients/evmone/lib/evmone/execution_state.hpp:212-232	make_execution_result
+vm.interpreter.process_call	2,3	part	2/2	repos/clients/evmone/test/state/host.cpp:267-311	Host.execute_message
+vm.interpreter.process_call	3,4	part	1/2	repos/clients/evmone/test/state/precompiles.cpp:845-882	call_precompile
+vm.interpreter.process_call	-	delegated	2/2	-> state_tracker.copy_tx_state	State.checkpoint
+vm.interpreter.process_call	-	delegated	2/2	-> state_tracker.restore_tx_state	State.rollback
+vm.interpreter.process_call	-	delegated	2/2	-> vm.emit_transfer_log	emit_transfer_log
+vm.interpreter.process_call	0	missing	-	-	-

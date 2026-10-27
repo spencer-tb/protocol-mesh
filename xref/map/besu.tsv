@@ -192,132 +192,108 @@ vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> vm.eoa_deleg
 vm.gas.calculate_data_fee	0	inlined	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java:693-703	Transaction.calculateUpfrontGasCost
 vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	BlobFeeMarket.blobGasPricePerGas
 vm.gas.calculate_gas_extend_memory	0,3,5	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/FrontierGasCalculator.java:393-403	FrontierGasCalculator.memoryExpansionGasCost
-vm.gas.calculate_gas_extend_memory	1,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/Memory.java:96-111	Memory.calculateNewActiveWords
+vm.gas.calculate_gas_extend_memory	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/Memory.java:96-111	Memory.calculateNewActiveWords
 vm.gas.calculate_gas_extend_memory	-	delegated	2/2	-> vm.gas.calculate_memory_gas_cost	FrontierGasCalculator.memoryCost
-vm.gas.calculate_gas_extend_memory	4	missing	-	-	-
+vm.gas.calculate_gas_extend_memory	2,4	missing	-	-	-
 vm.gas.calculate_total_blob_gas	0	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/CancunGasCalculator.java:63-66	CancunGasCalculator.blobGasCost
-vm.gas.calculate_total_blob_gas	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java:377-379	Transaction.getBlobCount
 vm.gas.charge_gas_from_meter	1	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java:350-353	MessageFrame.decrementRemainingGas
 vm.gas.charge_state_gas_from_meter	0,1,2	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java:1143-1166	MessageFrame.consumeStateGas
-vm.gas.check_max_fee_per_blob_gas	1	inlined	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/AbstractBlockProcessor.java:151-537	AbstractBlockProcessor.processBlock
 vm.gas.check_max_fee_per_blob_gas	0,2	inlined	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionValidator.java:199-291	MainnetTransactionValidator.validateCostAndFee
 vm.gas.check_max_fee_per_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	BlobFeeMarket.blobGasPricePerGas
+vm.gas.check_max_fee_per_blob_gas	1	missing	-	-	-
 vm.gas.credit_state_gas_refund	0,1	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java:1195-1206	MessageFrame.refillStateGasReservoir
 vm.gas.credit_state_gas_refund	0	part	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java:369-371	MessageFrame.incrementRemainingGas
 vm.gas.credit_state_gas_refund	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java:1095-1107	MessageFrame.incrementStateGasReservoir
-vm.gas.forfeit_remaining_gas	0,1	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java:164-171	AbstractMessageProcessor.exceptionalHalt
-vm.gas.forfeit_remaining_gas	0	part	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java:155-162	AbstractMessageProcessor.handleStateGasOnFrameFailure
+vm.gas.forfeit_remaining_gas	1	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java:164-171	AbstractMessageProcessor.exceptionalHalt
+vm.gas.forfeit_remaining_gas	0	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java:155-162	AbstractMessageProcessor.handleStateGasOnFrameFailure
 vm.gas.forfeit_remaining_gas	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java:340-342	MessageFrame.clearGasRemaining
 vm.gas.repay_state_gas_spill	0,1,2	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java:1217-1226	MessageFrame.settleStateGasOnChildSuccess
 vm.gas.repay_state_gas_spill	3	missing	-	-	-
 vm.gas.restore_state_gas	0	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java:155-162	AbstractMessageProcessor.handleStateGasOnFrameFailure
 vm.gas.restore_state_gas	1,2	inlined	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java:114-149	AbstractMessageProcessor.clearAccumulatedStateBesidesGasAndOutput
-vm.gas.settle_transaction_gas	0,4,5	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/TransactionGasAccounting.java:82-107	TransactionGasAccounting.calculate
-vm.gas.settle_transaction_gas	0,1,2,5	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/AmsterdamGasCalculator.java:412-435	AmsterdamGasCalculator.calculateGasRefund
+vm.gas.settle_transaction_gas	0,1,2,5	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/AmsterdamGasCalculator.java:412-435	AmsterdamGasCalculator.calculateGasRefund
+vm.gas.settle_transaction_gas	0,4,5	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/TransactionGasAccounting.java:82-107	TransactionGasAccounting.calculate
 vm.gas.settle_transaction_gas	3	missing	-	-	-
 vm.instructions.storage.sload	0,1,2	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/SLoadOperation.java:53-72	SLoadOperation.execute
 vm.instructions.storage.sload	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/SLoadOperation.java:43-51	SLoadOperation.SLoadOperation
+vm.instructions.storage.sload	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/SLoadOperationV2.java:44-54	SLoadOperationV2.SLoadOperationV2
 vm.instructions.storage.sload	0,1,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/SLoadOperationV2.java:56-72	SLoadOperationV2.execute
-vm.instructions.storage.sload	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/BerlinGasCalculator.java:115-118	BerlinGasCalculator.getWarmStorageReadCost
 vm.instructions.storage.sload	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/AmsterdamGasCalculator.java:289-292	AmsterdamGasCalculator.getColdSloadCost
 vm.instructions.storage.sload	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java:1346-1348	MessageFrame.warmUpStorage
 vm.instructions.storage.sload	-	delegated	2/2	-> state_tracker.get_storage	AbstractOperation.getStorageValue
-vm.instructions.storage.sload	-	delegated	2/2	-> state_tracker.get_storage	AbstractOperationV2.getStorageValue
 vm.instructions.storage.sload	-	delegated	2/2	-> vm.stack.pop	MessageFrame.popStackItem
 vm.instructions.storage.sload	-	delegated	2/2	-> vm.stack.push	MessageFrame.pushStackItem
 vm.instructions.storage.sload	3	missing	-	-	-
 vm.instructions.storage.tload	0,1,2	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/TLoadOperation.java:37-52	TLoadOperation.execute
 vm.instructions.storage.tload	0,1,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/TLoadOperationV2.java:39-54	TLoadOperationV2.execute
 vm.instructions.storage.tload	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/CancunGasCalculator.java:53-56	CancunGasCalculator.getTransientLoadOperationGasCost
-vm.instructions.storage.tload	-	delegated	2/2	-> state_tracker.get_transient_storage	MessageFrame.getTransientStorageValue
 vm.instructions.storage.tload	-	delegated	2/2	-> vm.stack.pop	MessageFrame.popStackItem
 vm.instructions.storage.tload	-	delegated	2/2	-> vm.stack.push	MessageFrame.pushStackItem
+vm.instructions.storage.tload	-	delegated	2/2	-> state_tracker.get_transient_storage	MessageFrame.getTransientStorageValue
+vm.instructions.storage.tload	-	delegated	1/2	-> vm.stack.pop	StackUtil.readBytes32At
+vm.instructions.storage.tload	-	delegated	1/2	-> vm.stack.push	StackUtil.setBytes
 vm.instructions.storage.tload	3	missing	-	-	-
-vm.instructions.system.call	0,1,2,3,5	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java:182-316	AbstractCallOperation.execute
-vm.instructions.system.call	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/SpuriousDragonGasCalculator.java:32-57	SpuriousDragonGasCalculator.callOperationStaticGasCost
+vm.instructions.system.call	0,1,2,3,4,5	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java:182-316	AbstractCallOperation.execute
 vm.instructions.system.call	0	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/CallOperation.java:89-96	CallOperation.execute
 vm.instructions.system.call	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/BerlinGasCalculator.java:147-171	BerlinGasCalculator.callOperationStaticGasCost
-vm.instructions.system.call	5	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java:324-369	AbstractCallOperation.complete
-vm.instructions.system.call	3	part	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractCallOperationV2.java:359-367	AbstractCallOperationV2.callCreatesNewAccount
+vm.instructions.system.call	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/FrontierGasCalculator.java:287-312	FrontierGasCalculator.callOperationStaticGasCost
+vm.instructions.system.call	5	inlined	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java:324-369	AbstractCallOperation.complete
 vm.instructions.system.call	3	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java:372-380	AbstractCallOperation.callCreatesNewAccount
-vm.instructions.system.call	2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java:406-448	AbstractCallOperation.getCode
 vm.instructions.system.call	-	delegated	2/2	-> vm.eoa_delegation.calculate_delegation_cost	PragueGasCalculator.calculateCodeDelegationResolutionGas
-vm.instructions.system.call	-	delegated	2/2	-> vm.gas.charge_state_gas	MessageFrame.consumeStateGas
-vm.instructions.system.call	-	delegated	2/2	-> vm.gas.calculate_message_call_gas	TangerineWhistleGasCalculator.gasAvailableForChildCall
-vm.instructions.system.create	0,2,3,4,5	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCreateOperation.java:70-146	AbstractCreateOperation.execute
+vm.instructions.system.call	-	delegated	1/2	-> vm.gas.calculate_message_call_gas	TangerineWhistleGasCalculator.gasAvailableForChildCall
+vm.instructions.system.create	0,2,3,5	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCreateOperation.java:70-146	AbstractCreateOperation.execute
 vm.instructions.system.create	2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/CreateOperation.java:44-53	CreateOperation.cost
 vm.instructions.system.create	4	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/CreateOperation.java:55-60	CreateOperation.generateTargetContractAddress
 vm.instructions.system.create	4	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/CreateOperation.java:62-70	CreateOperation.getInitCode
 vm.instructions.system.create	1,5	inlined	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCreateOperation.java:256-290	AbstractCreateOperation.complete
-vm.instructions.system.create	-	delegated	2/2	-> vm.instructions.system.generic_create	AbstractCreateOperation.fail
+vm.instructions.system.create	2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/AmsterdamGasCalculator.java:330-334	AmsterdamGasCalculator.txCreateCost
 vm.instructions.system.create	-	delegated	2/2	-> vm.instructions.system.generic_create	AbstractCreateOperation.spawnChildMessage
 vm.instructions.system.create	-	delegated	2/2	-> vm.gas.init_code_cost	ShanghaiGasCalculator.initcodeCost
 vm.instructions.system.create	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	FrontierGasCalculator.memoryExpansionGasCost
-vm.instructions.system.create	-	delegated	1/2	-> vm.stack.pop	MessageFrame.popStackItems
 vm.instructions.system.create	-	delegated	1/2	-> state_tracker.get_account	AbstractOperation.getMutableAccount
-vm.instructions.system.delegatecall	0,1,2,3,4,5	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java:182-316	AbstractCallOperation.execute
-vm.instructions.system.delegatecall	0	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/DelegateCallOperation.java:37-40	DelegateCallOperation.to
-vm.instructions.system.delegatecall	5	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/DelegateCallOperation.java:42-45	DelegateCallOperation.value
-vm.instructions.system.delegatecall	5	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/DelegateCallOperation.java:47-50	DelegateCallOperation.apparentValue
-vm.instructions.system.delegatecall	0	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/DelegateCallOperation.java:52-55	DelegateCallOperation.inputDataOffset
-vm.instructions.system.delegatecall	0	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/DelegateCallOperation.java:57-60	DelegateCallOperation.inputDataLength
-vm.instructions.system.delegatecall	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/TangerineWhistleGasCalculator.java:60-85	TangerineWhistleGasCalculator.callOperationStaticGasCost
-vm.instructions.system.delegatecall	0	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/DelegateCallOperation.java:62-65	DelegateCallOperation.outputDataOffset
-vm.instructions.system.delegatecall	0	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/DelegateCallOperation.java:67-70	DelegateCallOperation.outputDataLength
-vm.instructions.system.delegatecall	5	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/DelegateCallOperation.java:72-75	DelegateCallOperation.address
-vm.instructions.system.delegatecall	5	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/DelegateCallOperation.java:77-80	DelegateCallOperation.sender
-vm.instructions.system.delegatecall	0	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java:79-81	AbstractCallOperation.gas
-vm.instructions.system.delegatecall	4	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/DelegateCallOperation.java:82-85	DelegateCallOperation.gasAvailableForChildCall
+vm.instructions.system.delegatecall	0,1,2,4	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java:182-316	AbstractCallOperation.execute
+vm.instructions.system.delegatecall	4	part	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/DelegateCallOperation.java:82-85	DelegateCallOperation.gasAvailableForChildCall
 vm.instructions.system.delegatecall	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/BerlinGasCalculator.java:147-171	BerlinGasCalculator.callOperationStaticGasCost
+vm.instructions.system.delegatecall	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/FrontierGasCalculator.java:287-312	FrontierGasCalculator.callOperationStaticGasCost
 vm.instructions.system.delegatecall	5	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java:324-369	AbstractCallOperation.complete
-vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	FrontierGasCalculator.memoryExpansionGasCost
+vm.instructions.system.delegatecall	3	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java:406-448	AbstractCallOperation.getCode
 vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.eoa_delegation.calculate_delegation_cost	PragueGasCalculator.calculateCodeDelegationResolutionGas
-vm.instructions.system.delegatecall	-	delegated	2/2	-> state_tracker.get_account	AbstractOperation.getAccount
-vm.instructions.system.delegatecall	-	delegated	1/2	-> state_tracker.get_code	AbstractCallOperation.getCode
-vm.instructions.system.delegatecall	-	delegated	1/2	-> vm.eoa_delegation.calculate_delegation_cost	CodeDelegationHelper.getTarget
-vm.instructions.system.delegatecall	-	delegated	1/2	-> vm.gas.calculate_message_call_gas	TangerineWhistleGasCalculator.gasAvailableForChildCall
+vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.calculate_message_call_gas	TangerineWhistleGasCalculator.gasAvailableForChildCall
+vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	FrontierGasCalculator.memoryExpansionGasCost
 vm.instructions.system.generic_create	0,1,2,4	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCreateOperation.java:70-146	AbstractCreateOperation.execute
-vm.instructions.system.generic_create	0,1,2,4	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractCreateOperationV2.java:63-137	AbstractCreateOperationV2.execute
 vm.instructions.system.generic_create	3	inlined	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/processor/ContractCreationProcessor.java:126-169	ContractCreationProcessor.start
-vm.instructions.system.generic_create	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractCreateOperationV2.java:189-192	AbstractCreateOperationV2.fail
-vm.instructions.system.generic_create	3,4	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractCreateOperationV2.java:194-227	AbstractCreateOperationV2.spawnChildMessage
 vm.instructions.system.generic_create	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCreateOperation.java:201-207	AbstractCreateOperation.fail
 vm.instructions.system.generic_create	3,4	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCreateOperation.java:209-243	AbstractCreateOperation.spawnChildMessage
-vm.instructions.system.generic_create	5	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractCreateOperationV2.java:229-259	AbstractCreateOperationV2.complete
 vm.instructions.system.generic_create	5	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCreateOperation.java:256-290	AbstractCreateOperation.complete
 vm.instructions.system.generic_create	-	delegated	1/2	-> vm.memory.memory_read_bytes	CreateOperation.getInitCode
 vm.instructions.system.generic_create	-	delegated	1/2	-> vm.memory.memory_read_bytes	Create2Operation.getInitCode
-vm.instructions.system.generic_create	-	delegated	2/2	-> vm.gas.withhold_create_gas	TangerineWhistleGasCalculator.gasAvailableForChildCreate
+vm.instructions.system.generic_create	-	delegated	2/2	-> state_tracker.account_deployable	ContractCreationProcessor.accountExists
 vm.instructions.system.generic_create	-	delegated	2/2	-> vm.gas.charge_state_gas	MessageFrame.consumeStateGas
 vm.instructions.system.generic_create	-	delegated	2/2	-> vm.gas.credit_state_gas_refund	MessageFrame.refillStateGasReservoir
-vm.instructions.system.generic_create	-	delegated	1/2	-> vm.memory.memory_read_bytes	AbstractCreateOperationV2.getInitCode
-vm.instructions.system.generic_create	-	delegated	2/2	-> state_tracker.get_account	AbstractOperation.getMutableAccount
-vm.instructions.system.generic_create	-	delegated	2/2	-> state_tracker.get_account	AbstractOperationV2.getMutableAccount
+vm.instructions.system.generic_create	-	delegated	2/2	-> vm.incorporate_child	MessageFrame.settleStateGasOnChildSuccess
+vm.instructions.system.generic_create	-	delegated	2/2	-> vm.gas.withhold_create_gas	TangerineWhistleGasCalculator.gasAvailableForChildCreate
 vm.instructions.system.revert	0,1,2,3	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/RevertOperation.java:41-56	RevertOperation.execute
-vm.instructions.system.revert	3	part	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java:114-149	AbstractMessageProcessor.clearAccumulatedStateBesidesGasAndOutput
-vm.instructions.system.revert	3	part	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java:178-183	AbstractMessageProcessor.revert
+vm.instructions.system.revert	0,1,2,3	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/RevertOperationV2.java:41-61	RevertOperationV2.execute
+vm.instructions.system.revert	2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/Memory.java:119-128	Memory.ensureCapacityForBytes
+vm.instructions.system.revert	2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/Memory.java:247-261	Memory.getMutableBytes
 vm.instructions.system.revert	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	FrontierGasCalculator.memoryExpansionGasCost
 vm.instructions.system.revert	-	delegated	2/2	-> vm.memory.memory_read_bytes	MessageFrame.readMemory
-vm.instructions.system.revert	-	delegated	2/2	-> vm.memory.memory_read_bytes	Memory.getBytes
 vm.instructions.system.revert	-	delegated	2/2	-> vm.stack.pop	MessageFrame.popStackItem
-vm.instructions.system.revert	-	delegated	1/2	-> vm.gas.calculate_gas_extend_memory	FrontierGasCalculator.memoryCost
-vm.instructions.system.revert	-	delegated	1/2	-> vm.gas.calculate_gas_extend_memory	MessageFrame.calculateMemoryExpansion
+vm.interpreter.charge_value_transfer_to_non_alive_account	0	part	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/Eip8037StateGasCostCalculator.java:80-83	Eip8037StateGasCostCalculator.newAccountStateGas
+vm.interpreter.charge_value_transfer_to_non_alive_account	0	inlined	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractCallOperationV2.java:167-301	AbstractCallOperationV2.execute
 vm.interpreter.charge_value_transfer_to_non_alive_account	0	inlined	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java:182-316	AbstractCallOperation.execute
 vm.interpreter.charge_value_transfer_to_non_alive_account	0	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractCallOperationV2.java:359-367	AbstractCallOperationV2.callCreatesNewAccount
 vm.interpreter.charge_value_transfer_to_non_alive_account	0	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java:372-380	AbstractCallOperation.callCreatesNewAccount
-vm.interpreter.charge_value_transfer_to_non_alive_account	0	inlined	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionProcessor.java:943-976	MainnetTransactionProcessor.chargeTransactionEntry
 vm.interpreter.charge_value_transfer_to_non_alive_account	-	delegated	2/2	-> vm.gas.charge_state_gas_from_meter	MessageFrame.consumeStateGas
 vm.interpreter.process_call	3,4	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java:243-296	AbstractMessageProcessor.process
 vm.interpreter.process_call	2,3	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/processor/MessageCallProcessor.java:91-109	MessageCallProcessor.start
 vm.interpreter.process_call	2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/processor/MessageCallProcessor.java:127-173	MessageCallProcessor.transferValue
-vm.interpreter.process_call	4,5	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java:155-162	AbstractMessageProcessor.handleStateGasOnFrameFailure
+vm.interpreter.process_call	4,5	part	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java:155-162	AbstractMessageProcessor.handleStateGasOnFrameFailure
 vm.interpreter.process_call	4	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java:164-171	AbstractMessageProcessor.exceptionalHalt
 vm.interpreter.process_call	4	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java:178-183	AbstractMessageProcessor.revert
 vm.interpreter.process_call	3	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/processor/MessageCallProcessor.java:180-207	MessageCallProcessor.executePrecompile
-vm.interpreter.process_call	0	inlined	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java:182-316	AbstractCallOperation.execute
 vm.interpreter.process_call	3	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/EVM.java:265-504	EVM.runToHalt
-vm.interpreter.process_call	1	inlined	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java:2088-2147	MessageFrame.Builder.build
-vm.interpreter.process_call	-	delegated	2/2	-> vm.emit_transfer_log	EIP7708TransferLogEmitter.emitTransferLog
-vm.interpreter.process_call	-	delegated	1/2	-> state_tracker.restore_tx_state	AbstractMessageProcessor.clearAccumulatedStateBesidesGasAndOutput
+vm.interpreter.process_call	3	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/EVM.java:511-684	EVM.runToHaltV2
+vm.interpreter.process_call	-	delegated	2/2	-> state_tracker.restore_tx_state	AbstractMessageProcessor.clearAccumulatedStateBesidesGasAndOutput
 vm.interpreter.process_call	-	delegated	2/2	-> state_tracker.restore_tx_state	MessageFrame.rollback
-vm.interpreter.process_call	-	delegated	2/2	-> vm.gas.forfeit_remaining_gas	MessageFrame.clearGasRemaining
+vm.interpreter.process_call	0	missing	-	-	-
