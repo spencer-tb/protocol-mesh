@@ -53,6 +53,11 @@ updated, and round again. Nothing waits for an EELS release.
 - [ ] Execution-based mapping: run the EELS tests that hit a spec function
   through each client's runner with coverage, and diff against tests that
   do not. Use it to confirm rows for EIPs under active work.
+- [ ] Query by EIP or fork: `./xref.sh eip 7928` and `./xref.sh fork
+  amsterdam` list every EELS function the EIP or fork touches, with each
+  client's rows. Tags from code and docstrings miss functions that never
+  name their EIP, so add the functions the EIP's EELS commits changed and
+  the fork-to-fork diff.
 - [ ] Teams confirm their own client's rows, with a verified flag per row.
 - [x] Differential fuzzing for geth (`fuzz/`): memory, memory extension,
   the 63/64 call rule, blob base fee, excess blob gas and intrinsic gas
