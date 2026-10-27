@@ -1,0 +1,87 @@
+# Teams, the repos each owns, and what its members' setup clones and builds.
+#
+# A member's agents change code only in the repos their team owns, in
+# worktrees on their own fork. A problem anywhere else is written up for the
+# team that owns that repo. `repos` and `build` use the names in repos.txt
+# and the build targets in bootstrap.py, and "*" means all of them.
+
+# Every team clones these: the spec, the EIPs, the engine API and the calls.
+common = ["execution-specs", "EIPs", "execution-apis", "ethereum-pm", "forkcast"]
+
+[teams.specs]
+title = "EELS, the execution specs and their tests"
+owns = ["execution-specs", "execution-apis", "ethereum-types", "EIPs"]
+repos = ["*"]
+build = ["*"]
+
+[teams.research]
+title = "Researchers and EIP authors"
+owns = ["EIPs"]
+repos = ["eth-rnd-archive"]
+build = []
+
+[teams.hive]
+title = "Hive, devnets and ethPandaOps tooling"
+owns = [
+  "hive", "hive-tests", "hive-ui", "ethereum-package",
+  "glamsterdam-devnets", "heze-devnets", "bogota-devnets",
+]
+repos = [
+  "hive", "hive-tests", "hive-ui", "clive", "ethereum-package",
+  "glamsterdam-devnets", "heze-devnets", "bogota-devnets",
+]
+build = ["eels", "hive", "clive"]
+
+[teams.geth]
+title = "go-ethereum"
+owns = ["clients/go-ethereum"]
+repos = ["hive", "hive-tests", "clive", "clients/go-ethereum"]
+build = ["eels", "hive", "clive", "geth"]
+
+[teams.reth]
+title = "reth, revm and alloy-evm"
+owns = ["clients/reth", "clients/revm", "clients/alloy-evm"]
+repos = ["hive", "hive-tests", "clive", "clients/reth", "clients/revm", "clients/alloy-evm"]
+build = ["eels", "hive", "clive"]
+
+[teams.nethermind]
+title = "Nethermind"
+owns = ["clients/nethermind"]
+repos = ["hive", "hive-tests", "clive", "clients/nethermind"]
+build = ["eels", "hive", "clive", "nethermind"]
+
+[teams.besu]
+title = "Besu"
+owns = ["clients/besu"]
+repos = ["hive", "hive-tests", "clive", "clients/besu"]
+build = ["eels", "hive", "clive", "besu"]
+
+[teams.erigon]
+title = "Erigon"
+owns = ["clients/erigon"]
+repos = ["hive", "hive-tests", "clive", "clients/erigon"]
+build = ["eels", "hive", "clive", "erigon"]
+
+[teams.ethrex]
+title = "ethrex"
+owns = ["clients/ethrex"]
+repos = ["hive", "hive-tests", "clive", "clients/ethrex"]
+build = ["eels", "hive", "clive", "ethrex"]
+
+[teams.nimbus]
+title = "Nimbus"
+owns = ["clients/nimbus-eth1"]
+repos = ["hive", "hive-tests", "clive", "clients/nimbus-eth1"]
+build = ["eels", "hive", "clive", "nimbus"]
+
+[teams.ethereumjs]
+title = "EthereumJS"
+owns = ["clients/ethereumjs-monorepo"]
+repos = ["hive", "hive-tests", "clive", "clients/ethereumjs-monorepo"]
+build = ["eels", "hive", "clive", "ethereumjs"]
+
+[teams.evmone]
+title = "evmone"
+owns = ["clients/evmone"]
+repos = ["clients/evmone"]
+build = ["eels", "evmone"]

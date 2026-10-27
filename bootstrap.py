@@ -6,9 +6,11 @@
 Set up everything needed to work on EIPs across the spec, the tests and the
 execution clients, on macOS or Linux. Run it again any time.
 
-  ./setup.sh               clone or fetch the repos, install any missing
-                           toolchains and build every client binary whose
-                           code changed
+  ./setup.sh               clone or fetch your team's repos, install the
+                           toolchains its builds need and rebuild what
+                           changed. The first run asks which team you are
+                           on and saves it in .mesh/me.toml.
+  ./setup.sh --team geth   set or change your team, see teams.toml
   ./setup.sh geth besu     the same, building only the targets named
   ./setup.sh --profile review
                            only the repos profiles/review.txt lists, with
@@ -37,14 +39,18 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import tomllib
 from collections.abc import Callable, Sequence
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 HERE = Path(__file__).resolve().parent
 MANIFEST = HERE / "repos.txt"
 PROFILES = HERE / "profiles"
+TEAMS_FILE = HERE / "teams.toml"
+ME_FILE = HERE / ".mesh" / "me.toml"
 
 # repos.txt may only point at these GitHub owners, over https.
 TRUSTED_OWNERS = frozenset(
@@ -382,25 +388,20 @@ def install_ripgrep(ws: Workspace) -> None:
     run(["cargo", "install", "-q", "--locked", "ripgrep"])
 
 
-def install_codex(ws: Workspace) -> None:
-    """Install the Codex CLI with npm when there is none."""
-    if have("codex"):
-        return
-    say("install codex")
-    run(["npm", "install", "-g", "-s", "--prefix", ws.local, "@openai/codex"])
+Installer = Callable[[Workspace], None]
 
+# Every setup gets these. Build targets add what they need.
+BASE_INSTALLERS: tuple[Installer, ...] = (install_uv, install_jq)
 
-INSTALLERS: tuple[Callable[[Workspace], None], ...] = (
-    install_uv,
+INSTALLERS: tuple[Installer, ...] = (
+    *BASE_INSTALLERS,
     install_cmake,
     install_rust,
     install_go,
     install_node,
     install_dotnet,
     install_jdk,
-    install_jq,
     install_ripgrep,
-    install_codex,
 )
 
 
@@ -457,11 +458,24 @@ def install_env(ws: Workspace) -> None:
         )
 
 
-def install_tools(ws: Workspace) -> None:
-    """Install every missing or too old toolchain into ~/.local."""
+def installers_for(targets: Sequence[str]) -> list[Installer]:
+    """Return the installers `targets` need, the base ones first, once each."""
+    chosen = list(BASE_INSTALLERS)
+    for name in targets:
+        for install in TARGETS[name].needs:
+            if install not in chosen:
+                chosen.append(install)
+    return chosen
+
+
+def install_tools(ws: Workspace, targets: Sequence[str]) -> None:
+    """Install the toolchains `targets` need into ~/.local, if missing."""
     (ws.local / "bin").mkdir(parents=True, exist_ok=True)
-    for install in INSTALLERS:
+    for install in installers_for(targets):
         install(ws)
+    # ripgrep comes from cargo, so only where Rust is set up anyway.
+    if have("cargo"):
+        install_ripgrep(ws)
     install_env(ws)
     use_toolchains(ws)
 
@@ -503,6 +517,105 @@ def read_profile(
             "which repos.txt does not have"
         )
     return [repo for repo in repos if repo.dir in wanted]
+
+
+@dataclass(frozen=True)
+class Team:
+    """A team from teams.toml."""
+
+    title: str
+    owns: tuple[str, ...]
+    repos: tuple[str, ...]
+    build: tuple[str, ...]
+
+
+def read_teams(path: Path = TEAMS_FILE) -> dict[str, Team]:
+    """Return the teams in `path`, each with the common repos added."""
+    data = tomllib.loads(path.read_text())
+    common = list(data.get("common", []))
+    teams = {}
+    for name, entry in data["teams"].items():
+        repos = list(entry.get("repos", []))
+        teams[name] = Team(
+            title=entry["title"],
+            owns=tuple(entry["owns"]),
+            repos=("*",)
+            if "*" in repos
+            else tuple(dict.fromkeys(common + repos)),
+            build=tuple(entry.get("build", [])),
+        )
+    return teams
+
+
+def team_plan(team: Team, repos: list[Repo]) -> tuple[list[Repo], list[str]]:
+    """Return the repos a team clones, including those it owns, and the
+    targets it builds."""
+    known = {repo.dir for repo in repos}
+    unknown = [
+        d for d in team.repos + team.owns if d != "*" and d not in known
+    ]
+    unknown += [t for t in team.build if t != "*" and t not in TARGETS]
+    if unknown:
+        raise SystemExit(
+            f"setup: teams.toml names {' '.join(unknown)}, which "
+            "repos.txt and the build targets do not have"
+        )
+    wanted = set(team.repos + team.owns)
+    picked = [r for r in repos if "*" in wanted or r.dir in wanted]
+    builds = list(TARGETS) if "*" in team.build else list(team.build)
+    return picked, builds
+
+
+def read_me(path: Path = ME_FILE) -> dict[str, Any]:
+    """Return who this checkout works for, or nothing yet."""
+    if not path.exists():
+        return {}
+    return tomllib.loads(path.read_text())
+
+
+def write_me(path: Path, login: str, team: str, eips: Sequence[int]) -> None:
+    """Save who this checkout works for, in a file git ignores."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        "# Who this checkout works for. Git ignores this file, and\n"
+        "# ./setup.sh --team NAME changes the team.\n"
+        f'login = "{login}"\n'
+        f'team = "{team}"\n'
+        f"eips = [{', '.join(str(eip) for eip in eips)}]\n"
+    )
+
+
+def gh_login() -> str:
+    """Return the GitHub login gh uses, or nothing."""
+    if not have("gh"):
+        return ""
+    result = capture(["gh", "api", "user", "--jq", ".login"], timeout=30)
+    return result.stdout.strip() if result.returncode == 0 else ""
+
+
+def pick_team(answer: str, teams: dict[str, Team]) -> str | None:
+    """Return the team an answer names, by number or name."""
+    names = list(teams)
+    answer = answer.strip().lower()
+    if answer.isdigit() and 1 <= int(answer) <= len(names):
+        return names[int(answer) - 1]
+    return answer if answer in teams else None
+
+
+def parse_eips(answer: str) -> list[int]:
+    """Return the EIP numbers in an answer such as "8141, EIP-7805"."""
+    return [int(number) for number in re.findall(r"\d+", answer)]
+
+
+def ask_me(teams: dict[str, Team]) -> tuple[str, list[int]]:
+    """Ask which team the user is on and which EIPs they focus on."""
+    print("Which team are you on? Your agents change code only in its repos.")
+    for number, (name, entry) in enumerate(teams.items(), 1):
+        print(f"  {number:>2}. {name:<11} {entry.title}")
+    while (team := pick_team(input("team: "), teams)) is None:
+        print("pick a number or a name from the list")
+    eips = parse_eips(input("EIPs you focus on, optional, like 8141 7805: "))
+    return team, eips
 
 
 def github_repo(url: str) -> str | None:
@@ -764,20 +877,25 @@ class Target:
 
     source: str
     build: Callable[[Workspace, Path], None]
+    needs: tuple[Installer, ...] = ()
 
 
 TARGETS = {
     "eels": Target("execution-specs", build_eels),
-    "hive": Target("hive", build_hive),
-    "clive": Target("clive", build_clive),
-    "geth": Target("clients/go-ethereum", build_geth),
-    "erigon": Target("clients/erigon", build_erigon),
-    "besu": Target("clients/besu", build_besu),
-    "nethermind": Target("clients/nethermind", build_nethermind),
-    "evmone": Target("clients/evmone", build_evmone),
-    "ethrex": Target("clients/ethrex", build_ethrex),
+    "hive": Target("hive", build_hive, (install_go,)),
+    "clive": Target("clive", build_clive, (install_go,)),
+    "geth": Target("clients/go-ethereum", build_geth, (install_go,)),
+    "erigon": Target("clients/erigon", build_erigon, (install_go,)),
+    "besu": Target("clients/besu", build_besu, (install_jdk,)),
+    "nethermind": Target(
+        "clients/nethermind", build_nethermind, (install_dotnet,)
+    ),
+    "evmone": Target("clients/evmone", build_evmone, (install_cmake,)),
+    "ethrex": Target("clients/ethrex", build_ethrex, (install_rust,)),
     "nimbus": Target("clients/nimbus-eth1", build_nimbus),
-    "ethereumjs": Target("clients/ethereumjs-monorepo", build_ethereumjs),
+    "ethereumjs": Target(
+        "clients/ethereumjs-monorepo", build_ethereumjs, (install_node,)
+    ),
 }
 
 
@@ -899,15 +1017,22 @@ def check_repos(ws: Workspace, repos: list[Repo]) -> None:
         print(f"  all {len(repos)} cloned")
 
 
-def check(ws: Workspace) -> None:
-    """Print which tools, repos, builds and system packages are in place."""
+def check(ws: Workspace, me: dict[str, Any], repos: list[Repo]) -> None:
+    """Print who this is for and which tools, repos and builds are in place."""
+    if me:
+        eips = " ".join(f"EIP-{eip}" for eip in me.get("eips", []))
+        print(f"you: {me.get('login') or '?'} on team {me.get('team')}")
+        if eips:
+            print(f"  focus {eips}")
+    else:
+        print("you: no team yet, run ./setup.sh --team NAME")
     print("tools")
     for name, args, minimum in STATUS_TOOLS:
         print(row(name, tool_version(*args), minimum))
     if have("docker") and capture(["docker", "info"], timeout=30).returncode:
         print("  docker is installed but not running, hive needs it")
 
-    check_repos(ws, read_manifest())
+    check_repos(ws, repos)
 
     print(f"builds in {ws.bin}")
     for name in TARGETS:
@@ -931,6 +1056,11 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
     parser.add_argument(
         "--check", action="store_true", help="only print the status"
+    )
+    parser.add_argument(
+        "--team",
+        metavar="NAME",
+        help="set the team this checkout works for, see teams.toml",
     )
     parser.add_argument(
         "--profile",
@@ -958,20 +1088,43 @@ def main(argv: Sequence[str] | None = None) -> int:
             parser.error(f"unknown target {name}, see --help")
     if args.profile and args.targets:
         parser.error("a profile builds nothing, so it takes no targets")
+    if args.profile and args.team:
+        parser.error("pick a profile or a team, not both")
+    teams = read_teams()
+    if args.team and args.team not in teams:
+        parser.error(f"unknown team {args.team}, pick from {' '.join(teams)}")
 
     ws = Workspace.from_env()
     # Builds run their own uv projects and must never wait on a prompt.
     os.environ.pop("VIRTUAL_ENV", None)
     os.environ["GIT_TERMINAL_PROMPT"] = "0"
     use_toolchains(ws)
+
+    # The first run asks who this checkout works for, once.
+    me = read_me()
+    if args.team:
+        login = me.get("login") or gh_login()
+        write_me(ME_FILE, login, args.team, me.get("eips", []))
+        me = read_me()
+    elif not (me or args.profile or args.check) and sys.stdin.isatty():
+        team, eips = ask_me(teams)
+        write_me(ME_FILE, gh_login(), team, eips)
+        me = read_me()
+
     repos = read_manifest()
+    builds = list(args.targets)
     if args.profile:
         repos = read_profile(args.profile, repos)
+    elif me.get("team") in teams:
+        repos, team_builds = team_plan(teams[me["team"]], repos)
+        builds = builds or team_builds
+    else:
+        builds = builds or list(TARGETS)
     if args.check:
         if args.profile:
             check_repos(ws, repos)
         else:
-            check(ws)
+            check(ws, me, repos)
         return 0
 
     for tool in ("git", "curl", "tar"):
@@ -982,12 +1135,12 @@ def main(argv: Sequence[str] | None = None) -> int:
         check_repos(ws, repos)
         return 0
     try:
-        install_tools(ws)
+        install_tools(ws, builds)
     except subprocess.CalledProcessError as error:
         command = " ".join(map(str, error.cmd))
         raise SystemExit(f"setup: {command} failed") from error
-    failed = build_targets(ws, args.targets or list(TARGETS))
-    check(ws)
+    failed = build_targets(ws, builds)
+    check(ws, me, repos)
     if failed:
         say(f"build failed: {' '.join(failed)}")
         return 1
