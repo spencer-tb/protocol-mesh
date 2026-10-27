@@ -96,6 +96,12 @@ each execution client. `./xref.sh show charge_state_gas` reads the shared
 map, and `./xref.sh find` ranks candidates locally for free. See
 `xref/README.md`.
 
+## Differential fuzzing
+
+`uv run fuzz/run.py` runs the same inputs through EELS functions and the
+geth functions xref pairs them with, and reports every difference. See
+`fuzz/README.md`.
+
 ## Build targets
 
 | Target | Checkout | Output |
