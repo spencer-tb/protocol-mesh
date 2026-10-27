@@ -34,13 +34,18 @@ MAX_CANDIDATES = 30
 REFERENCE = "geth"
 
 # Functions in the fork that are not protocol behaviour, so the map skips
-# them: exception messages, arithmetic on a gas type, and hex helpers for
-# tooling.
+# them: exception messages, arithmetic on a gas type, hex helpers and hooks
+# only tooling uses, a type guard, and repackaging with no rule in it.
 NOT_SPEC = (
     "exceptions.*.__init__",
     "vm.exceptions.*.__init__",
     "fork_types.StateGasPerByte.*",
     "utils.hexadecimal.*",
+    "fork.apply_fork",
+    "transactions.get_transaction_hash",
+    "transactions.has_access_list",
+    "state_tracker.extract_block_diff",
+    "blocks.decode_receipt",
 )
 
 
