@@ -11,8 +11,8 @@ For one spec function and one client:
 4. A judge reads every candidate and assigns it to steps, or rejects it.
 5. A step nobody covers gets one more targeted search.
 
-Results go to `data/tree.json`. `render_tsv` flattens them into `map.tsv`,
-one row per step and location, for agents to grep.
+Results go to `data/tree.json`. `render_tsv` writes them to `map/` as one
+file per client, for agents to grep.
 """
 
 import json
@@ -641,43 +641,52 @@ def build(
 
 
 def render_tsv(config: Config, target: Path) -> None:
-    """Write one grep-able row per spec step and client location."""
+    """
+    Write the map as grep-able files in `target`.
+
+    `spec.tsv` lists each spec function's steps once. Each client gets its
+    own file with one row per client function, pointing at step ids, plus
+    a row for the steps it lacks.
+    """
     data = json.loads(tree_path(config).read_text())
     local = {
         name: Path(where).as_posix().removeprefix("../")
         for name, where in config.checkouts.items()
     }
-    rows = ["# spec\tstep\tclient\trole\tlocation\tfunction"]
+    target.mkdir(parents=True, exist_ok=True)
+    spec_rows = ["# spec\tstep\twhat it does"]
+    client_rows: dict[str, list[str]] = defaultdict(
+        lambda: ["# spec\tsteps\trole\tlocation\tfunction"]
+    )
     for spec_id, entry in sorted(data["entries"].items()):
-        steps = {s["id"]: s["text"] for s in entry.get("steps", [])}
+        for step in entry.get("steps", []):
+            spec_rows.append(f"{spec_id}\t{step['id']}\t{step['text']}")
         for client, table in sorted(entry.get("clients", {}).items()):
+            rows = client_rows[client]
             for match in table.get("matches", []):
                 if match["confidence"] == "low":
                     continue
                 root = local.get(match["repo"], match["repo"])
-                where = (
-                    f"{root}/{match['path']}"
-                    f":{match['line']}-{match['end_line']}"
+                steps = ",".join(str(step) for step in match["steps"])
+                rows.append(
+                    f"{spec_id}\t{steps or '-'}\t{match['role']}\t"
+                    f"{root}/{match['path']}:{match['line']}-"
+                    f"{match['end_line']}\t{match['qualname']}"
                 )
-                for step in match["steps"] or [None]:
-                    rows.append(
-                        f"{spec_id}\t{steps.get(step, '-')}\t{client}\t"
-                        f"{match['role']}\t{where}\t{match['qualname']}"
-                    )
             for item in table.get("delegated", []):
                 rows.append(
-                    f"{spec_id}\t-\t{client}\tdelegated\t"
-                    f"-> {item['spec']}\t{item['qualname']}"
+                    f"{spec_id}\t-\tdelegated\t-> {item['spec']}\t"
+                    f"{item['qualname']}"
                 )
-            for step in table.get("missing", []):
-                rows.append(
-                    f"{spec_id}\t{steps.get(step, '-')}\t{client}\t"
-                    "missing\t-\t-"
-                )
-    target.write_text("\n".join(rows) + "\n")
-    print(f"{len(rows) - 1} rows in {target}")
+            if table.get("missing"):
+                missing = ",".join(str(step) for step in table["missing"])
+                rows.append(f"{spec_id}\t{missing}\tmissing\t-\t-")
+    (target / "spec.tsv").write_text("\n".join(spec_rows) + "\n")
+    for client, rows in sorted(client_rows.items()):
+        (target / f"{client}.tsv").write_text("\n".join(rows) + "\n")
+        print(f"{client:<12} {len(rows) - 1} rows")
 
 
 def tsv_target(config: Config) -> Path:
-    """Return where map.tsv goes, next to xref.toml."""
-    return config.root / "map.tsv"
+    """Return the map folder, next to xref.toml."""
+    return config.root / "map"

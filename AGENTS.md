@@ -52,7 +52,7 @@ what lives where.
 | Need | Skill |
 |---|---|
 | An EIP's text, fork status, changes, discussion | `eip` |
-| Where each client implements a spec function | `xref` |
+| Where each client implements a spec function | `xref`, start with `rg <function> xref/map/` |
 | What a call said or decided | `calls` |
 | Eth R&D Discord discussion | `discord` |
 | ethresear.ch or Ethereum Magicians threads | `forums` |
