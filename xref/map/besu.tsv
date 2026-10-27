@@ -70,6 +70,20 @@ block_access_lists.update_builder_from_tx	-	delegated	2/2	-> block_access_lists.
 block_access_lists.validate_block_access_list_gas_limit	2	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetBlockAccessListValidator.java:68-91	MainnetBlockAccessListValidator.validateExecutedBlockAccessListItemSize
 block_access_lists.validate_block_access_list_gas_limit	0,1	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/block/access/list/BlockAccessList.java:81-88	BlockAccessList.eip7928ItemCount
 block_access_lists.validate_block_access_list_gas_limit	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/block/access/list/BlockAccessList.java:210-217	BlockAccessList.BlockAccessListBuilder.getOrCreateAccountBuilder
+blocks.encode_receipt	0,1	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/receipt/TransactionReceiptEncoder.java:103-121	TransactionReceiptEncoder.writeLegacyReceipt
+blocks.encode_receipt	0,1	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/receipt/SyncTransactionReceiptEncoder.java:34-70	SyncTransactionReceiptEncoder.encodeForRootCalculation
+blocks.encode_receipt	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/receipt/TransactionReceiptEncoder.java:70-86	TransactionReceiptEncoder.writeTo
+blocks.encode_receipt	0,1	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/receipt/TransactionReceiptEncoder.java:88-94	TransactionReceiptEncoder.shouldEncodeOpaqueBytes
+bloom.add_to_bloom	0	entry	2/2	repos/clients/besu/datatypes/src/main/java/org/hyperledger/besu/datatypes/LogsBloomFilter.java:235-238	LogsBloomFilter.Builder.insertBytes
+bloom.add_to_bloom	1	part	2/2	repos/clients/besu/datatypes/src/main/java/org/hyperledger/besu/datatypes/LogsBloomFilter.java:255-262	LogsBloomFilter.Builder.setBits
+bloom.add_to_bloom	2,3	part	2/2	repos/clients/besu/datatypes/src/main/java/org/hyperledger/besu/datatypes/LogsBloomFilter.java:264-268	LogsBloomFilter.Builder.setBit
+bloom.logs_bloom	1	entry	2/2	repos/clients/besu/datatypes/src/main/java/org/hyperledger/besu/datatypes/LogsBloomFilter.java:210-213	LogsBloomFilter.Builder.insertLogs
+bloom.logs_bloom	0	part	2/2	repos/clients/besu/datatypes/src/main/java/org/hyperledger/besu/datatypes/LogsBloomFilter.java:157-159	LogsBloomFilter.Builder.Builder
+bloom.logs_bloom	1	part	2/2	repos/clients/besu/datatypes/src/main/java/org/hyperledger/besu/datatypes/LogsBloomFilter.java:180-187	LogsBloomFilter.Builder.insertLog
+bloom.logs_bloom	2	part	2/2	repos/clients/besu/datatypes/src/main/java/org/hyperledger/besu/datatypes/LogsBloomFilter.java:245-247	LogsBloomFilter.Builder.build
+bloom.logs_bloom	-	delegated	2/2	-> bloom.add_to_bloom	LogsBloomFilter.Builder.insertBytes
+bloom.logs_bloom	-	delegated	2/2	-> bloom.add_to_bloom	LogsBloomFilter.Builder.setBits
+bloom.logs_bloom	-	delegated	2/2	-> bloom.add_to_bloom	LogsBloomFilter.Builder.setBit
 fork.apply_body	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/blockhash/CancunPreExecutionProcessor.java:43-52	CancunPreExecutionProcessor.process
 fork.apply_body	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/blockhash/PraguePreExecutionProcessor.java:54-66	PraguePreExecutionProcessor.process
 fork.apply_body	2	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/block/access/list/BlockAccessList.java:200-203	BlockAccessList.BlockAccessListBuilder.createPostExecutionAccessLocationTracker
@@ -86,6 +100,8 @@ fork.calculate_base_fee_per_gas	0	part	2/2	repos/clients/besu/ethereum/core/src/
 fork.calculate_base_fee_per_gas	-	delegated	2/2	-> fork.check_gas_limit	GasLimitRangeAndDeltaValidationRule.validate
 fork.calculate_base_fee_per_gas	-	delegated	2/2	-> fork.check_gas_limit	AbstractGasLimitSpecification.deltaBound
 fork.calculate_base_fee_per_gas	1	missing	-	-	-
+fork.check_gas_limit	0,1,2,3	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/headervalidationrules/GasLimitRangeAndDeltaValidationRule.java:50-88	GasLimitRangeAndDeltaValidationRule.validate
+fork.check_gas_limit	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/AbstractGasLimitSpecification.java:39-41	AbstractGasLimitSpecification.deltaBound
 fork.check_transaction	0,2,3,5	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionProcessor.java:201-749	MainnetTransactionProcessor.processTransaction
 fork.check_transaction	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionValidator.java:86-155	MainnetTransactionValidator.validate
 fork.check_transaction	1,2	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionValidator.java:199-291	MainnetTransactionValidator.validateCostAndFee
@@ -99,6 +115,7 @@ fork.check_transaction	-	delegated	2/2	-> transactions.calculate_max_gas_fee	Tra
 fork.check_transaction	-	delegated	2/2	-> transactions.calculate_max_gas_fee	Transaction.getUpfrontGasCost
 fork.check_transaction	-	delegated	2/2	-> transactions.calculate_effective_gas_price	TransactionPriceCalculator.eip1559
 fork.check_transaction	4	missing	-	-	-
+fork.disburse_gas_fees	1	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/feemarket/CoinbaseFeePriceCalculator.java:29-33	CoinbaseFeePriceCalculator.eip1559
 fork.execute_block	2,3,4	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/AbstractBlockProcessor.java:151-537	AbstractBlockProcessor.processBlock
 fork.execute_block	4,5	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetBlockBodyValidator.java:76-106	MainnetBlockBodyValidator.validateBodyRoots
 fork.execute_block	5	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetBlockAccessListValidator.java:93-119	MainnetBlockAccessListValidator.validateExecutedBlockAccessListAfterBuild
@@ -107,6 +124,7 @@ fork.execute_block	4,5	part	2/2	repos/clients/besu/ethereum/core/src/main/java/o
 fork.execute_block	1	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetBlockBodyValidator.java:203-220	MainnetBlockBodyValidator.validateEthHash
 fork.execute_block	5	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetBlockBodyValidator.java:316-329	MainnetBlockBodyValidator.validateWithdrawals
 fork.execute_block	0	missing	-	-	-
+fork.get_last_256_block_hashes	1,2	missing	-	-	-
 fork.make_receipt	0	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetProtocolSpecs.java:1473-1484	MainnetProtocolSpecs.BerlinTransactionReceiptFactory.create
 fork.make_receipt	0	part	1/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetProtocolSpecs.java:1454-1464	MainnetProtocolSpecs.ByzantiumTransactionReceiptFactory.create
 fork.make_receipt	-	delegated	2/2	-> blocks.encode_receipt	TransactionReceiptEncoder.writeTo
@@ -115,6 +133,9 @@ fork.make_receipt	-	delegated	2/2	-> blocks.encode_receipt	TransactionReceiptEnc
 fork.make_receipt	-	delegated	2/2	-> blocks.encode_receipt	TransactionReceiptEncoder.writeLogs
 fork.make_receipt	-	delegated	2/2	-> blocks.encode_receipt	TransactionReceiptEncoder.writeStatusOrStateRoot
 fork.make_receipt	1	missing	-	-	-
+fork.process_checked_system_transaction	1,2,3	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/systemcall/SystemCallProcessor.java:78-106	SystemCallProcessor.process
+fork.process_checked_system_transaction	0,2	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/systemcall/SystemCallProcessor.java:141-189	SystemCallProcessor.execute
+fork.process_checked_system_transaction	-	delegated	1/2	-> fork.process_unchecked_system_transaction	SystemCallProcessor.createMessageFrame
 fork.process_general_purpose_requests	0,1,2,3,4	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/requests/RequestProcessorCoordinator.java:44-50	RequestProcessorCoordinator.process
 fork.process_general_purpose_requests	3,4	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/requests/MainnetRequestsProcessor.java:31-50	MainnetRequestsProcessor.amsterdamRequestsProcessors
 fork.process_general_purpose_requests	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/requests/DepositRequestProcessor.java:45-54	DepositRequestProcessor.process
@@ -124,35 +145,184 @@ fork.process_general_purpose_requests	-	delegated	2/2	-> fork.process_checked_sy
 fork.process_general_purpose_requests	-	delegated	2/2	-> requests.parse_deposit_requests	DepositRequestProcessor.getDepositRequestData
 fork.process_general_purpose_requests	-	delegated	2/2	-> requests.parse_deposit_requests	DepositRequestProcessor.isDepositEvent
 fork.process_general_purpose_requests	-	delegated	2/2	-> requests.parse_deposit_requests	DepositLogDecoder.decodeFromLog
+fork.process_transaction	1,2,3,5	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionProcessor.java:201-749	MainnetTransactionProcessor.processTransaction
+fork.process_transaction	0	part	1/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/BodyValidation.java:54-60	BodyValidation.transactionsRoot
+fork.process_transaction	4	part	1/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/BodyValidation.java:100-113	BodyValidation.receiptsRoot
+fork.process_transaction	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/AbstractBlockProcessor.java:637-642	AbstractBlockProcessor.createTransactionAccessLocationTracker
+fork.process_transaction	-	delegated	2/2	-> state_tracker.incorporate_tx_into_block	AbstractBlockProcessor.applyPartialBlockAccessView
+fork.process_transaction	-	delegated	2/2	-> fork.check_transaction	MainnetTransactionValidator.validate
+fork.process_transaction	-	delegated	2/2	-> fork.check_transaction	MainnetTransactionValidator.validateForSender
+fork.process_transaction	-	delegated	2/2	-> fork.check_transaction	AbstractBlockProcessor.hasAvailableBlockBudget
+fork.process_transaction	-	delegated	2/2	-> vm.gas.settle_transaction_gas	AmsterdamGasCalculator.calculateGasRefund
+fork.process_transaction	-	delegated	2/2	-> vm.gas.settle_transaction_gas	TransactionGasAccounting.calculate
+fork.process_transaction	-	delegated	1/2	-> state_tracker.clear_account_preserving_balance	MainnetTransactionProcessor.settleSelfDestructs
+fork.process_transaction	-	delegated	2/2	-> vm.interpreter.process_top_level	MainnetTransactionProcessor.chargeTopFrame
 fork.process_unchecked_system_transaction	0,2,3	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/systemcall/SystemCallProcessor.java:141-189	SystemCallProcessor.execute
 fork.process_unchecked_system_transaction	3	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/systemcall/SystemCallProcessor.java:191-200	SystemCallProcessor.applyAccessLocationTracker
 fork.process_unchecked_system_transaction	1	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/systemcall/SystemCallProcessor.java:202-248	SystemCallProcessor.createMessageFrame
 fork.process_unchecked_system_transaction	1	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/systemcall/SystemCallProcessor.java:250-254	SystemCallProcessor.systemCallStateGasReservoir
+fork.process_withdrawals	0,2,3	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/WithdrawalsProcessor.java:28-46	WithdrawalsProcessor.processWithdrawals
+fork.process_withdrawals	1	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/BodyValidation.java:68-73	BodyValidation.withdrawalsRoot
+fork.process_withdrawals	1	part	1/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Util.java:86-97	Util.getRootFromListOfBytes
+fork.process_withdrawals	2	part	2/2	repos/clients/besu/datatypes/src/main/java/org/hyperledger/besu/datatypes/GWei.java:117-119	GWei.getAsWei
+fork.process_withdrawals	-	delegated	2/2	-> state_tracker.incorporate_tx_into_block	BlockAccessList.BlockAccessListBuilder.apply
+fork.process_withdrawals	-	delegated	1/2	-> state_tracker.create_ether	MutableAccount.incrementBalance
 fork.state_transition	1,2,3	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetBlockImporter.java:46-85	MainnetBlockImporter.importBlock
 fork.state_transition	-	delegated	2/2	-> fork.execute_block	AbstractBlockProcessor.processBlock
 fork.state_transition	-	delegated	2/2	-> fork.get_last_256_block_hashes	FrontierPreExecutionProcessor.createBlockHashLookup
 fork.state_transition	0	missing	-	-	-
+fork.update_sender_state	0,1,2,3	inlined	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionProcessor.java:201-749	MainnetTransactionProcessor.processTransaction
+fork.update_sender_state	0,1	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java:693-703	Transaction.calculateUpfrontGasCost
+fork.validate_header	1	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetBlockHeaderValidator.java:137-143	MainnetBlockHeaderValidator.blobAwareBlockHeaderValidator
+fork.validate_header	4	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/headervalidationrules/IncrementalTimestampRule.java:23-31	IncrementalTimestampRule.validate
+fork.validate_header	4	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/headervalidationrules/NoNonceRule.java:23-27	NoNonceRule.validate
+fork.validate_header	4	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/headervalidationrules/NoDifficultyRule.java:24-28	NoDifficultyRule.validate
+fork.validate_header	4	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/headervalidationrules/ConstantOmmersHashRule.java:26-30	ConstantOmmersHashRule.validate
+fork.validate_header	4,5	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/headervalidationrules/AncestryValidationRule.java:30-49	AncestryValidationRule.validate
+fork.validate_header	2	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/headervalidationrules/GasUsageValidationRule.java:33-43	GasUsageValidationRule.validate
+fork.validate_header	4	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/headervalidationrules/ExtraDataMaxLengthValidationRule.java:37-40	ExtraDataMaxLengthValidationRule.validate
+fork.validate_header	3	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/headervalidationrules/BaseFeeMarketBlockHeaderGasPriceValidationRule.java:38-76	BaseFeeMarketBlockHeaderGasPriceValidationRule.validate
+fork.validate_header	1	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/headervalidationrules/BlobGasValidationRule.java:45-79	BlobGasValidationRule.validate
+fork.validate_header	2,3,4,5	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetBlockHeaderValidator.java:108-127	MainnetBlockHeaderValidator.mergeBlockHeaderValidator
+fork.validate_header	0	missing	-	-	-
+fork_types.encode_account	0	inlined	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/staterootcommitter/BalStateRootCommitter.java:294-358	BalStateRootCommitter.BalComputation.resolveAccount
+requests.compute_requests_hash	0,1	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/BodyValidation.java:81-92	BodyValidation.requestsHash
+requests.compute_requests_hash	-	delegated	1/2	-> vm.precompiled_contracts.sha256.sha256	Sha256Hash.sha256
+requests.extract_deposit_data	0,1,2,3,4,5	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/DepositLogDecoder.java:77-90	DepositLogDecoder.decodeFromLog
+requests.extract_deposit_data	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/DepositLogDecoder.java:92-99	DepositLogDecoder.validateLogLength
+requests.extract_deposit_data	1	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/DepositLogDecoder.java:101-107	DepositLogDecoder.validateOffsets
+requests.extract_deposit_data	1	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/DepositLogDecoder.java:109-117	DepositLogDecoder.validateFieldOffset
+requests.extract_deposit_data	2,3,4	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/DepositLogDecoder.java:119-125	DepositLogDecoder.validateSizes
+requests.extract_deposit_data	2,3,4	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/DepositLogDecoder.java:127-134	DepositLogDecoder.validateFieldSize
+requests.extract_deposit_data	2,3,4	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/DepositLogDecoder.java:136-138	DepositLogDecoder.extractField
+requests.parse_deposit_requests	0,1,2	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/requests/DepositRequestProcessor.java:56-65	DepositRequestProcessor.getDepositRequestData
+requests.parse_deposit_requests	1	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/requests/DepositRequestProcessor.java:67-71	DepositRequestProcessor.isDepositEvent
+requests.parse_deposit_requests	-	delegated	2/2	-> requests.extract_deposit_data	DepositLogDecoder.decodeFromLog
+requests.parse_deposit_requests	-	delegated	2/2	-> requests.extract_deposit_data	DepositLogDecoder.validateLogLength
+requests.parse_deposit_requests	-	delegated	2/2	-> requests.extract_deposit_data	DepositLogDecoder.validateOffsets
+requests.parse_deposit_requests	-	delegated	2/2	-> requests.extract_deposit_data	DepositLogDecoder.validateSizes
+requests.parse_deposit_requests	-	delegated	2/2	-> requests.extract_deposit_data	DepositLogDecoder.extractField
+requests.parse_deposit_requests	-	delegated	2/2	-> requests.extract_deposit_data	DepositLogDecoder.validateFieldOffset
+requests.parse_deposit_requests	-	delegated	2/2	-> requests.extract_deposit_data	DepositLogDecoder.validateFieldSize
+state_tracker.account_deployable	0	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/processor/ContractCreationProcessor.java:121-124	ContractCreationProcessor.accountExists
+state_tracker.account_deployable	0	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/account/AccountState.java:105-107	AccountState.hasCode
+state_tracker.account_deployable	0	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/UpdateTrackingAccount.java:221-225	UpdateTrackingAccount.hasCode
+state_tracker.account_exists	-	delegated	2/2	-> state_tracker.get_account_optional	AbstractWorldUpdater.get
+state_tracker.account_exists	-	delegated	2/2	-> state_tracker.get_account_optional	JournaledUpdater.get
+state_tracker.account_exists	-	delegated	2/2	-> state_tracker.get_account_optional	SimpleWorld.get
+state_tracker.account_exists	-	delegated	2/2	-> state_tracker.get_account_optional	AbstractOperationV2.getAccount
+state_tracker.account_exists	-	delegated	1/2	-> state_tracker.get_account_optional	JournaledUpdater.getForMutation
+state_tracker.account_exists	-	delegated	1/2	-> state_tracker.get_account_optional	StackedUpdater.getForMutation
+state_tracker.account_exists	0	missing	-	-	-
+state_tracker.account_exists_and_is_empty	1	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/account/AccountState.java:142-144	AccountState.isEmpty
+state_tracker.account_exists_and_is_empty	1	part	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/account/AccountState.java:105-107	AccountState.hasCode
+state_tracker.account_exists_and_is_empty	1	part	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/UpdateTrackingAccount.java:221-225	UpdateTrackingAccount.hasCode
+state_tracker.account_exists_and_is_empty	-	delegated	2/2	-> state_tracker.get_account_optional	JournaledUpdater.get
+state_tracker.account_exists_and_is_empty	-	delegated	2/2	-> state_tracker.get_account_optional	AbstractWorldUpdater.get
+state_tracker.account_exists_and_is_empty	0	missing	-	-	-
+state_tracker.clear_account_preserving_balance	0,1	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionProcessor.java:987-1002	MainnetTransactionProcessor.settleSelfDestructs
+state_tracker.clear_account_preserving_balance	-	delegated	2/2	-> state_tracker.destroy_storage	JournaledAccount.clearStorage
 state_tracker.copy_tx_state	0,1	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/JournaledUpdater.java:51-69	JournaledUpdater.JournaledUpdater
 state_tracker.copy_tx_state	0	inlined	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java:276-319	MessageFrame.MessageFrame
+state_tracker.create_ether	0	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/account/MutableAccount.java:51-55	MutableAccount.incrementBalance
+state_tracker.create_ether	-	delegated	1/2	-> state_tracker.modify_state	SimpleAccount.setBalance
+state_tracker.create_ether	-	delegated	1/2	-> state_tracker.modify_state	JournaledAccount.setBalance
+state_tracker.create_ether	-	delegated	1/2	-> state_tracker.modify_state	UpdateTrackingAccount.setBalance
+state_tracker.destroy_account	1	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/AbstractWorldUpdater.java:125-129	AbstractWorldUpdater.deleteAccount
+state_tracker.destroy_account	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/JournaledUpdater.java:159-166	JournaledUpdater.deleteAccount
+state_tracker.destroy_account	-	delegated	2/2	-> state_tracker.destroy_storage	JournaledAccount.clearStorage
+state_tracker.destroy_account	-	delegated	1/2	-> state_tracker.destroy_storage	DefaultStateRootCommitter.DefaultComputation.clearStorage
+state_tracker.destroy_account	-	delegated	2/2	-> state_tracker.destroy_storage	UpdateTrackingAccount.clearStorage
+state_tracker.destroy_account	0	missing	-	-	-
+state_tracker.destroy_storage	1,2	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/UpdateTrackingAccount.java:340-347	UpdateTrackingAccount.clearStorage
+state_tracker.destroy_storage	0	inlined	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/block/access/list/AccessLocationTracker.java:98-210	AccessLocationTracker.createPartialBlockAccessView
+state_tracker.destroy_storage	0	inlined	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/block/access/list/AccessLocationTracker.java:212-265	AccessLocationTracker.addChangesSinceIndexStart
+state_tracker.destroy_storage	1,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/JournaledAccount.java:319-326	JournaledAccount.clearStorage
+state_tracker.get_account	-	delegated	2/2	-> state_tracker.get_account_optional	JournaledUpdater.get
+state_tracker.get_account	-	delegated	2/2	-> state_tracker.get_account_optional	AbstractWorldUpdater.get
+state_tracker.get_account	-	delegated	2/2	-> state_tracker.get_account_optional	JournaledUpdater.getAccount
+state_tracker.get_account	-	delegated	2/2	-> state_tracker.get_account_optional	AbstractWorldUpdater.getAccount
+state_tracker.get_account	-	delegated	2/2	-> state_tracker.get_account_optional	SimpleWorld.get
+state_tracker.get_account	-	delegated	1/2	-> state_tracker.get_account_optional	SimpleWorld.getAccount
+state_tracker.get_account	0	missing	-	-	-
+state_tracker.get_account_optional	0,1,2	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractOperation.java:100-107	AbstractOperation.getAccount
+state_tracker.get_account_optional	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/block/access/list/AccessLocationTracker.java:62-65	AccessLocationTracker.addTouchedAccount
+state_tracker.get_account_optional	1,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/AbstractWorldUpdater.java:92-103	AbstractWorldUpdater.get
+state_tracker.get_account_optional	0,1,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractOperation.java:118-125	AbstractOperation.getMutableAccount
+state_tracker.get_account_optional	1,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/JournaledUpdater.java:168-178	JournaledUpdater.get
+state_tracker.get_code	1	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/UpdateTrackingAccount.java:277-279	UpdateTrackingAccount.currentCode
+state_tracker.get_code	0,1,3	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/JournaledAccount.java:214-221	JournaledAccount.getCode
+state_tracker.get_code	0,2,3	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/UpdateTrackingAccount.java:260-275	UpdateTrackingAccount.resolveOldCode
 state_tracker.get_pre_state_account	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/block/access/list/AccessLocationTracker.java:286-290	AccessLocationTracker.IndexStartAccount.IndexStartAccount
 state_tracker.get_pre_state_account	-	delegated	2/2	-> state_tracker.get_pre_state_account_optional	AccessLocationTracker.findOriginalAccount
+state_tracker.get_pre_state_account_optional	0,1,2	entry	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractOperation.java:100-107	AbstractOperation.getAccount
+state_tracker.get_pre_state_account_optional	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/block/access/list/AccessLocationTracker.java:62-65	AccessLocationTracker.addTouchedAccount
+state_tracker.get_pre_state_account_optional	1,2	part	1/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/parallelization/BalConcurrentTransactionProcessor.java:78-95	BalConcurrentTransactionProcessor.getWorldStateForTransaction
+state_tracker.get_pre_state_account_optional	0,1,2	part	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractOperationV2.java:139-143	AbstractOperationV2.getAccount
+state_tracker.get_storage	0	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractOperation.java:173-181	AbstractOperation.getStorageValue
+state_tracker.get_storage	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/block/access/list/AccessLocationTracker.java:67-70	AccessLocationTracker.addSlotAccessForAccount
+state_tracker.get_storage	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/block/access/list/AccessLocationTracker.java:80-82	AccessLocationTracker.AccountAccessList.addSlotAccess
+state_tracker.get_storage	1,2,3	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/JournaledAccount.java:268-281	JournaledAccount.getStorageValue
+state_tracker.get_storage	1,2,3	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/UpdateTrackingAccount.java:286-299	UpdateTrackingAccount.getStorageValue
+state_tracker.get_storage_original	0,1,2,3	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/UpdateTrackingAccount.java:301-310	UpdateTrackingAccount.getOriginalStorageValue
+state_tracker.get_storage_original	0,3	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/JournaledAccount.java:283-289	JournaledAccount.getOriginalStorageValue
+state_tracker.get_storage_original	1,2,3	part	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/UpdateTrackingAccount.java:286-299	UpdateTrackingAccount.getStorageValue
+state_tracker.get_transient_storage	0	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java:1654-1657	MessageFrame.getTransientStorageValue
 state_tracker.incorporate_tx_into_block	2,3,4	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/StackedUpdater.java:83-117	StackedUpdater.commit
 state_tracker.incorporate_tx_into_block	-	delegated	2/2	-> block_access_lists.update_builder_from_tx	BlockAccessList.BlockAccessListBuilder.apply
 state_tracker.incorporate_tx_into_block	-	delegated	1/2	-> block_access_lists.update_builder_from_tx	BlockAccessList.BlockAccessListBuilder.AccountBuilder.addStorageRead
 state_tracker.incorporate_tx_into_block	-	delegated	1/2	-> block_access_lists.update_builder_from_tx	BlockAccessList.BlockAccessListBuilder.AccountBuilder.addStorageWrite
 state_tracker.incorporate_tx_into_block	-	delegated	2/2	-> block_access_lists.update_builder_from_tx	AccessLocationTracker.createPartialBlockAccessView
 state_tracker.incorporate_tx_into_block	0,1,5	missing	-	-	-
+state_tracker.increment_nonce	0	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/account/MutableAccount.java:32-36	MutableAccount.incrementNonce
+state_tracker.is_account_alive	0	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/account/AccountState.java:142-144	AccountState.isEmpty
+state_tracker.is_account_alive	0	inlined	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/SpuriousDragonGasCalculator.java:90-97	SpuriousDragonGasCalculator.selfDestructOperationGasCost
+state_tracker.is_account_alive	0	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/account/AccountState.java:105-107	AccountState.hasCode
+state_tracker.is_account_alive	0	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/UpdateTrackingAccount.java:221-225	UpdateTrackingAccount.hasCode
+state_tracker.is_account_alive	0	inlined	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java:372-380	AbstractCallOperation.callCreatesNewAccount
+state_tracker.is_account_alive	0	inlined	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/AmsterdamGasCalculator.java:387-397	AmsterdamGasCalculator.selfDestructOperationGasCost
+state_tracker.mark_account_created	0	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java:1264-1266	MessageFrame.addCreate
 state_tracker.modify_state	0	part	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/account/MutableAccount.java:51-55	MutableAccount.incrementBalance
 state_tracker.modify_state	0	part	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/account/MutableAccount.java:65-73	MutableAccount.decrementBalance
 state_tracker.modify_state	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/WorldUpdater.java:150-153	WorldUpdater.clearAccountsThatAreEmpty
+state_tracker.move_ether	0,1	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/processor/MessageCallProcessor.java:127-173	MessageCallProcessor.transferValue
+state_tracker.move_ether	0,1	inlined	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/PayOperation.java:45-93	PayOperation.execute
+state_tracker.move_ether	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/account/MutableAccount.java:51-55	MutableAccount.incrementBalance
+state_tracker.move_ether	0	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/account/MutableAccount.java:65-73	MutableAccount.decrementBalance
 state_tracker.restore_tx_state	0	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java:114-149	AbstractMessageProcessor.clearAccumulatedStateBesidesGasAndOutput
+state_tracker.set_account	0	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/AbstractWorldUpdater.java:77-82	AbstractWorldUpdater.track
+state_tracker.set_account	0	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/AbstractWorldUpdater.java:125-129	AbstractWorldUpdater.deleteAccount
+state_tracker.set_account	0	inlined	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/JournaledUpdater.java:129-135	JournaledUpdater.createAccount
+state_tracker.set_account	0	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/JournaledUpdater.java:159-166	JournaledUpdater.deleteAccount
+state_tracker.set_account_balance	0	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/JournaledAccount.java:206-212	JournaledAccount.setBalance
+state_tracker.set_account_balance	0	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/fluent/SimpleAccount.java:148-154	SimpleAccount.setBalance
+state_tracker.set_code	0,1	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/JournaledAccount.java:249-261	JournaledAccount.setCode
+state_tracker.set_code	0,1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/fluent/SimpleAccount.java:156-163	SimpleAccount.setCode
+state_tracker.set_storage	1	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/JournaledAccount.java:311-317	JournaledAccount.setStorageValue
+state_tracker.set_storage	0	inlined	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/SStoreOperation.java:70-159	SStoreOperation.execute
+state_tracker.set_storage	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/UpdateTrackingAccount.java:332-338	UpdateTrackingAccount.setStorageValue
+state_tracker.set_storage	-	delegated	2/2	-> state_tracker.get_account_optional	AbstractOperation.getMutableAccount
+state_tracker.set_storage	-	delegated	2/2	-> state_tracker.get_account_optional	AbstractOperationV2.getMutableAccount
+state_tracker.set_transient_storage	0	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java:1666-1669	MessageFrame.setTransientStorageValue
 transactions.calculate_effective_gas_price	1,2	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/feemarket/TransactionPriceCalculator.java:30-44	TransactionPriceCalculator.eip1559
 transactions.calculate_effective_gas_price	0,2	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionValidator.java:199-291	MainnetTransactionValidator.validateCostAndFee
 transactions.calculate_effective_gas_price	1	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java:342-360	Transaction.getEffectivePriorityFeePerGas
 transactions.calculate_effective_gas_price	1	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java:746-748	Transaction.getEffectiveGasPrice
+transactions.calculate_intrinsic_cost	0,1,5	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/AmsterdamGasCalculator.java:220-240	AmsterdamGasCalculator.transactionIntrinsicGasCost
+transactions.calculate_intrinsic_cost	4	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/AmsterdamGasCalculator.java:183-197	AmsterdamGasCalculator.transactionFloorCost
+transactions.calculate_intrinsic_cost	2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/AmsterdamGasCalculator.java:199-212	AmsterdamGasCalculator.accessListGasCost
+transactions.calculate_intrinsic_cost	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/AmsterdamGasCalculator.java:247-263	AmsterdamGasCalculator.baseRecipientExecutionGas
+transactions.calculate_intrinsic_cost	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/AmsterdamGasCalculator.java:266-271	AmsterdamGasCalculator.isSelfTransfer
+transactions.calculate_intrinsic_cost	4	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/AmsterdamGasCalculator.java:278-285	AmsterdamGasCalculator.accessListBytes
+transactions.calculate_intrinsic_cost	3	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/AmsterdamGasCalculator.java:399-405	AmsterdamGasCalculator.delegateCodeGasCost
+transactions.calculate_intrinsic_cost	5	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/GasCalculator.java:603-607	GasCalculator.transactionIntrinsicExecutionGas
+transactions.calculate_intrinsic_cost	-	delegated	2/2	-> vm.gas.init_code_cost	AmsterdamGasCalculator.initCodeCost
 transactions.calculate_max_gas_fee	0	inlined	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java:693-703	Transaction.calculateUpfrontGasCost
 transactions.calculate_max_gas_fee	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java:725-732	Transaction.getMaxGasPrice
+transactions.chain_id	0,1,2	inlined	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/FrontierTransactionDecoder.java:48-91	FrontierTransactionDecoder.decode
 transactions.check_nonce	0	inlined	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionValidator.java:293-365	MainnetTransactionValidator.validateForSender
+transactions.count_tokens_in_data	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Payload.java:64-72	Payload.computeZeroBytes
+transactions.count_tokens_in_data	0	inlined	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/AmsterdamGasCalculator.java:220-240	AmsterdamGasCalculator.transactionIntrinsicGasCost
 transactions.decode_transaction	1,2,3	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/TransactionDecoder.java:122-136	TransactionDecoder.decodeOpaqueBytes
 transactions.decode_transaction	2	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/AccessListTransactionDecoder.java:40-81	AccessListTransactionDecoder.decode
 transactions.decode_transaction	2	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/EIP1559TransactionDecoder.java:40-81	EIP1559TransactionDecoder.decode
@@ -165,23 +335,74 @@ transactions.decode_transaction	2	part	2/2	repos/clients/besu/ethereum/core/src/
 transactions.decode_transaction	3	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/TransactionDecoder.java:164-166	TransactionDecoder.isTypedTransaction
 transactions.decode_transaction	2	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/TransactionDecoder.java:177-188	TransactionDecoder.getDecoder
 transactions.decode_transaction	0,4	missing	-	-	-
+transactions.encode_transaction	0,1	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/TransactionEncoder.java:90-116	TransactionEncoder.encodeOpaqueBytes
+transactions.encode_transaction	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/FrontierTransactionEncoder.java:26-37	FrontierTransactionEncoder.encode
+transactions.encode_transaction	1	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/EIP1559TransactionEncoder.java:28-42	EIP1559TransactionEncoder.encode
+transactions.encode_transaction	1	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/BlobTransactionEncoder.java:28-52	BlobTransactionEncoder.encode
+transactions.encode_transaction	1	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/AccessListTransactionEncoder.java:34-54	AccessListTransactionEncoder.encode
+transactions.encode_transaction	1	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/CodeDelegationTransactionEncoder.java:66-88	CodeDelegationTransactionEncoder.encode
+transactions.encode_transaction	2	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/TransactionEncoder.java:138-150	TransactionEncoder.getEncoder
 transactions.has_access_list	0	entry	2/2	repos/clients/besu/datatypes/src/main/java/org/hyperledger/besu/datatypes/TransactionType.java:149-151	TransactionType.supportsAccessList
+transactions.recover_sender	1,2,3	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java:486-498	Transaction.computeSender
+transactions.recover_sender	1	inlined	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/FrontierTransactionDecoder.java:48-91	FrontierTransactionDecoder.decode
+transactions.recover_sender	3	part	1/2	repos/clients/besu/datatypes/src/main/java/org/hyperledger/besu/datatypes/Address.java:147-149	Address.extract
+transactions.recover_sender	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionValidator.java:371-407	MainnetTransactionValidator.validateTransactionSignature
+transactions.recover_sender	1,2	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java:846-918	Transaction.getPreimage
+transactions.recover_sender	-	delegated	2/2	-> transactions.signing_hash_155	Transaction.frontierPreimage
+transactions.recover_sender	-	delegated	2/2	-> transactions.signing_hash_1559	Transaction.eip1559Preimage
+transactions.recover_sender	-	delegated	2/2	-> transactions.signing_hash_4844	Transaction.blobPreimage
+transactions.recover_sender	-	delegated	2/2	-> transactions.signing_hash_2930	Transaction.accessListPreimage
+transactions.recover_sender	-	delegated	2/2	-> transactions.signing_hash_7702	Transaction.codeDelegationPreimage
 transactions.signing_hash_155	0	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java:920-944	Transaction.frontierPreimage
 transactions.signing_hash_155	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java:790-825	Transaction.computeSenderRecoveryHash
+transactions.signing_hash_1559	0	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java:946-974	Transaction.eip1559Preimage
+transactions.signing_hash_1559	0	part	1/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/AccessListTransactionEncoder.java:92-109	AccessListTransactionEncoder.writeAccessList
+transactions.signing_hash_1559	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java:790-825	Transaction.computeSenderRecoveryHash
+transactions.signing_hash_1559	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java:976-996	Transaction.eip1559PreimageFields
 transactions.signing_hash_2930	0	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java:1033-1051	Transaction.accessListPreimage
 transactions.signing_hash_2930	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/AccessListTransactionEncoder.java:56-90	AccessListTransactionEncoder.encodeAccessListInner
 transactions.signing_hash_2930	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/AccessListTransactionEncoder.java:92-109	AccessListTransactionEncoder.writeAccessList
 transactions.signing_hash_2930	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java:790-825	Transaction.computeSenderRecoveryHash
+transactions.signing_hash_4844	0	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java:998-1031	Transaction.blobPreimage
+transactions.signing_hash_4844	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/BlobTransactionEncoder.java:54-57	BlobTransactionEncoder.writeBlobVersionedHashes
+transactions.signing_hash_4844	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java:790-825	Transaction.computeSenderRecoveryHash
+transactions.signing_hash_4844	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java:976-996	Transaction.eip1559PreimageFields
 transactions.signing_hash_7702	0	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java:1053-1084	Transaction.codeDelegationPreimage
 transactions.signing_hash_7702	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/CodeDelegationTransactionEncoder.java:35-40	CodeDelegationTransactionEncoder.encodeCodeDelegationInner
 transactions.signing_hash_7702	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/CodeDelegationTransactionEncoder.java:49-57	CodeDelegationTransactionEncoder.encodeSingleCodeDelegation
 transactions.signing_hash_7702	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/CodeDelegationTransactionEncoder.java:59-64	CodeDelegationTransactionEncoder.encodeAuthorizationDetails
 transactions.signing_hash_7702	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java:790-825	Transaction.computeSenderRecoveryHash
 transactions.signing_hash_7702	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java:976-996	Transaction.eip1559PreimageFields
+transactions.signing_hash_pre155	0	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java:920-944	Transaction.frontierPreimage
+transactions.signing_hash_pre155	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java:790-825	Transaction.computeSenderRecoveryHash
+transactions.validate_transaction	0,2	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionValidator.java:86-155	MainnetTransactionValidator.validate
+transactions.validate_transaction	2,3	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetBlobsValidator.java:108-146	MainnetBlobsValidator.validateBlobTransaction
+transactions.validate_transaction	3	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionValidator.java:157-192	MainnetTransactionValidator.validateCodeDelegation
+transactions.validate_transaction	1,4	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionValidator.java:199-291	MainnetTransactionValidator.validateCostAndFee
+transactions.validate_transaction	-	delegated	2/2	-> transactions.calculate_intrinsic_cost	AmsterdamGasCalculator.transactionIntrinsicGasCost
+transactions.validate_transaction	-	delegated	2/2	-> transactions.calculate_intrinsic_cost	AmsterdamGasCalculator.transactionFloorCost
+utils.address.compute_contract_address	0	entry	2/2	repos/clients/besu/datatypes/src/main/java/org/hyperledger/besu/datatypes/Address.java:215-225	Address.contractAddress
+utils.address.compute_contract_address	1	part	2/2	repos/clients/besu/datatypes/src/main/java/org/hyperledger/besu/datatypes/Address.java:147-149	Address.extract
+utils.address.compute_create2_contract_address	0,1	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/Create2OperationV2.java:56-64	Create2OperationV2.generateTargetContractAddress
+utils.address.compute_create2_contract_address	0,1	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/Create2Operation.java:59-67	Create2Operation.generateTargetContractAddress
+utils.address.compute_create2_contract_address	1	part	2/2	repos/clients/besu/datatypes/src/main/java/org/hyperledger/besu/datatypes/Address.java:147-149	Address.extract
+utils.address.to_address_masked	0	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/internal/Words.java:46-59	Words.toAddress
+utils.address.to_address_masked	0	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/StackUtil.java:181-188	StackUtil.readAddressAt
+vm.emit_transfer_log	0,2	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/log/EIP7708TransferLogEmitter.java:120-126	EIP7708TransferLogEmitter.emitTransferLog
+vm.emit_transfer_log	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/log/EIP7708TransferLogEmitter.java:86-98	EIP7708TransferLogEmitter.createTransferLog
+vm.emit_transfer_log	2	part	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java:991-993	MessageFrame.addLog
 vm.eoa_delegation.calculate_delegation_cost	0,1,2,3,4	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/PragueGasCalculator.java:108-128	PragueGasCalculator.calculateCodeDelegationResolutionGas
 vm.eoa_delegation.calculate_delegation_cost	2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/CodeDelegationHelper.java:69-71	CodeDelegationHelper.getTargetAddress
 vm.eoa_delegation.calculate_delegation_cost	-	delegated	2/2	-> vm.eoa_delegation.is_valid_delegation	CodeDelegationHelper.hasCodeDelegation
+vm.eoa_delegation.get_delegated_code_address	0	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/CodeDelegationHelper.java:83-103	CodeDelegationHelper.getTarget
+vm.eoa_delegation.get_delegated_code_address	0	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/CodeDelegationHelper.java:69-71	CodeDelegationHelper.getTargetAddress
+vm.eoa_delegation.get_delegated_code_address	-	delegated	2/2	-> vm.eoa_delegation.is_valid_delegation	CodeDelegationHelper.hasCodeDelegation
 vm.eoa_delegation.is_valid_delegation	0	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/CodeDelegationHelper.java:56-60	CodeDelegationHelper.hasCodeDelegation
+vm.eoa_delegation.recover_authority	1,2	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/CodeDelegation.java:155-164	CodeDelegation.computeAuthority
+vm.eoa_delegation.recover_authority	1	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/CodeDelegationTransactionEncoder.java:42-47	CodeDelegationTransactionEncoder.encodeSingleCodeDelegationWithoutSignature
+vm.eoa_delegation.recover_authority	1	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/encoding/CodeDelegationTransactionEncoder.java:59-64	CodeDelegationTransactionEncoder.encodeAuthorizationDetails
+vm.eoa_delegation.recover_authority	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/CodeDelegation.java:121-130	CodeDelegation.authorizer
+vm.eoa_delegation.recover_authority	0	inlined	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/CodeDelegationProcessor.java:168-191	CodeDelegationProcessor.isCodeDelegationValid
 vm.eoa_delegation.resolve_delegated_code_address	0,1,2	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/PragueGasCalculator.java:108-128	PragueGasCalculator.calculateCodeDelegationResolutionGas
 vm.eoa_delegation.resolve_delegated_code_address	2	inlined	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractCallOperationV2.java:167-301	AbstractCallOperationV2.execute
 vm.eoa_delegation.resolve_delegated_code_address	2	inlined	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java:182-316	AbstractCallOperation.execute
@@ -189,31 +410,202 @@ vm.eoa_delegation.resolve_delegated_code_address	0,1,3	part	2/2	repos/clients/be
 vm.eoa_delegation.resolve_delegated_code_address	0,1,3	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java:406-448	AbstractCallOperation.getCode
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> vm.eoa_delegation.get_delegated_code_address	CodeDelegationHelper.hasCodeDelegation
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> vm.eoa_delegation.get_delegated_code_address	CodeDelegationHelper.getTargetAddress
+vm.eoa_delegation.set_delegation	0,1,2,3,4,5	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/CodeDelegationProcessor.java:99-166	CodeDelegationProcessor.processCodeDelegation
+vm.eoa_delegation.set_delegation	4,5	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/CodeDelegationService.java:40-49	CodeDelegationService.processCodeDelegation
+vm.eoa_delegation.set_delegation	2	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/CodeDelegationProcessor.java:73-97	CodeDelegationProcessor.process
+vm.eoa_delegation.set_delegation	1,2,4	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionProcessor.java:909-933	MainnetTransactionProcessor.chargeCodeDelegationAccesses
+vm.eoa_delegation.set_delegation	-	delegated	2/2	-> vm.eoa_delegation.validate_authorization	CodeDelegationProcessor.isCodeDelegationValid
+vm.eoa_delegation.set_delegation	-	delegated	2/2	-> vm.eoa_delegation.validate_authorization	CodeDelegationProcessor.canSetCodeDelegation
+vm.eoa_delegation.set_delegation	-	delegated	2/2	-> vm.eoa_delegation.validate_authorization	CodeDelegationService.canSetCodeDelegation
+vm.eoa_delegation.set_delegation	-	delegated	2/2	-> vm.eoa_delegation.is_valid_delegation	CodeDelegationHelper.hasCodeDelegation
+vm.eoa_delegation.set_delegation	-	delegated	2/2	-> vm.eoa_delegation.validate_authorization	CodeDelegation.authorizer
+vm.eoa_delegation.set_delegation	-	delegated	2/2	-> state_tracker.increment_nonce	MutableAccount.incrementNonce
+vm.eoa_delegation.validate_authorization	2,3	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/CodeDelegationProcessor.java:99-166	CodeDelegationProcessor.processCodeDelegation
+vm.eoa_delegation.validate_authorization	4	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/worldstate/CodeDelegationService.java:57-59	CodeDelegationService.canSetCodeDelegation
+vm.eoa_delegation.validate_authorization	0,1,2	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/CodeDelegationProcessor.java:168-191	CodeDelegationProcessor.isCodeDelegationValid
+vm.eoa_delegation.validate_authorization	4,5	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/CodeDelegationProcessor.java:193-215	CodeDelegationProcessor.canSetCodeDelegation
+vm.eoa_delegation.validate_authorization	-	delegated	2/2	-> vm.eoa_delegation.recover_authority	CodeDelegation.authorizer
+vm.eoa_delegation.validate_authorization	-	delegated	2/2	-> vm.eoa_delegation.recover_authority	CodeDelegation.computeAuthority
+vm.eoa_delegation.validate_authorization	-	delegated	2/2	-> vm.eoa_delegation.is_valid_delegation	CodeDelegationHelper.hasCodeDelegation
+vm.gas.calculate_blob_gas_price	0	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/feemarket/BlobFeeMarket.java:46-59	BlobFeeMarket.blobGasPricePerGas
+vm.gas.calculate_blob_gas_price	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/feemarket/BlobFeeMarket.java:61-74	BlobFeeMarket.fakeExponential
 vm.gas.calculate_data_fee	0	inlined	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/core/Transaction.java:693-703	Transaction.calculateUpfrontGasCost
 vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	BlobFeeMarket.blobGasPricePerGas
+vm.gas.calculate_excess_blob_gas	1,2,3,4	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/OsakaTargetingGasLimitCalculator.java:103-131	OsakaTargetingGasLimitCalculator.computeExcessBlobGas
+vm.gas.calculate_excess_blob_gas	0	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/feemarket/ExcessBlobGasCalculator.java:31-42	ExcessBlobGasCalculator.calculateExcessBlobGasForParent
+vm.gas.calculate_excess_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	BlobFeeMarket.blobGasPricePerGas
+vm.gas.calculate_excess_blob_gas	-	delegated	1/2	-> vm.gas.calculate_blob_gas_price	BlobFeeMarket.fakeExponential
 vm.gas.calculate_gas_extend_memory	0,3,5	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/FrontierGasCalculator.java:393-403	FrontierGasCalculator.memoryExpansionGasCost
 vm.gas.calculate_gas_extend_memory	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/Memory.java:96-111	Memory.calculateNewActiveWords
 vm.gas.calculate_gas_extend_memory	-	delegated	2/2	-> vm.gas.calculate_memory_gas_cost	FrontierGasCalculator.memoryCost
 vm.gas.calculate_gas_extend_memory	2,4	missing	-	-	-
+vm.gas.calculate_memory_gas_cost	1,2,3	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/FrontierGasCalculator.java:556-564	FrontierGasCalculator.memoryCost
+vm.gas.calculate_memory_gas_cost	0	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/Memory.java:96-111	Memory.calculateNewActiveWords
+vm.gas.calculate_message_call_gas	0,2,3	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/TangerineWhistleGasCalculator.java:113-127	TangerineWhistleGasCalculator.gasAvailableForChildCall
+vm.gas.calculate_message_call_gas	2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/TangerineWhistleGasCalculator.java:109-111	TangerineWhistleGasCalculator.gasCap
+vm.gas.calculate_message_call_gas	1	inlined	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java:182-316	AbstractCallOperation.execute
 vm.gas.calculate_total_blob_gas	0	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/CancunGasCalculator.java:63-66	CancunGasCalculator.blobGasCost
+vm.gas.charge_gas	0	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java:350-353	MessageFrame.decrementRemainingGas
 vm.gas.charge_gas_from_meter	1	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java:350-353	MessageFrame.decrementRemainingGas
+vm.gas.charge_state_gas	0	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java:1143-1166	MessageFrame.consumeStateGas
 vm.gas.charge_state_gas_from_meter	0,1,2	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java:1143-1166	MessageFrame.consumeStateGas
+vm.gas.check_block_gas_capacity	0,1,2	entry	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/BlockGasAccountingStrategy.java:105-119	BlockGasAccountingStrategy.hasBlockCapacity
+vm.gas.check_block_gas_capacity	1,2	part	1/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/AbstractBlockProcessor.java:605-635	AbstractBlockProcessor.hasAvailableBlockBudget
+vm.gas.check_block_gas_capacity	3	missing	-	-	-
+vm.gas.check_gas	0	inlined	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java:182-316	AbstractCallOperation.execute
 vm.gas.check_max_fee_per_blob_gas	0,2	inlined	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetTransactionValidator.java:199-291	MainnetTransactionValidator.validateCostAndFee
 vm.gas.check_max_fee_per_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	BlobFeeMarket.blobGasPricePerGas
 vm.gas.check_max_fee_per_blob_gas	1	missing	-	-	-
+vm.gas.commit_state_gas	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java:1130-1132	MessageFrame.resetStateGasSpilled
+vm.gas.commit_state_gas	0,2	missing	-	-	-
 vm.gas.credit_state_gas_refund	0,1	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java:1195-1206	MessageFrame.refillStateGasReservoir
 vm.gas.credit_state_gas_refund	0	part	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java:369-371	MessageFrame.incrementRemainingGas
 vm.gas.credit_state_gas_refund	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java:1095-1107	MessageFrame.incrementStateGasReservoir
+vm.gas.drain_state_gas_reservoir	0	missing	-	-	-
 vm.gas.forfeit_remaining_gas	1	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java:164-171	AbstractMessageProcessor.exceptionalHalt
 vm.gas.forfeit_remaining_gas	0	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java:155-162	AbstractMessageProcessor.handleStateGasOnFrameFailure
 vm.gas.forfeit_remaining_gas	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java:340-342	MessageFrame.clearGasRemaining
+vm.gas.init_code_cost	0	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/AmsterdamGasCalculator.java:274-276	AmsterdamGasCalculator.initCodeCost
+vm.gas.init_code_cost	0	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/ShanghaiGasCalculator.java:43-46	ShanghaiGasCalculator.initcodeCost
+vm.gas.max_message_call_gas	0	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/TangerineWhistleGasCalculator.java:51-53	TangerineWhistleGasCalculator.allButOneSixtyFourth
 vm.gas.repay_state_gas_spill	0,1,2	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java:1217-1226	MessageFrame.settleStateGasOnChildSuccess
 vm.gas.repay_state_gas_spill	3	missing	-	-	-
+vm.gas.restore_child_gas	1	missing	-	-	-
 vm.gas.restore_state_gas	0	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java:155-162	AbstractMessageProcessor.handleStateGasOnFrameFailure
 vm.gas.restore_state_gas	1,2	inlined	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java:114-149	AbstractMessageProcessor.clearAccumulatedStateBesidesGasAndOutput
+vm.gas.restore_state_gas_to_entry	1,2	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/processor/AbstractMessageProcessor.java:155-162	AbstractMessageProcessor.handleStateGasOnFrameFailure
+vm.gas.restore_state_gas_to_entry	2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/frame/MessageFrame.java:1130-1132	MessageFrame.resetStateGasSpilled
+vm.gas.restore_state_gas_to_entry	0	missing	-	-	-
 vm.gas.settle_transaction_gas	0,1,2,5	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/AmsterdamGasCalculator.java:412-435	AmsterdamGasCalculator.calculateGasRefund
 vm.gas.settle_transaction_gas	0,4,5	part	2/2	repos/clients/besu/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/TransactionGasAccounting.java:82-107	TransactionGasAccounting.calculate
 vm.gas.settle_transaction_gas	3	missing	-	-	-
+vm.gas.tx_state_gas_used	0	missing	-	-	-
+vm.gas.withhold_create_gas	0,1	inlined	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractCreateOperationV2.java:194-227	AbstractCreateOperationV2.spawnChildMessage
+vm.gas.withhold_create_gas	0,1	inlined	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCreateOperation.java:209-243	AbstractCreateOperation.spawnChildMessage
+vm.gas.withhold_create_gas	-	delegated	2/2	-> vm.gas.max_message_call_gas	TangerineWhistleGasCalculator.gasAvailableForChildCreate
+vm.gas.withhold_create_gas	-	delegated	2/2	-> vm.gas.max_message_call_gas	TangerineWhistleGasCalculator.allButOneSixtyFourth
+vm.incorporate_child	2,4	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCallOperation.java:324-369	AbstractCallOperation.complete
+vm.incorporate_child	2,4	inlined	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractCreateOperationV2.java:229-259	AbstractCreateOperationV2.complete
+vm.incorporate_child	2,4	inlined	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractCreateOperation.java:256-290	AbstractCreateOperation.complete
+vm.incorporate_child	2,4	inlined	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractCallOperationV2.java:309-350	AbstractCallOperationV2.complete
+vm.incorporate_child	-	delegated	2/2	-> vm.gas.repay_state_gas_spill	MessageFrame.settleStateGasOnChildSuccess
+vm.incorporate_child	0,1,3	missing	-	-	-
+vm.instructions.arithmetic.add	0,2	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AddOperation.java:50-65	AddOperation.staticOperation
+vm.instructions.arithmetic.add	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AddOperation.java:35-37	AddOperation.AddOperation
+vm.instructions.arithmetic.add	0,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AddOperationOptimized.java:49-60	AddOperationOptimized.staticOperation
+vm.instructions.arithmetic.add	0,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AddOperationV2.java:56-77	AddOperationV2.staticOperation
+vm.instructions.arithmetic.add	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractFixedCostOperation.java:74-87	AbstractFixedCostOperation.execute
+vm.instructions.arithmetic.add	-	delegated	2/2	-> vm.stack.pop	MessageFrame.popStackItem
+vm.instructions.arithmetic.add	-	delegated	2/2	-> vm.stack.push	MessageFrame.pushStackItem
+vm.instructions.arithmetic.addmod	0,2	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AddModOperation.java:50-75	AddModOperation.staticOperation
+vm.instructions.arithmetic.addmod	0,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AddModOperationV2.java:45-69	AddModOperationV2.staticOperation
+vm.instructions.arithmetic.addmod	0,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AddModOperationOptimized.java:48-62	AddModOperationOptimized.staticOperation
+vm.instructions.arithmetic.addmod	2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/UInt256.java:725-754	UInt256.addMod
+vm.instructions.arithmetic.addmod	-	delegated	2/2	-> vm.stack.pop	MessageFrame.popStackItem
+vm.instructions.arithmetic.addmod	-	delegated	2/2	-> vm.stack.push	MessageFrame.pushStackItem
+vm.instructions.arithmetic.addmod	1,3	missing	-	-	-
+vm.instructions.arithmetic.div	0,2	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/DivOperation.java:50-74	DivOperation.staticOperation
+vm.instructions.arithmetic.div	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/DivOperationV2.java:32-34	DivOperationV2.DivOperationV2
+vm.instructions.arithmetic.div	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/DivOperation.java:35-37	DivOperation.DivOperation
+vm.instructions.arithmetic.div	0,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/DivOperationV2.java:47-71	DivOperationV2.staticOperation
+vm.instructions.arithmetic.div	0,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/DivOperationOptimized.java:50-63	DivOperationOptimized.staticOperation
+vm.instructions.arithmetic.div	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractFixedCostOperationV2.java:66-72	AbstractFixedCostOperationV2.execute
+vm.instructions.arithmetic.div	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractFixedCostOperation.java:74-87	AbstractFixedCostOperation.execute
+vm.instructions.arithmetic.div	2	part	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/UInt256.java:671-698	UInt256.div
+vm.instructions.arithmetic.div	-	delegated	2/2	-> vm.stack.pop	MessageFrame.popStackItem
+vm.instructions.arithmetic.div	-	delegated	2/2	-> vm.stack.push	MessageFrame.pushStackItem
+vm.instructions.arithmetic.div	-	delegated	1/2	-> vm.stack.pop	MessageFrame.stackHasItemsV2
+vm.instructions.arithmetic.exp	0,1,2	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/ExpOperation.java:52-79	ExpOperation.staticOperation
+vm.instructions.arithmetic.exp	0,1,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/ExpOperationV2.java:54-80	ExpOperationV2.staticOperation
+vm.instructions.arithmetic.exp	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/ExpOperationV2.java:82-93	ExpOperationV2.bitLength
+vm.instructions.arithmetic.exp	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/SpuriousDragonGasCalculator.java:85-88	SpuriousDragonGasCalculator.expOperationByteGasCost
+vm.instructions.arithmetic.exp	2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/ExpOperationV2.java:97-108	ExpOperationV2.power
+vm.instructions.arithmetic.exp	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/gascalculator/FrontierGasCalculator.java:424-427	FrontierGasCalculator.expOperationGasCost
+vm.instructions.arithmetic.exp	-	delegated	2/2	-> vm.stack.pop	MessageFrame.popStackItem
+vm.instructions.arithmetic.exp	-	delegated	2/2	-> vm.stack.push	MessageFrame.pushStackItem
+vm.instructions.arithmetic.exp	3	missing	-	-	-
+vm.instructions.arithmetic.mod	0,2	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/ModOperation.java:51-72	ModOperation.staticOperation
+vm.instructions.arithmetic.mod	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/ModOperationV2.java:31-33	ModOperationV2.ModOperationV2
+vm.instructions.arithmetic.mod	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/ModOperationOptimized.java:33-35	ModOperationOptimized.ModOperationOptimized
+vm.instructions.arithmetic.mod	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/ModOperation.java:36-38	ModOperation.ModOperation
+vm.instructions.arithmetic.mod	0,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/ModOperationV2.java:46-70	ModOperationV2.staticOperation
+vm.instructions.arithmetic.mod	0,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/ModOperationOptimized.java:48-58	ModOperationOptimized.staticOperation
+vm.instructions.arithmetic.mod	1	part	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractFixedCostOperation.java:74-87	AbstractFixedCostOperation.execute
+vm.instructions.arithmetic.mod	2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/UInt256.java:636-643	UInt256.mod
+vm.instructions.arithmetic.mod	-	delegated	2/2	-> vm.stack.pop	MessageFrame.popStackItem
+vm.instructions.arithmetic.mod	-	delegated	2/2	-> vm.stack.push	MessageFrame.pushStackItem
+vm.instructions.arithmetic.mod	3	missing	-	-	-
+vm.instructions.arithmetic.mul	0,2	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/MulOperation.java:50-62	MulOperation.staticOperation
+vm.instructions.arithmetic.mul	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/MulOperation.java:35-37	MulOperation.MulOperation
+vm.instructions.arithmetic.mul	0,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/MulOperationOptimized.java:49-59	MulOperationOptimized.staticOperation
+vm.instructions.arithmetic.mul	0,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/MulOperationV2.java:52-73	MulOperationV2.staticOperation
+vm.instructions.arithmetic.mul	1	part	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractFixedCostOperation.java:74-87	AbstractFixedCostOperation.execute
+vm.instructions.arithmetic.mul	1,3	inlined	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/EVM.java:265-504	EVM.runToHalt
+vm.instructions.arithmetic.mul	-	delegated	2/2	-> vm.stack.pop	MessageFrame.popStackItem
+vm.instructions.arithmetic.mul	-	delegated	2/2	-> vm.stack.push	MessageFrame.pushStackItem
+vm.instructions.arithmetic.mulmod	0,2	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/MulModOperation.java:50-75	MulModOperation.staticOperation
+vm.instructions.arithmetic.mulmod	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/MulModOperation.java:35-37	MulModOperation.MulModOperation
+vm.instructions.arithmetic.mulmod	0,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/MulModOperationOptimized.java:48-60	MulModOperationOptimized.staticOperation
+vm.instructions.arithmetic.mulmod	0,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/MulModOperationV2.java:49-73	MulModOperationV2.staticOperation
+vm.instructions.arithmetic.mulmod	1	part	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractFixedCostOperation.java:74-87	AbstractFixedCostOperation.execute
+vm.instructions.arithmetic.mulmod	2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/UInt256.java:763-792	UInt256.mulMod
+vm.instructions.arithmetic.mulmod	-	delegated	1/2	-> vm.stack.pop	MessageFrame.popStackItem
+vm.instructions.arithmetic.mulmod	-	delegated	1/2	-> vm.stack.push	MessageFrame.pushStackItem
+vm.instructions.arithmetic.mulmod	3	missing	-	-	-
+vm.instructions.arithmetic.sdiv	0,2,3	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/SDivOperation.java:50-75	SDivOperation.staticOperation
+vm.instructions.arithmetic.sdiv	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/SDivOperationOptimized.java:34-36	SDivOperationOptimized.SDivOperationOptimized
+vm.instructions.arithmetic.sdiv	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/SDivOperation.java:35-37	SDivOperation.SDivOperation
+vm.instructions.arithmetic.sdiv	0,2,3	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/SDivOperationV2.java:46-70	SDivOperationV2.staticOperation
+vm.instructions.arithmetic.sdiv	0,2,3	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/SDivOperationOptimized.java:49-61	SDivOperationOptimized.staticOperation
+vm.instructions.arithmetic.sdiv	1	part	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractFixedCostOperation.java:74-87	AbstractFixedCostOperation.execute
+vm.instructions.arithmetic.sdiv	2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/UInt256.java:709-716	UInt256.signedDiv
+vm.instructions.arithmetic.sdiv	-	delegated	2/2	-> vm.stack.pop	MessageFrame.popStackItem
+vm.instructions.arithmetic.sdiv	-	delegated	2/2	-> vm.stack.push	MessageFrame.pushStackItem
+vm.instructions.arithmetic.signextend	0,2,3,4,5	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/SignExtendOperation.java:49-76	SignExtendOperation.staticOperation
+vm.instructions.arithmetic.signextend	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/SignExtendOperation.java:34-36	SignExtendOperation.SignExtendOperation
+vm.instructions.arithmetic.signextend	0,2,3,4,5	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/SignExtendOperationV2.java:53-87	SignExtendOperationV2.staticOperation
+vm.instructions.arithmetic.signextend	1	part	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractFixedCostOperation.java:74-87	AbstractFixedCostOperation.execute
+vm.instructions.arithmetic.signextend	-	delegated	1/2	-> vm.stack.pop	MessageFrame.popStackItem
+vm.instructions.arithmetic.signextend	-	delegated	1/2	-> vm.stack.push	MessageFrame.pushStackItem
+vm.instructions.arithmetic.signextend	-	delegated	2/2	-> vm.stack.pop	FixedStack.pop
+vm.instructions.arithmetic.signextend	-	delegated	2/2	-> vm.stack.pop	FlexStack.pop
+vm.instructions.arithmetic.signextend	-	delegated	2/2	-> vm.stack.push	FixedStack.push
+vm.instructions.arithmetic.smod	0,2,3	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/SModOperation.java:50-82	SModOperation.staticOperation
+vm.instructions.arithmetic.smod	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/SModOperationV2.java:31-33	SModOperationV2.SModOperationV2
+vm.instructions.arithmetic.smod	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/SModOperation.java:35-37	SModOperation.SModOperation
+vm.instructions.arithmetic.smod	0,2,3	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/SModOperationV2.java:46-70	SModOperationV2.staticOperation
+vm.instructions.arithmetic.smod	0,2,3	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/SModOperationOptimized.java:48-58	SModOperationOptimized.staticOperation
+vm.instructions.arithmetic.smod	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractFixedCostOperation.java:74-87	AbstractFixedCostOperation.execute
+vm.instructions.arithmetic.smod	2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/UInt256.java:654-661	UInt256.signedMod
+vm.instructions.arithmetic.smod	-	delegated	2/2	-> vm.stack.pop	MessageFrame.popStackItem
+vm.instructions.arithmetic.smod	-	delegated	2/2	-> vm.stack.push	MessageFrame.pushStackItem
+vm.instructions.arithmetic.smod	4	missing	-	-	-
+vm.instructions.arithmetic.sub	0,2	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/SubOperation.java:51-68	SubOperation.staticOperation
+vm.instructions.arithmetic.sub	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/SubOperation.java:36-38	SubOperation.SubOperation
+vm.instructions.arithmetic.sub	0,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/SubOperationOptimized.java:49-59	SubOperationOptimized.staticOperation
+vm.instructions.arithmetic.sub	0,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/SubOperationV2.java:53-74	SubOperationV2.staticOperation
+vm.instructions.arithmetic.sub	1	part	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractFixedCostOperation.java:74-87	AbstractFixedCostOperation.execute
+vm.instructions.bitwise.bitwise_and	0,2	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AndOperation.java:48-56	AndOperation.staticOperation
+vm.instructions.bitwise.bitwise_and	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AndOperation.java:33-35	AndOperation.AndOperation
+vm.instructions.bitwise.bitwise_and	0,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AndOperationOptimized.java:49-62	AndOperationOptimized.staticOperation
+vm.instructions.bitwise.bitwise_and	0,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AndOperationV2.java:53-74	AndOperationV2.staticOperation
+vm.instructions.bitwise.bitwise_and	1	part	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractFixedCostOperation.java:74-87	AbstractFixedCostOperation.execute
+vm.instructions.bitwise.bitwise_and	-	delegated	2/2	-> vm.stack.pop	MessageFrame.popStackItem
+vm.instructions.bitwise.bitwise_and	-	delegated	2/2	-> vm.stack.push	MessageFrame.pushStackItem
+vm.instructions.bitwise.bitwise_and	3	missing	-	-	-
+vm.instructions.bitwise.bitwise_not	0,2	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/NotOperation.java:49-57	NotOperation.staticOperation
+vm.instructions.bitwise.bitwise_not	0,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/NotOperationOptimized.java:49-57	NotOperationOptimized.staticOperation
+vm.instructions.bitwise.bitwise_not	0,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/NotOperationV2.java:53-69	NotOperationV2.staticOperation
+vm.instructions.bitwise.bitwise_not	1	part	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/AbstractFixedCostOperationV2.java:66-72	AbstractFixedCostOperationV2.execute
+vm.instructions.bitwise.bitwise_not	1	part	1/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/AbstractFixedCostOperation.java:74-87	AbstractFixedCostOperation.execute
+vm.instructions.bitwise.bitwise_not	-	delegated	2/2	-> vm.stack.pop	MessageFrame.popStackItem
+vm.instructions.bitwise.bitwise_not	-	delegated	2/2	-> vm.stack.push	MessageFrame.pushStackItem
+vm.instructions.bitwise.bitwise_not	-	delegated	1/2	-> vm.stack.pop	MessageFrame.stackHasItemsV2
+vm.instructions.bitwise.bitwise_or	0,2	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/OrOperation.java:48-57	OrOperation.staticOperation
+vm.instructions.bitwise.bitwise_or	0,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/OrOperationOptimized.java:49-58	OrOperationOptimized.staticOperation
+vm.instructions.bitwise.bitwise_or	0,2	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/OrOperationV2.java:53-74	OrOperationV2.staticOperation
+vm.instructions.bitwise.bitwise_or	-	delegated	2/2	-> vm.stack.pop	MessageFrame.popStackItem
+vm.instructions.bitwise.bitwise_or	-	delegated	2/2	-> vm.stack.push	MessageFrame.pushStackItem
 vm.instructions.storage.sload	0,1,2	entry	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/SLoadOperation.java:53-72	SLoadOperation.execute
 vm.instructions.storage.sload	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/operation/SLoadOperation.java:43-51	SLoadOperation.SLoadOperation
 vm.instructions.storage.sload	1	part	2/2	repos/clients/besu/evm/src/main/java/org/hyperledger/besu/evm/v2/operation/SLoadOperationV2.java:44-54	SLoadOperationV2.SLoadOperationV2
