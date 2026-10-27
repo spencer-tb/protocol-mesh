@@ -34,8 +34,9 @@ Json = dict[str, Any]
 HERE = Path(__file__).resolve().parent
 OUT = HERE / "results"
 CONFIG = HERE.parent / "xref.toml"
-CLIENTS = ("geth", "reth")
+CLIENTS = ("geth", "reth", "nethermind")
 MODEL = "claude-opus-5-5"
+METHODS = ("a", "b", "c", "e")
 WORKERS = 4
 
 # Questions per spec module, in proportion to the judged map.
@@ -149,6 +150,29 @@ def run_c(config: Config, questions: list[str]) -> Json:
                     for m in matches
                 ],
                 "cost_usd": result.get("cost_usd", 0.0),
+            }
+    return out
+
+
+def run_e(config: Config, questions: list[str]) -> Json:
+    """Read each answer from the step tables `xref build` wrote."""
+    tree = json.loads((config.data / "tree.json").read_text())["entries"]
+    out: Json = {}
+    for spec_id in questions:
+        for client in CLIENTS:
+            table = tree.get(spec_id, {}).get("clients", {}).get(client)
+            if not table or "matches" not in table:
+                out[f"{spec_id}|{client}"] = {"error": "not built"}
+                continue
+            out[f"{spec_id}|{client}"] = {
+                "answers": [
+                    {k: m[k] for k in ("repo", "path", "qualname", "line")}
+                    | {"end_line": m["end_line"]}
+                    for m in table["matches"]
+                    if m["confidence"] in CONFIDENT
+                ],
+                "seconds": table.get("search_seconds", 0.0),
+                "cost_usd": table.get("cost_usd", 0.0),
             }
     return out
 
@@ -314,7 +338,7 @@ def resolve(symbols: list[Symbol], answer: Json) -> Symbol | None:
 
 def pooled(config: Config, questions: list[str]) -> Json:
     """Gather every method's candidates per question, as indexed functions."""
-    runs = {m: read(m) for m in ("a", "b", "c")}
+    runs = {m: read(m) for m in METHODS}
     pool: Json = {}
     for client in CLIENTS:
         symbols = client_symbols(config, client)
@@ -340,10 +364,16 @@ def adjudicate(config: Config, questions: list[str]) -> None:
     specs = spec_by_id(config)
     pool = pooled(config, questions)
     labels: Json = read("gold") if (OUT / "gold.json").exists() else {}
-    todo = [n for n in pool if n not in labels and pool[n]]
+
+    def fresh(name: str) -> list[Json]:
+        seen = {key(c) for c in labels.get(name, {}).get("candidates", [])}
+        return [c for c in pool[name] if key(c) not in seen]
+
+    todo = [n for n in pool if fresh(n)]
     symbols = {c: client_symbols(config, c) for c in CLIENTS}
 
     def one(name: str) -> tuple[str, Json]:
+        new = fresh(name)
         spec_id, client = name.split("|")
         spec = specs[spec_id]
         by_key = {(s.repo, s.path, s.qualname): s for s in symbols[client]}
@@ -352,7 +382,7 @@ def adjudicate(config: Config, questions: list[str]) -> None:
             f"```python\n{read_body(config, spec)}\n```",
             f"Candidates from the {client} client:",
         ]
-        for i, item in enumerate(pool[name]):
+        for i, item in enumerate(new):
             body = read_body(config, by_key[key(item)])
             parts.append(
                 f"[{i}] {item['qualname']} - {item['repo']}/{item['path']}:"
@@ -380,17 +410,24 @@ def adjudicate(config: Config, questions: list[str]) -> None:
                 for label in reply["structured_output"]["labels"]
             }
         except (json.JSONDecodeError, KeyError, TypeError):
-            return name, {"error": result.stderr[-300:]}
+            # Keep earlier labels when the verifier call fails.
+            return name, {
+                **labels.get(name, {}),
+                "error": result.stderr[-300:],
+            }
+        before = labels.get(name, {})
         return name, {
-            "candidates": [
+            "candidates": before.get("candidates", [])
+            + [
                 item
                 | {
                     "relation": got.get(i, {}).get("relation", "unlabelled"),
                     "note": got.get(i, {}).get("note", ""),
                 }
-                for i, item in enumerate(pool[name])
+                for i, item in enumerate(new)
             ],
-            "cost_usd": reply.get("total_cost_usd"),
+            "cost_usd": float(before.get("cost_usd") or 0)
+            + float(reply.get("total_cost_usd") or 0),
         }
 
     with ThreadPoolExecutor(WORKERS) as runner:
@@ -409,7 +446,7 @@ def adjudicate(config: Config, questions: list[str]) -> None:
 def score(questions: list[str]) -> None:
     """Write results/report.md comparing the methods."""
     gold = read("gold")
-    runs = {m: read(m) for m in ("a", "b", "c")}
+    runs = {m: read(m) for m in METHODS}
     lines = [
         "# xref benchmark",
         "",
@@ -425,6 +462,7 @@ def score(questions: list[str]) -> None:
         ("a", "A, grep agent"),
         ("b", "B, xref find (top 5)"),
         ("c", "C, judged map"),
+        ("e", "E, step tables"),
     ):
         for client in CLIENTS:
             tally: Counter[str] = Counter()
@@ -504,7 +542,7 @@ def main() -> None:
     parser.add_argument(
         "stage", choices=["select", "run", "adjudicate", "score"]
     )
-    parser.add_argument("method", nargs="?", choices=["a", "b", "c"])
+    parser.add_argument("method", nargs="?", choices=list(METHODS))
     args = parser.parse_args()
     config = load(CONFIG)
     if args.stage == "select":
@@ -512,7 +550,7 @@ def main() -> None:
         return
     questions = read("questions")
     if args.stage == "run":
-        runner = {"a": run_a, "b": run_b, "c": run_c}[args.method]
+        runner = {"a": run_a, "b": run_b, "c": run_c, "e": run_e}[args.method]
         save(args.method, runner(config, questions))
     elif args.stage == "adjudicate":
         adjudicate(config, questions)

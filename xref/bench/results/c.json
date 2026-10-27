@@ -16,6 +16,10 @@
   "judged": false,
   "answers": []
  },
+ "vm.gas.allocate_evm_gas|nethermind": {
+  "judged": false,
+  "answers": []
+ },
  "vm.gas.calculate_data_fee|geth": {
   "judged": true,
   "answers": [
@@ -33,6 +37,10 @@
   "judged": false,
   "answers": []
  },
+ "vm.gas.calculate_data_fee|nethermind": {
+  "judged": false,
+  "answers": []
+ },
  "vm.gas.calculate_gas_extend_memory|geth": {
   "judged": true,
   "answers": [
@@ -47,6 +55,10 @@
   "cost_usd": 0.066
  },
  "vm.gas.calculate_gas_extend_memory|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.gas.calculate_gas_extend_memory|nethermind": {
   "judged": false,
   "answers": []
  },
@@ -81,12 +93,20 @@
   "judged": false,
   "answers": []
  },
+ "vm.gas.calculate_total_blob_gas|nethermind": {
+  "judged": false,
+  "answers": []
+ },
  "vm.gas.charge_gas_from_meter|geth": {
   "judged": true,
   "answers": [],
   "cost_usd": 0.0979
  },
  "vm.gas.charge_gas_from_meter|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.gas.charge_gas_from_meter|nethermind": {
   "judged": false,
   "answers": []
  },
@@ -114,6 +134,10 @@
   "judged": false,
   "answers": []
  },
+ "vm.gas.charge_state_gas_from_meter|nethermind": {
+  "judged": false,
+  "answers": []
+ },
  "vm.gas.check_max_fee_per_blob_gas|geth": {
   "judged": true,
   "answers": [
@@ -128,6 +152,10 @@
   "cost_usd": 0.1161
  },
  "vm.gas.check_max_fee_per_blob_gas|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.gas.check_max_fee_per_blob_gas|nethermind": {
   "judged": false,
   "answers": []
  },
@@ -155,6 +183,10 @@
   "judged": false,
   "answers": []
  },
+ "vm.gas.credit_state_gas_refund|nethermind": {
+  "judged": false,
+  "answers": []
+ },
  "vm.gas.forfeit_remaining_gas|geth": {
   "judged": true,
   "answers": [
@@ -179,6 +211,10 @@
   "judged": false,
   "answers": []
  },
+ "vm.gas.forfeit_remaining_gas|nethermind": {
+  "judged": false,
+  "answers": []
+ },
  "vm.gas.repay_state_gas_spill|geth": {
   "judged": true,
   "answers": [
@@ -193,6 +229,10 @@
   "cost_usd": 0.0584
  },
  "vm.gas.repay_state_gas_spill|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.gas.repay_state_gas_spill|nethermind": {
   "judged": false,
   "answers": []
  },
@@ -220,6 +260,10 @@
   "judged": false,
   "answers": []
  },
+ "vm.gas.restore_state_gas|nethermind": {
+  "judged": false,
+  "answers": []
+ },
  "vm.gas.settle_transaction_gas|geth": {
   "judged": true,
   "answers": [
@@ -234,6 +278,10 @@
   "cost_usd": 0.0646
  },
  "vm.gas.settle_transaction_gas|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.gas.settle_transaction_gas|nethermind": {
   "judged": false,
   "answers": []
  },
@@ -312,6 +360,10 @@
   ],
   "cost_usd": 0.0563
  },
+ "transactions.calculate_effective_gas_price|nethermind": {
+  "judged": false,
+  "answers": []
+ },
  "transactions.calculate_max_gas_fee|geth": {
   "judged": true,
   "answers": [
@@ -345,6 +397,10 @@
   ],
   "cost_usd": 0.0631
  },
+ "transactions.calculate_max_gas_fee|nethermind": {
+  "judged": false,
+  "answers": []
+ },
  "transactions.check_nonce|geth": {
   "judged": true,
   "answers": [
@@ -377,6 +433,10 @@
    }
   ],
   "cost_usd": 0.0412
+ },
+ "transactions.check_nonce|nethermind": {
+  "judged": false,
+  "answers": []
  },
  "transactions.decode_transaction|geth": {
   "judged": true,
@@ -418,6 +478,10 @@
   ],
   "cost_usd": 0.1226
  },
+ "transactions.decode_transaction|nethermind": {
+  "judged": false,
+  "answers": []
+ },
  "transactions.has_access_list|geth": {
   "judged": true,
   "answers": [],
@@ -427,6 +491,10 @@
   "judged": true,
   "answers": [],
   "cost_usd": 0.0727
+ },
+ "transactions.has_access_list|nethermind": {
+  "judged": false,
+  "answers": []
  },
  "transactions.signing_hash_155|geth": {
   "judged": true,
@@ -453,6 +521,10 @@
   "answers": [],
   "cost_usd": 0.0499
  },
+ "transactions.signing_hash_155|nethermind": {
+  "judged": false,
+  "answers": []
+ },
  "transactions.signing_hash_2930|geth": {
   "judged": true,
   "answers": [
@@ -471,6 +543,10 @@
   "answers": [],
   "cost_usd": 0.0485
  },
+ "transactions.signing_hash_2930|nethermind": {
+  "judged": false,
+  "answers": []
+ },
  "transactions.signing_hash_7702|geth": {
   "judged": true,
   "answers": [
@@ -488,6 +564,10 @@
   "judged": true,
   "answers": [],
   "cost_usd": 0.0419
+ },
+ "transactions.signing_hash_7702|nethermind": {
+  "judged": false,
+  "answers": []
  },
  "fork.apply_body|geth": {
   "judged": true,
@@ -536,6 +616,10 @@
   ],
   "cost_usd": 0.0684
  },
+ "fork.apply_body|nethermind": {
+  "judged": false,
+  "answers": []
+ },
  "fork.calculate_base_fee_per_gas|geth": {
   "judged": true,
   "answers": [
@@ -568,6 +652,10 @@
    }
   ],
   "cost_usd": 0.0986
+ },
+ "fork.calculate_base_fee_per_gas|nethermind": {
+  "judged": false,
+  "answers": []
  },
  "fork.check_transaction|geth": {
   "judged": true,
@@ -622,6 +710,10 @@
    }
   ],
   "cost_usd": 0.1175
+ },
+ "fork.check_transaction|nethermind": {
+  "judged": false,
+  "answers": []
  },
  "fork.execute_block|geth": {
   "judged": true,
@@ -684,6 +776,10 @@
   ],
   "cost_usd": 0.0955
  },
+ "fork.execute_block|nethermind": {
+  "judged": false,
+  "answers": []
+ },
  "fork.make_receipt|geth": {
   "judged": true,
   "answers": [
@@ -723,6 +819,10 @@
    }
   ],
   "cost_usd": 0.0657
+ },
+ "fork.make_receipt|nethermind": {
+  "judged": false,
+  "answers": []
  },
  "fork.process_general_purpose_requests|geth": {
   "judged": true,
@@ -813,6 +913,10 @@
   ],
   "cost_usd": 0.0945
  },
+ "fork.process_general_purpose_requests|nethermind": {
+  "judged": false,
+  "answers": []
+ },
  "fork.process_unchecked_system_transaction|geth": {
   "judged": true,
   "answers": [
@@ -860,6 +964,10 @@
   ],
   "cost_usd": 0.0637
  },
+ "fork.process_unchecked_system_transaction|nethermind": {
+  "judged": false,
+  "answers": []
+ },
  "fork.state_transition|geth": {
   "judged": true,
   "answers": [
@@ -884,6 +992,10 @@
   "judged": true,
   "answers": [],
   "cost_usd": 0.0927
+ },
+ "fork.state_transition|nethermind": {
+  "judged": false,
+  "answers": []
  },
  "vm.instructions.system.call|geth": {
   "judged": true,
@@ -923,6 +1035,10 @@
   "judged": false,
   "answers": []
  },
+ "vm.instructions.system.call|nethermind": {
+  "judged": false,
+  "answers": []
+ },
  "vm.instructions.system.create|geth": {
   "judged": true,
   "answers": [
@@ -944,6 +1060,10 @@
   "cost_usd": 0.0853
  },
  "vm.instructions.system.create|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.instructions.system.create|nethermind": {
   "judged": false,
   "answers": []
  },
@@ -975,6 +1095,10 @@
   "cost_usd": 0.0904
  },
  "vm.instructions.system.delegatecall|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.instructions.system.delegatecall|nethermind": {
   "judged": false,
   "answers": []
  },
@@ -1016,6 +1140,10 @@
   "judged": false,
   "answers": []
  },
+ "vm.instructions.system.generic_create|nethermind": {
+  "judged": false,
+  "answers": []
+ },
  "vm.instructions.system.revert|geth": {
   "judged": true,
   "answers": [
@@ -1037,6 +1165,10 @@
   "cost_usd": 0.0332
  },
  "vm.instructions.system.revert|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.instructions.system.revert|nethermind": {
   "judged": false,
   "answers": []
  },
@@ -1087,6 +1219,10 @@
   ],
   "cost_usd": 0.0924
  },
+ "vm.eoa_delegation.calculate_delegation_cost|nethermind": {
+  "judged": false,
+  "answers": []
+ },
  "vm.eoa_delegation.is_valid_delegation|geth": {
   "judged": true,
   "answers": [
@@ -1104,6 +1240,10 @@
   "judged": true,
   "answers": [],
   "cost_usd": 0.1209
+ },
+ "vm.eoa_delegation.is_valid_delegation|nethermind": {
+  "judged": false,
+  "answers": []
  },
  "vm.eoa_delegation.resolve_delegated_code_address|geth": {
   "judged": true,
@@ -1145,6 +1285,10 @@
   ],
   "cost_usd": 0.088
  },
+ "vm.eoa_delegation.resolve_delegated_code_address|nethermind": {
+  "judged": false,
+  "answers": []
+ },
  "vm.interpreter.charge_value_transfer_to_non_alive_account|geth": {
   "judged": true,
   "answers": [
@@ -1166,6 +1310,10 @@
   "cost_usd": 0.0834
  },
  "vm.interpreter.charge_value_transfer_to_non_alive_account|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.interpreter.charge_value_transfer_to_non_alive_account|nethermind": {
   "judged": false,
   "answers": []
  },
@@ -1207,6 +1355,10 @@
   "judged": false,
   "answers": []
  },
+ "vm.interpreter.process_call|nethermind": {
+  "judged": false,
+  "answers": []
+ },
  "vm.instructions.storage.sload|geth": {
   "judged": true,
   "answers": [
@@ -1231,6 +1383,10 @@
   "judged": false,
   "answers": []
  },
+ "vm.instructions.storage.sload|nethermind": {
+  "judged": false,
+  "answers": []
+ },
  "vm.instructions.storage.tload|geth": {
   "judged": true,
   "answers": [
@@ -1252,6 +1408,10 @@
   "cost_usd": 0.0284
  },
  "vm.instructions.storage.tload|reth": {
+  "judged": false,
+  "answers": []
+ },
+ "vm.instructions.storage.tload|nethermind": {
   "judged": false,
   "answers": []
  }

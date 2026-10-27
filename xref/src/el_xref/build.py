@@ -1,0 +1,683 @@
+"""
+Map spec functions to client code as step tables.
+
+For one spec function and one client:
+
+1. Split the spec function into the steps a client has to implement. This
+   is done once per spec function and shared by every client.
+2. An agent searches the client for the code behind each step.
+3. The candidates grow with the functions those call, two levels down, and
+   the functions tagged with the same EIPs.
+4. A judge reads every candidate and assigns it to steps, or rejects it.
+5. A step nobody covers gets one more targeted search.
+
+Results go to `data/tree.json`. `render_tsv` flattens them into `map.tsv`,
+one row per step and location, for agents to grep.
+"""
+
+import json
+import subprocess
+import time
+from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor
+from pathlib import Path
+
+from .config import Config, Json
+from .index import Symbol, index_path, load, read_body
+from .link import head, select_specs
+
+MODEL = "claude-opus-5-5"
+TREE = "tree.json"
+MAX_CANDIDATES = 30
+MAX_BODY = 4000
+
+# Calls too generic to follow.
+SKIP_CALLS = {"len", "append", "make", "new", "panic", "uint64", "int"}
+
+
+def claude(
+    prompt: str,
+    schema: Json,
+    system: str = "",
+    tools: str = "",
+    cwd: Path | None = None,
+    effort: str = "medium",
+    model: str = MODEL,
+) -> tuple[Json, float]:
+    """Run one structured `claude -p` call and return its output and cost."""
+    command = [
+        "claude", "-p", "--model", model, "--effort", effort,
+        "--tools", tools, "--strict-mcp-config",
+        "--no-session-persistence", "--output-format", "json",
+        "--json-schema", json.dumps(schema),
+    ]  # fmt: skip
+    if tools:
+        command += ["--allowedTools", tools, "--permission-mode", "dontAsk"]
+    if system:
+        command += ["--system-prompt", system]
+    result = subprocess.run(
+        command,
+        input=prompt,
+        capture_output=True,
+        text=True,
+        timeout=900,
+        cwd=cwd,
+        check=False,
+    )
+    try:
+        reply = json.loads(result.stdout)
+        return reply["structured_output"], float(
+            reply.get("total_cost_usd") or 0.0
+        )
+    except (json.JSONDecodeError, KeyError, TypeError) as error:
+        raise RuntimeError(
+            f"claude failed: {result.stderr[-300:] or result.stdout[-300:]}"
+        ) from error
+
+
+def numbered(body: str, first: int) -> str:
+    """Return `body` with line numbers starting at `first`."""
+    return "\n".join(
+        f"{first + i:>5}  {line}" for i, line in enumerate(body.splitlines())
+    )
+
+
+# 1. Steps.
+
+STEPS_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "steps": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "text": {"type": "string"},
+                    "first": {"type": "integer"},
+                    "last": {"type": "integer"},
+                },
+                "required": ["text", "first", "last"],
+            },
+        }
+    },
+    "required": ["steps"],
+}
+
+STEPS_PROMPT = """\
+Split this function from the Ethereum execution specs into the steps an \
+execution client has to implement: 1 to 6 steps, each a short phrase \
+saying what it computes, checks or changes, with its first and last spec \
+line. Leave out type conversions, logging and docstrings. A function that \
+does one thing is one step.
+
+{spec_id} ({path}):
+
+```python
+{body}
+```
+"""
+
+
+def spec_steps(
+    config: Config, spec: Symbol, cache: Json
+) -> tuple[list[Json], float]:
+    """Return the steps of `spec`, cached while its code is unchanged."""
+    cached = cache.get(spec.id)
+    if cached and cached["hash"] == spec.hash:
+        return cached["steps"], 0.0
+    body = numbered(read_body(config, spec), spec.line)
+    out, cost = claude(
+        STEPS_PROMPT.format(spec_id=spec.id, path=spec.path, body=body),
+        STEPS_SCHEMA,
+        effort="low",
+    )
+    steps = [{"id": i, **step} for i, step in enumerate(out["steps"])]
+    cache[spec.id] = {"hash": spec.hash, "steps": steps}
+    return steps, cost
+
+
+# 2. Agent search.
+
+SEARCH_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "locations": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "repo": {"type": "string"},
+                    "path": {"type": "string"},
+                    "qualname": {"type": "string"},
+                    "line": {"type": "integer"},
+                },
+                "required": ["repo", "path", "qualname", "line"],
+            },
+        }
+    },
+    "required": ["locations"],
+}
+
+SEARCH_PROMPT = """\
+Find the functions in the {client} execution client that implement this \
+function from the Ethereum execution specs, the {fork} fork. The client's \
+code is in these directories of the current folder: {repos}. Search only \
+there.
+
+The spec function does these steps:
+{steps}
+
+Find the client code for every step. A client often splits the work over \
+several functions, inlines a step in a bigger function, or does a step \
+somewhere the main function never calls, so keep looking until each step \
+is accounted for or you are sure the client lacks it. List every function \
+involved, the main one first. `repo` is the directory name, `path` is \
+relative to it, `qualname` is the function or Type.method name and `line` \
+is where it starts.{focus}
+
+{spec_id} ({path}:{line}):
+
+```python
+{body}
+```
+"""
+
+
+def search(
+    config: Config,
+    spec: Symbol,
+    steps: list[Json],
+    client: str,
+    focus: list[Json] | None = None,
+) -> tuple[list[Json], float, float]:
+    """Run the agent search and return locations, cost and seconds."""
+    hint = ""
+    if focus:
+        hint = "\n\nA first pass found no code for these steps, look for " + (
+            "them specifically: "
+            + "; ".join(f"[{s['id']}] {s['text']}" for s in focus)
+        )
+    prompt = SEARCH_PROMPT.format(
+        client=client,
+        fork=config.spec.fork,
+        repos=", ".join(f"{r.name}/" for r in config.clients[client].repos),
+        steps="\n".join(f"[{s['id']}] {s['text']}" for s in steps),
+        focus=hint,
+        spec_id=spec.id,
+        path=spec.path,
+        line=spec.line,
+        body=read_body(config, spec),
+    )
+    started = time.monotonic()
+    out, cost = claude(
+        prompt,
+        SEARCH_SCHEMA,
+        tools="Read,Grep,Glob",
+        cwd=config.repo_cache,
+    )
+    return out["locations"], cost, time.monotonic() - started
+
+
+# 3. More candidates: the calls and the EIP tags.
+
+
+class Client:
+    """Every indexed function of one client, with lookups."""
+
+    def __init__(self, config: Config, name: str) -> None:
+        """Load the index of every repo of client `name`."""
+        self.symbols: list[Symbol] = []
+        for repo in config.clients[name].repos:
+            self.symbols.extend(load(index_path(config, repo)))
+        self.by_key = {(s.repo, s.path, s.qualname): s for s in self.symbols}
+        self.by_name: dict[str, list[Symbol]] = defaultdict(list)
+        for s in self.symbols:
+            self.by_name[s.name].append(s)
+
+    def resolve(self, location: Json) -> Symbol | None:
+        """Return the indexed function an agent's answer points at."""
+        exact = self.by_key.get(
+            (location["repo"], location["path"], location["qualname"])
+        )
+        if exact:
+            return exact
+        in_file = [
+            s
+            for s in self.symbols
+            if s.repo == location["repo"] and s.path == location["path"]
+        ]
+        for s in in_file:
+            if s.line <= location.get("line", 0) <= s.end_line:
+                return s
+        name = location["qualname"].split(".")[-1]
+        named = [s for s in in_file if s.name == name]
+        return named[0] if named else None
+
+    def callees(self, symbol: Symbol) -> list[Symbol]:
+        """Return the functions `symbol` calls, when the name is specific."""
+        found = []
+        for name in symbol.calls:
+            if name in SKIP_CALLS or name == symbol.name:
+                continue
+            matches = [
+                s for s in self.by_name.get(name, []) if s.repo == symbol.repo
+            ]
+            if 0 < len(matches) <= 3:
+                found.extend(matches)
+        return found
+
+    def tagged(self, eips: list[str]) -> list[Symbol]:
+        """Return functions sharing EIP tags, the most shared first."""
+        wanted = set(eips)
+        scored = [
+            (len(wanted & set(s.eips)), s)
+            for s in self.symbols
+            if wanted & set(s.eips)
+        ]
+        scored.sort(key=lambda pair: -pair[0])
+        return [s for _, s in scored[:8]]
+
+
+def candidates(
+    client: Client, spec: Symbol, seeds: list[Symbol]
+) -> list[Symbol]:
+    """Return the seeds, what they call two levels down and EIP-tagged code."""
+    chosen: dict[str, Symbol] = {s.id: s for s in seeds}
+    frontier = list(seeds)
+    for _ in range(2):
+        nxt = []
+        for symbol in frontier:
+            for callee in client.callees(symbol):
+                if callee.id not in chosen:
+                    chosen[callee.id] = callee
+                    nxt.append(callee)
+        frontier = nxt
+    for symbol in client.tagged(spec.eips):
+        chosen.setdefault(symbol.id, symbol)
+    return list(chosen.values())[:MAX_CANDIDATES]
+
+
+# 4. Two independent judges, and a third for what they disagree on.
+
+IMPLEMENTS = {"entry", "part", "inlined"}
+
+JUDGE_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "candidates": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {"type": "integer"},
+                    "role": {
+                        "enum": [
+                            "entry",
+                            "part",
+                            "inlined",
+                            "delegated",
+                            "unrelated",
+                        ]
+                    },
+                    "steps": {"type": "array", "items": {"type": "integer"}},
+                    "delegated_to": {"type": "string"},
+                    "first": {"type": "integer"},
+                    "last": {"type": "integer"},
+                    "quote": {"type": "string"},
+                    "confidence": {"enum": ["high", "medium", "low"]},
+                    "note": {"type": "string"},
+                },
+                "required": [
+                    "id",
+                    "role",
+                    "steps",
+                    "delegated_to",
+                    "first",
+                    "last",
+                    "quote",
+                    "confidence",
+                    "note",
+                ],
+            },
+        },
+        "missing": {"type": "array", "items": {"type": "integer"}},
+    },
+    "required": ["candidates", "missing"],
+}
+
+RULES = """\
+You map a function from the Ethereum execution specs onto an execution \
+client's code, judging from the code, not the names. Give every numbered \
+candidate one role:
+
+- `entry`: the client's main function for this spec function.
+- `part`: its own code computes, checks or changes what one or more of \
+the steps do.
+- `inlined`: the steps' logic is written inside it, but it mostly does \
+other work.
+- `delegated`: it implements another spec function that this one calls, \
+from the list given. Name that spec function in `delegated_to`.
+- `unrelated`: anything else, including wrappers that only forward the \
+call, callers, dispatch loops that call the logic, generic helpers, \
+neighbours, and opposites such as a refund for a charge.
+
+For entry, part and inlined, list the steps and give `first` and `last`, \
+the client lines that do them, and `quote`, the most telling line. Use \
+empty values otherwise. Then list in `missing` the steps no candidate \
+does in its own code. Note in one sentence what the candidate does."""
+
+
+def judge(
+    config: Config,
+    spec: Symbol,
+    steps: list[Json],
+    found: list[Symbol],
+    callees: list[str],
+    model: str = MODEL,
+    effort: str = "medium",
+    disputes: str = "",
+) -> tuple[Json, float]:
+    """Give every candidate a role and the steps it implements."""
+    parts = [
+        f"Spec function {spec.id} ({spec.path}:{spec.line}):",
+        "```python\n" + read_body(config, spec) + "\n```",
+        "Steps:",
+        *(f"[{s['id']}] {s['text']}" for s in steps),
+        "",
+        "Spec functions it calls, for `delegated`: "
+        + (", ".join(callees) or "none"),
+        disputes,
+        "Candidates:",
+    ]
+    for i, symbol in enumerate(found):
+        body = numbered(read_body(config, symbol)[:MAX_BODY], symbol.line)
+        parts.append(
+            f"[{i}] {symbol.qualname} - {symbol.repo}/{symbol.path}:"
+            f"{symbol.line}-{symbol.end_line}\n```\n{body}\n```"
+        )
+    return claude(
+        "\n".join(parts),
+        JUDGE_SCHEMA,
+        system=RULES,
+        effort=effort,
+        model=model,
+    )
+
+
+def side(item: Json | None) -> str:
+    """Return what a verdict says about one candidate, for comparing."""
+    if item is None or item["role"] == "unrelated":
+        return "unrelated"
+    if item["role"] == "delegated":
+        return "delegated:" + str(item["delegated_to"])
+    return "implements"
+
+
+def settle(
+    config: Config,
+    spec: Symbol,
+    steps: list[Json],
+    found: list[Symbol],
+    callees: list[str],
+) -> tuple[dict[int, Json], float, int]:
+    """Judge twice independently, then settle disagreements with a third."""
+    # The second judge sees the candidates in reverse, so neither inherits
+    # the other's bias towards whatever comes first.
+    first, cost_a = judge(config, spec, steps, found, callees)
+    second, cost_b = judge(config, spec, steps, found[::-1], callees)
+    last = len(found) - 1
+    a = {c["id"]: c for c in first["candidates"]}
+    b = {last - c["id"]: c for c in second["candidates"]}
+    final = {}
+    disputed = []
+    for i in range(len(found)):
+        if side(a.get(i)) == side(b.get(i)):
+            if a.get(i):
+                final[i] = a[i] | {"agreed": True}
+        else:
+            disputed.append(i)
+    cost = cost_a + cost_b
+    if disputed:
+        subset = [found[i] for i in disputed]
+        notes = "\n".join(
+            f"[{n}] first judge: {side(a.get(i))}, "
+            f"{(a.get(i) or {}).get('note', '')} Second judge: "
+            f"{side(b.get(i))}, {(b.get(i) or {}).get('note', '')}"
+            for n, i in enumerate(disputed)
+        )
+        third, cost_c = judge(
+            config,
+            spec,
+            steps,
+            subset,
+            callees,
+            effort="high",
+            disputes="Two judges disagreed on these candidates. Decide "
+            "each one yourself from the code:\n" + notes + "\n",
+        )
+        cost += cost_c
+        for item in third["candidates"]:
+            if 0 <= item["id"] < len(disputed):
+                final[disputed[item["id"]]] = item | {"agreed": False}
+    return final, cost, len(disputed)
+
+
+def located(symbol: Symbol) -> Json:
+    """Describe where a client function is."""
+    return {
+        "repo": symbol.repo,
+        "path": symbol.path,
+        "qualname": symbol.qualname,
+        "line": symbol.line,
+        "end_line": symbol.end_line,
+        "hash": symbol.hash,
+    }
+
+
+def spec_callees(spec: Symbol, specs: dict[str, list[Symbol]]) -> list[str]:
+    """Return the other spec functions `spec` calls."""
+    found = []
+    for name in spec.calls:
+        for other in specs.get(name, []):
+            if other.id != spec.id and other.id not in found:
+                found.append(other.id)
+    return found
+
+
+def map_pair(
+    config: Config,
+    spec: Symbol,
+    steps: list[Json],
+    name: str,
+    client: Client,
+    callees: list[str],
+    earlier: list[Json] | None = None,
+) -> Json:
+    """
+    Build one spec function's step table for one client.
+
+    With `earlier` matches, judge again from those and what they call,
+    without a search.
+    """
+    cost = seconds = 0.0
+    disputed = 0
+    seeds = [s for m in earlier or [] if (s := client.resolve(m))]
+    found: list[Symbol] = candidates(client, spec, seeds) if seeds else []
+    final: dict[int, Json] = {}
+    for attempt in range(1 if earlier is not None else 2):
+        if earlier is None:
+            covered = {
+                step
+                for item in final.values()
+                if item["role"] in IMPLEMENTS
+                for step in item["steps"]
+            }
+            focus = [s for s in steps if s["id"] not in covered]
+            if attempt and not focus:
+                break
+            locations, spent, took = search(
+                config, spec, steps, name, focus if attempt else None
+            )
+            cost += spent
+            seconds += took
+            seeds += [s for loc in locations if (s := client.resolve(loc))]
+            unique = list({s.id: s for s in seeds}.values())
+            found = candidates(client, spec, unique)
+        final, spent, count = settle(config, spec, steps, found, callees)
+        cost += spent
+        disputed += count
+    matches, delegated = [], []
+    for i, item in final.items():
+        place = located(found[i])
+        if item["role"] in IMPLEMENTS:
+            matches.append(
+                place
+                | {
+                    k: item[k]
+                    for k in (
+                        "steps",
+                        "role",
+                        "confidence",
+                        "note",
+                        "first",
+                        "last",
+                        "quote",
+                        "agreed",
+                    )
+                }
+            )
+        elif item["role"] == "delegated":
+            delegated.append(place | {"spec": item["delegated_to"]})
+    matches.sort(key=lambda m: (m["role"] != "entry", m["line"]))
+    covered = {step for m in matches for step in m["steps"]}
+    return {
+        "matches": matches,
+        "delegated": delegated,
+        "missing": [s["id"] for s in steps if s["id"] not in covered],
+        "disputed": disputed,
+        "cost_usd": round(cost, 4),
+        "search_seconds": round(seconds, 1),
+        "model": MODEL,
+        "built_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+    }
+
+
+def tree_path(config: Config) -> Path:
+    """Return where the step tables are kept."""
+    return config.data / TREE
+
+
+def build(
+    config: Config,
+    only: list[str],
+    modules: list[str],
+    clients: list[str],
+    workers: int,
+    rejudge: bool = False,
+) -> None:
+    """
+    Build step tables for the chosen spec functions and clients.
+
+    With `rejudge`, judge existing tables again from their matches,
+    without a search.
+    """
+    every = load(index_path(config, config.spec.repo))
+    specs = select_specs(every, modules, only)
+    by_name: dict[str, list[Symbol]] = defaultdict(list)
+    for symbol in every:
+        by_name[symbol.name].append(symbol)
+    names = clients or list(config.clients)
+    path = tree_path(config)
+    data: Json = json.loads(path.read_text()) if path.exists() else {}
+    entries = data.setdefault("entries", {})
+    steps_cache = data.setdefault("steps", {})
+    data["repos"] = {r.name: head(config, r.name) for r in config.all_repos()}
+    tables = {n: Client(config, n) for n in names}
+
+    for spec in specs:
+        steps, _ = spec_steps(config, spec, steps_cache)
+        entries.setdefault(spec.id, {})["steps"] = steps
+    path.write_text(json.dumps(data, indent=1))
+
+    def current(spec: Symbol, n: str) -> Json:
+        return dict(entries[spec.id].get("clients", {}).get(n, {}))
+
+    if rejudge:
+        todo = [(s, n) for s in specs for n in names if current(s, n)]
+    else:
+        todo = [
+            (s, n)
+            for s in specs
+            for n in names
+            if current(s, n).get("spec_hash") != s.hash
+        ]
+
+    def one(item: tuple[Symbol, str]) -> tuple[Symbol, str, Json]:
+        spec, n = item
+        earlier = current(spec, n).get("matches") if rejudge else None
+        try:
+            table = map_pair(
+                config,
+                spec,
+                entries[spec.id]["steps"],
+                n,
+                tables[n],
+                spec_callees(spec, by_name),
+                earlier,
+            )
+        except RuntimeError as error:
+            return spec, n, {"error": str(error)[:300]}
+        return spec, n, table | {"spec_hash": spec.hash}
+
+    with ThreadPoolExecutor(workers) as pool:
+        for done, (spec, n, table) in enumerate(pool.map(one, todo), 1):
+            entries[spec.id].setdefault("clients", {})[n] = table
+            path.write_text(json.dumps(data, indent=1))
+            print(
+                f"{done}/{len(todo)} {spec.id} {n} "
+                f"{len(table.get('matches', []))} matches "
+                f"${table.get('cost_usd', 0):.2f}"
+            )
+
+
+def render_tsv(config: Config, target: Path) -> None:
+    """Write one grep-able row per spec step and client location."""
+    data = json.loads(tree_path(config).read_text())
+    local = {
+        name: Path(where).as_posix().removeprefix("../")
+        for name, where in config.checkouts.items()
+    }
+    rows = ["# spec\tstep\tclient\trole\tlocation\tfunction"]
+    for spec_id, entry in sorted(data["entries"].items()):
+        steps = {s["id"]: s["text"] for s in entry.get("steps", [])}
+        for client, table in sorted(entry.get("clients", {}).items()):
+            for match in table.get("matches", []):
+                if match["confidence"] == "low":
+                    continue
+                root = local.get(match["repo"], match["repo"])
+                where = (
+                    f"{root}/{match['path']}"
+                    f":{match['line']}-{match['end_line']}"
+                )
+                for step in match["steps"] or [None]:
+                    rows.append(
+                        f"{spec_id}\t{steps.get(step, '-')}\t{client}\t"
+                        f"{match['role']}\t{where}\t{match['qualname']}"
+                    )
+            for item in table.get("delegated", []):
+                rows.append(
+                    f"{spec_id}\t-\t{client}\tdelegated\t"
+                    f"-> {item['spec']}\t{item['qualname']}"
+                )
+            for step in table.get("missing", []):
+                rows.append(
+                    f"{spec_id}\t{steps.get(step, '-')}\t{client}\t"
+                    "missing\t-\t-"
+                )
+    target.write_text("\n".join(rows) + "\n")
+    print(f"{len(rows) - 1} rows in {target}")
+
+
+def tsv_target(config: Config) -> Path:
+    """Return where map.tsv goes, next to xref.toml."""
+    return config.root / "map.tsv"

@@ -2150,5 +2150,1026 @@
   "seconds": 12.682735958020203,
   "turns": 4,
   "cost_usd": 0.06273480000000001
+ },
+ "vm.gas.allocate_evm_gas|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs",
+    "qualname": "EthereumGasPolicy.TryCreateAvailableFromIntrinsic",
+    "line": 814,
+    "relation": "equivalent"
+   }
+  ],
+  "seconds": 11.740602707955986,
+  "turns": 6,
+  "cost_usd": 0.15895520000000002
+ },
+ "vm.gas.calculate_data_fee|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/BlobGasCalculator.cs",
+    "qualname": "BlobGasCalculator.TryCalculateBlobBaseFee",
+    "line": 57,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs",
+    "qualname": "BlobBaseFeeCalculator.TryCalculateBlobFees",
+    "line": 58,
+    "relation": "equivalent"
+   }
+  ],
+  "seconds": 21.587807750096545,
+  "turns": 9,
+  "cost_usd": 0.18816500000000003
+ },
+ "vm.gas.calculate_gas_extend_memory|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/EvmPooledMemory.cs",
+    "qualname": "EvmPooledMemory.CalculateMemoryCost",
+    "line": 314,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/EvmPooledMemory.cs",
+    "qualname": "EvmPooledMemory.CalculateMemoryCost",
+    "line": 300,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs",
+    "qualname": "EthereumGasPolicy.UpdateMemoryCost",
+    "line": 415,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs",
+    "qualname": "EthereumGasPolicy.UpdateMemoryCost",
+    "line": 434,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/EvmPooledMemory.cs",
+    "qualname": "EvmPooledMemory.ComputeMemoryExpansionCost",
+    "line": 703,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 13.065793209010735,
+  "turns": 6,
+  "cost_usd": 0.15612580000000004
+ },
+ "vm.gas.calculate_total_blob_gas|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/BlobGasCalculator.cs",
+    "qualname": "BlobGasCalculator.CalculateBlobGas",
+    "line": 42,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Core/TransactionExtensions.cs",
+    "qualname": "TransactionExtensions.GetBlobGas",
+    "line": 73,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/BlobGasCalculator.cs",
+    "qualname": "BlobGasCalculator.CalculateBlobGas",
+    "line": 39,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 10.555130083113909,
+  "turns": 5,
+  "cost_usd": 0.10769700000000001
+ },
+ "vm.gas.charge_gas_from_meter|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs",
+    "qualname": "EthereumGasPolicy.UpdateGas",
+    "line": 449,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.zkevm.cs",
+    "qualname": "EthereumGasPolicy.UpdateGas<TCost>",
+    "line": 24,
+    "relation": "equivalent"
+   }
+  ],
+  "seconds": 7.965065124910325,
+  "turns": 5,
+  "cost_usd": 0.0685434
+ },
+ "vm.gas.charge_state_gas_from_meter|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs",
+    "qualname": "EthereumGasPolicy.TryConsumeStateGas",
+    "line": 129,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs",
+    "qualname": "EthereumGasPolicy.CalculateStateGasSpill",
+    "line": 97,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs",
+    "qualname": "EthereumGasPolicy.TryConsumeStateAndExecutionGas",
+    "line": 154,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 10.91065575007815,
+  "turns": 5,
+  "cost_usd": 0.1163072
+ },
+ "vm.gas.check_max_fee_per_blob_gas|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs",
+    "qualname": "TransactionProcessorBase.BuyGas",
+    "line": 1192,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessorBase.FrameTx.cs",
+    "qualname": "TransactionProcessorBase.ExecuteFrameTx",
+    "line": 95,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 23.713272124994546,
+  "turns": 7,
+  "cost_usd": 0.17554419999999998
+ },
+ "vm.gas.credit_state_gas_refund|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/VirtualMachine.cs",
+    "qualname": "VirtualMachine.CreditStateGasRefund",
+    "line": 1030,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs",
+    "qualname": "EthereumGasPolicy.RefundStateGas",
+    "line": 569,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs",
+    "qualname": "EthereumGasPolicy.AddStateGasRefundToReservoir",
+    "line": 601,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/VirtualMachine.cs",
+    "qualname": "VirtualMachine.CreditStateGasRefund",
+    "line": 1025,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 10.224482040968724,
+  "turns": 5,
+  "cost_usd": 0.11296999999999999
+ },
+ "vm.gas.forfeit_remaining_gas|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs",
+    "qualname": "EthereumGasPolicy.ClearExecutionGas",
+    "line": 82,
+    "relation": "equivalent"
+   }
+  ],
+  "seconds": 31.498367958003655,
+  "turns": 11,
+  "cost_usd": 0.1997988
+ },
+ "vm.gas.repay_state_gas_spill|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs",
+    "qualname": "EthereumGasPolicy.RepayStateGasSpill",
+    "line": 173,
+    "relation": "equivalent"
+   }
+  ],
+  "seconds": 7.548345874994993,
+  "turns": 5,
+  "cost_usd": 0.0946134
+ },
+ "vm.gas.restore_state_gas|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs",
+    "qualname": "EthereumGasPolicy.RestoreChildStateGas",
+    "line": 189,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs",
+    "qualname": "EthereumGasPolicy.RestoreChildStateGasOnHalt",
+    "line": 201,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs",
+    "qualname": "EthereumGasPolicy.ResetForHalt",
+    "line": 636,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 11.872822792036459,
+  "turns": 5,
+  "cost_usd": 0.1325316
+ },
+ "vm.gas.settle_transaction_gas|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs",
+    "qualname": "TransactionProcessorBase.Refund",
+    "line": 1938,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs",
+    "qualname": "TransactionProcessorBase.CalculateSpentGasAndRefund",
+    "line": 2005,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs",
+    "qualname": "TransactionProcessorBase.CalculateBlockGas",
+    "line": 2031,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs",
+    "qualname": "TransactionProcessorBase.RefundOnTopLevelHalt",
+    "line": 1776,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/GasPolicy/Eip8037BlockGasInclusionCheck.cs",
+    "qualname": "Eip8037BlockGasInclusionCheck.CalculateBlockExecutionGas",
+    "line": 56,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessorBase.FrameTx.cs",
+    "qualname": "TransactionProcessorBase.SettleFrameTx",
+    "line": 466,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/RefundHelper.cs",
+    "qualname": "RefundHelper.CalculateClaimableRefund",
+    "line": 19,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 48.363109041936696,
+  "turns": 9,
+  "cost_usd": 0.2882602
+ },
+ "transactions.calculate_effective_gas_price|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Core/TransactionExtensions.cs",
+    "qualname": "TransactionExtensions.CalculateEffectiveGasPrice",
+    "line": 49,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs",
+    "qualname": "TransactionProcessorBase.CalculateEffectiveGasPrice",
+    "line": 1162,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Core/TransactionExtensions.cs",
+    "qualname": "TransactionExtensions.TryCalculatePremiumPerGas",
+    "line": 19,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 12.574360665981658,
+  "turns": 7,
+  "cost_usd": 0.1023484
+ },
+ "transactions.calculate_max_gas_fee|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs",
+    "qualname": "TransactionProcessorBase.BuyGas",
+    "line": 1192,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 10.83919175004121,
+  "turns": 5,
+  "cost_usd": 0.08589300000000001
+ },
+ "transactions.check_nonce|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs",
+    "qualname": "TransactionProcessorBase.IncrementNonce",
+    "line": 1323,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 12.69463416596409,
+  "turns": 6,
+  "cost_usd": 0.0809492
+ },
+ "transactions.decode_transaction|nethermind": {
+  "answers": [],
+  "seconds": 23.087546917027794,
+  "turns": 14,
+  "cost_usd": 0.1374314
+ },
+ "transactions.has_access_list|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Core/TxTypeExtensions.cs",
+    "qualname": "TxTypeExtensions.SupportsAccessList",
+    "line": 9,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Core/Transaction.cs",
+    "qualname": "Transaction.SupportsAccessList",
+    "line": 53,
+    "relation": "equivalent"
+   }
+  ],
+  "seconds": 8.582867124932818,
+  "turns": 4,
+  "cost_usd": 0.049481800000000006
+ },
+ "transactions.signing_hash_155|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Consensus/Signer.cs",
+    "qualname": "Signer.TrySign",
+    "line": 52,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 38.893184083048254,
+  "turns": 15,
+  "cost_usd": 0.18530699999999997
+ },
+ "transactions.signing_hash_2930|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Consensus/Signer.cs",
+    "qualname": "Signer.TrySign",
+    "line": 52,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 32.66706174996216,
+  "turns": 16,
+  "cost_usd": 0.1925682
+ },
+ "transactions.signing_hash_7702|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Consensus/Signer.cs",
+    "qualname": "Signer.TrySign",
+    "line": 52,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 33.51132574991789,
+  "turns": 15,
+  "cost_usd": 0.172746
+ },
+ "fork.apply_body|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Consensus/Processing/BlockProcessor.cs",
+    "qualname": "BlockProcessor.ProcessBlock",
+    "line": 211,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Consensus/Processing/BlockProcessor.cs",
+    "qualname": "BlockProcessor.FinalizeBlock",
+    "line": 254,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 13.505415790947154,
+  "turns": 5,
+  "cost_usd": 0.0912462
+ },
+ "fork.calculate_base_fee_per_gas|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Core/BaseFeeCalculator.cs",
+    "qualname": "DefaultBaseFeeCalculator.Calculate",
+    "line": 19,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Core/BaseFeeCalculator.cs",
+    "qualname": "BaseFeeCalculator.Calculate",
+    "line": 70,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 8.268637250061147,
+  "turns": 4,
+  "cost_usd": 0.0773774
+ },
+ "fork.check_transaction|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs",
+    "qualname": "TransactionProcessorBase.Execute",
+    "line": 315,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs",
+    "qualname": "TransactionProcessorBase.Execute",
+    "line": 271,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs",
+    "qualname": "TransactionProcessorBase.ValidateStatic",
+    "line": 987,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs",
+    "qualname": "TransactionProcessorBase.BuyGas",
+    "line": 1192,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs",
+    "qualname": "TransactionProcessorBase.ValidateSender",
+    "line": 1171,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs",
+    "qualname": "TransactionProcessorBase.CalculateAvailableGas",
+    "line": 806,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 18.07141154096462,
+  "turns": 5,
+  "cost_usd": 0.1134258
+ },
+ "fork.execute_block|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Consensus/Processing/BlockProcessor.cs",
+    "qualname": "BlockProcessor.ProcessOne",
+    "line": 77,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Consensus/Processing/BlockProcessor.cs",
+    "qualname": "BlockProcessor.ProcessBlock",
+    "line": 211,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Consensus/Validators/BlockValidator.cs",
+    "qualname": "BlockValidator.ValidateProcessedBlock",
+    "line": 177,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Consensus/Processing/BlockProcessor.cs",
+    "qualname": "BlockProcessor.ValidateProcessedBlock",
+    "line": 142,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Consensus/Processing/BlockProcessor.cs",
+    "qualname": "BlockProcessor.FinalizeBlock",
+    "line": 254,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 15.792426750063896,
+  "turns": 5,
+  "cost_usd": 0.1629766
+ },
+ "fork.make_receipt|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Core/TransactionReceipt.cs",
+    "qualname": "TxReceipt.CalculateBloom",
+    "line": 105,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 40.980291082989424,
+  "turns": 18,
+  "cost_usd": 0.2138846
+ },
+ "fork.process_general_purpose_requests|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Consensus/Processing/BlockAccessListManager.SystemContracts.cs",
+    "qualname": "BlockAccessListManager.ProcessExecutionRequests",
+    "line": 85,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Consensus/Processing/BlockProcessor.SystemContractHandler.cs",
+    "qualname": "BlockProcessor.SystemContractHandler.ProcessExecutionRequests",
+    "line": 37,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Consensus/Processing/BlockProcessor.BlockAccessListSystemContractHandler.cs",
+    "qualname": "BlockProcessor.BlockAccessListSystemContractHandler.ProcessExecutionRequests",
+    "line": 21,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 49.26498549990356,
+  "turns": 19,
+  "cost_usd": 0.22896119999999998
+ },
+ "fork.process_unchecked_system_transaction|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/TransactionProcessing/SystemTransactionProcessor.cs",
+    "qualname": "SystemTransactionProcessor.Execute",
+    "line": 59,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Consensus/Processing/BlockAccessListManager.SystemContracts.cs",
+    "qualname": "BlockAccessListManager.ApplyBlockhashStateChanges",
+    "line": 32,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 27.367623333004303,
+  "turns": 14,
+  "cost_usd": 0.2046816
+ },
+ "fork.state_transition|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Consensus/Processing/BlockchainProcessor.cs",
+    "qualname": "BlockchainProcessor.Process",
+    "line": 791,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Consensus/Processing/BranchProcessor.cs",
+    "qualname": "BranchProcessor.Process",
+    "line": 64,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Consensus/Processing/BlockchainProcessor.cs",
+    "qualname": "BlockchainProcessor.ProcessBranch",
+    "line": 872,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 16.11436233308632,
+  "turns": 7,
+  "cost_usd": 0.15237019999999998
+ },
+ "vm.instructions.system.call|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Call.cs",
+    "qualname": "EvmInstructions.InstructionCall",
+    "line": 95,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Call.cs",
+    "qualname": "EvmInstructions.ChargesNewAccount",
+    "line": 341,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 15.854159791953862,
+  "turns": 5,
+  "cost_usd": 0.14141299999999998
+ },
+ "vm.instructions.system.create|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Create.cs",
+    "qualname": "EvmInstructions.InstructionCreate",
+    "line": 97,
+    "relation": "equivalent"
+   }
+  ],
+  "seconds": 10.176487250020728,
+  "turns": 5,
+  "cost_usd": 0.12047559999999999
+ },
+ "vm.instructions.system.delegatecall|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Call.cs",
+    "qualname": "EvmInstructions.InstructionCall",
+    "line": 95,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Call.cs",
+    "qualname": "EvmInstructions.CreateFullCallFrame",
+    "line": 585,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Call.cs",
+    "qualname": "EvmInstructions.OpDelegateCall",
+    "line": 58,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 10.217232833965681,
+  "turns": 5,
+  "cost_usd": 0.10750880000000002
+ },
+ "vm.instructions.system.generic_create|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Create.cs",
+    "qualname": "EvmInstructions.InstructionCreate",
+    "line": 97,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/VirtualMachine.cs",
+    "qualname": "VirtualMachine.ExecuteTransaction",
+    "line": 354,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/VirtualMachine.cs",
+    "qualname": "VirtualMachine.PrepareCreateData",
+    "line": 674,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 19.46476891695056,
+  "turns": 8,
+  "cost_usd": 0.1978666
+ },
+ "vm.instructions.system.revert|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.ControlFlow.cs",
+    "qualname": "EvmInstructions.InstructionRevert",
+    "line": 327,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/VirtualMachine.OpcodeHandlers.cs",
+    "qualname": "RevertOpcode.Execute",
+    "line": 1991,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 8.457248916034587,
+  "turns": 5,
+  "cost_usd": 0.0665632
+ },
+ "vm.eoa_delegation.calculate_delegation_cost|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Call.cs",
+    "qualname": "EvmInstructions.InstructionCall",
+    "line": 95,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/CodeInfoRepository.cs",
+    "qualname": "CodeInfoRepository.GetCachedCodeInfo",
+    "line": 72,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs",
+    "qualname": "EthereumGasPolicy.TryConsumeAccountAccessGasWithDelegation",
+    "line": 226,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/CodeInfoRepository.cs",
+    "qualname": "CodeInfoRepository.TryGetDelegation",
+    "line": 211,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 26.94553237501532,
+  "turns": 11,
+  "cost_usd": 0.18042260000000002
+ },
+ "vm.eoa_delegation.is_valid_delegation|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Core/Eip7702Constants.cs",
+    "qualname": "Eip7702Constants.IsDelegatedCode",
+    "line": 25,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/ICodeInfoRepository.cs",
+    "qualname": "ICodeInfoRepository.TryGetDelegatedAddress",
+    "line": 49,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 17.208387583028525,
+  "turns": 7,
+  "cost_usd": 0.0933718
+ },
+ "vm.eoa_delegation.resolve_delegated_code_address|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Call.cs",
+    "qualname": "EvmInstructions.InstructionCall",
+    "line": 95,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/CodeInfoRepository.cs",
+    "qualname": "CodeInfoRepository.GetCachedCodeInfo",
+    "line": 72,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs",
+    "qualname": "EthereumGasPolicy.TryConsumeAccountAccessGasWithDelegation",
+    "line": 226,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/CodeInfoRepository.cs",
+    "qualname": "CodeInfoRepository.GetDelegatedCodeInfo",
+    "line": 99,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 27.815909249940887,
+  "turns": 11,
+  "cost_usd": 0.141392
+ },
+ "vm.interpreter.charge_value_transfer_to_non_alive_account|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Call.cs",
+    "qualname": "EvmInstructions.ChargesNewAccount",
+    "line": 341,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs",
+    "qualname": "EthereumGasPolicy.TryConsumeNewAccountCreation",
+    "line": 681,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Call.cs",
+    "qualname": "EvmInstructions.InstructionCall",
+    "line": 95,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.ControlFlow.cs",
+    "qualname": "EvmInstructions.InstructionSelfDestruct",
+    "line": 362,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Call.cs",
+    "qualname": "EvmInstructions.InstructionPay",
+    "line": 353,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 23.513801708002575,
+  "turns": 9,
+  "cost_usd": 0.23166820000000002
+ },
+ "vm.interpreter.process_call|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/VirtualMachine.cs",
+    "qualname": "VirtualMachine.ExecuteTransaction",
+    "line": 354,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/VirtualMachine.cs",
+    "qualname": "VirtualMachine.ExecuteCall",
+    "line": 1626,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/VirtualMachine.cs",
+    "qualname": "VirtualMachine.ExecutePrecompile",
+    "line": 1181,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/VirtualMachine.ExecutionHandlers.cs",
+    "qualname": "VirtualMachine.InitializeFrameCore",
+    "line": 63,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/VirtualMachine.cs",
+    "qualname": "VirtualMachine.HandleException",
+    "line": 1127,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/VirtualMachine.cs",
+    "qualname": "VirtualMachine.HandleFailure",
+    "line": 914,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 17.7421939590713,
+  "turns": 8,
+  "cost_usd": 0.16021040000000003
+ },
+ "vm.instructions.storage.sload|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Storage.cs",
+    "qualname": "EvmInstructions.InstructionSLoad",
+    "line": 836,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/VirtualMachine.OpcodeHandlers.cs",
+    "qualname": "SLoadOpcode.Execute",
+    "line": 1624,
+    "relation": "partial"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs",
+    "qualname": "EthereumGasPolicy.TryConsumeStorageAccessGas",
+    "line": 328,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 11.881490375031717,
+  "turns": 6,
+  "cost_usd": 0.08978520000000001
+ },
+ "vm.instructions.storage.tload|nethermind": {
+  "answers": [
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Storage.cs",
+    "qualname": "EvmInstructions.InstructionTLoad",
+    "line": 38,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/VirtualMachine.GuestHandlers.zkevm.cs",
+    "qualname": "RawCalliHelper.ExecuteTLoad",
+    "line": 1536,
+    "relation": "equivalent"
+   },
+   {
+    "repo": "nethermind",
+    "path": "src/Nethermind/Nethermind.Evm/VirtualMachine.OpcodeHandlers.cs",
+    "qualname": "TLoadOpcode.Execute",
+    "line": 1768,
+    "relation": "partial"
+   }
+  ],
+  "seconds": 18.691444125026464,
+  "turns": 6,
+  "cost_usd": 0.0977238
  }
 }
