@@ -323,6 +323,9 @@ def walk_functions(
 ) -> Iterator[tuple[Node, tuple[str, ...]]]:
     """Yield function nodes with the names of their enclosing types."""
     for child in node.children:
+        # Rust keeps unit tests in the source files, under `mod tests`.
+        if child.type == "mod_item" and node_name(child, lang) == "tests":
+            continue
         if child.type in FUNCTIONS[lang]:
             yield child, owners
             # Nested functions (Go closures, C# local functions) are kept
