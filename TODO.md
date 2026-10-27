@@ -57,14 +57,9 @@ updated, and round again. Nothing waits for an EELS release.
 - [x] Differential fuzzing for geth (`fuzz/`): memory, memory extension,
   the 63/64 call rule, blob base fee, excess blob gas and intrinsic gas
   with the calldata floor. 13,579 cases, no differences.
-- [ ] The real fuzzer: native, coverage-guided targets per client (Go
-  fuzzing for geth and erigon, cargo-fuzz for revm and ethrex, SharpFuzz
-  for nethermind, Jazzer for besu), generated from the map's confident
-  pairs, all fed the same inputs so clients are compared with each other.
-  EELS only seeds the corpus with spec edge cases and settles
-  disagreements. `fuzz/` is the proof that the map can drive this.
-- [ ] Fuzz more pairs, chosen from the xref map: every pure function with a
-  confident match.
+- [ ] Export the map's confident pure-function pairs (spec function, client
+  function, file and line) in a format fuzzing teams can feed into their
+  own tools. We do not build or run a fuzzer ourselves.
 - [ ] Prove equal for all inputs, with an SMT solver, the few formulas that
   matter most, such as `fake_exponential` and intrinsic gas.
 
