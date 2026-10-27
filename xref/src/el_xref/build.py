@@ -29,6 +29,8 @@ from .link import head, select_specs
 MODEL = "claude-opus-5-5"
 TREE = "tree.json"
 MAX_CANDIDATES = 30
+# Built first, and its answers seed and hint the other clients.
+REFERENCE = "geth"
 MAX_BODY = 4000
 
 # Calls too generic to follow.
@@ -259,11 +261,12 @@ def search(
     steps: list[Json],
     client: str,
     focus: list[Json] | None = None,
+    hints: str = "",
 ) -> tuple[list[Json], float, float]:
     """Run the agent search and return locations, cost and seconds."""
-    hint = ""
+    hint = hints
     if focus:
-        hint = "\n\nA first pass found no code for these steps, look for " + (
+        hint += "\n\nA first pass found no code for these steps, look for " + (
             "them specifically: "
             + "; ".join(f"[{s['id']}] {s['text']}" for s in focus)
         )
@@ -490,7 +493,13 @@ def settle(
     found: list[Symbol],
     callees: list[str],
 ) -> tuple[dict[int, Json], float, int]:
-    """Judge twice independently, then settle disagreements with a third."""
+    """
+    Judge twice independently and keep what either judge accepts.
+
+    Agents read the code after the map points them at it, so a wrong row
+    costs one read while a missing row costs a search. Each row records
+    its votes, 2 when both judges accept it and 1 when only one does.
+    """
     # The second judge sees the candidates in reverse, so neither inherits
     # the other's bias towards whatever comes first.
     first, cost_a = judge(config, spec, steps, found, callees)
@@ -498,38 +507,17 @@ def settle(
     last = len(found) - 1
     a = {c["id"]: c for c in first["candidates"]}
     b = {last - c["id"]: c for c in second["candidates"]}
-    final = {}
-    disputed = []
+    final: dict[int, Json] = {}
+    split = 0
     for i in range(len(found)):
-        if side(a.get(i)) == side(b.get(i)):
-            if a.get(i):
-                final[i] = a[i] | {"agreed": True}
-        else:
-            disputed.append(i)
-    cost = cost_a + cost_b
-    if disputed:
-        subset = [found[i] for i in disputed]
-        notes = "\n".join(
-            f"[{n}] first judge: {side(a.get(i))}, "
-            f"{(a.get(i) or {}).get('note', '')} Second judge: "
-            f"{side(b.get(i))}, {(b.get(i) or {}).get('note', '')}"
-            for n, i in enumerate(disputed)
-        )
-        third, cost_c = judge(
-            config,
-            spec,
-            steps,
-            subset,
-            callees,
-            effort="high",
-            disputes="Two judges disagreed on these candidates. Decide "
-            "each one yourself from the code:\n" + notes + "\n",
-        )
-        cost += cost_c
-        for item in third["candidates"]:
-            if 0 <= item["id"] < len(disputed):
-                final[disputed[item["id"]]] = item | {"agreed": False}
-    return final, cost, len(disputed)
+        sides = [side(a.get(i)), side(b.get(i))]
+        split += sides[0] != sides[1]
+        for verdict in (a.get(i), b.get(i)):
+            if verdict and side(verdict) != "unrelated":
+                votes = sides.count(side(verdict))
+                if votes > final.get(i, {}).get("votes", 0):
+                    final[i] = verdict | {"votes": votes}
+    return final, cost_a + cost_b, split
 
 
 def located(symbol: Symbol) -> Json:
@@ -562,40 +550,60 @@ def map_pair(
     client: Client,
     callees: list[str],
     earlier: list[Json] | None = None,
+    reference: tuple[str, list[Json]] | None = None,
 ) -> Json:
     """
     Build one spec function's step table for one client.
 
-    With `earlier` matches, judge again from those and what they call,
-    without a search.
+    Seeds come first from `earlier` matches and from functions named like
+    the `reference` client's answers, which forks such as erigon keep. When
+    those cover every step, there is no search. Otherwise the agent
+    searches for the steps still uncovered, at most twice. With `earlier`
+    the search is skipped entirely.
     """
     cost = seconds = 0.0
-    disputed = 0
+    split = 0
     seeds = [s for m in earlier or [] if (s := client.resolve(m))]
-    found: list[Symbol] = candidates(client, spec, seeds) if seeds else []
+    hints = ""
+    if reference and reference[1]:
+        other, matches = reference
+        for match in matches:
+            name_only = match["qualname"].split(".")[-1]
+            seeds += client.by_name.get(name_only, [])[:3]
+        hints = f"\n\nIn {other}, these functions do the steps: " + "; ".join(
+            f"{m['qualname']} (steps {','.join(map(str, m['steps']))})"
+            for m in matches
+        )
+    found: list[Symbol] = []
     final: dict[int, Json] = {}
-    for attempt in range(1 if earlier is not None else 2):
-        if earlier is None:
-            covered = {
-                step
-                for item in final.values()
-                if item["role"] in IMPLEMENTS
-                for step in item["steps"]
-            }
-            focus = [s for s in steps if s["id"] not in covered]
-            if attempt and not focus:
-                break
-            locations, spent, took = search(
-                config, spec, steps, name, focus if attempt else None
-            )
-            cost += spent
-            seconds += took
-            seeds += [s for loc in locations if (s := client.resolve(loc))]
-            unique = list({s.id: s for s in seeds}.values())
-            found = candidates(client, spec, unique)
+
+    def judge_seeds() -> None:
+        nonlocal found, final, cost, split
+        unique = list({s.id: s for s in seeds}.values())
+        found = candidates(client, spec, unique)
         final, spent, count = settle(config, spec, steps, found, callees)
         cost += spent
-        disputed += count
+        split += count
+
+    if seeds:
+        judge_seeds()
+    for _ in range(0 if earlier is not None else 2):
+        covered = {
+            step
+            for item in final.values()
+            if item["role"] in IMPLEMENTS
+            for step in item["steps"]
+        }
+        focus = [s for s in steps if s["id"] not in covered]
+        if found and not focus:
+            break
+        locations, spent, took = search(
+            config, spec, steps, name, focus if found else None, hints
+        )
+        cost += spent
+        seconds += took
+        seeds += [s for loc in locations if (s := client.resolve(loc))]
+        judge_seeds()
     matches, delegated = [], []
     for i, item in final.items():
         place = located(found[i])
@@ -612,19 +620,21 @@ def map_pair(
                         "first",
                         "last",
                         "quote",
-                        "agreed",
+                        "votes",
                     )
                 }
             )
         elif item["role"] == "delegated":
-            delegated.append(place | {"spec": item["delegated_to"]})
+            delegated.append(
+                place | {"spec": item["delegated_to"], "votes": item["votes"]}
+            )
     matches.sort(key=lambda m: (m["role"] != "entry", m["line"]))
     covered = {step for m in matches for step in m["steps"]}
     return {
         "matches": matches,
         "delegated": delegated,
         "missing": [s["id"] for s in steps if s["id"] not in covered],
-        "disputed": disputed,
+        "split": split,
         "cost_usd": round(cost, 4),
         "search_seconds": round(seconds, 1),
         "model": MODEL,
@@ -685,6 +695,13 @@ def build(
     def one(item: tuple[Symbol, str]) -> tuple[Symbol, str, Json]:
         spec, n = item
         earlier = current(spec, n).get("matches") if rejudge else None
+        reference = None
+        if n != REFERENCE:
+            answers = current(spec, REFERENCE).get("matches", [])
+            reference = (
+                REFERENCE,
+                [m for m in answers if m.get("votes", 2) == 2],
+            )
         try:
             table = map_pair(
                 config,
@@ -694,20 +711,27 @@ def build(
                 tables[n],
                 spec_callees(spec, by_name),
                 earlier,
+                reference,
             )
         except RuntimeError as error:
             return spec, n, {"error": str(error)[:300]}
         return spec, n, table | {"spec_hash": spec.hash}
 
-    with ThreadPoolExecutor(workers) as pool:
-        for done, (spec, n, table) in enumerate(pool.map(one, todo), 1):
-            entries[spec.id].setdefault("clients", {})[n] = table
-            path.write_text(json.dumps(data, indent=1))
-            print(
-                f"{done}/{len(todo)} {spec.id} {n} "
-                f"{len(table.get('matches', []))} matches "
-                f"${table.get('cost_usd', 0):.2f}"
-            )
+    first = [item for item in todo if item[1] == REFERENCE]
+    rest = [item for item in todo if item[1] != REFERENCE]
+    done = 0
+    for batch in (first, rest):
+        with ThreadPoolExecutor(workers) as pool:
+            for spec, n, table in pool.map(one, batch):
+                done += 1
+                entries[spec.id].setdefault("clients", {})[n] = table
+                path.write_text(json.dumps(data, indent=1))
+                print(
+                    f"{done}/{len(todo)} {spec.id} {n} "
+                    f"{len(table.get('matches', []))} matches "
+                    f"${table.get('cost_usd', 0):.2f} "
+                    f"{table.get('search_seconds', 0):.0f}s searching"
+                )
 
 
 def render_tsv(config: Config, target: Path) -> None:
@@ -734,7 +758,7 @@ def render_tsv(config: Config, target: Path) -> None:
         eips[symbol.id] = ",".join(f"eip{n}" for n in sorted(numbers)) or "-"
     spec_rows = ["# eels\tstep\teips\twhat it does"]
     client_rows: dict[str, list[str]] = defaultdict(
-        lambda: ["# eels\tsteps\trole\tlocation\tfunction"]
+        lambda: ["# eels\tsteps\trole\tvotes\tlocation\tfunction"]
     )
     for spec_id, entry in sorted(data["entries"].items()):
         for step in entry.get("steps", []):
@@ -751,17 +775,18 @@ def render_tsv(config: Config, target: Path) -> None:
                 steps = ",".join(str(step) for step in match["steps"])
                 rows.append(
                     f"{spec_id}\t{steps or '-'}\t{match['role']}\t"
+                    f"{match.get('votes', 2)}/2\t"
                     f"{root}/{match['path']}:{match['line']}-"
                     f"{match['end_line']}\t{match['qualname']}"
                 )
             for item in table.get("delegated", []):
                 rows.append(
-                    f"{spec_id}\t-\tdelegated\t-> {item['spec']}\t"
-                    f"{item['qualname']}"
+                    f"{spec_id}\t-\tdelegated\t{item.get('votes', 2)}/2\t"
+                    f"-> {item['spec']}\t{item['qualname']}"
                 )
             if table.get("missing"):
                 missing = ",".join(str(step) for step in table["missing"])
-                rows.append(f"{spec_id}\t{missing}\tmissing\t-\t-")
+                rows.append(f"{spec_id}\t{missing}\tmissing\t-\t-\t-")
     (target / "eels.tsv").write_text("\n".join(spec_rows) + "\n")
     for client, rows in sorted(client_rows.items()):
         (target / f"{client}.tsv").write_text("\n".join(rows) + "\n")
