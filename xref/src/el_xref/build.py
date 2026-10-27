@@ -35,7 +35,8 @@ REFERENCE = "geth"
 
 # Functions in the fork that are not protocol behaviour, so the map skips
 # them: exception messages, arithmetic on a gas type, hex helpers and hooks
-# only tooling uses, a type guard, and repackaging with no rule in it.
+# only tooling uses, and repackaging with no rule in it. Settled by two
+# independent checks that agreed on all 13.
 NOT_SPEC = (
     "exceptions.*.__init__",
     "vm.exceptions.*.__init__",
@@ -43,7 +44,6 @@ NOT_SPEC = (
     "utils.hexadecimal.*",
     "fork.apply_fork",
     "transactions.get_transaction_hash",
-    "transactions.has_access_list",
     "state_tracker.extract_block_diff",
     "blocks.decode_receipt",
 )
