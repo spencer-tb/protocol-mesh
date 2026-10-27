@@ -64,6 +64,18 @@ block_access_lists.validate_block_access_list_gas_limit	2	entry	2/2	repos/client
 block_access_lists.validate_block_access_list_gas_limit	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/Eip7928Constants.cs:30-31	Eip7928Constants.ExceedsItemLimit
 block_access_lists.validate_block_access_list_gas_limit	2	inlined	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Processing/BlockProcessor.cs:168-192	BlockProcessor.ThrowIfProducedBlockExceedsItemLimit
 block_access_lists.validate_block_access_list_gas_limit	0,1	missing	-	-	-
+blocks.encode_receipt	0,1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Serialization.Rlp/ReceiptMessageDecoder.cs:202-260	ReceiptMessageDecoder.Encode
+blocks.encode_receipt	0,1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Serialization.Rlp/ReceiptMessageDecoder.zkevm.cs:26-44	ReceiptMessageDecoder.EncodeInOnePass
+bloom.add_to_bloom	3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/Bloom.cs:196-201	Bloom.Set
+bloom.add_to_bloom	3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/Bloom.cs:203-210	Bloom.SetWordMasks
+bloom.add_to_bloom	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/Bloom.cs:212-222	Bloom.WordMask
+bloom.add_to_bloom	0,1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/Bloom.cs:234-242	Bloom.GetExtract
+bloom.logs_bloom	1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/Bloom.cs:143-157	Bloom.Add
+bloom.logs_bloom	-	delegated	2/2	-> bloom.add_to_bloom	Bloom.Set
+bloom.logs_bloom	-	delegated	2/2	-> bloom.add_to_bloom	Bloom.GetExtract
+bloom.logs_bloom	-	delegated	2/2	-> bloom.add_to_bloom	Bloom.SetWordMasks
+bloom.logs_bloom	-	delegated	2/2	-> bloom.add_to_bloom	Bloom.WordMask
+bloom.logs_bloom	0,2	missing	-	-	-
 fork.apply_body	0,1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Processing/BlockProcessor.cs:211-244	BlockProcessor.ProcessBlock
 fork.apply_body	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Processing/BlockProcessor.BlockValidationTransactionsExecutor.cs:37-61	BlockProcessor.BlockValidationTransactionsExecutor.ProcessTransactions
 fork.apply_body	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Processing/BlockProcessor.BlockProductionTransactionsExecutor.cs:68-111	BlockProcessor.BlockProductionTransactionsExecutor.ProcessTransactions
@@ -81,6 +93,7 @@ fork.apply_body	5	missing	-	-	-
 fork.calculate_base_fee_per_gas	0,2,3,4	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/BaseFeeCalculator.cs:19-65	DefaultBaseFeeCalculator.Calculate
 fork.calculate_base_fee_per_gas	-	delegated	2/2	-> fork.check_gas_limit	HeaderValidator.ValidateGasLimitRange
 fork.calculate_base_fee_per_gas	1	missing	-	-	-
+fork.check_gas_limit	0,1,2,3	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Validators/HeaderValidator.cs:297-331	HeaderValidator.ValidateGasLimitRange
 fork.check_transaction	0,2,3,4	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:315-360	TransactionProcessorBase.Execute
 fork.check_transaction	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:1073-1116	TransactionProcessorBase.ValidateGas
 fork.check_transaction	3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:1171-1184	TransactionProcessorBase.ValidateSender
@@ -96,6 +109,10 @@ fork.check_transaction	-	delegated	2/2	-> vm.gas.allocate_evm_gas	TransactionPro
 fork.check_transaction	-	delegated	2/2	-> vm.gas.check_block_gas_capacity	BlockAccessListManager.CheckPerTxInclusion
 fork.check_transaction	-	delegated	2/2	-> vm.gas.check_block_gas_capacity	Eip8037BlockGasInclusionCheck.Validate
 fork.check_transaction	-	delegated	2/2	-> vm.gas.check_block_gas_capacity	Eip8037BlockGasInclusionCheck.TryGetBlockGasReservations
+fork.disburse_gas_fees	1,3	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:1886-1917	TransactionProcessorBase.PayFees
+fork.disburse_gas_fees	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:1812-1826	TransactionProcessorBase.RefundFailedEip8037Gas
+fork.disburse_gas_fees	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:2046-2050	TransactionProcessorBase.PayRefund
+fork.disburse_gas_fees	-	delegated	2/2	-> state_tracker.create_ether	WorldStateExtensions.AddToBalanceAndCreateIfNotEmpty
 fork.execute_block	2,3,5	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Processing/BlockProcessor.cs:77-122	BlockProcessor.ProcessOne
 fork.execute_block	4	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Processing/BlockAccessListManager.StateChanges.cs:16-59	BlockAccessListManager.SetBlockAccessList
 fork.execute_block	0,1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Validators/BlockValidator.cs:87-100	BlockValidator.ValidateBlock
@@ -113,10 +130,28 @@ fork.execute_block	-	delegated	2/2	-> fork.validate_header	HeaderValidator.Valid
 fork.execute_block	-	delegated	2/2	-> fork.validate_header	HeaderValidator.ValidateParent
 fork.execute_block	-	delegated	2/2	-> fork.validate_header	HeaderValidator.ValidateGasUsed
 fork.execute_block	-	delegated	2/2	-> fork.apply_body	BlockProcessor.BlockValidationTransactionsExecutor.ProcessTransactions
+fork.get_last_256_block_hashes	0,1,2	missing	-	-	-
 fork.make_receipt	0	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/TransactionReceipt.cs:105-106	TxReceipt.CalculateBloom
 fork.make_receipt	1	missing	-	-	-
+fork.process_checked_system_transaction	-	delegated	2/2	-> fork.process_unchecked_system_transaction	SystemTransactionProcessor.Execute
+fork.process_checked_system_transaction	0,1,2,3	missing	-	-	-
 fork.process_general_purpose_requests	0,1,2,3,4	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/ExecutionRequest/ExecutionRequestExtensions.cs:61-109	ExecutionRequestExtensions.GetFlatEncodedRequests
 fork.process_general_purpose_requests	0,1,2,3,4	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/ExecutionRequest/ExecutionRequestExtensions.cs:98-108	ExecutionRequestExtensions.GetFlatEncodedRequests.FlatEncodeRequests
+fork.process_transaction	1,2	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:315-360	TransactionProcessorBase.Execute
+fork.process_transaction	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/BlockAccessListBasedWorldState.cs:49-49	BlockAccessListBasedWorldState.SetBlockAccessIndex
+fork.process_transaction	0,5	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Processing/BlockAccessListManager.cs:248-256	BlockAccessListManager.NextTransaction
+fork.process_transaction	2,3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:386-533	TransactionProcessorBase.ExecuteEvmTransaction
+fork.process_transaction	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Processing/BlockAccessListManager.TxProcessorPool.cs:388-392	BlockAccessListManager.SequentialTxProcessorWithWorldStateManager.NextTransaction
+fork.process_transaction	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Processing/BlockAccessListManager.TxProcessorPool.cs:460-486	BlockAccessListManager.TxProcessorWithWorldState.Setup
+fork.process_transaction	2,3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:535-635	TransactionProcessorBase.ExecuteSimpleTransfer
+fork.process_transaction	-	delegated	2/2	-> fork.check_transaction	TransactionProcessorBase.ValidateStatic
+fork.process_transaction	-	delegated	2/2	-> fork.check_transaction	TransactionProcessorBase.CalculateEffectiveGasPrice
+fork.process_transaction	-	delegated	2/2	-> vm.interpreter.process_top_level	TransactionProcessorBase.BuildExecutionEnvironment
+fork.process_transaction	-	delegated	2/2	-> fork.check_transaction	TransactionProcessorBase.ValidateSender
+fork.process_transaction	-	delegated	2/2	-> fork.check_transaction	TransactionProcessorBase.BuyGas
+fork.process_transaction	-	delegated	2/2	-> fork.update_sender_state	TransactionProcessorBase.IncrementNonce
+fork.process_transaction	-	delegated	1/2	-> vm.interpreter.process_top_level	TransactionProcessorBase.ExecuteEvmCall
+fork.process_transaction	4	missing	-	-	-
 fork.process_unchecked_system_transaction	2	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/SystemTransactionProcessor.cs:59-67	SystemTransactionProcessor.Execute
 fork.process_unchecked_system_transaction	1,2	inlined	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Processing/BlockAccessListManager.SystemContracts.cs:32-55	BlockAccessListManager.ApplyBlockhashStateChanges
 fork.process_unchecked_system_transaction	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:53-59	EthereumGasPolicy.CreateSystemTransactionIntrinsicGas
@@ -127,6 +162,9 @@ fork.process_unchecked_system_transaction	0	part	2/2	repos/clients/nethermind/sr
 fork.process_unchecked_system_transaction	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Processing/BlockAccessListManager.TxProcessorPool.cs:460-486	BlockAccessListManager.TxProcessorWithWorldState.Setup
 fork.process_unchecked_system_transaction	-	delegated	1/2	-> state_tracker.incorporate_tx_into_block	BlockAccessListManager.ParallelTxProcessorWithWorldStateManager.MergeAndReturnBal
 fork.process_unchecked_system_transaction	-	delegated	1/2	-> state_tracker.incorporate_tx_into_block	BlockAccessListManager.SequentialTxProcessorWithWorldStateManager.MergeAndReturnBal
+fork.process_withdrawals	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/Proofs/WithdrawalTrie.cs:28-36	WithdrawalTrie.Initialize
+fork.process_withdrawals	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Processing/BlockAccessListManager.SystemContracts.cs:72-83	BlockAccessListManager.ProcessWithdrawals
+fork.process_withdrawals	2	missing	-	-	-
 fork.state_transition	0,1,2	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Processing/BranchProcessor.cs:64-307	BranchProcessor.Process
 fork.state_transition	3	entry	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Processing/BlockchainProcessor.cs:791-866	BlockchainProcessor.Process
 fork.state_transition	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Processing/BranchProcessor.cs:52-56	BranchProcessor.PreCommitBlock
@@ -137,8 +175,109 @@ fork.state_transition	-	delegated	1/2	-> fork.get_last_256_block_hashes	IBlockha
 fork.state_transition	-	delegated	2/2	-> fork.execute_block	BlockProcessor.ProcessBlock
 fork.state_transition	-	delegated	1/2	-> fork.execute_block	BlockProcessor.CommitState
 fork.state_transition	-	delegated	1/2	-> fork.execute_block	BlockProcessor.CommitStateAndStorageRoots
+fork.update_sender_state	0,1,3	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:1192-1294	TransactionProcessorBase.BuyGas
+fork.update_sender_state	3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:1296-1300	TransactionProcessorBase.DebitSender
+fork.update_sender_state	2,3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:1323-1359	TransactionProcessorBase.IncrementNonce
+fork.update_sender_state	-	delegated	2/2	-> vm.gas.calculate_data_fee	BlobBaseFeeCalculator.TryCalculateBlobFees
+fork.update_sender_state	-	delegated	1/2	-> vm.gas.calculate_data_fee	BlobGasCalculator.TryCalculateFeePerBlobGas
+fork.validate_header	0,1,2,3,4,5	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Validators/HeaderValidator.cs:81-108	HeaderValidator.Validate
+fork.validate_header	3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Validators/HeaderValidator.cs:181-196	HeaderValidator.Validate1559
+fork.validate_header	4	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Validators/HeaderValidator.cs:198-211	HeaderValidator.ValidateBlockNumber
+fork.validate_header	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Validators/HeaderValidator.cs:213-223	HeaderValidator.ValidateGasUsed
+fork.validate_header	5	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Validators/HeaderValidator.cs:239-265	HeaderValidator.ValidateParent
+fork.validate_header	4	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Validators/HeaderValidator.cs:280-295	HeaderValidator.ValidateExtraData
+fork.validate_header	4	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Validators/HeaderValidator.cs:333-345	HeaderValidator.ValidateTimestamp
+fork.validate_header	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Validators/HeaderValidator.cs:435-451	HeaderValidator.ValidateExcessBlobGas
+fork.validate_header	-	delegated	2/2	-> vm.gas.calculate_excess_blob_gas	BlobGasCalculator.CalculateExcessBlobGas
+fork.validate_header	-	delegated	2/2	-> fork.calculate_base_fee_per_gas	HeaderValidator.ValidateGasLimitRange
+fork_types.encode_account	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Serialization.Rlp/AccountDecoder.cs:148-172	AccountDecoder.EncodeAsBytes
+fork_types.encode_account	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Serialization.Rlp/AccountDecoder.cs:111-137	AccountDecoder.Encode
+fork_types.encode_account	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Serialization.Rlp/AccountDecoder.cs:236-265	AccountDecoder.GetContentLength
+requests.compute_requests_hash	0,1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/ExecutionRequest/ExecutionRequestExtensions.cs:33-50	ExecutionRequestExtensions.CalculateHashFromFlatEncodedRequests
+requests.compute_requests_hash	-	delegated	1/2	-> vm.precompiled_contracts.sha256.sha256	ExecutionRequestExtensions.Sha256
+requests.compute_requests_hash	-	delegated	1/2	-> vm.precompiled_contracts.sha256.sha256	ExecutionRequestExtensions.Sha256
+requests.extract_deposit_data	0,1,2,3,4,5	missing	-	-	-
+requests.parse_deposit_requests	0,1,2	missing	-	-	-
+state_tracker.account_deployable	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/WorldState.cs:444-450	WorldState.IsNonZeroAccount
+state_tracker.account_deployable	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/State/IWorldState.cs:257-262	IWorldState.IsNonZeroAccount
+state_tracker.account_deployable	-	delegated	2/2	-> state_tracker.get_account	StateProvider.GetThroughCache
+state_tracker.account_exists	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/StateProvider.cs:130-130	StateProvider.AccountExists
+state_tracker.account_exists	0	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/TracedAccessWorldState.cs:396-402	TracedAccessWorldState.AccountExists
+state_tracker.account_exists	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/TracedAccessWorldState.cs:502-503	TracedAccessWorldState.AccountExistsInternal
+state_tracker.account_exists	-	delegated	2/2	-> state_tracker.get_account_optional	StateProvider.GetThroughCache
+state_tracker.account_exists	-	delegated	1/2	-> state_tracker.get_account_optional	StateProvider.GetAndAddToCache
+state_tracker.account_exists_and_is_empty	0,1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/StateProvider.cs:138-142	StateProvider.IsDeadAccount
+state_tracker.account_exists_and_is_empty	0,1	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/StateProvider.cs:130-130	StateProvider.AccountExists
+state_tracker.account_exists_and_is_empty	-	delegated	2/2	-> state_tracker.get_account_optional	StateProvider.GetThroughCache
+state_tracker.clear_account_preserving_balance	0,1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:102-117	TransactionProcessorBase.DestroyAccount
+state_tracker.clear_account_preserving_balance	-	delegated	2/2	-> state_tracker.destroy_storage	WorldState.ClearStorage
+state_tracker.clear_account_preserving_balance	-	delegated	2/2	-> state_tracker.destroy_storage	WorldState.MarkStorageDestroyed
+state_tracker.clear_account_preserving_balance	-	delegated	2/2	-> state_tracker.destroy_storage	PersistentStorageProvider.ClearStorage
+state_tracker.clear_account_preserving_balance	-	delegated	2/2	-> state_tracker.destroy_storage	PersistentStorageProvider.MarkStorageDestroyed
+state_tracker.clear_account_preserving_balance	-	delegated	2/2	-> state_tracker.destroy_storage	PersistentStorageProvider.ResetContractState
 state_tracker.copy_tx_state	1	missing	-	-	-
+state_tracker.create_ether	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/StateProvider.cs:280-345	StateProvider.SetNewBalance
+state_tracker.create_ether	0	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/StateProvider.cs:631-644	StateProvider.AddToBalanceAndCreateIfNotExists
+state_tracker.create_ether	-	delegated	2/2	-> state_tracker.modify_state	StateProvider.PushUpdate
+state_tracker.create_ether	-	delegated	1/2	-> state_tracker.modify_state	StateProvider.GetThroughCache
+state_tracker.destroy_account	0,1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:102-117	TransactionProcessorBase.DestroyAccount
+state_tracker.destroy_account	-	delegated	2/2	-> state_tracker.destroy_storage	WorldState.ClearStorage
+state_tracker.destroy_account	-	delegated	2/2	-> state_tracker.destroy_storage	WorldState.MarkStorageDestroyed
+state_tracker.destroy_account	-	delegated	2/2	-> state_tracker.destroy_storage	PersistentStorageProvider.ClearStorage
+state_tracker.destroy_account	-	delegated	2/2	-> state_tracker.destroy_storage	PersistentStorageProvider.MarkStorageDestroyed
+state_tracker.destroy_account	-	delegated	1/2	-> state_tracker.set_account	WorldState.DeleteAccount
+state_tracker.destroy_account	-	delegated	2/2	-> state_tracker.set_account	StateProvider.DeleteAccount
+state_tracker.destroy_account	-	delegated	2/2	-> state_tracker.set_account	StateProvider.PushDelete
+state_tracker.destroy_storage	2	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/PersistentStorageProvider.cs:834-879	PersistentStorageProvider.ClearStorage
+state_tracker.destroy_storage	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/PartialStorageProviderBase.cs:246-259	PartialStorageProviderBase.ClearStorage
+state_tracker.destroy_storage	0,1	inlined	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/BlockAccessLists/BlockAccessListAtIndex.cs:251-295	BlockAccessListAtIndex.DeleteAccount
+state_tracker.get_account	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/StateProvider.cs:132-136	StateProvider.GetAccount
+state_tracker.get_account	-	delegated	2/2	-> state_tracker.get_account_optional	StateProvider.GetThroughCache
+state_tracker.get_account	-	delegated	2/2	-> state_tracker.get_account_optional	StateProvider.GetAndAddToCache
+state_tracker.get_account	-	delegated	2/2	-> state_tracker.get_account_optional	StateProvider.GetState
+state_tracker.get_account_optional	0,1,2	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/TracedAccessWorldState.cs:306-317	TracedAccessWorldState.TryGetAccount
+state_tracker.get_account_optional	0	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/BlockAccessLists/BlockAccessListAtIndex.cs:190-190	BlockAccessListAtIndex.AddAccountRead
+state_tracker.get_account_optional	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/BlockAccessLists/BlockAccessListAtIndex.cs:193-201	BlockAccessListAtIndex.RecordReadAndGet
+state_tracker.get_account_optional	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/TracedAccessWorldState.cs:319-325	TracedAccessWorldState.AddAccountRead
+state_tracker.get_account_optional	1,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/TracedAccessWorldState.cs:439-440	TracedAccessWorldState.GetBalanceInternal
+state_tracker.get_account_optional	1,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/TracedAccessWorldState.cs:448-449	TracedAccessWorldState.GetNonceInternal
+state_tracker.get_account_optional	1,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/TracedAccessWorldState.cs:481-482	TracedAccessWorldState.GetCodeHashInternal
+state_tracker.get_account_optional	1,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/TracedAccessWorldState.cs:502-503	TracedAccessWorldState.AccountExistsInternal
+state_tracker.get_account_optional	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/TracedAccessWorldState.cs:505-506	TracedAccessWorldState.AccountExistsCurrent
+state_tracker.get_account_optional	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/TracedAccessWorldState.cs:508-523	TracedAccessWorldState.AccountExistsCurrent
+state_tracker.get_account_optional	1,2	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/StateProvider.cs:1070-1086	StateProvider.GetThroughCache
+state_tracker.get_account_optional	-	delegated	2/2	-> state_tracker.get_pre_state_account_optional	StateProvider.GetState
+state_tracker.get_code	0,1,2,3	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/StateProvider.cs:407-427	StateProvider.GetCodeCore
+state_tracker.get_code	3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/TrieStoreScopeProvider.cs:505-518	TrieStoreScopeProvider.KeyValueWithBatchingBackedCodeDb.GetCode
 state_tracker.get_pre_state_account	0	missing	-	-	-
+state_tracker.get_pre_state_account_optional	0,1,2	entry	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/TracedAccessWorldState.cs:306-317	TracedAccessWorldState.TryGetAccount
+state_tracker.get_pre_state_account_optional	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/BlockAccessLists/BlockAccessListAtIndex.cs:193-201	BlockAccessListAtIndex.RecordReadAndGet
+state_tracker.get_pre_state_account_optional	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/BlockAccessLists/ReadOnlyAccountChanges.cs:211-212	ReadOnlyAccountChanges.TryGetLastBalanceChangeBefore
+state_tracker.get_pre_state_account_optional	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/BlockAccessLists/ReadOnlyAccountChanges.cs:214-215	ReadOnlyAccountChanges.TryGetLastNonceChangeBefore
+state_tracker.get_pre_state_account_optional	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/BlockAccessLists/ReadOnlyAccountChanges.cs:217-218	ReadOnlyAccountChanges.TryGetLastCodeChangeBefore
+state_tracker.get_pre_state_account_optional	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/BlockAccessListBasedWorldState.cs:230-238	BlockAccessListBasedWorldState.ReadParentAccount
+state_tracker.get_pre_state_account_optional	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/TracedAccessWorldState.cs:319-325	TracedAccessWorldState.AddAccountRead
+state_tracker.get_pre_state_account_optional	1,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/BlockAccessListBasedWorldState.cs:324-370	BlockAccessListBasedWorldState.TryGetAccount
+state_tracker.get_pre_state_account_optional	1,2	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/TracedAccessWorldState.cs:439-440	TracedAccessWorldState.GetBalanceInternal
+state_tracker.get_pre_state_account_optional	1,2	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/TracedAccessWorldState.cs:448-449	TracedAccessWorldState.GetNonceInternal
+state_tracker.get_pre_state_account_optional	1,2	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/TracedAccessWorldState.cs:481-482	TracedAccessWorldState.GetCodeHashInternal
+state_tracker.get_pre_state_account_optional	1,2	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/TracedAccessWorldState.cs:502-503	TracedAccessWorldState.AccountExistsInternal
+state_tracker.get_storage	0	entry	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/TracedAccessWorldState.cs:92-108	TracedAccessWorldState.Get
+state_tracker.get_storage	1,2,3	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/PersistentStorageProvider.cs:169-179	PersistentStorageProvider.GetCurrentValue
+state_tracker.get_storage	0,1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/TracedAccessWorldState.cs:110-133	TracedAccessWorldState.GetStorageSlow
+state_tracker.get_storage	2,3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/BlockAccessListBasedWorldState.cs:143-164	BlockAccessListBasedWorldState.GetStorageSlow
+state_tracker.get_storage	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/PartialStorageProviderBase.cs:170-186	PartialStorageProviderBase.TryGetCachedValue
+state_tracker.get_storage	2,3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/PersistentStorageProvider.cs:1466-1505	PersistentStorageProvider.PerContractState.LoadFromTree
+state_tracker.get_storage	3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/PersistentStorageProvider.cs:1507-1513	PersistentStorageProvider.PerContractState.LoadFromTreeStorage
+state_tracker.get_storage_original	1,2,3	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/PersistentStorageProvider.cs:186-200	PersistentStorageProvider.GetOriginal
+state_tracker.get_storage_original	1,3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/BlockAccessListBasedWorldState.cs:172-192	BlockAccessListBasedWorldState.GetOriginalStorageSlow
+state_tracker.get_storage_original	1,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/PersistentStorageProvider.cs:210-231	PersistentStorageProvider.TryGetJournalledTransactionStartValue
+state_tracker.get_storage_original	3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/PersistentStorageProvider.cs:233-245	PersistentStorageProvider.LoadCapturedOriginal
+state_tracker.get_storage_original	-	delegated	1/2	-> state_tracker.get_storage	PersistentStorageProvider.PerContractState.LoadFromTree
+state_tracker.get_storage_original	0	missing	-	-	-
+state_tracker.get_transient_storage	0	entry	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/WorldState.cs:157-161	WorldState.GetTransientState
+state_tracker.get_transient_storage	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/TransientStorageProvider.cs:52-53	TransientStorageProvider.GetCurrentValue
+state_tracker.get_transient_storage	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/PartialStorageProviderBase.cs:170-186	PartialStorageProviderBase.TryGetCachedValue
 state_tracker.incorporate_tx_into_block	0,5	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Processing/BlockAccessListManager.cs:248-256	BlockAccessListManager.NextTransaction
 state_tracker.incorporate_tx_into_block	5	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/BlockAccessLists/BlockAccessListAtIndex.cs:66-83	BlockAccessListAtIndex.Clear
 state_tracker.incorporate_tx_into_block	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Processing/BlockAccessListManager.TxProcessorPool.cs:231-253	BlockAccessListManager.ParallelTxProcessorWithWorldStateManager.MergeAndReturnBal
@@ -147,32 +286,160 @@ state_tracker.incorporate_tx_into_block	0	part	1/2	repos/clients/nethermind/src/
 state_tracker.incorporate_tx_into_block	-	delegated	2/2	-> block_access_lists.update_builder_from_tx	GeneratedAccountChanges.Merge
 state_tracker.incorporate_tx_into_block	-	delegated	2/2	-> block_access_lists.update_builder_from_tx	GeneratedBlockAccessList.Merge
 state_tracker.incorporate_tx_into_block	1,2,3,4	missing	-	-	-
+state_tracker.increment_nonce	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/StateProvider.cs:361-378	StateProvider.IncrementNonce
+state_tracker.increment_nonce	0	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/State/WorldStateExtensions.cs:71-72	WorldStateExtensions.IncrementNonce
+state_tracker.increment_nonce	0	inlined	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:1323-1359	TransactionProcessorBase.IncrementNonce
+state_tracker.is_account_alive	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/StateProvider.cs:138-142	StateProvider.IsDeadAccount
+state_tracker.is_account_alive	-	delegated	2/2	-> state_tracker.get_account_optional	StateProvider.GetThroughCache
+state_tracker.is_account_alive	-	delegated	2/2	-> state_tracker.get_account_optional	StateProvider.GetAndAddToCache
+state_tracker.mark_account_created	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/StackAccessTracker.cs:62-62	StackAccessTracker.WasCreated
 state_tracker.modify_state	0,1	missing	-	-	-
+state_tracker.move_ether	0,1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/StateProvider.cs:280-345	StateProvider.SetNewBalance
+state_tracker.move_ether	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/StateProvider.cs:631-644	StateProvider.AddToBalanceAndCreateIfNotExists
 state_tracker.restore_tx_state	0	entry	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/BlockAccessLists/BlockAccessListAtIndex.cs:303-366	BlockAccessListAtIndex.Restore
+state_tracker.set_account	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/StateProvider.cs:1026-1049	StateProvider.SetState
+state_tracker.set_account_balance	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/StateProvider.cs:280-345	StateProvider.SetNewBalance
+state_tracker.set_account_balance	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/Account.cs:103-103	Account.WithChangedBalance
+state_tracker.set_account_balance	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/StateProvider.cs:1099-1115	StateProvider.PushUpdate
+state_tracker.set_code	0,1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/StateProvider.cs:180-219	StateProvider.InsertCode
+state_tracker.set_code	1	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/Account.cs:106-106	Account.WithChangedCodeHash
+state_tracker.set_code	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/StateProvider.cs:248-274	StateProvider.SetCodeHash
+state_tracker.set_storage	1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/PersistentStorageProvider.cs:114-125	PersistentStorageProvider.Set
+state_tracker.set_storage	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/PartialStorageProviderBase.cs:208-230	PartialStorageProviderBase.PushUpdate
+state_tracker.set_storage	0	missing	-	-	-
+state_tracker.set_transient_storage	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/TransientStorageProvider.cs:19-31	TransientStorageProvider.Set
+state_tracker.set_transient_storage	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/TransientStorageProvider.cs:34-40	TransientStorageProvider.SetZero
+state_tracker.set_transient_storage	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/PartialStorageProviderBase.cs:208-230	PartialStorageProviderBase.PushUpdate
+state_tracker.set_transient_storage	0	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.State/PartialStorageProviderBase.cs:290-297	PartialStorageProviderBase.Change.SetUpdate
 transactions.calculate_effective_gas_price	1,2	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/TransactionExtensions.cs:49-52	TransactionExtensions.CalculateEffectiveGasPrice
 transactions.calculate_effective_gas_price	0,1,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/TransactionExtensions.cs:19-31	TransactionExtensions.TryCalculatePremiumPerGas
+transactions.calculate_intrinsic_cost	0,1,2,3,4,5	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:782-811	EthereumGasPolicy.CalculateIntrinsicGasWithoutMemo
+transactions.calculate_intrinsic_cost	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/IntrinsicGasCalculator.cs:54-57	IntrinsicGasCalculator.CalculateFloorTokensInAccessList
+transactions.calculate_intrinsic_cost	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/IntrinsicGasCalculator.cs:59-79	IntrinsicGasCalculator.AccessListCost
+transactions.calculate_intrinsic_cost	3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/IntrinsicGasCalculator.cs:81-103	IntrinsicGasCalculator.AuthorizationListCost
+transactions.calculate_intrinsic_cost	4	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/IntrinsicGasCalculator.cs:105-106	IntrinsicGasCalculator.CalculateFloorTokensInCallData
+transactions.calculate_intrinsic_cost	4	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/IntrinsicGasCalculator.cs:159-167	IntrinsicGasCalculator.CalculateFloorCost
+transactions.calculate_intrinsic_cost	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:779-780	EthereumGasPolicy.IsEip2780SelfTransfer
+transactions.calculate_intrinsic_cost	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:844-850	EthereumGasPolicy.CreateCost
+transactions.calculate_intrinsic_cost	0,1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:852-854	EthereumGasPolicy.DataCost
+transactions.calculate_intrinsic_cost	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:865-880	EthereumGasPolicy.Eip2780ExtraGas
+transactions.calculate_intrinsic_cost	-	delegated	2/2	-> transactions.count_tokens_in_data	IntrinsicGasCalculator.CalculateTokensInCallData
+transactions.calculate_intrinsic_cost	-	delegated	2/2	-> vm.gas.init_code_cost	ReleaseSpecExtensions.GetBaseDataCost
 transactions.calculate_max_gas_fee	0	inlined	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:1192-1294	TransactionProcessorBase.BuyGas
+transactions.chain_id	0,3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Crypto/EthereumEcdsaExtensions.cs:176-193	EthereumEcdsaExtensions.SigningParameters
+transactions.chain_id	0,1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Validators/TxValidator.cs:605-621	BaseSignatureTxValidator.IsWellFormed
+transactions.chain_id	2	missing	-	-	-
 transactions.check_nonce	0	inlined	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:1323-1359	TransactionProcessorBase.IncrementNonce
+transactions.count_tokens_in_data	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/IntrinsicGasCalculator.cs:46-51	IntrinsicGasCalculator.CalculateTokensInCallData
+transactions.count_tokens_in_data	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/IntrinsicGasCalculator.cs:108-115	IntrinsicGasCalculator.CalculateEip7623FloorTokensInCallData
+transactions.count_tokens_in_data	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/FrameTxValidation.cs:835-839	FrameTxValidation.CountCalldataTokens
 transactions.decode_transaction	0,1,2,3,4	missing	-	-	-
+transactions.encode_transaction	0,1,2	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Serialization.Rlp/TxDecoder.cs:242-279	TxDecoder.EncodeTx
+transactions.encode_transaction	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Serialization.Rlp/TxDecoders/AccessListTxDecoder.cs:23-33	AccessListTxDecoder.EncodeTransaction
+transactions.encode_transaction	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Serialization.Rlp/TxDecoders/SetCodeTxDecoder.cs:30-39	SetCodeTxDecoder.EncodeTransaction
+transactions.encode_transaction	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Serialization.Rlp/TxDecoders/LegacyTxDecoder.cs:41-58	LegacyTxDecoder.EncodeTransaction
+transactions.encode_transaction	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Serialization.Rlp/TxDecoders/EIP1559TxDecoder.cs:57-65	EIP1559TxDecoder.EncodeTransaction
+transactions.encode_transaction	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Serialization.Rlp/TxDecoders/BlobTxDecoder.cs:61-86	BlobTxDecoder.EncodeTransaction
+transactions.encode_transaction	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Serialization.Rlp/TxDecoder.cs:130-133	TxDecoder.GetDecoder
+transactions.encode_transaction	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Serialization.Rlp/TxDecoders/BaseTxDecoder.cs:160-169	BaseTxDecoder.StartTypedTransaction
 transactions.has_access_list	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/TxTypeExtensions.cs:9-10	TxTypeExtensions.SupportsAccessList
+transactions.recover_sender	1,2,3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Crypto/EthereumEcdsa.std.cs:14-25	EthereumEcdsa.RecoverAddress
+transactions.recover_sender	1,2,3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Crypto/EthereumEcdsa.zkevm.cs:15-21	EthereumEcdsa.RecoverAddress
+transactions.recover_sender	3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/Crypto/PublicKey.cs:77-81	PublicKey.ComputeAddress
+transactions.recover_sender	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/Crypto/Signature.cs:78-78	Signature.GetRecoveryId
+transactions.recover_sender	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Crypto/EthereumEcdsaExtensions.cs:176-193	EthereumEcdsaExtensions.SigningParameters
+transactions.recover_sender	0,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Validators/TxValidator.cs:605-621	BaseSignatureTxValidator.IsWellFormed
+transactions.recover_sender	-	delegated	2/2	-> transactions.signing_hash_155	EthereumEcdsaExtensions.CalculateSignatureHash
+transactions.recover_sender	-	delegated	1/2	-> transactions.signing_hash_155	EthereumEcdsaExtensions.SignatureHash
+transactions.recover_sender	-	delegated	2/2	-> transactions.signing_hash_155	EthereumEcdsaExtensions.SignedPayloadHash
 transactions.signing_hash_155	0	missing	-	-	-
+transactions.signing_hash_1559	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Crypto/EthereumEcdsaExtensions.cs:165-173	EthereumEcdsaExtensions.CalculateSignatureHash
+transactions.signing_hash_1559	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Serialization.Rlp/TxDecoders/EIP1559TxDecoder.cs:28-40	BaseEIP1559TxDecoder.EncodeEip1559Fields
+transactions.signing_hash_1559	0	inlined	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Crypto/EthereumEcdsaExtensions.cs:43-59	EthereumEcdsaExtensions.Sign
+transactions.signing_hash_1559	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Serialization.Rlp/TxDecoders/EIP1559TxDecoder.cs:57-65	EIP1559TxDecoder.EncodeTransaction
+transactions.signing_hash_1559	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Serialization.Rlp/TxDecoders/BaseTxDecoder.cs:160-169	BaseTxDecoder.StartTypedTransaction
+transactions.signing_hash_1559	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Crypto/EthereumEcdsaExtensions.cs:247-280	EthereumEcdsaExtensions.SignedPayloadHash
 transactions.signing_hash_2930	0	missing	-	-	-
+transactions.signing_hash_4844	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Crypto/EthereumEcdsaExtensions.cs:165-173	EthereumEcdsaExtensions.CalculateSignatureHash
+transactions.signing_hash_4844	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Serialization.Rlp/TxDecoders/EIP1559TxDecoder.cs:28-40	BaseEIP1559TxDecoder.EncodeEip1559Fields
+transactions.signing_hash_4844	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Serialization.Rlp/TxDecoders/BlobTxDecoder.cs:61-86	BlobTxDecoder.EncodeTransaction
+transactions.signing_hash_4844	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Serialization.Rlp/TxDecoders/BlobTxDecoder.cs:136-154	BlobTxDecoder.EncodeBlobVersionedHashes
+transactions.signing_hash_4844	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Serialization.Rlp/TxDecoders/BaseTxDecoder.cs:160-169	BaseTxDecoder.StartTypedTransaction
+transactions.signing_hash_4844	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Crypto/EthereumEcdsaExtensions.cs:247-280	EthereumEcdsaExtensions.SignedPayloadHash
 transactions.signing_hash_7702	0	missing	-	-	-
+transactions.signing_hash_pre155	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Crypto/EthereumEcdsaExtensions.cs:165-173	EthereumEcdsaExtensions.CalculateSignatureHash
+transactions.signing_hash_pre155	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Serialization.Rlp/TxDecoders/LegacyTxDecoder.cs:41-58	LegacyTxDecoder.EncodeTransaction
+transactions.signing_hash_pre155	0	inlined	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Crypto/EthereumEcdsaExtensions.cs:43-59	EthereumEcdsaExtensions.Sign
+transactions.signing_hash_pre155	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Serialization.Rlp/TxDecoders/BaseTxDecoder.cs:186-195	BaseTxDecoder.EncodeLegacyFields
+transactions.validate_transaction	0,3	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:987-1071	TransactionProcessorBase.ValidateStatic
+transactions.validate_transaction	3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/Validation/SetCodeTxValidation.cs:26-29	SetCodeTxValidation.ValidateNoContractCreation
+transactions.validate_transaction	3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/Validation/SetCodeTxValidation.cs:34-39	SetCodeTxValidation.ValidateAuthorizationList
+transactions.validate_transaction	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/TransactionExtensions.cs:57-58	TransactionExtensions.IsAboveInitCode
+transactions.validate_transaction	4	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Validators/TxValidator.cs:181-201	IntrinsicGasTxValidator.IsWellFormed
+transactions.validate_transaction	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Validators/TxValidator.cs:252-253	GasFieldsTxValidator.IsWellFormed
+transactions.validate_transaction	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Validators/TxValidator.cs:397-398	ContractSizeTxValidator.IsWellFormed
+transactions.validate_transaction	3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Validators/TxValidator.cs:446-453	BlobFieldsTxValidator.IsWellFormed
+transactions.validate_transaction	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Validators/TxValidator.cs:455-467	BlobFieldsTxValidator.ValidateBlobFields
+transactions.validate_transaction	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Validators/TxValidator.cs:471-484	BlobFieldsTxValidator.ValidateBlobVersionedHashes
+transactions.validate_transaction	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Validators/TxValidator.cs:486-505	BlobFieldsTxValidator.ValidateBlobGasLimits
+transactions.validate_transaction	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Validators/TxValidator.cs:675-680	GasLimitCapTxValidator.IsWellFormed
+transactions.validate_transaction	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Validators/TxValidator.cs:694-695	NonceCapTxValidator.IsWellFormed
+transactions.validate_transaction	4	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:1073-1116	TransactionProcessorBase.ValidateGas
+transactions.validate_transaction	-	delegated	2/2	-> transactions.calculate_intrinsic_cost	EthereumGasPolicy.CalculateIntrinsicGas
+transactions.validate_transaction	-	delegated	2/2	-> transactions.calculate_intrinsic_cost	EthereumGasPolicy.CalculateIntrinsicGasWithoutMemo
+utils.address.compute_contract_address	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/Address.cs:55-55	Address.Address
+utils.address.compute_contract_address	0	missing	-	-	-
+utils.address.compute_create2_contract_address	0,1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/ContractAddress.cs:46-58	ContractAddress.FromSalted
+utils.address.compute_create2_contract_address	0	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/ContractAddress.cs:39-40	ContractAddress.From
+utils.address.to_address_masked	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/PoppedAddressCache.cs:37-39	PoppedAddressCache.GetOrCreate
+utils.address.to_address_masked	0	entry	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/EvmStack.cs:1818-1826	PopAddress
+utils.address.to_address_masked	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/PoppedAddressCache.cs:48-63	PoppedAddressCache.GetOrCreateBehindFront
+utils.address.to_address_masked	0	inlined	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/EvmStack.cs:1806-1813	PopAddress
+utils.address.to_address_masked	0	inlined	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/EvmStack.cs:1828-1840	PopAddress
+vm.emit_transfer_log	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.cs:2024-2030	VirtualMachine.AddTransferLog
+vm.emit_transfer_log	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransferLog.cs:33-34	TransferLog.CreateTransferInternal
+vm.emit_transfer_log	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.cs:2011-2019	VirtualMachine.AddLog
+vm.emit_transfer_log	0,2	inlined	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.cs:2032-2049	VirtualMachine.AddSelfDestructLog
 vm.eoa_delegation.calculate_delegation_cost	0,1,2,4	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/CodeInfoRepository.cs:72-94	CodeInfoRepository.GetCachedCodeInfo
 vm.eoa_delegation.calculate_delegation_cost	1,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/ICodeInfoRepository.cs:49-59	ICodeInfoRepository.TryGetDelegatedAddress
 vm.eoa_delegation.calculate_delegation_cost	0,1,2,4	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/CodeInfoRepository.cs:211-221	CodeInfoRepository.TryGetDelegation
 vm.eoa_delegation.calculate_delegation_cost	3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:225-238	EthereumGasPolicy.TryConsumeAccountAccessGasWithDelegation
 vm.eoa_delegation.calculate_delegation_cost	3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:248-272	EthereumGasPolicy.TryConsumeAccountAccessGasCore
 vm.eoa_delegation.calculate_delegation_cost	-	delegated	2/2	-> vm.eoa_delegation.is_valid_delegation	Eip7702Constants.IsDelegatedCode
+vm.eoa_delegation.get_delegated_code_address	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/ICodeInfoRepository.cs:49-59	ICodeInfoRepository.TryGetDelegatedAddress
+vm.eoa_delegation.get_delegated_code_address	-	delegated	2/2	-> vm.eoa_delegation.is_valid_delegation	Eip7702Constants.IsDelegatedCode
 vm.eoa_delegation.is_valid_delegation	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/Eip7702Constants.cs:25-27	Eip7702Constants.IsDelegatedCode
+vm.eoa_delegation.recover_authority	1,2	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Crypto/EthereumEcdsaExtensions.cs:308-313	EthereumEcdsaExtensions.RecoverAddress
+vm.eoa_delegation.recover_authority	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Crypto/EthereumEcdsa.std.cs:14-25	EthereumEcdsa.RecoverAddress
+vm.eoa_delegation.recover_authority	2	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.Crypto/EthereumEcdsa.std.cs:37-42	EthereumEcdsa.RecoverAddressRaw
+vm.eoa_delegation.recover_authority	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Serialization.Rlp/Eip7702/AuthorizationTupleDecoder.cs:49-57	AuthorizationTupleDecoder.EncodeWithoutSignature
+vm.eoa_delegation.recover_authority	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Serialization.Rlp/Eip7702/AuthorizationTupleDecoder.cs:59-64	AuthorizationTupleDecoder.EncodeSignaturePayload
+vm.eoa_delegation.recover_authority	0	inlined	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:919-968	TransactionProcessorBase.IsValidForExecution
 vm.eoa_delegation.resolve_delegated_code_address	0,1,3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/CodeInfoRepository.cs:72-94	CodeInfoRepository.GetCachedCodeInfo
+vm.eoa_delegation.set_delegation	0,1,2,3,4,5	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:811-907	TransactionProcessorBase.ProcessDelegations
+vm.eoa_delegation.set_delegation	4,5	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/CodeInfoRepository.cs:174-209	CodeInfoRepository.SetDelegation
+vm.eoa_delegation.set_delegation	-	delegated	2/2	-> vm.eoa_delegation.validate_authorization	TransactionProcessorBase.IsValidForExecution
+vm.eoa_delegation.set_delegation	-	delegated	2/2	-> vm.eoa_delegation.is_valid_delegation	CodeInfoRepository.TryGetDelegation
+vm.eoa_delegation.set_delegation	-	delegated	2/2	-> vm.gas.charge_state_gas_from_meter	EthereumGasPolicy.TryConsumeStateGas
+vm.eoa_delegation.set_delegation	-	delegated	2/2	-> vm.gas.charge_state_gas_from_meter	IGasPolicy.TryConsumeStateGas
+vm.eoa_delegation.validate_authorization	0,1,2,3,4,5	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:919-968	TransactionProcessorBase.IsValidForExecution
+vm.eoa_delegation.validate_authorization	-	delegated	2/2	-> vm.eoa_delegation.recover_authority	EthereumEcdsaExtensions.RecoverAddress
+vm.eoa_delegation.validate_authorization	-	delegated	1/2	-> vm.eoa_delegation.recover_authority	AuthorizationTupleDecoder.EncodeSignaturePayload
 vm.gas.allocate_evm_gas	0,1,2	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:813-842	EthereumGasPolicy.TryCreateAvailableFromIntrinsic
+vm.gas.calculate_blob_gas_price	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/BlobGasCalculator.cs:76-89	BlobGasCalculator.TryCalculateFeePerBlobGas
+vm.gas.calculate_blob_gas_price	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/BlobGasCalculator.cs:100-146	BlobGasCalculator.CalculateFeePerBlobGas
+vm.gas.calculate_blob_gas_price	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/BlobGasCalculator.cs:102-142	BlobGasCalculator.CalculateFeePerBlobGas.FakeExponentialOverflow
 vm.gas.calculate_data_fee	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/BlobGasCalculator.cs:57-65	BlobGasCalculator.TryCalculateBlobBaseFee
 vm.gas.calculate_data_fee	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:58-67	BlobBaseFeeCalculator.TryCalculateBlobFees
 vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	BlobGasCalculator.TryCalculateFeePerBlobGas
 vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	BlobGasCalculator.TryCalculateFeePerBlobGas
 vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	BlobGasCalculator.CalculateFeePerBlobGas
 vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	TransactionExtensions.CalculateFeePerBlobGas
+vm.gas.calculate_excess_blob_gas	0,1,2,3,4	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/BlobGasCalculator.cs:148-186	BlobGasCalculator.CalculateExcessBlobGas
+vm.gas.calculate_excess_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	BlobGasCalculator.TryCalculateFeePerBlobGas
+vm.gas.calculate_excess_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	BlobGasCalculator.CalculateFeePerBlobGas
+vm.gas.calculate_excess_blob_gas	-	delegated	1/2	-> vm.gas.calculate_blob_gas_price	BlobGasCalculator.TryCalculateFeePerBlobGas
+vm.gas.calculate_excess_blob_gas	-	delegated	1/2	-> vm.gas.calculate_blob_gas_price	BlobGasCalculator.CalculateFeePerBlobGas.FakeExponentialOverflow
 vm.gas.calculate_gas_extend_memory	1,5	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/EvmPooledMemory.cs:300-312	EvmPooledMemory.CalculateMemoryCost
 vm.gas.calculate_gas_extend_memory	1	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/EvmPooledMemory.cs:96-123	EvmPooledMemory.CheckMemoryAccessViolation
 vm.gas.calculate_gas_extend_memory	1,5	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/EvmPooledMemory.cs:314-326	EvmPooledMemory.CalculateMemoryCost
@@ -180,27 +447,54 @@ vm.gas.calculate_gas_extend_memory	1	part	2/2	repos/clients/nethermind/src/Nethe
 vm.gas.calculate_gas_extend_memory	2,3,4	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/EvmPooledMemory.cs:702-719	EvmPooledMemory.ComputeMemoryExpansionCost
 vm.gas.calculate_gas_extend_memory	3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/EvmPooledMemory.cs:722-726	EvmPooledMemory.ExpansionCost
 vm.gas.calculate_gas_extend_memory	0	missing	-	-	-
+vm.gas.calculate_memory_gas_cost	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/EvmPooledMemory.cs:702-719	EvmPooledMemory.ComputeMemoryExpansionCost
+vm.gas.calculate_memory_gas_cost	1,2,3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/EvmPooledMemory.cs:722-726	EvmPooledMemory.ExpansionCost
+vm.gas.calculate_message_call_gas	0,2,3	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Call.cs:93-337	EvmInstructions.InstructionCall
+vm.gas.calculate_message_call_gas	-	delegated	2/2	-> vm.gas.max_message_call_gas	EthereumGasPolicy.TryReserveChildGasCore
+vm.gas.calculate_message_call_gas	1	missing	-	-	-
 vm.gas.calculate_total_blob_gas	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/TransactionExtensions.cs:73-73	TransactionExtensions.GetBlobGas
 vm.gas.calculate_total_blob_gas	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Core/TransactionExtensions.cs:74-74	TransactionExtensions.GetBlobCount
+vm.gas.charge_gas	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:448-460	EthereumGasPolicy.UpdateGas
+vm.gas.charge_gas	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:117-118	EthereumGasPolicy.ConsumeRaw
 vm.gas.charge_gas_from_meter	0,1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:448-460	EthereumGasPolicy.UpdateGas
 vm.gas.charge_gas_from_meter	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:117-118	EthereumGasPolicy.ConsumeRaw
+vm.gas.charge_state_gas	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:128-152	EthereumGasPolicy.TryConsumeStateGas
+vm.gas.charge_state_gas	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:96-113	EthereumGasPolicy.CalculateStateGasSpill
 vm.gas.charge_state_gas_from_meter	0,1,2	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:128-152	EthereumGasPolicy.TryConsumeStateGas
 vm.gas.charge_state_gas_from_meter	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:96-113	EthereumGasPolicy.CalculateStateGasSpill
 vm.gas.charge_state_gas_from_meter	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:117-118	EthereumGasPolicy.ConsumeRaw
 vm.gas.charge_state_gas_from_meter	1,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:120-126	EthereumGasPolicy.TryConsume
+vm.gas.check_block_gas_capacity	1,2	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Processing/BlockAccessListManager.Validation.cs:111-144	BlockAccessListManager.CheckPerTxInclusion
+vm.gas.check_block_gas_capacity	0,1,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/Eip8037BlockGasInclusionCheck.cs:29-51	Eip8037BlockGasInclusionCheck.Validate
+vm.gas.check_block_gas_capacity	0,1,2	inlined	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Processing/BlockProcessor.BlockProductionTransactionPicker.cs:36-136	BlockProcessor.BlockProductionTransactionPicker.CanAddTransaction
+vm.gas.check_block_gas_capacity	1,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/Eip8037BlockGasInclusionCheck.cs:65-75	Eip8037BlockGasInclusionCheck.TryGetBlockGasReservations
+vm.gas.check_block_gas_capacity	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/Eip8037BlockGasInclusionCheck.cs:77-77	Eip8037BlockGasInclusionCheck.WorstCaseExecution
+vm.gas.check_block_gas_capacity	3	inlined	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Validators/BlockValidator.cs:402-462	BlockValidator.ValidateEip4844Fields
 vm.gas.check_max_fee_per_blob_gas	0,1,2	inlined	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Validators/BlockValidator.cs:402-462	BlockValidator.ValidateEip4844Fields
 vm.gas.check_max_fee_per_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	BlobGasCalculator.TryCalculateFeePerBlobGas
 vm.gas.check_max_fee_per_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	BlobGasCalculator.CalculateFeePerBlobGas
+vm.gas.commit_state_gas	1,2	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:646-658	EthereumGasPolicy.FoldTopFrameStateGas
+vm.gas.commit_state_gas	0	missing	-	-	-
 vm.gas.credit_state_gas_refund	0,1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:568-587	EthereumGasPolicy.RefundStateGas
 vm.gas.credit_state_gas_refund	0,1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:600-608	EthereumGasPolicy.AddStateGasRefundToReservoir
 vm.gas.credit_state_gas_refund	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:627-633	EthereumGasPolicy.TrackStateGasSpillRefund
+vm.gas.drain_state_gas_reservoir	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:706-718	EthereumGasPolicy.CreateChildFrameGas
 vm.gas.forfeit_remaining_gas	1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:81-82	EthereumGasPolicy.ClearExecutionGas
+vm.gas.init_code_cost	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/ReleaseSpecExtensions.cs:20-23	ReleaseSpecExtensions.GetBaseDataCost
+vm.gas.init_code_cost	0	inlined	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:345-355	EthereumGasPolicy.TryConsumeCreateGas
+vm.gas.max_message_call_gas	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:543-549	EthereumGasPolicy.TryReserveChildGasCore
+vm.gas.max_message_call_gas	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/IGasPolicy.cs:374-380	IGasPolicy.TryReserveChildGas
 vm.gas.repay_state_gas_spill	0,1,2	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:172-184	EthereumGasPolicy.RepayStateGasSpill
 vm.gas.repay_state_gas_spill	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:221-223	EthereumGasPolicy.GetUnrefundedStateGasSpill
 vm.gas.repay_state_gas_spill	3	missing	-	-	-
+vm.gas.restore_child_gas	0	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:496-498	EthereumGasPolicy.UpdateGasUp
 vm.gas.restore_state_gas	0,1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:188-196	EthereumGasPolicy.RestoreChildStateGas
 vm.gas.restore_state_gas	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:200-207	EthereumGasPolicy.RestoreChildStateGasOnHalt
 vm.gas.restore_state_gas	2	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:610-625	EthereumGasPolicy.RemoveStateGasRefundFromReservoir
+vm.gas.restore_state_gas_to_entry	2,3	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:635-644	EthereumGasPolicy.ResetForHalt
+vm.gas.restore_state_gas_to_entry	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:568-587	EthereumGasPolicy.RefundStateGas
+vm.gas.restore_state_gas_to_entry	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:1671-1684	TransactionProcessorBase.RefundRevertedExecutionStateGas
+vm.gas.restore_state_gas_to_entry	0	missing	-	-	-
 vm.gas.settle_transaction_gas	1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:1938-1979	TransactionProcessorBase.Refund
 vm.gas.settle_transaction_gas	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/RefundHelper.cs:18-24	RefundHelper.CalculateClaimableRefund
 vm.gas.settle_transaction_gas	0	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/IGasPolicy.cs:49-60	IGasPolicy.GetPreRefundGas
@@ -211,6 +505,122 @@ vm.gas.settle_transaction_gas	0,1,2,4	inlined	2/2	repos/clients/nethermind/src/N
 vm.gas.settle_transaction_gas	0,1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:2005-2026	TransactionProcessorBase.CalculateSpentGasAndRefund
 vm.gas.settle_transaction_gas	4	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/TransactionProcessing/TransactionProcessor.cs:2031-2044	TransactionProcessorBase.CalculateBlockGas
 vm.gas.settle_transaction_gas	3	missing	-	-	-
+vm.gas.tx_state_gas_used	1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:90-91	EthereumGasPolicy.GetStateGasUsed
+vm.gas.tx_state_gas_used	0	missing	-	-	-
+vm.gas.withhold_create_gas	0	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:543-549	EthereumGasPolicy.TryReserveChildGasCore
+vm.gas.withhold_create_gas	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:551-562	EthereumGasPolicy.TryReserveChildGas
+vm.incorporate_child	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:161-169	EthereumGasPolicy.Refund
+vm.incorporate_child	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:188-196	EthereumGasPolicy.RestoreChildStateGas
+vm.incorporate_child	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:200-207	EthereumGasPolicy.RestoreChildStateGasOnHalt
+vm.incorporate_child	2,4	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VmState.cs:465-471	VmState.CommitToParent
+vm.incorporate_child	-	delegated	2/2	-> vm.gas.repay_state_gas_spill	EthereumGasPolicy.RepayStateGasSpill
+vm.incorporate_child	0,1,3	missing	-	-	-
+vm.instructions.arithmetic.add	1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math2Param.cs:49-60	EvmInstructions.InstructionMath2Param
+vm.instructions.arithmetic.add	0,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math2Param.cs:64-182	EvmInstructions.Math2ParamCore
+vm.instructions.arithmetic.add	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math2Param.cs:220-222	EvmInstructions.OpAdd.Operation
+vm.instructions.arithmetic.add	-	delegated	2/2	-> vm.gas.charge_gas	IGasPolicy.UpdateGas
+vm.instructions.arithmetic.add	-	delegated	2/2	-> vm.stack.pop	EnsureDepth
+vm.instructions.arithmetic.add	-	delegated	2/2	-> vm.stack.pop	Pop1Peek32BytesUnchecked
+vm.instructions.arithmetic.add	3	missing	-	-	-
+vm.instructions.arithmetic.addmod	0,1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math3Param.cs:20-31	EvmInstructions.InstructionMath3Param
+vm.instructions.arithmetic.addmod	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Arith256.std.cs:13-15	EvmInstructions.AddMod256
+vm.instructions.arithmetic.addmod	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Arith256.zkevm.cs:20-32	EvmInstructions.AddMod256
+vm.instructions.arithmetic.addmod	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/ZiskArithmetic.zkevm.cs:31-37	ZiskArithmetic.AddMod
+vm.instructions.arithmetic.addmod	0,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math3Param.cs:33-52	EvmInstructions.Math3ParamCore
+vm.instructions.arithmetic.addmod	1	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.OpcodeHandlers.cs:844-845	VirtualMachine.Math3Opcode.TryConsumeGas
+vm.instructions.arithmetic.addmod	3	missing	-	-	-
+vm.instructions.arithmetic.div	1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math2Param.cs:49-60	EvmInstructions.InstructionMath2Param
+vm.instructions.arithmetic.div	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Arith256.std.cs:21-26	EvmInstructions.Divide256
+vm.instructions.arithmetic.div	0,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math2Param.cs:64-182	EvmInstructions.Math2ParamCore
+vm.instructions.arithmetic.div	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Arith256.zkevm.cs:73-87	EvmInstructions.Divide256
+vm.instructions.arithmetic.div	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math2Param.cs:253-265	EvmInstructions.OpDiv.Operation
+vm.instructions.arithmetic.div	1	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.OpcodeHandlers.cs:812-813	VirtualMachine.Math2Opcode.TryConsumeGas
+vm.instructions.arithmetic.div	-	delegated	2/2	-> vm.stack.pop	Pop1Peek32BytesUnchecked
+vm.instructions.arithmetic.div	-	delegated	2/2	-> vm.stack.pop	Pop1Peek32BytesUnchecked
+vm.instructions.arithmetic.div	3	missing	-	-	-
+vm.instructions.arithmetic.exp	0,1,2	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math2Param.cs:408-451	EvmInstructions.InstructionExp
+vm.instructions.arithmetic.exp	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/IGasPolicy.cs:123-125	IGasPolicy.TryConsumeExpBytes
+vm.instructions.arithmetic.exp	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:305-308	EthereumGasPolicy.TryConsumeExpBytes
+vm.instructions.arithmetic.exp	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math2Param.cs:453-461	EvmInstructions.WriteSmallExpResult
+vm.instructions.arithmetic.exp	-	delegated	2/2	-> vm.stack.pop	EnsureDepth
+vm.instructions.arithmetic.exp	-	delegated	2/2	-> vm.stack.pop	Pop1Peek32BytesUnchecked
+vm.instructions.arithmetic.exp	-	delegated	1/2	-> vm.stack.pop	Pop1Peek32BytesUnchecked
+vm.instructions.arithmetic.exp	-	delegated	1/2	-> vm.stack.push	WriteUInt256ToSlot
+vm.instructions.arithmetic.exp	-	delegated	1/2	-> vm.stack.push	EvmInstructions.WriteSmallWordToSlot
+vm.instructions.arithmetic.exp	3	missing	-	-	-
+vm.instructions.arithmetic.mod	2	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math2Param.cs:309-321	EvmInstructions.OpMod.Operation
+vm.instructions.arithmetic.mod	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Arith256.std.cs:28-30	EvmInstructions.Mod256
+vm.instructions.arithmetic.mod	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math2Param.cs:49-60	EvmInstructions.InstructionMath2Param
+vm.instructions.arithmetic.mod	0,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math2Param.cs:64-182	EvmInstructions.Math2ParamCore
+vm.instructions.arithmetic.mod	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Arith256.zkevm.cs:89-101	EvmInstructions.Mod256
+vm.instructions.arithmetic.mod	-	delegated	1/2	-> vm.stack.pop	EnsureDepth
+vm.instructions.arithmetic.mod	-	delegated	2/2	-> vm.stack.pop	Pop1Peek32BytesUnchecked
+vm.instructions.arithmetic.mod	-	delegated	2/2	-> vm.stack.pop	Pop1Peek32BytesUnchecked
+vm.instructions.arithmetic.mod	-	delegated	2/2	-> vm.stack.push	WriteUInt256ToSlot
+vm.instructions.arithmetic.mod	3	missing	-	-	-
+vm.instructions.arithmetic.mul	1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math2Param.cs:49-60	EvmInstructions.InstructionMath2Param
+vm.instructions.arithmetic.mul	0,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math2Param.cs:64-182	EvmInstructions.Math2ParamCore
+vm.instructions.arithmetic.mul	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math2Param.cs:242-243	EvmInstructions.OpMul.Operation
+vm.instructions.arithmetic.mul	-	delegated	2/2	-> vm.stack.pop	Pop1Peek32BytesUnchecked
+vm.instructions.arithmetic.mul	-	delegated	2/2	-> vm.stack.pop	Pop1Peek32BytesUnchecked
+vm.instructions.arithmetic.mul	-	delegated	1/2	-> vm.stack.push	WriteUInt256ToSlot
+vm.instructions.arithmetic.mul	3	missing	-	-	-
+vm.instructions.arithmetic.mulmod	1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math3Param.cs:20-31	EvmInstructions.InstructionMath3Param
+vm.instructions.arithmetic.mulmod	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Arith256.std.cs:17-19	EvmInstructions.MulMod256
+vm.instructions.arithmetic.mulmod	0,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math3Param.cs:33-52	EvmInstructions.Math3ParamCore
+vm.instructions.arithmetic.mulmod	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Arith256.zkevm.cs:34-50	EvmInstructions.MulMod256
+vm.instructions.arithmetic.mulmod	2	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math3Param.cs:61-61	EvmInstructions.OpMulMod.Operation
+vm.instructions.arithmetic.mulmod	1	part	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.OpcodeHandlers.cs:844-845	VirtualMachine.Math3Opcode.TryConsumeGas
+vm.instructions.arithmetic.mulmod	-	delegated	2/2	-> vm.stack.pop	Pop2Peek32BytesUnchecked
+vm.instructions.arithmetic.mulmod	3	missing	-	-	-
+vm.instructions.arithmetic.sdiv	2	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math2Param.cs:278-300	EvmInstructions.OpSDiv.Operation
+vm.instructions.arithmetic.sdiv	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math2Param.cs:49-60	EvmInstructions.InstructionMath2Param
+vm.instructions.arithmetic.sdiv	-	delegated	2/2	-> vm.gas.charge_gas	IGasPolicy.UpdateGas
+vm.instructions.arithmetic.sdiv	-	delegated	2/2	-> vm.stack.pop	Pop1Peek32BytesUnchecked
+vm.instructions.arithmetic.sdiv	-	delegated	2/2	-> vm.stack.pop	Pop1Peek32BytesUnchecked
+vm.instructions.arithmetic.sdiv	-	delegated	1/2	-> vm.stack.push	WriteUInt256ToSlot
+vm.instructions.arithmetic.sdiv	4	missing	-	-	-
+vm.instructions.arithmetic.signextend	0,2,3,4,5	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math1Param.cs:224-275	EvmInstructions.SignExtendCore
+vm.instructions.arithmetic.signextend	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math1Param.cs:214-222	EvmInstructions.InstructionSignExtend
+vm.instructions.arithmetic.signextend	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.OpcodeHandlers.cs:924-925	VirtualMachine.SignExtendOpcode.TryConsumeGas
+vm.instructions.arithmetic.signextend	-	delegated	2/2	-> vm.stack.pop	Pop1Peek32BytesUnchecked
+vm.instructions.arithmetic.signextend	-	delegated	1/2	-> vm.stack.pop	Pop1Peek32BytesUnchecked
+vm.instructions.arithmetic.smod	2	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math2Param.cs:332-349	EvmInstructions.OpSMod.Operation
+vm.instructions.arithmetic.smod	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math2Param.cs:49-60	EvmInstructions.InstructionMath2Param
+vm.instructions.arithmetic.smod	0,3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math2Param.cs:64-182	EvmInstructions.Math2ParamCore
+vm.instructions.arithmetic.smod	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.OpcodeHandlers.cs:812-813	VirtualMachine.Math2Opcode.TryConsumeGas
+vm.instructions.arithmetic.smod	-	delegated	2/2	-> vm.stack.pop	Pop1Peek32BytesUnchecked
+vm.instructions.arithmetic.smod	-	delegated	2/2	-> vm.stack.pop	Pop1Peek32BytesUnchecked
+vm.instructions.arithmetic.smod	4	missing	-	-	-
+vm.instructions.arithmetic.sub	1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math2Param.cs:49-60	EvmInstructions.InstructionMath2Param
+vm.instructions.arithmetic.sub	0,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math2Param.cs:64-182	EvmInstructions.Math2ParamCore
+vm.instructions.arithmetic.sub	1,3	inlined	1/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.Dispatch.zkevm.cs:146-310	VirtualMachine.RawCalliHelper.ExecuteOpcode
+vm.instructions.arithmetic.sub	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Math2Param.cs:230-232	EvmInstructions.OpSub.Operation
+vm.instructions.arithmetic.sub	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.OpcodeHandlers.cs:812-813	VirtualMachine.Math2Opcode.TryConsumeGas
+vm.instructions.bitwise.bitwise_and	1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Bitwise.cs:76-86	EvmInstructions.InstructionBitwise
+vm.instructions.bitwise.bitwise_and	0,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Bitwise.cs:90-122	EvmInstructions.BitwiseCore
+vm.instructions.bitwise.bitwise_and	0,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Bitwise.cs:165-202	EvmInstructions.BitwiseScalar
+vm.instructions.bitwise.bitwise_and	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Bitwise.cs:209-210	EvmInstructions.OpBitwiseAnd.Operation
+vm.instructions.bitwise.bitwise_and	-	delegated	1/2	-> vm.gas.charge_gas	IGasPolicy.UpdateGas
+vm.instructions.bitwise.bitwise_and	-	delegated	1/2	-> vm.stack.pop	EnsureDepth
+vm.instructions.bitwise.bitwise_and	-	delegated	2/2	-> vm.stack.pop	Pop1Peek32BytesUnchecked
+vm.instructions.bitwise.bitwise_and	-	delegated	1/2	-> vm.stack.pop	Pop1Peek32BytesUnchecked
+vm.instructions.bitwise.bitwise_and	3	missing	-	-	-
+vm.instructions.bitwise.bitwise_or	1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Bitwise.cs:76-86	EvmInstructions.InstructionBitwise
+vm.instructions.bitwise.bitwise_or	0,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Bitwise.cs:90-122	EvmInstructions.BitwiseCore
+vm.instructions.bitwise.bitwise_or	0,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Bitwise.cs:165-202	EvmInstructions.BitwiseScalar
+vm.instructions.bitwise.bitwise_or	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Bitwise.cs:218-219	EvmInstructions.OpBitwiseOr.Operation
+vm.instructions.bitwise.bitwise_or	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.OpcodeHandlers.cs:892-893	VirtualMachine.BitwiseOpcode.TryConsumeGas
+vm.instructions.bitwise.bitwise_or	-	delegated	2/2	-> vm.stack.pop	Pop1Peek32BytesUnchecked
+vm.instructions.bitwise.bitwise_or	3	missing	-	-	-
+vm.instructions.bitwise.bitwise_xor	1	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Bitwise.cs:76-86	EvmInstructions.InstructionBitwise
+vm.instructions.bitwise.bitwise_xor	0,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Bitwise.cs:90-122	EvmInstructions.BitwiseCore
+vm.instructions.bitwise.bitwise_xor	0,2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Bitwise.cs:165-202	EvmInstructions.BitwiseScalar
+vm.instructions.bitwise.bitwise_xor	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Bitwise.cs:227-228	EvmInstructions.OpBitwiseXor.Operation
+vm.instructions.bitwise.bitwise_xor	0,1,3	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.GuestHandlers.zkevm.cs:545-570	ExecuteBinary
+vm.instructions.bitwise.bitwise_xor	2	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/VirtualMachine.GuestHandlers.zkevm.cs:737-744	XorOperation.Apply
+vm.instructions.bitwise.bitwise_xor	-	delegated	1/2	-> vm.stack.pop	EnsureDepth
+vm.instructions.bitwise.bitwise_xor	-	delegated	1/2	-> vm.stack.pop	Pop1Peek32BytesUnchecked
 vm.instructions.storage.sload	0,1,2	entry	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/Instructions/EvmInstructions.Storage.cs:834-887	EvmInstructions.InstructionSLoad
 vm.instructions.storage.sload	1	part	2/2	repos/clients/nethermind/src/Nethermind/Nethermind.Evm/GasPolicy/EthereumGasPolicy.cs:381-412	EthereumGasPolicy.TryConsumeStorageAccessGasCore
 vm.instructions.storage.sload	-	delegated	2/2	-> vm.stack.pop	PopBytesByRef

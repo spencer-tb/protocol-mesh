@@ -68,6 +68,9 @@ block_access_lists.update_builder_from_tx	-	delegated	2/2	-> block_access_lists.
 block_access_lists.update_builder_from_tx	-	delegated	2/2	-> block_access_lists.add_code_change	addCodeChange
 block_access_lists.update_builder_from_tx	-	delegated	2/2	-> block_access_lists.add_storage_write	addStorageWrite
 block_access_lists.validate_block_access_list_gas_limit	0,1,2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_validation.nim:47-64	checkBalSize
+blocks.encode_receipt	0,1	missing	-	-	-
+bloom.add_to_bloom	0,1,2,3	missing	-	-	-
+bloom.logs_bloom	0,1,2	missing	-	-	-
 fork.apply_body	0,1,2,3	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_block.nim:103-225	procBlkPreamble
 fork.apply_body	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_block.nim:61-101	processTransactions
 fork.apply_body	4,5	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_block.nim:227-298	procBlkEpilogue
@@ -86,6 +89,7 @@ fork.calculate_base_fee_per_gas	-	entry	1/2	repos/clients/nimbus-eth1/execution_
 fork.calculate_base_fee_per_gas	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/gaslimit.nim:56-80	verifyEip1559Header
 fork.calculate_base_fee_per_gas	-	delegated	2/2	-> fork.check_gas_limit	validateGasLimit
 fork.calculate_base_fee_per_gas	0,2,3,4	missing	-	-	-
+fork.check_gas_limit	0,1,2,3	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/gaslimit.nim:26-38	validateGasLimit
 fork.check_transaction	0,1,3	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_transaction.nim:118-137	validateForInclusion
 fork.check_transaction	2,5	part	2/2	repos/clients/nimbus-eth1/execution_chain/transaction/call_evm.nim:22-35	callParams
 fork.check_transaction	2	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/validate.nim:236-242	gasCost
@@ -94,6 +98,9 @@ fork.check_transaction	-	delegated	2/2	-> vm.gas.check_block_gas_capacity	checkB
 fork.check_transaction	-	delegated	2/2	-> transactions.validate_transaction	validateTxBasic
 fork.check_transaction	-	delegated	1/2	-> transactions.validate_transaction	intrinsicGas
 fork.check_transaction	4	missing	-	-	-
+fork.disburse_gas_fees	1,3	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_transaction.nim:36-85	commitOrRollbackDependingOnGasUsed
+fork.disburse_gas_fees	-	delegated	1/2	-> state_tracker.create_ether	trackAddBalanceChange
+fork.disburse_gas_fees	-	delegated	2/2	-> state_tracker.create_ether	addBalance
 fork.execute_block	2	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/chain/forked_chain/chain_private.nim:60-99	getVmState
 fork.execute_block	1,2	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/chain/forked_chain/chain_private.nim:101-203	processBlock
 fork.execute_block	0,2,3,5	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_block.nim:103-225	procBlkPreamble
@@ -103,8 +110,19 @@ fork.execute_block	-	delegated	1/2	-> fork.validate_header	validateHeaderAndKins
 fork.execute_block	-	delegated	2/2	-> fork.validate_header	validateHeader
 fork.execute_block	-	delegated	1/2	-> fork.apply_body	processParentBlockHash
 fork.execute_block	-	delegated	1/2	-> fork.apply_body	processBeaconBlockRoot
+fork.get_last_256_block_hashes	0	entry	1/2	repos/clients/nimbus-eth1/execution_chain/evm/computation.nim:83-91	getBlockHash
+fork.get_last_256_block_hashes	1,2	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/chain/forked_chain/chain_branch.nim:58-71	branchBlockHashFn
+fork.get_last_256_block_hashes	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:1009-1021	getBlockHash
 fork.make_receipt	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/executor/executor_helpers.nim:42-55	makeReceipt
 fork.make_receipt	1	missing	-	-	-
+fork.process_checked_system_transaction	2,3	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_transaction.nim:233-247	processDequeueWithdrawalRequests
+fork.process_checked_system_transaction	2,3	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_transaction.nim:249-263	processDequeueConsolidationRequests
+fork.process_checked_system_transaction	2,3	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_transaction.nim:265-279	processBuilderDepositRequests
+fork.process_checked_system_transaction	2,3	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_transaction.nim:281-295	processBuilderExitRequests
+fork.process_checked_system_transaction	-	delegated	2/2	-> fork.process_unchecked_system_transaction	systemCall
+fork.process_checked_system_transaction	-	delegated	2/2	-> state_tracker.get_code	getCode
+fork.process_checked_system_transaction	-	delegated	2/2	-> state_tracker.get_account	getAccount
+fork.process_checked_system_transaction	0,1	missing	-	-	-
 fork.process_general_purpose_requests	1,2,3,4	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_block.nim:227-298	procBlkEpilogue
 fork.process_general_purpose_requests	1	part	1/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_transaction.nim:233-247	processDequeueWithdrawalRequests
 fork.process_general_purpose_requests	2	part	1/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_transaction.nim:249-263	processDequeueConsolidationRequests
@@ -115,8 +133,30 @@ fork.process_general_purpose_requests	0,1,2,3,4	part	2/2	repos/clients/nimbus-et
 fork.process_general_purpose_requests	-	delegated	2/2	-> requests.parse_deposit_requests	parseDepositLogs
 fork.process_general_purpose_requests	-	delegated	1/2	-> fork.process_checked_system_transaction	systemCall
 fork.process_general_purpose_requests	-	delegated	1/2	-> requests.parse_deposit_requests	addDepositLogs
+fork.process_transaction	1,2,3,5	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_transaction.nim:143-186	processTransaction
+fork.process_transaction	3,4	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_transaction.nim:36-85	commitOrRollbackDependingOnGasUsed
+fork.process_transaction	0,4	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_block.nim:61-101	processTransactions
+fork.process_transaction	-	delegated	2/2	-> fork.check_transaction	validateForInclusion
+fork.process_transaction	-	delegated	2/2	-> fork.check_transaction	checkBlockGasCapacity
+fork.process_transaction	-	delegated	2/2	-> fork.check_transaction	validateTransaction
+fork.process_transaction	-	delegated	2/2	-> fork.update_sender_state	prepareToRunComputation
+fork.process_transaction	-	delegated	2/2	-> vm.interpreter.process_top_level	runComputation
+fork.process_transaction	-	delegated	2/2	-> vm.interpreter.process_top_level	setupEVM
+fork.process_transaction	-	delegated	1/2	-> fork.update_sender_state	preExecComputation
+fork.process_transaction	-	delegated	2/2	-> vm.gas.settle_transaction_gas	calculateAndPossiblyRefundGas
+fork.process_transaction	-	delegated	2/2	-> vm.interpreter.process_top_level	finishRunningComputation
+fork.process_transaction	-	delegated	1/2	-> vm.interpreter.process_top_level	txCallEvm
+fork.process_transaction	-	delegated	2/2	-> fork.make_receipt	makeReceipt
+fork.process_transaction	-	delegated	1/2	-> fork.check_transaction	intrinsicGas
 fork.process_unchecked_system_transaction	2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/transaction/system_call.nim:97-97	systemCall
 fork.process_unchecked_system_transaction	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/transaction/system_call.nim:30-45	setupComputation
+fork.process_withdrawals	1	part	1/2	repos/clients/nimbus-eth1/execution_chain/core/withdrawals.nim:16-33	validateWithdrawals
+fork.process_withdrawals	3	inlined	1/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_block.nim:227-298	procBlkEpilogue
+fork.process_withdrawals	0	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:291-295	beginCallFrame
+fork.process_withdrawals	0,2,3	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/core/tx_pool/tx_packer.nim:295-342	vmExecCommit
+fork.process_withdrawals	-	delegated	1/2	-> state_tracker.create_ether	trackAddBalanceChange
+fork.process_withdrawals	-	delegated	2/2	-> state_tracker.incorporate_tx_into_block	commitCallFrame
+fork.process_withdrawals	-	delegated	2/2	-> state_tracker.create_ether	addBalance
 fork.state_transition	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/chain/forked_chain.nim:523-568	validateBlock
 fork.state_transition	0	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/chain/forked_chain/chain_private.nim:60-99	getVmState
 fork.state_transition	3	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/chain/forked_chain.nim:85-114	appendBlock
@@ -124,56 +164,315 @@ fork.state_transition	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/
 fork.state_transition	2,3	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/chain/forked_chain.nim:330-425	updateBase
 fork.state_transition	-	delegated	2/2	-> fork.get_last_256_block_hashes	branchBlockHashFn
 fork.state_transition	-	delegated	2/2	-> fork.execute_block	processBlock
+fork.update_sender_state	-	delegated	2/2	-> vm.gas.calculate_data_fee	blobGasFee
+fork.update_sender_state	-	delegated	2/2	-> state_tracker.increment_nonce	incNonce
+fork.update_sender_state	1,2	missing	-	-	-
+fork.validate_header	2,4	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/validate.nim:64-129	validateHeader
+fork.validate_header	3	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/gaslimit.nim:56-80	verifyEip1559Header
+fork.validate_header	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/eip4844.nim:158-197	validateEip4844Header
+fork.validate_header	-	delegated	2/2	-> vm.gas.calculate_excess_blob_gas	calcExcessBlobGas
+fork.validate_header	-	delegated	2/2	-> fork.calculate_base_fee_per_gas	calcEip1599BaseFee
+fork.validate_header	-	delegated	2/2	-> fork.calculate_base_fee_per_gas	validateGasLimit
+fork.validate_header	0,5	missing	-	-	-
+fork_types.encode_account	0	missing	-	-	-
+requests.compute_requests_hash	0,1	missing	-	-	-
+requests.extract_deposit_data	2,3,4,5	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/eip6110.nim:31-68	depositLogToRequest
+requests.extract_deposit_data	2,3,4,5	part	1/2	repos/clients/nimbus-eth1/execution_chain/core/eip6110.nim:47-49	depositLogToRequest.copyFrom
+requests.extract_deposit_data	0	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/core/eip6110.nim:80-87	parseDepositLogs
+requests.extract_deposit_data	1	missing	-	-	-
+requests.parse_deposit_requests	2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/eip6110.nim:80-87	parseDepositLogs
+requests.parse_deposit_requests	0	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_block.nim:61-101	processTransactions
+requests.parse_deposit_requests	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/eip6110.nim:74-78	addDepositLogs
+requests.parse_deposit_requests	-	delegated	2/2	-> requests.extract_deposit_data	depositLogToRequest
+requests.parse_deposit_requests	-	delegated	1/2	-> requests.extract_deposit_data	depositLogToRequest.copyFrom
+state_tracker.account_deployable	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:730-736	contractCollision
+state_tracker.account_deployable	0	part	1/2	repos/clients/nimbus-eth1/execution_chain/evm/computation.nim:245-260	accountDeployable
+state_tracker.account_deployable	-	delegated	2/2	-> state_tracker.get_account	getAccount
+state_tracker.account_exists	0	part	1/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:302-303	exists
+state_tracker.account_exists	-	delegated	2/2	-> state_tracker.get_account_optional	getAccount
+state_tracker.account_exists_and_is_empty	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:206-209	isEmpty
+state_tracker.account_exists_and_is_empty	-	delegated	2/2	-> state_tracker.get_account_optional	getAccount
+state_tracker.account_exists_and_is_empty	0	missing	-	-	-
+state_tracker.clear_account_preserving_balance	0,1	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:898-921	deleteAccount
 state_tracker.copy_tx_state	0	entry	1/2	repos/clients/nimbus-eth1/execution_chain/evm/computation.nim:184-187	beginSavePoint
 state_tracker.copy_tx_state	0	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:291-295	beginCallFrame
 state_tracker.copy_tx_state	1	missing	-	-	-
+state_tracker.create_ether	0	part	2/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:764-768	setBalance
+state_tracker.create_ether	-	delegated	1/2	-> state_tracker.modify_state	makeDirty
+state_tracker.destroy_account	0,1	entry	2/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:356-361	kill
+state_tracker.destroy_account	-	delegated	1/2	-> state_tracker.destroy_storage	clearStorage
+state_tracker.destroy_storage	0,1	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:481-509	normalizeChanges
+state_tracker.get_account	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:211-287	getAccount
+state_tracker.get_account_optional	1,2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:211-287	getAccount
+state_tracker.get_account_optional	0	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:222-228	accountEntry
+state_tracker.get_account_optional	0	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:316-318	trackAddressAccess
+state_tracker.get_code	0,1,2,3	entry	2/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:632-668	getCode
+state_tracker.get_code	3	part	2/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:378-385	cachedCode
+state_tracker.get_code	1,2	part	2/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:387-395	writtenCode
 state_tracker.get_pre_state_account	0	missing	-	-	-
+state_tracker.get_pre_state_account_optional	1,2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:211-287	getAccount
+state_tracker.get_pre_state_account_optional	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_overlay.nim:55-72	hasAccount
+state_tracker.get_pre_state_account_optional	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_overlay.nim:74-97	getAccount
+state_tracker.get_pre_state_account_optional	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:195-204	applyOverlay
+state_tracker.get_pre_state_account_optional	0	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:222-228	accountEntry
+state_tracker.get_pre_state_account_optional	0	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:316-318	trackAddressAccess
+state_tracker.get_storage	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/computation.nim:102-105	getStorage
+state_tracker.get_storage	2	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_overlay.nim:99-118	getStorage
+state_tracker.get_storage	3	part	2/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:305-317	fetchSlotChecked
+state_tracker.get_storage	1,2,3	part	2/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:319-343	originalStorageValue
+state_tracker.get_storage	0	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:320-325	trackStorageRead
+state_tracker.get_storage	1,2	part	2/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:345-354	storageValue
+state_tracker.get_storage_original	0,1,2,3	entry	2/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:319-343	originalStorageValue
+state_tracker.get_storage_original	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_overlay.nim:99-118	getStorage
+state_tracker.get_storage_original	3	part	1/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:305-317	fetchSlotChecked
+state_tracker.get_transient_storage	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/computation.nim:138-144	getTransientStorage
+state_tracker.get_transient_storage	0	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/transient_storage.nim:44-45	getStorage
 state_tracker.incorporate_tx_into_block	0,5	entry	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:535-545	commitCallFrame
 state_tracker.incorporate_tx_into_block	5	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:243-250	clearTransaction
 state_tracker.incorporate_tx_into_block	-	delegated	2/2	-> block_access_lists.update_builder_from_tx	normalizeChanges
 state_tracker.incorporate_tx_into_block	-	delegated	2/2	-> block_access_lists.update_builder_from_tx	recordTransaction
 state_tracker.incorporate_tx_into_block	1,2,3,4	missing	-	-	-
+state_tracker.increment_nonce	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:809-810	incNonce
+state_tracker.increment_nonce	0	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/evm/computation.nim:230-243	incrementNonce
+state_tracker.increment_nonce	0	part	1/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:803-807	setNonce
+state_tracker.is_account_alive	0	part	2/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:206-209	isEmpty
+state_tracker.is_account_alive	-	delegated	2/2	-> state_tracker.get_account_optional	getAccount
+state_tracker.mark_account_created	0	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:851-862	clearStorage
 state_tracker.modify_state	0,1	missing	-	-	-
+state_tracker.move_ether	0,1	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter_dispatch.nim:69-86	beforeExecCall
+state_tracker.move_ether	0,1	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter_dispatch.nim:98-123	beforeExecCreate
+state_tracker.move_ether	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:770-792	addBalance
+state_tracker.move_ether	0	part	2/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:794-801	subBalance
+state_tracker.move_ether	-	delegated	1/2	-> state_tracker.modify_state	setBalance
+state_tracker.move_ether	-	delegated	2/2	-> state_tracker.modify_state	trackSubBalanceChange
+state_tracker.move_ether	-	delegated	2/2	-> state_tracker.modify_state	trackAddBalanceChange
 state_tracker.restore_tx_state	0	entry	1/2	repos/clients/nimbus-eth1/execution_chain/evm/computation.nim:207-211	rollback
 state_tracker.restore_tx_state	0	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:547-573	undoJournal
 state_tracker.restore_tx_state	0	part	2/2	repos/clients/nimbus-eth1/execution_chain/block_access_list/bal_tracker.nim:575-586	rollbackCallFrame
+state_tracker.set_account	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:484-497	makeDirty
+state_tracker.set_account	-	delegated	2/2	-> state_tracker.destroy_account	kill
+state_tracker.set_account	-	delegated	2/2	-> state_tracker.destroy_account	deleteAccount
+state_tracker.set_account_balance	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:764-768	setBalance
+state_tracker.set_account_balance	-	delegated	2/2	-> state_tracker.modify_state	makeDirty
+state_tracker.set_code	0,1	entry	2/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:822-834	setCode
+state_tracker.set_code	-	delegated	2/2	-> state_tracker.modify_state	makeDirty
+state_tracker.set_storage	0,1	entry	2/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:836-849	setStorage
+state_tracker.set_storage	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:484-497	makeDirty
+state_tracker.set_storage	-	delegated	2/2	-> state_tracker.get_account_optional	getAccount
+state_tracker.set_transient_storage	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/transient_storage.nim:55-62	setStorage
 transactions.calculate_effective_gas_price	0,2	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/core/validate.nim:357-426	validateTransaction
 transactions.calculate_effective_gas_price	1	missing	-	-	-
+transactions.calculate_intrinsic_cost	0,1,2,3,4,5	entry	2/2	repos/clients/nimbus-eth1/execution_chain/transaction/call_types.nim:74-149	intrinsicGas
+transactions.calculate_intrinsic_cost	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/transaction/call_types.nim:66-67	selfTransfer
 transactions.calculate_max_gas_fee	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/validate.nim:236-242	gasCost
+transactions.chain_id	1,2	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/core/validate.nim:202-226	validateLegacySignatureForm
+transactions.chain_id	-	delegated	2/2	-> vm.instructions.block.chain_id	chainIdOp
+transactions.chain_id	0,3	missing	-	-	-
 transactions.check_nonce	0	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/core/validate.nim:357-426	validateTransaction
+transactions.count_tokens_in_data	0	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/transaction/call_types.nim:74-149	intrinsicGas
 transactions.decode_transaction	2,3	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/pooled_txs_rlp.nim:76-80	read
 transactions.decode_transaction	0,1,4	missing	-	-	-
+transactions.encode_transaction	2	missing	-	-	-
 transactions.has_access_list	0	missing	-	-	-
+transactions.recover_sender	0	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/validate.nim:202-226	validateLegacySignatureForm
+transactions.recover_sender	0,2	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/validate.nim:228-234	validateEip2930SignatureForm
+transactions.recover_sender	1,3	missing	-	-	-
 transactions.signing_hash_155	0	missing	-	-	-
+transactions.signing_hash_1559	0	missing	-	-	-
 transactions.signing_hash_2930	0	missing	-	-	-
+transactions.signing_hash_4844	0	missing	-	-	-
 transactions.signing_hash_7702	0	missing	-	-	-
+transactions.signing_hash_pre155	0	missing	-	-	-
+transactions.validate_transaction	0,1,2,3,4	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/validate.nim:244-355	validateTxBasic
+transactions.validate_transaction	-	delegated	2/2	-> transactions.calculate_intrinsic_cost	intrinsicGas
+utils.address.compute_contract_address	-	entry	1/2	repos/clients/nimbus-eth1/execution_chain/evm/message.nim:24-28	generateContractAddress
+utils.address.compute_contract_address	0,1	missing	-	-	-
+utils.address.compute_create2_contract_address	0,1	missing	-	-	-
+utils.address.to_address_masked	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/stack.nim:97-98	fromStackElem
+vm.emit_transfer_log	0,1,2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/eip7708.nim:41-48	emitTransferLog
+vm.emit_transfer_log	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/eip7708.nim:19-27	createTransferLog
+vm.emit_transfer_log	2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/eip7708.nim:30-31	addLogEntry
 vm.eoa_delegation.calculate_delegation_cost	0,1,2,3,4	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_call.nim:102-130	gasCallDelegate
 vm.eoa_delegation.calculate_delegation_cost	1,2	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/eip7702.nim:66-70	parseDelegationAddress
 vm.eoa_delegation.calculate_delegation_cost	3	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_helpers.nim:77-86	delegateResolutionCost
 vm.eoa_delegation.calculate_delegation_cost	-	delegated	2/2	-> state_tracker.get_code	getCode
 vm.eoa_delegation.calculate_delegation_cost	-	delegated	2/2	-> vm.eoa_delegation.is_valid_delegation	isDelegation
+vm.eoa_delegation.get_delegated_code_address	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/eip7702.nim:66-70	parseDelegationAddress
+vm.eoa_delegation.get_delegated_code_address	-	delegated	1/2	-> vm.eoa_delegation.is_valid_delegation	isDelegation
+vm.eoa_delegation.get_delegated_code_address	-	delegated	2/2	-> vm.eoa_delegation.is_valid_delegation	isDelegation
 vm.eoa_delegation.is_valid_delegation	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/eip7702.nim:50-57	isDelegation
+vm.eoa_delegation.recover_authority	0,1,2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/eip7702.nim:27-48	authority
+vm.eoa_delegation.recover_authority	2	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/pubkey_recovery.nim:22-33	recoverPubkeyRaw
+vm.eoa_delegation.recover_authority	2	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/pubkey_recovery.nim:35-45	recoverPubkeyRaw
 vm.eoa_delegation.resolve_delegated_code_address	0,1,2,3	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_call.nim:102-130	gasCallDelegate
 vm.eoa_delegation.resolve_delegated_code_address	2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_helpers.nim:77-86	delegateResolutionCost
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> vm.eoa_delegation.get_delegated_code_address	parseDelegationAddress
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> state_tracker.get_code	getCode
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> vm.eoa_delegation.get_delegated_code_address	isDelegation
+vm.eoa_delegation.set_delegation	0,1,2,3,4,5	entry	2/2	repos/clients/nimbus-eth1/execution_chain/transaction/eoa_delegation.nim:87-134	setDelegation
+vm.eoa_delegation.set_delegation	4	part	2/2	repos/clients/nimbus-eth1/execution_chain/core/eip7702.nim:62-64	addressToDelegation
+vm.eoa_delegation.set_delegation	-	delegated	2/2	-> vm.eoa_delegation.validate_authorization	validateAuthorization
+vm.eoa_delegation.set_delegation	-	delegated	1/2	-> vm.eoa_delegation.validate_authorization	authority
+vm.eoa_delegation.set_delegation	-	delegated	2/2	-> state_tracker.account_exists	accountExists
+vm.eoa_delegation.set_delegation	-	delegated	2/2	-> vm.gas.charge_state_gas_from_meter	chargeStateGas
+vm.eoa_delegation.set_delegation	-	delegated	2/2	-> vm.gas.charge_gas_from_meter	consumeGas
+vm.eoa_delegation.set_delegation	-	delegated	1/2	-> state_tracker.get_pre_state_account	getOriginalCode
+vm.eoa_delegation.set_delegation	-	delegated	2/2	-> vm.eoa_delegation.is_valid_delegation	isDelegation
+vm.eoa_delegation.set_delegation	-	delegated	2/2	-> state_tracker.set_code	setCode
+vm.eoa_delegation.set_delegation	-	delegated	2/2	-> state_tracker.increment_nonce	setNonce
+vm.eoa_delegation.validate_authorization	0,1,2,3,4,5	entry	2/2	repos/clients/nimbus-eth1/execution_chain/transaction/eoa_delegation.nim:22-53	validateAuthorization
+vm.eoa_delegation.validate_authorization	3	part	1/2	repos/clients/nimbus-eth1/execution_chain/db/ledger.nim:1149-1150	accessList
+vm.eoa_delegation.validate_authorization	-	delegated	2/2	-> vm.eoa_delegation.recover_authority	authority
+vm.eoa_delegation.validate_authorization	-	delegated	2/2	-> state_tracker.get_code	getCode
+vm.eoa_delegation.validate_authorization	-	delegated	2/2	-> vm.eoa_delegation.is_valid_delegation	isDelegation
+vm.eoa_delegation.validate_authorization	-	delegated	2/2	-> state_tracker.get_account	getNonce
+vm.gas.calculate_blob_gas_price	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/eip4844.nim:119-128	getBlobBaseFee
+vm.gas.calculate_blob_gas_price	0	part	1/2	repos/clients/nimbus-eth1/execution_chain/core/eip4844.nim:99-110	fakeExponential
 vm.gas.calculate_data_fee	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/eip4844.nim:130-134	blobGasFee
 vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_total_blob_gas	getTotalBlobGas
 vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	getBlobBaseFee
 vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_total_blob_gas	getTotalBlobGas
+vm.gas.calculate_excess_blob_gas	0,1,2,3,4	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/eip4844.nim:141-155	calcExcessBlobGas
+vm.gas.calculate_excess_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	getBlobBaseFee
 vm.gas.calculate_gas_extend_memory	0,1,3,5	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_costs.nim:158-354	gasCosts
 vm.gas.calculate_gas_extend_memory	2,4	missing	-	-	-
+vm.gas.calculate_memory_gas_cost	0	part	1/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/utils/utils_numeric.nim:26-33	ceil32
+vm.gas.calculate_memory_gas_cost	0	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/utils/utils_numeric.nim:35-38	wordCount
+vm.gas.calculate_memory_gas_cost	0,1,2,3	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_costs.nim:158-354	gasCosts
+vm.gas.calculate_message_call_gas	0,1,2,3	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_costs.nim:411-465	prefix gasCall2
+vm.gas.calculate_message_call_gas	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_costs.nim:390-408	prefix gasCall1
+vm.gas.calculate_message_call_gas	-	delegated	1/2	-> vm.gas.max_message_call_gas	gasCosts
 vm.gas.calculate_total_blob_gas	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/eip4844.nim:115-116	getTotalBlobGas
+vm.gas.charge_gas	0	entry	1/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_meter.nim:27-38	consumeGas
 vm.gas.charge_gas_from_meter	0,1	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_meter.nim:27-38	consumeGas
+vm.gas.charge_state_gas	-	delegated	2/2	-> vm.gas.charge_state_gas_from_meter	chargeStateGas
+vm.gas.charge_state_gas	0	missing	-	-	-
 vm.gas.charge_state_gas_from_meter	0,1,2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_meter.nim:55-67	chargeStateGas
+vm.gas.check_block_gas_capacity	0,1,2,3	entry	2/2	repos/clients/nimbus-eth1/execution_chain/core/executor/process_transaction.nim:87-116	checkBlockGasCapacity
+vm.gas.check_gas	0	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_meter.nim:97-100	checkGas
 vm.gas.check_max_fee_per_blob_gas	0,2	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/core/tx_pool/tx_desc.nim:213-246	classifyValid
 vm.gas.check_max_fee_per_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	getBlobBaseFee
+vm.gas.commit_state_gas	0,1,2	missing	-	-	-
 vm.gas.credit_state_gas_refund	0,1	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_meter.nim:107-112	creditStateGasRefund
+vm.gas.drain_state_gas_reservoir	0	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_create.nim:66-112	execSubCreate
 vm.gas.forfeit_remaining_gas	1	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_meter.nim:72-74	burnGas
 vm.gas.forfeit_remaining_gas	0	missing	-	-	-
+vm.gas.init_code_cost	0	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/transaction/call_types.nim:74-149	intrinsicGas
+vm.gas.max_message_call_gas	0	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_create.nim:66-112	execSubCreate
+vm.gas.max_message_call_gas	0	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_costs.nim:158-354	gasCosts
 vm.gas.repay_state_gas_spill	0,1,2,3	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_meter.nim:119-128	repayStateGasSpill
+vm.gas.restore_child_gas	0	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_meter.nim:40-41	returnGas
+vm.gas.restore_child_gas	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_meter.nim:69-70	returnStateGas
 vm.gas.restore_state_gas	0,1	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_meter.nim:102-105	refillFrameStateGas
+vm.gas.restore_state_gas_to_entry	1,2,3	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_meter.nim:102-105	refillFrameStateGas
+vm.gas.restore_state_gas_to_entry	0	missing	-	-	-
+vm.gas.tx_state_gas_used	1	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_meter.nim:114-117	frameStateGasUsed
+vm.gas.tx_state_gas_used	0	missing	-	-	-
+vm.gas.withhold_create_gas	0,1	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_create.nim:66-112	execSubCreate
+vm.incorporate_child	2,3,4	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_create.nim:41-64	postExecutionCreate
+vm.incorporate_child	2,3,4	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_call.nim:223-258	execSubCall
+vm.incorporate_child	2,4	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/computation.nim:391-394	merge
+vm.incorporate_child	-	delegated	2/2	-> vm.gas.repay_state_gas_spill	repayStateGasSpill
+vm.incorporate_child	0,1	missing	-	-	-
+vm.instructions.arithmetic.add	0,2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_arithmetic.nim:40-42	addOp
+vm.instructions.arithmetic.add	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_dispatcher.nim:43-55	handleFixedGasCostsDirective
+vm.instructions.arithmetic.add	3	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/code_stream.nim:64-77	next
+vm.instructions.arithmetic.add	0,2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/stack.nim:316-326	binaryOp
+vm.instructions.arithmetic.add	-	delegated	2/2	-> vm.gas.charge_gas	consumeGas
+vm.instructions.arithmetic.add	-	delegated	1/2	-> vm.gas.charge_gas	opcodeGasCost
+vm.instructions.arithmetic.addmod	0,2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_arithmetic.nim:102-117	addmodOp
+vm.instructions.arithmetic.addmod	3	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/evm/code_stream.nim:64-77	next
+vm.instructions.arithmetic.addmod	-	delegated	1/2	-> vm.gas.charge_gas	opcodeGasCost
+vm.instructions.arithmetic.addmod	-	delegated	2/2	-> vm.stack.pop	lsCheck
+vm.instructions.arithmetic.addmod	-	delegated	2/2	-> vm.stack.pop	lsPeekInt
+vm.instructions.arithmetic.addmod	-	delegated	2/2	-> vm.stack.pop	lsShrink
+vm.instructions.arithmetic.addmod	-	delegated	2/2	-> vm.gas.charge_gas	opcodeGasCost
+vm.instructions.arithmetic.addmod	-	delegated	2/2	-> vm.gas.charge_gas	consumeGas
+vm.instructions.arithmetic.addmod	-	delegated	2/2	-> vm.stack.pop	ensurePop
+vm.instructions.arithmetic.div	0,2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_arithmetic.nim:52-62	divideOp
+vm.instructions.arithmetic.div	1	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_dispatcher.nim:43-55	handleFixedGasCostsDirective
+vm.instructions.arithmetic.div	2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_arithmetic.nim:54-60	divideOp.div256
+vm.instructions.arithmetic.div	3	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/evm/code_stream.nim:64-77	next
+vm.instructions.arithmetic.div	0,2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/stack.nim:337-347	binaryWithTop
+vm.instructions.arithmetic.div	-	delegated	2/2	-> vm.gas.charge_gas	opcodeGasCost
+vm.instructions.arithmetic.exp	0,1,2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_arithmetic.nim:136-153	expOp
+vm.instructions.arithmetic.exp	1	part	1/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/utils/utils_numeric.nim:23-24	log256
+vm.instructions.arithmetic.exp	1,2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_arithmetic.nim:138-151	expOp.exp256
+vm.instructions.arithmetic.exp	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/gas_costs.nim:158-354	gasCosts
+vm.instructions.arithmetic.exp	0,2	part	1/2	repos/clients/nimbus-eth1/execution_chain/evm/stack.nim:337-347	binaryWithTop
+vm.instructions.arithmetic.exp	-	delegated	2/2	-> vm.gas.charge_gas	opcodeGasCost
+vm.instructions.arithmetic.exp	-	delegated	2/2	-> vm.gas.charge_gas	consumeGas
+vm.instructions.arithmetic.mod	0,2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_arithmetic.nim:80-88	moduloOp
+vm.instructions.arithmetic.mod	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_dispatcher.nim:43-55	handleFixedGasCostsDirective
+vm.instructions.arithmetic.mod	3	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/code_stream.nim:64-77	next
+vm.instructions.arithmetic.mod	2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_arithmetic.nim:82-86	moduloOp.mod256
+vm.instructions.arithmetic.mod	0,2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/stack.nim:337-347	binaryWithTop
+vm.instructions.arithmetic.mod	-	delegated	2/2	-> vm.gas.charge_gas	consumeGas
+vm.instructions.arithmetic.mul	0,2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_arithmetic.nim:44-46	mulOp
+vm.instructions.arithmetic.mul	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_dispatcher.nim:43-55	handleFixedGasCostsDirective
+vm.instructions.arithmetic.mul	3	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/evm/code_stream.nim:64-77	next
+vm.instructions.arithmetic.mul	0,2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/stack.nim:316-326	binaryOp
+vm.instructions.arithmetic.mul	-	delegated	1/2	-> vm.gas.charge_gas	opcodeGasCost
+vm.instructions.arithmetic.mul	-	delegated	1/2	-> vm.gas.charge_gas	opcodeGasCost
+vm.instructions.arithmetic.mul	-	delegated	2/2	-> vm.gas.charge_gas	consumeGas
+vm.instructions.arithmetic.mulmod	0,2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_arithmetic.nim:119-134	mulmodOp
+vm.instructions.arithmetic.mulmod	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_dispatcher.nim:43-55	handleFixedGasCostsDirective
+vm.instructions.arithmetic.mulmod	3	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/code_stream.nim:64-77	next
+vm.instructions.arithmetic.mulmod	-	delegated	2/2	-> vm.gas.charge_gas	consumeGas
+vm.instructions.arithmetic.mulmod	-	delegated	2/2	-> vm.stack.pop	lsCheck
+vm.instructions.arithmetic.mulmod	-	delegated	2/2	-> vm.stack.pop	lsPeekInt
+vm.instructions.arithmetic.mulmod	-	delegated	2/2	-> vm.stack.pop	lsShrink
+vm.instructions.arithmetic.mulmod	-	delegated	1/2	-> vm.gas.charge_gas	opcodeGasCost
+vm.instructions.arithmetic.mulmod	-	delegated	2/2	-> vm.stack.pop	ensurePop
+vm.instructions.arithmetic.sdiv	0,2,3	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_arithmetic.nim:64-78	sdivOp
+vm.instructions.arithmetic.sdiv	1	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_dispatcher.nim:43-55	handleFixedGasCostsDirective
+vm.instructions.arithmetic.sdiv	2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/utils/utils_numeric.nim:45-48	extractSign
+vm.instructions.arithmetic.sdiv	2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/utils/utils_numeric.nim:50-51	setSign
+vm.instructions.arithmetic.sdiv	4	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/code_stream.nim:64-77	next
+vm.instructions.arithmetic.sdiv	2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_arithmetic.nim:66-76	sdivOp.sdiv256
+vm.instructions.arithmetic.sdiv	0,3	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/stack.nim:337-347	binaryWithTop
+vm.instructions.arithmetic.sdiv	-	delegated	2/2	-> vm.gas.charge_gas	opcodeGasCost
+vm.instructions.arithmetic.signextend	0,2,3,4,5	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_arithmetic.nim:155-172	signExtendOp
+vm.instructions.arithmetic.signextend	2,3,4	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_arithmetic.nim:158-170	signExtendOp.se256
+vm.instructions.arithmetic.signextend	0,5	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/stack.nim:337-347	binaryWithTop
+vm.instructions.arithmetic.signextend	-	delegated	1/2	-> vm.gas.charge_gas	opcodeGasCost
+vm.instructions.arithmetic.signextend	-	delegated	2/2	-> vm.gas.charge_gas	consumeGas
+vm.instructions.arithmetic.smod	0,2,3	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_arithmetic.nim:90-100	smodOp
+vm.instructions.arithmetic.smod	1	part	1/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_dispatcher.nim:43-55	handleFixedGasCostsDirective
+vm.instructions.arithmetic.smod	2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/utils/utils_numeric.nim:45-48	extractSign
+vm.instructions.arithmetic.smod	2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/utils/utils_numeric.nim:50-51	setSign
+vm.instructions.arithmetic.smod	4	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/code_stream.nim:64-77	next
+vm.instructions.arithmetic.smod	2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_arithmetic.nim:92-98	smodOp.smod256
+vm.instructions.arithmetic.smod	0,3	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/stack.nim:337-347	binaryWithTop
+vm.instructions.arithmetic.smod	-	delegated	2/2	-> vm.gas.charge_gas	consumeGas
+vm.instructions.arithmetic.smod	-	delegated	1/2	-> vm.gas.charge_gas	opcodeGasCost
+vm.instructions.arithmetic.sub	0,2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_arithmetic.nim:48-50	subOp
+vm.instructions.arithmetic.sub	1	inlined	1/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_dispatcher.nim:43-55	handleFixedGasCostsDirective
+vm.instructions.arithmetic.sub	3	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/code_stream.nim:64-77	next
+vm.instructions.arithmetic.sub	0,2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/stack.nim:316-326	binaryOp
+vm.instructions.arithmetic.sub	-	delegated	1/2	-> vm.gas.charge_gas	opcodeGasCost
+vm.instructions.arithmetic.sub	-	delegated	2/2	-> vm.gas.charge_gas	consumeGas
+vm.instructions.arithmetic.sub	-	delegated	1/2	-> vm.gas.charge_gas	opcodeGasCost
+vm.instructions.bitwise.bitwise_and	0,2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_arithmetic.nim:211-213	andOp
+vm.instructions.bitwise.bitwise_and	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_dispatcher.nim:43-55	handleFixedGasCostsDirective
+vm.instructions.bitwise.bitwise_and	3	inlined	2/2	repos/clients/nimbus-eth1/execution_chain/evm/code_stream.nim:64-77	next
+vm.instructions.bitwise.bitwise_and	0,2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/stack.nim:316-326	binaryOp
+vm.instructions.bitwise.bitwise_and	-	delegated	1/2	-> vm.gas.charge_gas	opcodeGasCost
+vm.instructions.bitwise.bitwise_and	-	delegated	2/2	-> vm.gas.charge_gas	opcodeGasCost
+vm.instructions.bitwise.bitwise_and	-	delegated	2/2	-> vm.gas.charge_gas	consumeGas
+vm.instructions.bitwise.bitwise_or	0,2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_arithmetic.nim:215-217	orOp
+vm.instructions.bitwise.bitwise_or	1	part	1/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_dispatcher.nim:43-55	handleFixedGasCostsDirective
+vm.instructions.bitwise.bitwise_or	3	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/code_stream.nim:64-77	next
+vm.instructions.bitwise.bitwise_or	0,2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/stack.nim:316-326	binaryOp
+vm.instructions.bitwise.bitwise_or	-	delegated	2/2	-> vm.gas.charge_gas	opcodeGasCost
+vm.instructions.bitwise.bitwise_or	-	delegated	2/2	-> vm.gas.charge_gas	consumeGas
+vm.instructions.bitwise.bitwise_xor	0,2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_arithmetic.nim:219-221	xorOp
+vm.instructions.bitwise.bitwise_xor	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_dispatcher.nim:43-55	handleFixedGasCostsDirective
+vm.instructions.bitwise.bitwise_xor	3	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/code_stream.nim:64-77	next
+vm.instructions.bitwise.bitwise_xor	0,2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/stack.nim:316-326	binaryOp
+vm.instructions.bitwise.bitwise_xor	-	delegated	2/2	-> vm.gas.charge_gas	opcodeGasCost
+vm.instructions.bitwise.bitwise_xor	-	delegated	2/2	-> vm.gas.charge_gas	consumeGas
+vm.instructions.bitwise.bitwise_xor	-	delegated	2/2	-> vm.gas.charge_gas	opcodeGasCost
 vm.instructions.storage.sload	0,1,2	entry	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_memory.nim:145-151	sloadEIP2929Op
 vm.instructions.storage.sload	1	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_helpers.nim:49-58	gasEip2929AccountCheck
 vm.instructions.storage.sload	1,2	part	2/2	repos/clients/nimbus-eth1/execution_chain/evm/interpreter/op_handlers/oph_memory.nim:147-150	sloadEIP2929Op.sloadEIP2929

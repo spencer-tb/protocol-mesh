@@ -56,6 +56,9 @@ block_access_lists.update_builder_from_tx	2,3,4	part	2/2	repos/clients/evm2/crat
 block_access_lists.update_builder_from_tx	2,3,4,5	part	2/2	repos/clients/evm2/crates/evm2/src/evm/bal/changes.rs:257-301	BalChanges.update_with_key
 block_access_lists.update_builder_from_tx	5	part	2/2	repos/clients/evm2/crates/evm2/src/evm/bal/account.rs:326-335	StorageBal.update_pending
 block_access_lists.validate_block_access_list_gas_limit	0,1,2	missing	-	-	-
+blocks.encode_receipt	0,1	missing	-	-	-
+bloom.add_to_bloom	0,1,2,3	missing	-	-	-
+bloom.logs_bloom	0,1,2	missing	-	-	-
 fork.apply_body	2,3,4,5	entry	2/2	repos/clients/reth/crates/ethereum/evm/src/executor.rs:399-464	EthBlockExecutor.finish_with_prepared_block_access_list
 fork.apply_body	2	part	2/2	repos/clients/reth/crates/ethereum/evm/src/executor.rs:191-196	EthBlockExecutor.set_transaction_block_access_index
 fork.apply_body	0	part	2/2	repos/clients/reth/crates/ethereum/evm/src/execution.rs:246-295	pre_execution_system_call_state_changes
@@ -75,6 +78,7 @@ fork.apply_body	-	delegated	1/2	-> block_access_lists.build_block_access_list	Et
 fork.apply_body	1	missing	-	-	-
 fork.calculate_base_fee_per_gas	-	delegated	2/2	-> fork.check_gas_limit	validate_against_parent_gas_limit
 fork.calculate_base_fee_per_gas	0,1,2,3,4	missing	-	-	-
+fork.check_gas_limit	0,1,2,3	entry	2/2	repos/clients/reth/crates/consensus/common/src/validation.rs:375-416	validate_against_parent_gas_limit
 fork.check_transaction	0,1,2,3	entry	2/2	repos/clients/evm2/crates/evm2/src/ethereum/eip4844.rs:38-100	prepare_with_hooks
 fork.check_transaction	0,1,2,3	part	2/2	repos/clients/evm2/crates/evm2/src/ethereum/legacy.rs:32-74	prepare_with_hooks
 fork.check_transaction	0,1,2,3,5	part	2/2	repos/clients/evm2/crates/evm2/src/ethereum/eip2930.rs:33-83	prepare_with_hooks
@@ -85,6 +89,8 @@ fork.check_transaction	3	part	2/2	repos/clients/evm2/crates/evm2/src/ethereum/mo
 fork.check_transaction	-	delegated	2/2	-> transactions.calculate_effective_gas_price	effective_gas_price
 fork.check_transaction	-	delegated	2/2	-> transactions.calculate_effective_gas_price	validate_gas_price
 fork.check_transaction	-	delegated	2/2	-> transactions.calculate_effective_gas_price	validate_priority_fee
+fork.disburse_gas_fees	0,1,2,3	entry	2/2	repos/clients/evm2/crates/evm2/src/ethereum/mod.rs:747-771	default_settle_gas
+fork.disburse_gas_fees	-	delegated	2/2	-> state_tracker.create_ether	AccountHandle.add_balance
 fork.execute_block	4,5	part	2/2	repos/clients/reth/crates/ethereum/consensus/src/validation.rs:43-130	validate_block_post_execution_with_bal_hashes
 fork.execute_block	1,5	part	2/2	repos/clients/reth/crates/consensus/common/src/validation.rs:96-134	validate_body_against_header
 fork.execute_block	4	part	2/2	repos/clients/reth/crates/ethereum/consensus/src/validation.rs:134-152	verify_receipts
@@ -99,12 +105,31 @@ fork.execute_block	-	delegated	2/2	-> fork.validate_header	validate_against_pare
 fork.execute_block	-	delegated	1/2	-> fork.apply_body	EthBlockExecutor.apply_pre_execution_changes
 fork.execute_block	-	delegated	2/2	-> fork.apply_body	pre_execution_system_call_state_changes
 fork.execute_block	-	delegated	1/2	-> fork.apply_body	EthBlockExecutor.validate_transaction_gas_limit
+fork.get_last_256_block_hashes	1	part	2/2	repos/clients/reth/crates/ethereum/evm/src/executor.rs:548-566	EthBigBlockPlan.new
+fork.get_last_256_block_hashes	0	part	2/2	repos/clients/reth/crates/ethereum/evm/src/executor.rs:568-574	EthBigBlockPlan.hashes_for_block
+fork.get_last_256_block_hashes	2	missing	-	-	-
 fork.make_receipt	0	entry	2/2	repos/clients/reth/crates/ethereum/evm/src/receipt.rs:15-25	RethReceiptBuilder.build_receipt
 fork.make_receipt	1	missing	-	-	-
+fork.process_checked_system_transaction	2,3	entry	2/2	repos/clients/reth/crates/ethereum/evm/src/execution.rs:421-451	execute_system_call
+fork.process_checked_system_transaction	-	delegated	2/2	-> fork.process_unchecked_system_transaction	Evm.system_call
+fork.process_checked_system_transaction	-	delegated	2/2	-> fork.process_unchecked_system_transaction	Evm.execute_system_call
+fork.process_checked_system_transaction	-	delegated	1/2	-> fork.process_unchecked_system_transaction	commit_detached_transaction
+fork.process_checked_system_transaction	0,1	missing	-	-	-
 fork.process_general_purpose_requests	1,2,3,4	entry	2/2	repos/clients/reth/crates/ethereum/evm/src/execution.rs:351-419	post_execution_system_call_state_changes
 fork.process_general_purpose_requests	0	part	2/2	repos/clients/reth/crates/ethereum/evm/src/execution.rs:297-317	block_requests_from_receipts
 fork.process_general_purpose_requests	-	delegated	2/2	-> requests.parse_deposit_requests	parse_deposit_requests_from_receipts
 fork.process_general_purpose_requests	-	delegated	2/2	-> fork.process_checked_system_transaction	execute_system_call
+fork.process_transaction	0,1,2,4	entry	2/2	repos/clients/reth/crates/ethereum/evm/src/executor.rs:306-341	EthBlockExecutor.execute_transaction_with_commit_condition
+fork.process_transaction	1,2	part	2/2	repos/clients/evm2/crates/evm2/src/ethereum/eip1559.rs:34-89	prepare_with_hooks
+fork.process_transaction	2,3	part	2/2	repos/clients/evm2/crates/evm2/src/ethereum/eip1559.rs:92-132	execute_prepared
+fork.process_transaction	5	part	2/2	repos/clients/reth/crates/ethereum/evm/src/execution.rs:161-192	execute_transaction_with_condition
+fork.process_transaction	0	part	2/2	repos/clients/reth/crates/ethereum/evm/src/executor.rs:191-196	EthBlockExecutor.set_transaction_block_access_index
+fork.process_transaction	5	part	2/2	repos/clients/reth/crates/ethereum/evm/src/execution.rs:204-218	commit_detached_transaction
+fork.process_transaction	5	part	2/2	repos/clients/reth/crates/ethereum/evm/src/execution.rs:231-244	accumulate_pending_state
+fork.process_transaction	0,1,2	part	2/2	repos/clients/reth/crates/ethereum/evm/src/executor.rs:343-356	EthBlockExecutor.execute_transaction_without_commit
+fork.process_transaction	0,4,5	part	2/2	repos/clients/reth/crates/ethereum/evm/src/executor.rs:358-385	EthBlockExecutor.commit_transaction
+fork.process_transaction	-	delegated	2/2	-> fork.check_transaction	EthBlockExecutor.validate_transaction_gas_limit
+fork.process_transaction	-	delegated	2/2	-> fork.make_receipt	RethReceiptBuilder.build_receipt
 fork.process_unchecked_system_transaction	1,2	entry	2/2	repos/clients/evm2/crates/evm2/src/evm/system.rs:139-186	Evm.execute_system_call
 fork.process_unchecked_system_transaction	1	part	2/2	repos/clients/evm2/crates/evm2/src/evm/system.rs:78-86	SystemTx.default
 fork.process_unchecked_system_transaction	3	part	1/2	repos/clients/reth/crates/ethereum/evm/src/execution.rs:421-451	execute_system_call
@@ -114,10 +139,84 @@ fork.process_unchecked_system_transaction	-	delegated	2/2	-> state_tracker.incor
 fork.process_unchecked_system_transaction	-	delegated	2/2	-> state_tracker.incorporate_tx_into_block	accumulate_pending_state
 fork.process_unchecked_system_transaction	-	delegated	2/2	-> state_tracker.incorporate_tx_into_block	State.commit_transaction
 fork.process_unchecked_system_transaction	0	missing	-	-	-
+fork.process_withdrawals	2	entry	2/2	repos/clients/reth/crates/ethereum/evm/src/execution.rs:476-557	post_block_balance_state_changes
+fork.process_withdrawals	1	inlined	2/2	repos/clients/reth/crates/ethereum/evm/src/build.rs:40-151	EthBlockAssembler.assemble_block
+fork.process_withdrawals	-	delegated	2/2	-> state_tracker.incorporate_tx_into_block	commit_state_changes
+fork.process_withdrawals	-	delegated	1/2	-> state_tracker.incorporate_tx_into_block	accumulate_pending_state
+fork.process_withdrawals	-	delegated	2/2	-> state_tracker.incorporate_tx_into_block	BalContext.commit
+fork.process_withdrawals	0	missing	-	-	-
 fork.state_transition	-	delegated	2/2	-> fork.execute_block	EthBlockExecutor.finish_with_prepared_block_access_list
 fork.state_transition	0,1,2,3	missing	-	-	-
+fork.update_sender_state	0	inlined	2/2	repos/clients/evm2/crates/evm2/src/ethereum/legacy.rs:32-74	prepare_with_hooks
+fork.update_sender_state	0	inlined	2/2	repos/clients/evm2/crates/evm2/src/ethereum/eip2930.rs:33-83	prepare_with_hooks
+fork.update_sender_state	0	inlined	2/2	repos/clients/evm2/crates/evm2/src/ethereum/eip1559.rs:34-89	prepare_with_hooks
+fork.update_sender_state	2	inlined	2/2	repos/clients/evm2/crates/evm2/src/ethereum/mod.rs:431-465	validate_sender_and_bump_nonce
+fork.update_sender_state	3	part	2/2	repos/clients/evm2/crates/evm2/src/ethereum/mod.rs:490-502	charge_upfront
+fork.update_sender_state	-	delegated	2/2	-> state_tracker.increment_nonce	AccountHandle.bump_nonce
+fork.validate_header	1,3,4,5	entry	2/2	repos/clients/reth/crates/ethereum/consensus/src/lib.rs:269-294	EthBeaconConsensus.validate_header_against_parent
+fork.validate_header	2	part	2/2	repos/clients/reth/crates/consensus/common/src/validation.rs:22-34	validate_header_gas
+fork.validate_header	4	part	2/2	repos/clients/reth/crates/ethereum/consensus/src/lib.rs:175-267	EthBeaconConsensus.validate_header
+fork.validate_header	4	part	2/2	repos/clients/reth/crates/consensus/common/src/validation.rs:278-288	validate_header_extra_data
+fork.validate_header	4,5	part	2/2	repos/clients/reth/crates/consensus/common/src/validation.rs:295-322	validate_against_parent_hash_number
+fork.validate_header	3	part	2/2	repos/clients/reth/crates/consensus/common/src/validation.rs:326-353	validate_against_parent_eip1559_base_fee
+fork.validate_header	4	part	2/2	repos/clients/reth/crates/consensus/common/src/validation.rs:357-368	validate_against_parent_timestamp
+fork.validate_header	1	part	2/2	repos/clients/reth/crates/consensus/common/src/validation.rs:422-456	validate_against_parent_4844
+fork.validate_header	-	delegated	2/2	-> fork.calculate_base_fee_per_gas	validate_against_parent_gas_limit
+fork.validate_header	0	missing	-	-	-
+fork_types.encode_account	0	missing	-	-	-
+requests.compute_requests_hash	0,1	missing	-	-	-
+requests.extract_deposit_data	5	inlined	2/2	repos/clients/reth/crates/ethereum/evm/src/execution.rs:321-349	parse_deposit_requests_from_receipts
+requests.extract_deposit_data	0,1,2,3,4	missing	-	-	-
+requests.parse_deposit_requests	0,1,2	entry	2/2	repos/clients/reth/crates/ethereum/evm/src/execution.rs:321-349	parse_deposit_requests_from_receipts
+state_tracker.account_deployable	0	part	1/2	repos/clients/evm2/crates/evm2/src/evm/state/account.rs:163-165	AccountInfo.is_empty_code_hash
+state_tracker.account_deployable	0	part	1/2	repos/clients/evm2/crates/evm2/src/evm/state/account.rs:415-417	AccountHandle.is_empty_code_hash
+state_tracker.account_deployable	0	inlined	2/2	repos/clients/evm2/crates/evm2/src/evm/state/mod.rs:665-710	State.create_account
+state_tracker.account_exists	0	entry	2/2	repos/clients/evm2/crates/evm2/src/evm/state/account.rs:390-392	AccountHandle.exists
+state_tracker.account_exists	0	inlined	2/2	repos/clients/evm2/crates/evm2/src/evm/mod.rs:1700-1734	Evm.load_account
+state_tracker.account_exists	-	delegated	2/2	-> state_tracker.get_account_optional	AccountHandle.get
+state_tracker.account_exists	-	delegated	2/2	-> state_tracker.get_account_optional	State.account_raw_with_skip
+state_tracker.account_exists_and_is_empty	0,1	entry	2/2	repos/clients/evm2/crates/evm2/src/evm/state/account.rs:247-250	Account.is_existing_dead
+state_tracker.account_exists_and_is_empty	1	part	2/2	repos/clients/evm2/crates/evm2/src/evm/state/account.rs:154-159	AccountInfo.is_empty
+state_tracker.account_exists_and_is_empty	1	part	2/2	repos/clients/evm2/crates/evm2/src/evm/state/account.rs:163-165	AccountInfo.is_empty_code_hash
+state_tracker.clear_account_preserving_balance	1	entry	2/2	repos/clients/evm2/crates/evm2/src/evm/state/account.rs:679-683	AccountHandle.reset_selfdestructed_for_finalization
+state_tracker.clear_account_preserving_balance	0,1	inlined	2/2	repos/clients/evm2/crates/evm2/src/evm/state/mod.rs:870-928	State.finalize_transaction
+state_tracker.clear_account_preserving_balance	-	delegated	2/2	-> state_tracker.destroy_storage	StorageHandle.wipe
+state_tracker.clear_account_preserving_balance	-	delegated	2/2	-> state_tracker.destroy_storage	StorageHandle.zero_loaded
 state_tracker.copy_tx_state	0	entry	2/2	repos/clients/evm2/crates/evm2/src/evm/state/mod.rs:210-212	State.checkpoint
 state_tracker.copy_tx_state	1	missing	-	-	-
+state_tracker.create_ether	0	entry	2/2	repos/clients/evm2/crates/evm2/src/evm/state/account.rs:564-571	AccountHandle.add_balance
+state_tracker.create_ether	0	inlined	2/2	repos/clients/reth/crates/ethereum/evm/src/execution.rs:476-557	post_block_balance_state_changes
+state_tracker.create_ether	0	part	1/2	repos/clients/evm2/crates/evm2/src/evm/state/account.rs:555-558	AccountHandle.set_balance
+state_tracker.destroy_account	0,1	inlined	2/2	repos/clients/evm2/crates/evm2/src/evm/state/mod.rs:870-928	State.finalize_transaction
+state_tracker.destroy_account	-	delegated	2/2	-> state_tracker.destroy_storage	StorageHandle.wipe
+state_tracker.destroy_account	-	delegated	2/2	-> state_tracker.set_account	AccountHandle.delete_for_finalization
+state_tracker.destroy_account	-	delegated	1/2	-> state_tracker.destroy_storage	StorageHandle.zero_loaded
+state_tracker.destroy_account	-	delegated	1/2	-> state_tracker.destroy_storage	AccountStorageCache.wipe
+state_tracker.destroy_storage	0,1,2	entry	2/2	repos/clients/evm2/crates/evm2/src/evm/state/storage.rs:268-271	StorageHandle.wipe
+state_tracker.destroy_storage	0	part	2/2	repos/clients/evm2/crates/evm2/src/evm/state/storage.rs:81-83	StorageSlot.is_changed
+state_tracker.destroy_storage	1,2	part	2/2	repos/clients/evm2/crates/evm2/src/evm/state/block.rs:163-170	BlockStateAccumulator.storage_wipe
+state_tracker.destroy_storage	0,1	part	2/2	repos/clients/evm2/crates/evm2/src/evm/state/storage.rs:278-282	StorageHandle.zero_loaded
+state_tracker.get_account	0	inlined	2/2	repos/clients/evm2/crates/evm2/src/evm/mod.rs:1700-1734	Evm.load_account
+state_tracker.get_account	-	delegated	2/2	-> state_tracker.get_account_optional	State.account_info_untracked
+state_tracker.get_account	-	delegated	2/2	-> state_tracker.get_account_optional	State.account_raw_with_skip
+state_tracker.get_account_optional	0,1,2	entry	2/2	repos/clients/evm2/crates/evm2/src/evm/state/mod.rs:511-539	State.account_raw_with_skip
+state_tracker.get_account_optional	0	part	1/2	repos/clients/evm2/crates/evm2/src/evm/bal/bal_context.rs:367-376	BalContext.account_read
+state_tracker.get_account_optional	1,2	part	1/2	repos/clients/evm2/crates/evm2/src/evm/state/mod.rs:602-607	State.account_info_untracked
+state_tracker.get_code	0,1,2,3	entry	2/2	repos/clients/evm2/crates/evm2/src/evm/state/account.rs:472-486	AccountHandle.load_code
+state_tracker.get_pre_state_account_optional	1,2	entry	2/2	repos/clients/evm2/crates/evm2/src/evm/db/cache.rs:326-356	CacheDB.get_account
+state_tracker.get_pre_state_account_optional	1	part	2/2	repos/clients/evm2/crates/evm2/src/evm/bal/account.rs:194-214	AccountInfoBal.populate_account_info
+state_tracker.get_pre_state_account_optional	1	part	2/2	repos/clients/evm2/crates/evm2/src/evm/bal/bal_context.rs:212-221	BalContext.get_bal_account
+state_tracker.get_pre_state_account_optional	1	part	2/2	repos/clients/evm2/crates/evm2/src/evm/bal/bal_context.rs:263-275	BalContext.populate_bal_account
+state_tracker.get_pre_state_account_optional	0	part	2/2	repos/clients/evm2/crates/evm2/src/evm/bal/bal_context.rs:367-376	BalContext.account_read
+state_tracker.get_storage	1	entry	1/2	repos/clients/evm2/crates/evm2/src/evm/mod.rs:1748-1771	Evm.sload
+state_tracker.get_storage	1,3	part	2/2	repos/clients/evm2/crates/evm2/src/evm/state/storage.rs:214-257	StorageHandle.into_slot_inner
+state_tracker.get_storage	2	part	2/2	repos/clients/evm2/crates/evm2/src/evm/bal/bal_context.rs:286-302	BalContext.bal_storage
+state_tracker.get_storage	2,3	part	2/2	repos/clients/evm2/crates/evm2/src/evm/db/cache.rs:367-406	CacheDB.get_storage
+state_tracker.get_storage	0	part	2/2	repos/clients/evm2/crates/evm2/src/evm/bal/bal_context.rs:379-389	BalContext.storage_read
+state_tracker.get_storage_original	0	part	2/2	repos/clients/evm2/crates/evm2/src/evm/state/storage.rs:214-257	StorageHandle.into_slot_inner
+state_tracker.get_storage_original	1	part	2/2	repos/clients/evm2/crates/evm2/src/evm/bal/bal_context.rs:286-302	BalContext.bal_storage
+state_tracker.get_storage_original	1,2,3	part	2/2	repos/clients/evm2/crates/evm2/src/evm/db/cache.rs:367-406	CacheDB.get_storage
+state_tracker.get_transient_storage	0	entry	2/2	repos/clients/evm2/crates/evm2/src/evm/state/mod.rs:714-716	State.tload
 state_tracker.incorporate_tx_into_block	5	entry	2/2	repos/clients/evm2/crates/evm2/src/evm/state/mod.rs:1033-1042	State.commit_transaction
 state_tracker.incorporate_tx_into_block	2,3,4	part	2/2	repos/clients/evm2/crates/evm2/src/evm/db/cache.rs:159-192	CacheDB.commit
 state_tracker.incorporate_tx_into_block	5	part	2/2	repos/clients/evm2/crates/evm2/src/evm/state/mod.rs:466-483	State.clear_transaction_state
@@ -128,72 +227,293 @@ state_tracker.incorporate_tx_into_block	-	delegated	2/2	-> block_access_lists.up
 state_tracker.incorporate_tx_into_block	-	delegated	2/2	-> block_access_lists.update_builder_from_tx	BalContext.storage
 state_tracker.incorporate_tx_into_block	-	delegated	2/2	-> block_access_lists.update_builder_from_tx	BalContext.account_read
 state_tracker.incorporate_tx_into_block	0,1	missing	-	-	-
+state_tracker.increment_nonce	0	entry	2/2	repos/clients/evm2/crates/evm2/src/evm/state/account.rs:584-591	AccountHandle.bump_nonce
+state_tracker.increment_nonce	-	delegated	2/2	-> state_tracker.modify_state	AccountHandle.present_mut
+state_tracker.is_account_alive	0	entry	2/2	repos/clients/evm2/crates/evm2/src/evm/state/account.rs:460-465	AccountHandle.is_empty_for_new_account_gas
+state_tracker.is_account_alive	0	part	2/2	repos/clients/evm2/crates/evm2/src/evm/state/account.rs:154-159	AccountInfo.is_empty
+state_tracker.is_account_alive	0	inlined	2/2	repos/clients/evm2/crates/evm2/src/evm/mod.rs:1700-1734	Evm.load_account
+state_tracker.is_account_alive	-	delegated	2/2	-> state_tracker.get_account_optional	State.account_raw_with_skip
+state_tracker.mark_account_created	0	entry	2/2	repos/clients/evm2/crates/evm2/src/evm/state/account.rs:223-226	Account.mark_created
+state_tracker.mark_account_created	0	entry	1/2	repos/clients/evm2/crates/evm2/src/evm/state/account.rs:641-644	AccountHandle.mark_created
 state_tracker.modify_state	0	part	1/2	repos/clients/evm2/crates/evm2/src/evm/state/account.rs:555-558	AccountHandle.set_balance
 state_tracker.modify_state	0	part	1/2	repos/clients/evm2/crates/evm2/src/evm/state/account.rs:575-578	AccountHandle.set_nonce
 state_tracker.modify_state	0	part	1/2	repos/clients/evm2/crates/evm2/src/evm/state/account.rs:584-591	AccountHandle.bump_nonce
 state_tracker.modify_state	0	part	1/2	repos/clients/evm2/crates/evm2/src/evm/state/account.rs:598-604	AccountHandle.set_code
 state_tracker.modify_state	1	inlined	2/2	repos/clients/evm2/crates/evm2/src/evm/state/mod.rs:870-928	State.finalize_transaction
 state_tracker.modify_state	-	delegated	2/2	-> state_tracker.destroy_account	AccountHandle.delete_for_finalization
+state_tracker.move_ether	0,1	entry	2/2	repos/clients/evm2/crates/evm2/src/evm/state/mod.rs:630-661	State.transfer
 state_tracker.restore_tx_state	0	entry	2/2	repos/clients/evm2/crates/evm2/src/evm/state/mod.rs:775-843	State.rollback
+state_tracker.set_account	0	entry	2/2	repos/clients/evm2/crates/evm2/src/evm/state/pending.rs:52-68	PendingState.insert_account
+state_tracker.set_account	0	part	2/2	repos/clients/evm2/crates/evm2/src/evm/state/account.rs:632-635	AccountHandle.present_mut
+state_tracker.set_account	0	part	2/2	repos/clients/evm2/crates/evm2/src/evm/state/account.rs:667-669	AccountHandle.delete_for_finalization
+state_tracker.set_account_balance	0	entry	2/2	repos/clients/evm2/crates/evm2/src/evm/state/account.rs:555-558	AccountHandle.set_balance
+state_tracker.set_account_balance	-	delegated	1/2	-> state_tracker.modify_state	AccountHandle.touch
+state_tracker.set_account_balance	-	delegated	2/2	-> state_tracker.modify_state	AccountHandle.present_mut
+state_tracker.set_code	0,1	entry	2/2	repos/clients/evm2/crates/evm2/src/evm/state/account.rs:598-604	AccountHandle.set_code
+state_tracker.set_code	0	part	2/2	repos/clients/evm2/crates/evm2/src/evm/state/account.rs:609-612	AccountHandle.set_code_slow
+state_tracker.set_code	-	delegated	2/2	-> state_tracker.modify_state	AccountHandle.touch
+state_tracker.set_code	-	delegated	2/2	-> state_tracker.modify_state	AccountHandle.present_mut
+state_tracker.set_storage	1	entry	1/2	repos/clients/evm2/crates/evm2/src/evm/mod.rs:1773-1805	Evm.sstore
+state_tracker.set_storage	1	part	2/2	repos/clients/evm2/crates/evm2/src/evm/state/storage.rs:367-378	StorageSlotHandle.set
+state_tracker.set_storage	1	part	1/2	repos/clients/evm2/crates/evm2/src/evm/state/mod.rs:576-583	State.storage
+state_tracker.set_storage	-	delegated	1/2	-> state_tracker.get_account_optional	State.account_raw_with_skip
+state_tracker.set_storage	0	missing	-	-	-
+state_tracker.set_transient_storage	0	entry	2/2	repos/clients/evm2/crates/evm2/src/evm/state/mod.rs:719-749	State.tstore
 transactions.calculate_effective_gas_price	0,2	part	2/2	repos/clients/evm2/crates/evm2/src/ethereum/mod.rs:283-291	validate_gas_price
 transactions.calculate_effective_gas_price	1	part	2/2	repos/clients/evm2/crates/evm2/src/ethereum/mod.rs:308-314	effective_gas_price
+transactions.calculate_intrinsic_cost	0,1,2,4,5	entry	2/2	repos/clients/evm2/crates/evm2/src/ethereum/mod.rs:835-882	intrinsic_and_floor_gas
+transactions.calculate_intrinsic_cost	5	inlined	1/2	repos/clients/evm2/crates/evm2/src/ethereum/eip7702.rs:37-100	prepare_with_hooks
+transactions.calculate_intrinsic_cost	3	part	2/2	repos/clients/evm2/crates/evm2/src/ethereum/eip7702.rs:213-216	eip7702_authorization_gas
+transactions.calculate_intrinsic_cost	0,4	part	1/2	repos/clients/evm2/crates/evm2/src/version/gas_params.rs:463-471	GasParams.tx_calldata_tokens
+transactions.calculate_intrinsic_cost	2,4	part	2/2	repos/clients/evm2/crates/evm2/src/version/gas_params.rs:497-511	GasParams.tx_floor_cost_with_base
+transactions.calculate_intrinsic_cost	1	part	2/2	repos/clients/evm2/crates/evm2/src/ethereum/mod.rs:892-910	eip2780_base_to_value_gas
+transactions.calculate_intrinsic_cost	-	delegated	1/2	-> transactions.count_tokens_in_data	count_zero_bytes
 transactions.calculate_max_gas_fee	0	inlined	2/2	repos/clients/evm2/crates/evm2/src/ethereum/legacy.rs:32-74	prepare_with_hooks
 transactions.calculate_max_gas_fee	0	inlined	2/2	repos/clients/evm2/crates/evm2/src/ethereum/eip2930.rs:33-83	prepare_with_hooks
 transactions.calculate_max_gas_fee	0	inlined	2/2	repos/clients/evm2/crates/evm2/src/ethereum/eip1559.rs:34-89	prepare_with_hooks
 transactions.calculate_max_gas_fee	0	inlined	2/2	repos/clients/evm2/crates/evm2/src/ethereum/eip7702.rs:37-100	prepare_with_hooks
 transactions.calculate_max_gas_fee	0	inlined	2/2	repos/clients/evm2/crates/evm2/src/ethereum/eip4844.rs:38-100	prepare_with_hooks
+transactions.chain_id	3	part	2/2	repos/clients/evm2/crates/evm2/src/ethereum/lazy_eip7702.rs:206-208	LazyTxEip7702.chain_id
+transactions.chain_id	0,1,2	missing	-	-	-
 transactions.check_nonce	0	inlined	2/2	repos/clients/evm2/crates/evm2/src/ethereum/mod.rs:431-465	validate_sender_and_bump_nonce
+transactions.count_tokens_in_data	0	entry	2/2	repos/clients/evm2/crates/evm2/src/version/gas_params.rs:463-471	GasParams.tx_calldata_tokens
+transactions.count_tokens_in_data	0	part	2/2	repos/clients/evm2/crates/evm2/src/version/gas_params.rs:525-531	count_zero_bytes
 transactions.decode_transaction	0	missing	-	-	-
+transactions.encode_transaction	0,1,2	missing	-	-	-
 transactions.has_access_list	0	entry	2/2	repos/clients/evm2/crates/evm2/src/ethereum/mod.rs:212-214	TxEnvelope.access_list
 transactions.has_access_list	0	part	2/2	repos/clients/evm2/crates/evm2/src/ethereum/lazy_eip7702.rs:266-268	LazyTxEip7702.access_list
+transactions.recover_sender	0,1,2,3	missing	-	-	-
 transactions.signing_hash_155	0	missing	-	-	-
+transactions.signing_hash_1559	0	missing	-	-	-
 transactions.signing_hash_2930	0	missing	-	-	-
+transactions.signing_hash_4844	0	missing	-	-	-
 transactions.signing_hash_7702	0	missing	-	-	-
+transactions.signing_hash_pre155	0	missing	-	-	-
+transactions.validate_transaction	0,1,2,3,4	part	2/2	repos/clients/reth/crates/transaction-pool/src/validate/eth.rs:457-661	EthTransactionValidator.validate_stateless
+utils.address.compute_contract_address	0,1	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/message.rs:161-172	derive_create_destination
+utils.address.compute_create2_contract_address	0,1	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/message.rs:161-172	derive_create_destination
+utils.address.to_address_masked	0	entry	2/2	repos/clients/evm2/crates/evm2/src/utils.rs:79-81	Word.to_address
+vm.emit_transfer_log	2	entry	2/2	repos/clients/evm2/crates/evm2/src/evm/mod.rs:911-918	Evm.log_eip7708_transfer
+vm.emit_transfer_log	2	part	2/2	repos/clients/evm2/crates/evm2/src/evm/mod.rs:890-895	Evm.log
+vm.emit_transfer_log	0,1	part	2/2	repos/clients/evm2/crates/evm2/src/evm/mod.rs:2002-2015	eip7708_transfer_log
 vm.eoa_delegation.calculate_delegation_cost	0,1,2,3,4	inlined	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/system.rs:75-150	load_acc_and_calc_gas
 vm.eoa_delegation.calculate_delegation_cost	1,2	part	2/2	repos/clients/evm2/crates/evm2/src/bytecode/mod.rs:299-305	Bytecode.eip7702_address
 vm.eoa_delegation.calculate_delegation_cost	0,1,2,3,4	inlined	2/2	repos/clients/evm2/crates/evm2/src/ethereum/mod.rs:568-679	prepare_initial_frame
 vm.eoa_delegation.calculate_delegation_cost	-	delegated	2/2	-> vm.eoa_delegation.is_valid_delegation	Bytecode.is_eip7702
 vm.eoa_delegation.calculate_delegation_cost	-	delegated	2/2	-> state_tracker.get_code	Evm.load_account
+vm.eoa_delegation.get_delegated_code_address	0	entry	2/2	repos/clients/evm2/crates/evm2/src/bytecode/mod.rs:299-305	Bytecode.eip7702_address
+vm.eoa_delegation.get_delegated_code_address	-	delegated	2/2	-> vm.eoa_delegation.is_valid_delegation	Bytecode.is_eip7702
+vm.eoa_delegation.get_delegated_code_address	-	delegated	2/2	-> vm.eoa_delegation.is_valid_delegation	Bytecode.new_eip7702_raw
 vm.eoa_delegation.is_valid_delegation	0	entry	2/2	repos/clients/evm2/crates/evm2/src/bytecode/mod.rs:216-233	Bytecode.new_eip7702_raw
+vm.eoa_delegation.recover_authority	0,2	entry	2/2	repos/clients/evm2/crates/evm2/src/ethereum/lazy_eip7702.rs:284-292	recover_authority
+vm.eoa_delegation.recover_authority	2	part	2/2	repos/clients/evm2/crates/evm2/src/precompiles/secp256k1/k256.rs:11-30	ecrecover
+vm.eoa_delegation.recover_authority	2	part	2/2	repos/clients/evm2/crates/evm2/src/precompiles/secp256k1/bitcoin_secp256k1.rs:17-27	ecrecover
+vm.eoa_delegation.recover_authority	1	missing	-	-	-
 vm.eoa_delegation.resolve_delegated_code_address	0,1,2,3	inlined	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/system.rs:75-150	load_acc_and_calc_gas
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> vm.eoa_delegation.get_delegated_code_address	Bytecode.eip7702_address
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> vm.eoa_delegation.get_delegated_code_address	Bytecode.is_eip7702
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> vm.gas.charge_gas_from_meter	GasTracker.spend
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	1/2	-> vm.gas.charge_gas_from_meter	RemainingGas.spend
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> state_tracker.get_account	Evm.load_account
+vm.eoa_delegation.set_delegation	0,5	entry	2/2	repos/clients/evm2/crates/evm2/src/ethereum/eip7702.rs:462-479	apply_auth_list
+vm.eoa_delegation.set_delegation	1,3	inlined	2/2	repos/clients/evm2/crates/evm2/src/ethereum/eip7702.rs:239-271	validate_one_auth
+vm.eoa_delegation.set_delegation	2	part	2/2	repos/clients/evm2/crates/evm2/src/ethereum/eip7702.rs:316-346	RuntimeAuthCharges.new
+vm.eoa_delegation.set_delegation	1,2,4	part	2/2	repos/clients/evm2/crates/evm2/src/ethereum/eip7702.rs:352-372	RuntimeAuthCharges.accepted
+vm.eoa_delegation.set_delegation	4,5	part	2/2	repos/clients/evm2/crates/evm2/src/evm/state/account.rs:619-627	AccountHandle.set_delegation
+vm.eoa_delegation.set_delegation	-	delegated	2/2	-> state_tracker.get_pre_state_account	AccountHandle.original_code
+vm.eoa_delegation.set_delegation	-	delegated	2/2	-> vm.eoa_delegation.validate_authorization	LazyAuthorization.authority
+vm.eoa_delegation.set_delegation	-	delegated	2/2	-> state_tracker.account_exists	AccountHandle.exists
+vm.eoa_delegation.set_delegation	-	delegated	1/2	-> state_tracker.get_code	AccountHandle.load_code
+vm.eoa_delegation.set_delegation	-	delegated	2/2	-> vm.eoa_delegation.is_valid_delegation	Bytecode.is_eip7702
+vm.eoa_delegation.validate_authorization	0,1,2,3,4,5	entry	2/2	repos/clients/evm2/crates/evm2/src/ethereum/eip7702.rs:239-271	validate_one_auth
+vm.eoa_delegation.validate_authorization	-	delegated	1/2	-> vm.eoa_delegation.recover_authority	LazyAuthorization.authority
+vm.eoa_delegation.validate_authorization	-	delegated	2/2	-> vm.eoa_delegation.recover_authority	recover_authority
+vm.eoa_delegation.validate_authorization	-	delegated	2/2	-> state_tracker.get_code	AccountHandle.load_code
+vm.eoa_delegation.validate_authorization	-	delegated	2/2	-> vm.eoa_delegation.is_valid_delegation	Bytecode.is_eip7702
 vm.gas.allocate_evm_gas	0,1,2	entry	2/2	repos/clients/evm2/crates/evm2/src/ethereum/mod.rs:513-536	initial_gas_and_reservoir
+vm.gas.calculate_blob_gas_price	0	entry	2/2	repos/clients/reth/crates/ethereum/evm/src/convert.rs:115-120	blob_basefee
 vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	blob_basefee
 vm.gas.calculate_data_fee	0	missing	-	-	-
+vm.gas.calculate_excess_blob_gas	0	entry	2/2	repos/clients/reth/crates/consensus/common/src/validation.rs:422-456	validate_against_parent_4844
+vm.gas.calculate_excess_blob_gas	1,2,3,4	missing	-	-	-
 vm.gas.calculate_gas_extend_memory	0,1	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/memory.rs:101-114	Memory.resize_evm
 vm.gas.calculate_gas_extend_memory	1	inlined	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/system.rs:35-50	resize_memory_range
 vm.gas.calculate_gas_extend_memory	2,3,4	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/memory.rs:118-141	Memory.resize_evm_cold
 vm.gas.calculate_gas_extend_memory	3,4	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:745-753	MemoryGas.set_words_num
 vm.gas.calculate_gas_extend_memory	-	delegated	2/2	-> vm.gas.calculate_memory_gas_cost	GasParams.memory_cost
 vm.gas.calculate_gas_extend_memory	5	missing	-	-	-
+vm.gas.calculate_memory_gas_cost	1,2,3	entry	2/2	repos/clients/evm2/crates/evm2/src/version/gas_params.rs:245-250	GasParams.memory_cost
+vm.gas.calculate_memory_gas_cost	0	part	2/2	repos/clients/evm2/crates/evm2/src/utils.rs:10-12	num_words
+vm.gas.calculate_message_call_gas	0,1,2,3	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/system.rs:75-150	load_acc_and_calc_gas
+vm.gas.calculate_message_call_gas	-	delegated	2/2	-> vm.gas.max_message_call_gas	GasParams.call_stipend_reduction
 vm.gas.calculate_total_blob_gas	0	inlined	2/2	repos/clients/evm2/crates/evm2/src/ethereum/eip4844.rs:38-100	prepare_with_hooks
+vm.gas.charge_gas	0	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:681-683	Gas.spend
+vm.gas.charge_gas	-	delegated	2/2	-> vm.gas.charge_gas_from_meter	GasTracker.spend
+vm.gas.charge_gas	-	delegated	2/2	-> vm.gas.charge_gas_from_meter	RemainingGas.spend
+vm.gas.charge_gas	-	delegated	2/2	-> vm.gas.charge_gas_from_meter	GasTracker.try_spend
 vm.gas.charge_gas_from_meter	0,1	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:313-322	GasTracker.spend
 vm.gas.charge_gas_from_meter	0,1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:328-335	GasTracker.try_spend
 vm.gas.charge_gas_from_meter	0,1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:508-517	RemainingGas.spend
+vm.gas.charge_state_gas	0	entry	1/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:688-690	Gas.spend_state
+vm.gas.charge_state_gas	-	delegated	1/2	-> vm.gas.charge_state_gas_from_meter	GasTracker.spend_state
 vm.gas.charge_state_gas_from_meter	0,1,2	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:340-354	GasTracker.spend_state
 vm.gas.charge_state_gas_from_meter	1,2	part	1/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:313-322	GasTracker.spend
 vm.gas.charge_state_gas_from_meter	2	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:360-366	GasTracker.try_spend_state
+vm.gas.check_block_gas_capacity	0,1,2	entry	2/2	repos/clients/reth/crates/ethereum/evm/src/executor.rs:275-304	EthBlockExecutor.validate_transaction_gas_limit
+vm.gas.check_block_gas_capacity	3	missing	-	-	-
+vm.gas.check_gas	0	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:328-335	GasTracker.try_spend
 vm.gas.check_max_fee_per_blob_gas	2	entry	2/2	repos/clients/evm2/crates/evm2/src/ethereum/eip4844.rs:154-162	validate_blob_fee
 vm.gas.check_max_fee_per_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	blob_basefee
 vm.gas.check_max_fee_per_blob_gas	0,1	missing	-	-	-
+vm.gas.commit_state_gas	0,1,2	missing	-	-	-
 vm.gas.credit_state_gas_refund	0,1	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:409-416	GasTracker.refill_reservoir
+vm.gas.drain_state_gas_reservoir	0	part	1/2	repos/clients/evm2/crates/evm2/src/interpreter/runtime.rs:105-124	Interpreter.init
+vm.gas.drain_state_gas_reservoir	0	inlined	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/system.rs:153-227	prepare_call
 vm.gas.forfeit_remaining_gas	1	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:439-447	GasTracker.settle_gas
 vm.gas.forfeit_remaining_gas	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:475-477	GasTracker.spend_all
 vm.gas.forfeit_remaining_gas	1	inlined	1/2	repos/clients/evm2/crates/evm2/src/ethereum/mod.rs:692-706	settle_initial_frame_gas
 vm.gas.forfeit_remaining_gas	0	missing	-	-	-
+vm.gas.init_code_cost	0	entry	2/2	repos/clients/evm2/crates/evm2/src/version/gas_params.rs:295-297	GasParams.initcode_cost
+vm.gas.init_code_cost	0	inlined	2/2	repos/clients/evm2/crates/evm2/src/ethereum/mod.rs:835-882	intrinsic_and_floor_gas
+vm.gas.max_message_call_gas	0	entry	2/2	repos/clients/evm2/crates/evm2/src/version/gas_params.rs:308-310	GasParams.call_stipend_reduction
 vm.gas.repay_state_gas_spill	0,1,2	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:241-247	GasTracker.absorb_returned_reservoir
 vm.gas.repay_state_gas_spill	3	missing	-	-	-
+vm.gas.restore_child_gas	0,1	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:461-471	GasTracker.merge_child_gas
+vm.gas.restore_child_gas	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:241-247	GasTracker.absorb_returned_reservoir
+vm.gas.restore_child_gas	0	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:426-428	GasTracker.erase_cost
 vm.gas.restore_state_gas	0,1	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:382-390	GasTracker.rollback_state_gas
 vm.gas.restore_state_gas	2	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:439-447	GasTracker.settle_gas
+vm.gas.restore_state_gas_to_entry	1,2,3	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:382-390	GasTracker.rollback_state_gas
+vm.gas.restore_state_gas_to_entry	0	missing	-	-	-
 vm.gas.settle_transaction_gas	0,1,3,5	entry	2/2	repos/clients/evm2/crates/evm2/src/ethereum/mod.rs:774-819	finalize_gas
 vm.gas.settle_transaction_gas	0,1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/host.rs:70-84	MessageResultExt.final_refund
 vm.gas.settle_transaction_gas	2	part	2/2	repos/clients/evm2/crates/evm2/src/evm/tx.rs:114-118	TxResultExt.tx_gas_used
 vm.gas.settle_transaction_gas	4	part	2/2	repos/clients/evm2/crates/evm2/src/evm/tx.rs:129-132	TxResultExt.execution_gas_spent
 vm.gas.settle_transaction_gas	5	inlined	2/2	repos/clients/evm2/crates/evm2/src/ethereum/mod.rs:747-771	default_settle_gas
+vm.gas.tx_state_gas_used	1	part	1/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:340-354	GasTracker.spend_state
+vm.gas.tx_state_gas_used	1	inlined	2/2	repos/clients/evm2/crates/evm2/src/ethereum/mod.rs:774-819	finalize_gas
+vm.gas.tx_state_gas_used	0	missing	-	-	-
+vm.gas.withhold_create_gas	-	delegated	2/2	-> vm.gas.max_message_call_gas	GasParams.call_stipend_reduction
+vm.incorporate_child	2,3	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:461-471	GasTracker.merge_child_gas
+vm.incorporate_child	2,3	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:241-247	GasTracker.absorb_returned_reservoir
+vm.incorporate_child	2	part	1/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:257-259	GasTracker.add_state_gas_spent
+vm.incorporate_child	2	part	1/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:273-275	GasTracker.add_state_gas_spilled
+vm.incorporate_child	2	part	1/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:420-422	GasTracker.record_refund
+vm.incorporate_child	2	part	1/2	repos/clients/evm2/crates/evm2/src/interpreter/gas.rs:426-428	GasTracker.erase_cost
+vm.incorporate_child	0,1,4	missing	-	-	-
+vm.instructions.arithmetic.add	0,2	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/arithmetic.rs:6-8	add
+vm.instructions.arithmetic.add	3	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/mod.rs:40-42	inc_pc
+vm.instructions.arithmetic.add	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/packed.rs:61-67	RemainingGas.pre_step
+vm.instructions.arithmetic.add	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/mod.rs:76-82	pre_step
+vm.instructions.arithmetic.add	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/tco.rs:132-137	pre_step
+vm.instructions.arithmetic.add	-	delegated	1/2	-> vm.stack.push	Word.write
+vm.instructions.arithmetic.addmod	0,2	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/arithmetic.rs:41-43	addmod
+vm.instructions.arithmetic.addmod	3	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/mod.rs:40-42	inc_pc
+vm.instructions.arithmetic.addmod	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/packed.rs:61-67	RemainingGas.pre_step
+vm.instructions.arithmetic.addmod	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/mod.rs:76-82	pre_step
+vm.instructions.arithmetic.addmod	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/tco.rs:132-137	pre_step
+vm.instructions.arithmetic.addmod	-	delegated	2/2	-> vm.stack.push	Word.write
+vm.instructions.arithmetic.addmod	-	delegated	2/2	-> vm.gas.charge_gas	GasTracker.spend
+vm.instructions.arithmetic.addmod	-	delegated	2/2	-> vm.gas.charge_gas	RemainingGas.spend
+vm.instructions.arithmetic.div	0,2	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/arithmetic.rs:21-23	div
+vm.instructions.arithmetic.div	3	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/mod.rs:40-42	inc_pc
+vm.instructions.arithmetic.div	3	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/mod.rs:45-52	instruction_len
+vm.instructions.arithmetic.div	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/packed.rs:61-67	RemainingGas.pre_step
+vm.instructions.arithmetic.div	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/mod.rs:76-82	pre_step
+vm.instructions.arithmetic.div	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/tco.rs:132-137	pre_step
+vm.instructions.arithmetic.div	-	delegated	2/2	-> vm.gas.charge_gas	GasTracker.spend
+vm.instructions.arithmetic.div	-	delegated	1/2	-> vm.stack.push	Word.write
+vm.instructions.arithmetic.exp	0,1,2	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/arithmetic.rs:51-54	exp
+vm.instructions.arithmetic.exp	1	part	2/2	repos/clients/evm2/crates/evm2/src/version/gas_params.rs:254-259	GasParams.exp_cost
+vm.instructions.arithmetic.exp	-	delegated	2/2	-> vm.gas.charge_gas	GasTracker.spend
+vm.instructions.arithmetic.exp	-	delegated	2/2	-> vm.gas.charge_gas	RemainingGas.spend
+vm.instructions.arithmetic.exp	-	delegated	1/2	-> vm.stack.push	Word.write
+vm.instructions.arithmetic.exp	-	delegated	1/2	-> vm.stack.push	write_word
+vm.instructions.arithmetic.mod	0,2	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/arithmetic.rs:31-33	rem
+vm.instructions.arithmetic.mod	3	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/mod.rs:40-42	inc_pc
+vm.instructions.arithmetic.mod	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/packed.rs:61-67	RemainingGas.pre_step
+vm.instructions.arithmetic.mod	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/mod.rs:76-82	pre_step
+vm.instructions.arithmetic.mod	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/tco.rs:132-137	pre_step
+vm.instructions.arithmetic.mod	-	delegated	2/2	-> vm.gas.charge_gas	GasTracker.spend
+vm.instructions.arithmetic.mod	-	delegated	2/2	-> vm.gas.charge_gas	RemainingGas.spend
+vm.instructions.arithmetic.mul	0,2	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/arithmetic.rs:11-13	mul
+vm.instructions.arithmetic.mul	3	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/mod.rs:40-42	inc_pc
+vm.instructions.arithmetic.mul	3	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/mod.rs:45-52	instruction_len
+vm.instructions.arithmetic.mul	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/packed.rs:61-67	RemainingGas.pre_step
+vm.instructions.arithmetic.mul	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/mod.rs:76-82	pre_step
+vm.instructions.arithmetic.mul	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/tco.rs:132-137	pre_step
+vm.instructions.arithmetic.mul	-	delegated	1/2	-> vm.stack.push	Word.write
+vm.instructions.arithmetic.mul	-	delegated	2/2	-> vm.gas.charge_gas	GasTracker.spend
+vm.instructions.arithmetic.mulmod	0,2	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/arithmetic.rs:46-48	mulmod
+vm.instructions.arithmetic.mulmod	3	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/mod.rs:40-42	inc_pc
+vm.instructions.arithmetic.mulmod	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/packed.rs:61-67	RemainingGas.pre_step
+vm.instructions.arithmetic.mulmod	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/mod.rs:76-82	pre_step
+vm.instructions.arithmetic.mulmod	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/tco.rs:132-137	pre_step
+vm.instructions.arithmetic.mulmod	-	delegated	2/2	-> vm.stack.push	Word.write
+vm.instructions.arithmetic.mulmod	-	delegated	2/2	-> vm.gas.charge_gas	GasTracker.spend
+vm.instructions.arithmetic.sdiv	0,3	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/arithmetic.rs:26-28	sdiv
+vm.instructions.arithmetic.sdiv	2	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/i256.rs:29-37	i256_div
+vm.instructions.arithmetic.sdiv	2	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/i256.rs:52-54	sign_mask
+vm.instructions.arithmetic.sdiv	2	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/i256.rs:58-62	negate_if
+vm.instructions.arithmetic.sdiv	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/packed.rs:61-67	RemainingGas.pre_step
+vm.instructions.arithmetic.sdiv	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/mod.rs:76-82	pre_step
+vm.instructions.arithmetic.sdiv	4	part	1/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/mod.rs:103-136	dispatch_inner
+vm.instructions.arithmetic.sdiv	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/tco.rs:132-137	pre_step
+vm.instructions.arithmetic.sdiv	-	delegated	2/2	-> vm.stack.push	Word.write
+vm.instructions.arithmetic.sdiv	-	delegated	2/2	-> vm.gas.charge_gas	GasTracker.spend
+vm.instructions.arithmetic.sdiv	-	delegated	2/2	-> vm.gas.charge_gas	RemainingGas.spend
+vm.instructions.arithmetic.signextend	0,2,3,4,5	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/arithmetic.rs:57-63	signextend
+vm.instructions.arithmetic.signextend	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/packed.rs:61-67	RemainingGas.pre_step
+vm.instructions.arithmetic.signextend	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/mod.rs:76-82	pre_step
+vm.instructions.arithmetic.signextend	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/tco.rs:132-137	pre_step
+vm.instructions.arithmetic.signextend	-	delegated	2/2	-> vm.gas.charge_gas	GasTracker.spend
+vm.instructions.arithmetic.signextend	-	delegated	2/2	-> vm.gas.charge_gas	RemainingGas.spend
+vm.instructions.arithmetic.smod	0,3	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/arithmetic.rs:36-38	smod
+vm.instructions.arithmetic.smod	4	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/mod.rs:40-42	inc_pc
+vm.instructions.arithmetic.smod	2	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/i256.rs:41-48	i256_mod
+vm.instructions.arithmetic.smod	2	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/i256.rs:52-54	sign_mask
+vm.instructions.arithmetic.smod	2	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/i256.rs:58-62	negate_if
+vm.instructions.arithmetic.smod	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/packed.rs:61-67	RemainingGas.pre_step
+vm.instructions.arithmetic.smod	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/mod.rs:76-82	pre_step
+vm.instructions.arithmetic.smod	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/tco.rs:132-137	pre_step
+vm.instructions.arithmetic.smod	-	delegated	1/2	-> vm.stack.push	Word.write
+vm.instructions.arithmetic.sub	0,2	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/arithmetic.rs:16-18	sub
+vm.instructions.arithmetic.sub	3	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/mod.rs:40-42	inc_pc
+vm.instructions.arithmetic.sub	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/tco.rs:132-137	pre_step
+vm.instructions.arithmetic.sub	-	delegated	2/2	-> vm.stack.push	Word.write
+vm.instructions.arithmetic.sub	-	delegated	2/2	-> vm.gas.charge_gas	GasTracker.spend
+vm.instructions.arithmetic.sub	-	delegated	2/2	-> vm.gas.charge_gas	RemainingGas.spend
+vm.instructions.bitwise.bitwise_and	0,2	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/bitwise.rs:36-38	bitand
+vm.instructions.bitwise.bitwise_and	3	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/mod.rs:40-42	inc_pc
+vm.instructions.bitwise.bitwise_and	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/packed.rs:61-67	RemainingGas.pre_step
+vm.instructions.bitwise.bitwise_and	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/mod.rs:76-82	pre_step
+vm.instructions.bitwise.bitwise_and	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/tco.rs:132-137	pre_step
+vm.instructions.bitwise.bitwise_and	-	delegated	2/2	-> vm.gas.charge_gas	GasTracker.spend
+vm.instructions.bitwise.bitwise_and	-	delegated	2/2	-> vm.gas.charge_gas	RemainingGas.spend
+vm.instructions.bitwise.bitwise_not	0,2	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/bitwise.rs:51-53	not
+vm.instructions.bitwise.bitwise_not	3	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/mod.rs:40-42	inc_pc
+vm.instructions.bitwise.bitwise_not	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/packed.rs:61-67	RemainingGas.pre_step
+vm.instructions.bitwise.bitwise_not	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/mod.rs:76-82	pre_step
+vm.instructions.bitwise.bitwise_not	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/tco.rs:132-137	pre_step
+vm.instructions.bitwise.bitwise_not	-	delegated	2/2	-> vm.gas.charge_gas	GasTracker.spend
+vm.instructions.bitwise.bitwise_not	-	delegated	2/2	-> vm.gas.charge_gas	RemainingGas.spend
+vm.instructions.bitwise.bitwise_not	-	delegated	1/2	-> vm.gas.charge_gas	Gas.spend
+vm.instructions.bitwise.bitwise_or	0,2	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/bitwise.rs:41-43	bitor
+vm.instructions.bitwise.bitwise_or	3	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/mod.rs:40-42	inc_pc
+vm.instructions.bitwise.bitwise_or	3	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/mod.rs:45-52	instruction_len
+vm.instructions.bitwise.bitwise_or	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/packed.rs:61-67	RemainingGas.pre_step
+vm.instructions.bitwise.bitwise_or	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/mod.rs:76-82	pre_step
+vm.instructions.bitwise.bitwise_or	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/tco.rs:132-137	pre_step
+vm.instructions.bitwise.bitwise_or	-	delegated	2/2	-> vm.gas.charge_gas	GasTracker.spend
+vm.instructions.bitwise.bitwise_or	-	delegated	2/2	-> vm.gas.charge_gas	RemainingGas.spend
+vm.instructions.bitwise.bitwise_or	-	delegated	1/2	-> vm.gas.charge_gas	Gas.spend
+vm.instructions.bitwise.bitwise_xor	0,2	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/bitwise.rs:46-48	bitxor
+vm.instructions.bitwise.bitwise_xor	3	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/mod.rs:40-42	inc_pc
+vm.instructions.bitwise.bitwise_xor	3	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/mod.rs:45-52	instruction_len
+vm.instructions.bitwise.bitwise_xor	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/table/mod.rs:76-82	pre_step
+vm.instructions.bitwise.bitwise_xor	1	part	2/2	repos/clients/evm2/crates/evm2/src/interpreter/dispatch/tco.rs:132-137	pre_step
+vm.instructions.bitwise.bitwise_xor	-	delegated	2/2	-> vm.gas.charge_gas	GasTracker.spend
+vm.instructions.bitwise.bitwise_xor	-	delegated	2/2	-> vm.gas.charge_gas	RemainingGas.spend
 vm.instructions.storage.sload	0,1,2	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/host.rs:22-39	sload
 vm.instructions.storage.sload	1,2	part	2/2	repos/clients/evm2/crates/evm2/src/evm/mod.rs:1748-1771	Evm.sload
 vm.instructions.storage.tload	0,2	entry	2/2	repos/clients/evm2/crates/evm2/src/interpreter/instructions/host.rs:115-118	tload

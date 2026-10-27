@@ -52,6 +52,15 @@ block_access_lists.update_builder_from_tx	5	eip7928	For each written storage slo
 block_access_lists.validate_block_access_list_gas_limit	0	-	Count one item per account address in the block access list
 block_access_lists.validate_block_access_list_gas_limit	1	-	Count each account's unique storage keys across storage changes and reads
 block_access_lists.validate_block_access_list_gas_limit	2	-	Reject the block if the item count exceeds block_gas_limit // BLOCK_ACCESS_LIST_ITEM
+blocks.encode_receipt	0	-	Encode typed receipt as type byte prefix plus RLP of receipt, by transaction type
+blocks.encode_receipt	1	-	Return legacy receipt unencoded
+bloom.add_to_bloom	0	-	Hash the bloom entry with keccak256
+bloom.add_to_bloom	1	-	For each of the first three 16-bit words, take the low 11 bits as the bit position
+bloom.add_to_bloom	2	-	Map the bit position to a byte index and bit mask, counting from the most significant byte
+bloom.add_to_bloom	3	-	Set that bit in the bloom filter
+bloom.logs_bloom	0	-	Initialize an empty 256-byte bloom
+bloom.logs_bloom	1	-	Add each log's address and topics to the bloom
+bloom.logs_bloom	2	-	Return the bloom
 fork.apply_body	0	eip2935,eip4788,eip7928	Run the system calls that store the parent beacon block root (EIP-4788) and the parent block hash (EIP-2935)
 fork.apply_body	1	eip2935,eip4788,eip7928	Decode and execute each transaction in order
 fork.apply_body	2	eip2935,eip4788,eip7928	Set the block access list index to N+1 for post-execution operations
@@ -63,45 +72,136 @@ fork.calculate_base_fee_per_gas	1	eip1559	Check block gas limit against parent g
 fork.calculate_base_fee_per_gas	2	eip1559	Keep parent base fee when parent gas used equals target
 fork.calculate_base_fee_per_gas	3	eip1559	Increase base fee by max(parent fee × excess gas / target / 8, 1) when parent used more than target
 fork.calculate_base_fee_per_gas	4	eip1559	Decrease base fee by parent fee × gas shortfall / target / 8 when parent used less than target
+fork.check_gas_limit	0	-	Compute max adjustment delta as parent gas limit / LIMIT_ADJUSTMENT_FACTOR
+fork.check_gas_limit	1	-	Reject if gas limit >= parent gas limit + delta
+fork.check_gas_limit	2	-	Reject if gas limit <= parent gas limit - delta
+fork.check_gas_limit	3	-	Reject if gas limit below LIMIT_MINIMUM
 fork.check_transaction	0	eip1559,eip2930,eip3607,eip4844,eip7702,eip8037	Recover sender and statically validate the transaction (intrinsic gas)
 fork.check_transaction	1	eip1559,eip2930,eip3607,eip4844,eip7702,eip8037	Check the tx gas and blob gas fit the block's remaining capacity
 fork.check_transaction	2	eip1559,eip2930,eip3607,eip4844,eip7702,eip8037	Compute effective gas price and max fee, checking blob fee cap for blob txs
 fork.check_transaction	3	eip1559,eip2930,eip3607,eip4844,eip7702,eip8037	Check sender nonce, balance covers max fee plus value, and sender is EOA or delegated
 fork.check_transaction	4	eip1559,eip2930,eip3607,eip4844,eip7702,eip8037	Split EVM gas into execution-gas grant and state gas reservoir
 fork.check_transaction	5	eip1559,eip2930,eip3607,eip4844,eip7702,eip8037	Build tx environment: access list, authorizations, recipient/create address, paid-write accounts, tx hash
+fork.disburse_gas_fees	0	-	Compute the refund for unused gas at the effective gas price
+fork.disburse_gas_fees	1	-	Compute the priority fee per gas and the coinbase fee on the gas used
+fork.disburse_gas_fees	2	-	Credit the payer with the gas refund
+fork.disburse_gas_fees	3	-	Credit the coinbase with the priority fee
 fork.execute_block	0	eip3675,eip4844,eip4895,eip7685,eip7843,eip7928,eip7934,eip8037	Check the RLP-encoded block size against MAX_RLP_BLOCK_SIZE
 fork.execute_block	1	eip3675,eip4844,eip4895,eip7685,eip7843,eip7928,eip7934,eip8037	Validate the header against the parent and require no ommers
 fork.execute_block	2	eip3675,eip4844,eip4895,eip7685,eip7843,eip7928,eip7934,eip8037	Set up the block state and block environment, including the access list builder
 fork.execute_block	3	eip3675,eip4844,eip4895,eip7685,eip7843,eip7928,eip7934,eip8037	Apply the block body (transactions and withdrawals)
 fork.execute_block	4	eip3675,eip4844,eip4895,eip7685,eip7843,eip7928,eip7934,eip8037	Compute the block diff, state root, tries, logs bloom, requests hash and access list hash
 fork.execute_block	5	eip3675,eip4844,eip4895,eip7685,eip7843,eip7928,eip7934,eip8037	Check gas used (max of regular and state gas) and every computed root and hash against the header
+fork.get_last_256_block_hashes	0	-	Take the last 255 blocks of the chain, return empty if there are none
+fork.get_last_256_block_hashes	1	-	Collect each block's parent hash in increasing block order
+fork.get_last_256_block_hashes	2	-	Hash the most recent block's header and append it
 fork.make_receipt	0	eip658	Build the receipt: success status, cumulative gas used, logs bloom and logs
 fork.make_receipt	1	eip658	Encode the receipt according to the transaction type
+fork.process_checked_system_transaction	0	eip7002,eip7251	Read the system contract's code through a throwaway transaction state that is never merged into the block
+fork.process_checked_system_transaction	1	eip7002,eip7251	Reject the block if the system contract has no code
+fork.process_checked_system_transaction	2	eip7002,eip7251	Run the system call as an unchecked system transaction
+fork.process_checked_system_transaction	3	eip7002,eip7251	Reject the block if the system call failed
 fork.process_general_purpose_requests	0	eip6110,eip7002,eip7251,eip7685,eip7732	Parse deposit requests from block logs and append them if non-empty
 fork.process_general_purpose_requests	1	eip6110,eip7002,eip7251,eip7685,eip7732	Call withdrawal request predeploy and append returned withdrawal requests
 fork.process_general_purpose_requests	2	eip6110,eip7002,eip7251,eip7685,eip7732	Call consolidation request predeploy and append returned consolidation requests
 fork.process_general_purpose_requests	3	eip6110,eip7002,eip7251,eip7685,eip7732	Call builder deposit contract and append returned builder deposit requests
 fork.process_general_purpose_requests	4	eip6110,eip7002,eip7251,eip7685,eip7732	Call builder exit contract and append returned builder exit requests
+fork.process_transaction	0	-	Set the block access list index and insert the transaction into the transactions trie
+fork.process_transaction	1	-	Validate chain ID and transaction against block, deriving the tx environment
+fork.process_transaction	2	-	Update sender state, then execute the top-level message
+fork.process_transaction	3	-	Settle gas (refunds, calldata floor, state gas) and pay fees to sender and coinbase
+fork.process_transaction	4	-	Accumulate block gas, blob gas and cumulative gas; build receipt, add it to receipts trie and collect logs
+fork.process_transaction	5	-	Clear self-destructed accounts and merge tx state changes into the block access list
 fork.process_unchecked_system_transaction	0	eip4788,eip7928,eip8037	Open a transaction-scoped state layered on the block state
 fork.process_unchecked_system_transaction	1	eip4788,eip7928,eip8037	Build the system transaction environment: SYSTEM_ADDRESS caller, zero value, SYSTEM_TRANSACTION_GAS limit and grant, base-fee gas price, state-gas reservoir for SYSTEM_MAX_SSTORES_PER_CALL storage sets, no access list or paid writes
 fork.process_unchecked_system_transaction	2	eip4788,eip7928,eip8037	Execute the top-level call to the target contract without checking code or failure
 fork.process_unchecked_system_transaction	3	eip4788,eip7928,eip8037	Commit the transaction state into the block state and record it in the block access list
+fork.process_withdrawals	0	-	Open a transaction-scoped state frame over the block state for withdrawals
+fork.process_withdrawals	1	-	Insert each withdrawal into the withdrawals trie keyed by its RLP-encoded index
+fork.process_withdrawals	2	-	Credit each withdrawal address with the amount converted from gwei to wei
+fork.process_withdrawals	3	-	Commit the withdrawal state changes into the block and record them in the block access list
 fork.state_transition	0	-	Build chain context: chain id, last 256 block hashes, parent header
 fork.state_transition	1	-	Execute the block against the current state to get the state diff
 fork.state_transition	2	-	Apply the block's state diff to the chain state
 fork.state_transition	3	-	Append the block to the chain and keep only the last 255 blocks
+fork.update_sender_state	0	-	Compute the execution gas fee: gas limit times effective gas price
+fork.update_sender_state	1	-	Compute the blob gas fee for blob transactions, zero otherwise
+fork.update_sender_state	2	-	Increment the sender's nonce
+fork.update_sender_state	3	-	Deduct the gas fee and blob fee from the sender's balance
+fork.validate_header	0	-	Reject genesis-numbered header (number < 1)
+fork.validate_header	1	-	Check excess blob gas matches value computed from parent
+fork.validate_header	2	-	Check gas used does not exceed gas limit
+fork.validate_header	3	-	Check base fee matches value computed from parent gas limit, gas used and base fee
+fork.validate_header	4	-	Check timestamp, number, extra data length and post-merge constants (difficulty, nonce, ommers hash)
+fork.validate_header	5	-	Check parent hash equals keccak256 of RLP-encoded parent header
+fork_types.encode_account	0	-	RLP-encode the account as the list [nonce, balance, storage_root, code_hash]
+requests.compute_requests_hash	0	eip7685	Hash each request with SHA2-256 and feed the digests in order into an outer SHA2-256
+requests.compute_requests_hash	1	eip7685	Return the outer SHA2-256 digest as the requests hash
+requests.extract_deposit_data	0	-	Check deposit event data has the fixed expected length
+requests.extract_deposit_data	1	-	Check the five ABI head offsets match the fixed expected offsets
+requests.extract_deposit_data	2	-	Check pubkey length prefix and extract pubkey
+requests.extract_deposit_data	3	-	Check withdrawal credentials and amount length prefixes and extract them
+requests.extract_deposit_data	4	-	Check signature and index length prefixes and extract them
+requests.extract_deposit_data	5	-	Return concatenated pubkey, withdrawal credentials, amount, signature and index
+requests.parse_deposit_requests	0	-	Iterate over block receipts, fetching each from the receipts trie and decoding it
+requests.parse_deposit_requests	1	-	Filter logs emitted by the deposit contract whose first topic is the deposit event signature
+requests.parse_deposit_requests	2	-	Extract deposit data from the log and append it to the concatenated deposit requests
+state_tracker.account_deployable	0	-	Load the account and report it deployable only if its nonce is zero and its code hash is the empty code hash
+state_tracker.account_exists	0	-	Look up the optional account at the address and report whether it is present
+state_tracker.account_exists_and_is_empty	0	-	Look up the account in the transaction state (may be absent)
+state_tracker.account_exists_and_is_empty	1	-	Return true only if the account exists with zero nonce, empty code hash and zero balance
+state_tracker.clear_account_preserving_balance	0	-	Destroy all of the account's storage
+state_tracker.clear_account_preserving_balance	1	-	Reset the account's nonce to 0 and code hash to the empty code hash, keeping its balance
 state_tracker.copy_tx_state	0	-	Snapshot the transaction state: deep-copy account, storage and code writes, storage clears and transient storage so they can be rolled back
 state_tracker.copy_tx_state	1	-	Share the parent, created accounts, storage reads and account reads with the snapshot so they are not rolled back
+state_tracker.create_ether	0	-	Increase the account's balance by the newly created amount
+state_tracker.destroy_account	0	-	Clear all storage of the account
+state_tracker.destroy_account	1	-	Remove the account from state (set to None)
+state_tracker.destroy_storage	0	-	Convert the account's pending storage writes into storage reads so they appear in the Block Access List
+state_tracker.destroy_storage	1	-	Drop the account's pending storage writes
+state_tracker.destroy_storage	2	-	Mark the account's storage as cleared so reads skip earlier block writes and pre-state
+state_tracker.get_account	0	-	Look up the account at the address, returning EMPTY_ACCOUNT if none exists
+state_tracker.get_account_optional	0	-	Record the address as read (for the block access list)
+state_tracker.get_account_optional	1	-	Return the account written earlier in this transaction, if any
+state_tracker.get_account_optional	2	-	Otherwise fall back to the pre-state account, or None if absent
+state_tracker.get_code	0	-	Return empty bytecode for the empty code hash
+state_tracker.get_code	1	-	Look up code written in the current transaction
+state_tracker.get_code	2	-	Look up code written earlier in the block
+state_tracker.get_code	3	-	Fall back to reading code from the pre-block state
 state_tracker.get_pre_state_account	0	-	Look up the account as it was before the current transaction, defaulting to EMPTY_ACCOUNT if none existed
+state_tracker.get_pre_state_account_optional	0	-	Record the address as read in the transaction's access set
+state_tracker.get_pre_state_account_optional	1	-	Return the account written earlier in the block if the parent has one
+state_tracker.get_pre_state_account_optional	2	-	Otherwise return the block pre-state account, or None if absent
+state_tracker.get_storage	0	-	Record the (address, key) storage read in the transaction's access set
+state_tracker.get_storage	1	-	Return the value written to the key earlier in this transaction, or zero if the account's storage was cleared in this transaction
+state_tracker.get_storage	2	-	Return the value written to the key earlier in the block, or zero if the account's storage was cleared earlier in the block
+state_tracker.get_storage	3	-	Fall back to the key's value in the block's pre-state
+state_tracker.get_storage_original	0	-	Return zero if the account was created in the current transaction
+state_tracker.get_storage_original	1	-	Return the slot's value from block-level storage writes if present
+state_tracker.get_storage_original	2	-	Return zero if the account's storage was cleared earlier in the block
+state_tracker.get_storage_original	3	-	Fall back to the slot value in the block pre-state
+state_tracker.get_transient_storage	0	-	Look up the (address, key) slot in the transaction's transient storage, returning 0 if it is unset
 state_tracker.incorporate_tx_into_block	0	-	Update the BAL builder by diffing the transaction's writes against the block state
 state_tracker.incorporate_tx_into_block	1	-	Merge the transaction's storage and account reads into the block read sets
 state_tracker.incorporate_tx_into_block	2	-	Merge account writes into block state
 state_tracker.incorporate_tx_into_block	3	-	Apply storage clears, dropping the block's earlier storage writes for cleared accounts
 state_tracker.incorporate_tx_into_block	4	-	Merge storage slot writes and code writes into block state
 state_tracker.incorporate_tx_into_block	5	-	Reset the transaction state, including transient storage, for reuse
+state_tracker.increment_nonce	0	-	Increment the account's nonce by one in the transaction state
+state_tracker.is_account_alive	0	-	Look up the account and return true only if it exists and is not empty (zero nonce, zero balance, no code)
+state_tracker.mark_account_created	0	eip6780	Add the address to the transaction's set of created accounts (the marker stays even if the creation reverts)
 state_tracker.modify_state	0	-	Apply the modification to the account and write it back to the transaction state
 state_tracker.modify_state	1	-	Destroy the account if it exists and is empty (zero nonce, zero balance, no code)
+state_tracker.move_ether	0	-	Check the sender's balance covers the amount and debit it from the sender
+state_tracker.move_ether	1	-	Credit the amount to the recipient's balance
 state_tracker.restore_tx_state	0	-	Restore the transaction's account, storage, code, storage-clear and transient-storage writes from the snapshot
+state_tracker.set_account	0	-	Record the account (or None to delete it) at the address in the transaction's account writes
+state_tracker.set_account_balance	0	-	Set the account's balance to the given amount in the transaction state
+state_tracker.set_code	0	-	Hash the code and store non-empty code by its hash
+state_tracker.set_code	1	-	Set the account's code hash in the transaction state
+state_tracker.set_storage	0	-	Assert the account exists
+state_tracker.set_storage	1	-	Record the storage write for the address and key in the transaction state
+state_tracker.set_transient_storage	0	-	Write the transient storage slot for (address, key): delete the entry when the value is zero, otherwise store the value
 transactions.calculate_effective_gas_price	0	eip1559	Fee-market tx: check max fee per gas covers the base fee
 transactions.calculate_effective_gas_price	1	eip1559	Fee-market tx: compute priority fee as min of max priority fee and max fee minus base fee, and return base fee plus priority fee
 transactions.calculate_effective_gas_price	2	eip1559	Legacy-priced tx: check gas price covers the base fee and return gas price
@@ -112,102 +212,673 @@ transactions.calculate_intrinsic_cost	3	eip2780,eip2930,eip3860,eip7623,eip7702,
 transactions.calculate_intrinsic_cost	4	eip2780,eip2930,eip3860,eip7623,eip7702,eip7976,eip7981,eip8037	Compute calldata floor gas anchored on base plus recipient gas, including access list surcharge
 transactions.calculate_intrinsic_cost	5	eip2780,eip2930,eip3860,eip7623,eip7702,eip7976,eip7981,eip8037	Sum intrinsic execution gas and return it with the floor
 transactions.calculate_max_gas_fee	0	eip1559	Multiply gas_limit by the fee cap: max_fee_per_gas for fee-market transactions, gas_price for legacy ones
+transactions.chain_id	0	eip155	Return no chain ID for a pre-EIP-155 legacy transaction (v is 27 or 28)
+transactions.chain_id	1	eip155	Reject a legacy transaction whose v is below 35
+transactions.chain_id	2	eip155	Derive the chain ID from v as (v - 35) >> 1 and reject it if it exceeds U64 max
+transactions.chain_id	3	eip155	Return the explicit chain_id field for typed transactions
 transactions.check_nonce	0	-	Reject the transaction unless its nonce equals the sender's account nonce (too low or too high)
+transactions.count_tokens_in_data	0	-	Count data tokens: zero bytes as 1, non-zero bytes as 4
 transactions.decode_transaction	0	eip1559,eip2718,eip2930,eip4844,eip7702	Pass through an already-decoded legacy transaction unchanged
 transactions.decode_transaction	1	eip1559,eip2718,eip2930,eip4844,eip7702	Reject an empty transaction byte string
 transactions.decode_transaction	2	eip1559,eip2718,eip2930,eip4844,eip7702	Decode typed transactions (types 1-4) from the RLP payload after the type byte
 transactions.decode_transaction	3	eip1559,eip2718,eip2930,eip4844,eip7702	Decode a legacy transaction as RLP when the first byte is a list prefix (0xC0-0xFE)
 transactions.decode_transaction	4	eip1559,eip2718,eip2930,eip4844,eip7702	Reject any other transaction type byte
+transactions.encode_transaction	0	-	Return legacy transactions unchanged as plain RLP
+transactions.encode_transaction	1	-	Prefix typed transactions with their type byte (0x01–0x04) and RLP-encode the payload
+transactions.encode_transaction	2	-	Reject unknown transaction types
 transactions.has_access_list	0	eip2930	Check whether the transaction is a type that carries an EIP-2930 access list
+transactions.recover_sender	0	-	Check r is in (0, secp256k1n) and s is in (0, secp256k1n/2]
+transactions.recover_sender	1	-	Legacy tx: recover public key with v-27 over the pre-EIP-155 signing hash, or derive chain id and parity from v and recover over the EIP-155 signing hash
+transactions.recover_sender	2	-	Typed tx (2930, 1559, 4844, 7702): check y_parity is 0 or 1 and recover public key over that type's signing hash
+transactions.recover_sender	3	-	Derive sender address as the last 20 bytes of keccak256 of the public key
 transactions.signing_hash_155	0	eip155	Keccak256-hash the RLP encoding of (nonce, gas_price, gas, to, value, data, chain_id, 0, 0) to get the EIP-155 signing hash
+transactions.signing_hash_1559	0	eip1559	Hash 0x02 type byte plus the RLP of the unsigned EIP-1559 fields (chain_id through access_list) with keccak256
 transactions.signing_hash_2930	0	eip2718,eip2930	Hash the 0x01 type byte followed by the RLP of the unsigned fields (chain_id, nonce, gas_price, gas, to, value, data, access_list) with keccak256
+transactions.signing_hash_4844	0	eip4844	Keccak256 hash of 0x03 prefix plus RLP of the unsigned blob transaction fields
 transactions.signing_hash_7702	0	eip7702	Hash keccak256 of 0x04 prefix plus RLP of the set-code transaction's unsigned fields (chain_id through authorizations)
+transactions.signing_hash_pre155	0	eip155	Keccak256 hash of the RLP encoding of (nonce, gas_price, gas, to, value, data)
+transactions.validate_transaction	0	eip2681,eip7623,eip7825,eip8037	Check nonce below 2^64-1, init code size limit and gas limit against TX_MAX_TOTAL_GAS_LIMIT
+transactions.validate_transaction	1	eip2681,eip7623,eip7825,eip8037	Check max priority fee does not exceed max fee for fee market transactions
+transactions.validate_transaction	2	eip2681,eip7623,eip7825,eip8037	Validate blob transaction: non-zero blob count within limit, KZG versioned hash version
+transactions.validate_transaction	3	eip2681,eip7623,eip7825,eip8037	Reject contract creation for blob and set-code transactions, and empty authorization lists
+transactions.validate_transaction	4	eip2681,eip7623,eip7825,eip8037	Compute intrinsic cost and check execution gas and calldata floor against tx gas and TX_MAX_GAS_LIMIT
+utils.address.compute_contract_address	0	-	Hash the RLP encoding of [sender address, nonce] with keccak256
+utils.address.compute_contract_address	1	-	Take the last 20 bytes of the hash as the new contract address
+utils.address.compute_create2_contract_address	0	-	Build preimage 0xff ++ sender ++ salt ++ keccak256(init code)
+utils.address.compute_create2_contract_address	1	-	Hash preimage and take last 20 bytes as the new address
+utils.address.to_address_masked	0	-	Truncate the value to its low-order 20 bytes as an address
+vm.emit_transfer_log	0	eip7708	Skip zero-value transfers
+vm.emit_transfer_log	1	eip7708	Build LOG3 from SYSTEM_ADDRESS with transfer topic, padded sender and recipient, amount as data
+vm.emit_transfer_log	2	eip7708	Append the log to the EVM's logs
 vm.eoa_delegation.calculate_delegation_cost	0	eip2929,eip7702	Load the code of the target account
 vm.eoa_delegation.calculate_delegation_cost	1	eip2929,eip7702	Return no delegation and zero cost if the code is not a valid delegation designator
 vm.eoa_delegation.calculate_delegation_cost	2	eip2929,eip7702	Extract the delegated address from the code after the marker
 vm.eoa_delegation.calculate_delegation_cost	3	eip2929,eip7702	Charge warm access if the delegated address is already accessed, else cold account access
 vm.eoa_delegation.calculate_delegation_cost	4	eip2929,eip7702	Return the delegation flag, delegated address and gas cost
+vm.eoa_delegation.get_delegated_code_address	0	-	Check the code is a valid delegation designator, and if so return the address that follows the marker, otherwise return none
 vm.eoa_delegation.is_valid_delegation	0	eip7702	Check the code has the delegated-code length and starts with the delegation marker
+vm.eoa_delegation.recover_authority	0	-	Validate signature values: y_parity in {0,1}, 0 < r < secp256k1n, 0 < s <= secp256k1n/2
+vm.eoa_delegation.recover_authority	1	-	Compute signing hash keccak256(0x05 || rlp([chain_id, address, nonce]))
+vm.eoa_delegation.recover_authority	2	-	Recover public key via secp256k1 ecrecover and derive authority address from last 20 bytes of its keccak256
 vm.eoa_delegation.resolve_delegated_code_address	0	eip7702	Load the target's code and parse its delegation designation
 vm.eoa_delegation.resolve_delegated_code_address	1	eip7702	Return the target unchanged when it has no delegation
 vm.eoa_delegation.resolve_delegated_code_address	2	eip7702	Charge warm or cold access for the delegated address and warm it
 vm.eoa_delegation.resolve_delegated_code_address	3	eip7702	Return the delegated address with the delegation flag set
+vm.eoa_delegation.set_delegation	0	eip7702	Validate each authorization and recover its authority, skipping invalid ones
+vm.eoa_delegation.set_delegation	1	eip7702	Charge new-account state gas if the authority account does not exist
+vm.eoa_delegation.set_delegation	2	eip7702	Charge account-write gas on the transaction's first paid write to the authority
+vm.eoa_delegation.set_delegation	3	eip7702	Check whether the authority held a delegation in the pre-transaction state
+vm.eoa_delegation.set_delegation	4	eip7702	Choose the code to set (clear or delegation marker), charging auth-base state gas for a net-new delegation
+vm.eoa_delegation.set_delegation	5	eip7702	Write the authority's code and increment its nonce
+vm.eoa_delegation.validate_authorization	0	-	Check chain ID is the current chain or zero
+vm.eoa_delegation.validate_authorization	1	-	Check nonce is below the maximum
+vm.eoa_delegation.validate_authorization	2	-	Recover authority address from signature, reject invalid
+vm.eoa_delegation.validate_authorization	3	-	Record authority as accessed
+vm.eoa_delegation.validate_authorization	4	-	Check authority code is empty or a valid delegation
+vm.eoa_delegation.validate_authorization	5	-	Check authority nonce matches authorization nonce
 vm.gas.allocate_evm_gas	0	eip7825,eip8037	Subtract the intrinsic execution cost from the tx gas limit to get the EVM gas
 vm.gas.allocate_evm_gas	1	eip7825,eip8037	Grant execution gas: the EVM gas, capped at TX_MAX_GAS_LIMIT minus the intrinsic execution cost
 vm.gas.allocate_evm_gas	2	eip7825,eip8037	Put the EVM gas above that cap into the state gas reservoir
+vm.gas.calculate_blob_gas_price	0	-	Compute blob gas price as fake_exponential(BLOB_MIN_GASPRICE, excess_blob_gas, BLOB_BASE_FEE_UPDATE_FRACTION)
 vm.gas.calculate_data_fee	0	eip4844	Multiply the transaction's total blob gas by the blob gas price derived from excess_blob_gas to get the blob data fee
+vm.gas.calculate_excess_blob_gas	0	-	Read parent excess blob gas, blob gas used and base fee, defaulting to zero
+vm.gas.calculate_excess_blob_gas	1	-	Return zero if parent excess plus used blob gas is below target
+vm.gas.calculate_excess_blob_gas	2	-	Compute target blob gas price from parent excess blob gas
+vm.gas.calculate_excess_blob_gas	3	-	If execution base cost exceeds blob price, add scaled blob gas used to excess (EIP-7918 reserve price)
+vm.gas.calculate_excess_blob_gas	4	-	Otherwise return parent blob gas minus target
 vm.gas.calculate_gas_extend_memory	0	-	Initialize the extension total, the cost owed and the current memory size
 vm.gas.calculate_gas_extend_memory	1	-	Skip zero-size extensions and those that fit in the current word-rounded memory
 vm.gas.calculate_gas_extend_memory	2	-	Add the word-rounded growth to the extension size
 vm.gas.calculate_gas_extend_memory	3	-	Charge the memory cost difference between the new and old sizes
 vm.gas.calculate_gas_extend_memory	4	-	Advance the current size to the extended size
 vm.gas.calculate_gas_extend_memory	5	-	Return the total cost and extension size
+vm.gas.calculate_memory_gas_cost	0	-	Round size up to 32-byte words
+vm.gas.calculate_memory_gas_cost	1	-	Compute linear cost: words × MEMORY_PER_WORD
+vm.gas.calculate_memory_gas_cost	2	-	Compute quadratic cost: words² / 512
+vm.gas.calculate_memory_gas_cost	3	-	Sum linear and quadratic costs as total memory gas
+vm.gas.calculate_message_call_gas	0	-	Zero the call stipend unless value is transferred
+vm.gas.calculate_message_call_gas	1	-	If gas left cannot cover extra gas plus memory cost, return requested gas plus extra gas as cost, unclamped
+vm.gas.calculate_message_call_gas	2	-	Cap the forwarded gas at the 63/64 maximum of gas left after memory and extra costs
+vm.gas.calculate_message_call_gas	3	-	Return cost (gas + extra gas) and sub-call gas (gas + stipend)
 vm.gas.calculate_total_blob_gas	0	eip4844	Compute blob gas as PER_BLOB times the number of blob versioned hashes for blob transactions, zero otherwise
+vm.gas.charge_gas	0	-	Deduct the execution gas amount from the EVM's gas meter
 vm.gas.charge_gas_from_meter	0	-	Raise OutOfGasError if gas_left is less than amount
 vm.gas.charge_gas_from_meter	1	-	Subtract amount from gas_left
+vm.gas.charge_state_gas	0	-	Charge the state gas from the reservoir, then gas_left, tracking spill
 vm.gas.charge_state_gas_from_meter	0	eip8037	If the state gas reservoir covers the amount, deduct it from the reservoir
 vm.gas.charge_state_gas_from_meter	1	eip8037	Otherwise, if reservoir plus gas_left covers it, empty the reservoir, take the remainder from gas_left and add it to state_gas_spilled
 vm.gas.charge_state_gas_from_meter	2	eip8037	Otherwise raise out-of-gas
+vm.gas.check_block_gas_capacity	0	-	Compute the remaining execution, state and blob gas in the block
+vm.gas.check_block_gas_capacity	1	-	Check the transaction's execution gas, capped at TX_MAX_GAS_LIMIT, fits the remaining execution gas
+vm.gas.check_block_gas_capacity	2	-	Check the transaction's gas limit fits the remaining state gas
+vm.gas.check_block_gas_capacity	3	-	Check the transaction's blob gas fits the remaining blob gas
+vm.gas.check_gas	0	-	Raise OutOfGasError if gas left is less than amount, without charging
 vm.gas.check_max_fee_per_blob_gas	0	eip4844	Skip the check for transactions without blobs
 vm.gas.check_max_fee_per_blob_gas	1	eip4844	Compute the blob gas price from the block's excess blob gas
 vm.gas.check_max_fee_per_blob_gas	2	eip4844	Reject if max fee per blob gas is below the blob gas price
+vm.gas.commit_state_gas	0	-	Assert the state gas reservoir has not risen above the baseline
+vm.gas.commit_state_gas	1	-	Fold the current spill into the committed spill and reset the spill to zero
+vm.gas.commit_state_gas	2	-	Lower the baseline to the current reservoir level
 vm.gas.credit_state_gas_refund	0	eip8037	Refund to gas_left up to the spilled state gas and reduce the spill by that amount
 vm.gas.credit_state_gas_refund	1	eip8037	Credit the remainder of the refund to the state gas reservoir
+vm.gas.drain_state_gas_reservoir	0	-	Take the parent frame's whole state gas reservoir and zero it, granting it all to the child frame
 vm.gas.forfeit_remaining_gas	0	eip8037	Check that no state gas spill is outstanding
 vm.gas.forfeit_remaining_gas	1	eip8037	Burn all remaining execution gas
+vm.gas.init_code_cost	0	-	Charge CODE_INIT_PER_WORD gas per 32-byte word of init code (length rounded up to a word)
+vm.gas.max_message_call_gas	0	-	Compute the all-but-one-64th cap: gas minus gas // 64
 vm.gas.repay_state_gas_spill	0	eip8037	Compute repayment as the smaller of the state gas reservoir and the outstanding spill
 vm.gas.repay_state_gas_spill	1	eip8037	Credit the repayment back to gas_left
 vm.gas.repay_state_gas_spill	2	eip8037	Deduct the repayment from the reservoir and from the outstanding spill
 vm.gas.repay_state_gas_spill	3	eip8037	Check that the reservoir or the spill is now zero
+vm.gas.restore_child_gas	0	-	Add the child's unused execution gas grant back to the parent's gas_left
+vm.gas.restore_child_gas	1	-	Add the child's unused state gas reservoir back to the parent's state_gas_left
 vm.gas.restore_state_gas	0	eip8037	Credit the spilled state gas back to gas_left and zero the spill
 vm.gas.restore_state_gas	1	eip8037	Reset the state gas reservoir to the frame's baseline
 vm.gas.restore_state_gas	2	eip8037	Discard the refunds accrued in the frame
+vm.gas.restore_state_gas_to_entry	0	-	Check invariants: state gas baseline does not exceed the frame's grant and no refund has accrued
+vm.gas.restore_state_gas_to_entry	1	-	Refund all spilled and committed-spill state gas back into gas_left
+vm.gas.restore_state_gas_to_entry	2	-	Zero the spilled and committed-spill counters
+vm.gas.restore_state_gas_to_entry	3	-	Reset state_gas_left and state_gas_baseline to the frame's state gas grant
 vm.gas.settle_transaction_gas	0	eip3529,eip7623,eip7778,eip8037	Compute pre-refund gas used: gas limit minus returned execution gas and state gas reservoir
 vm.gas.settle_transaction_gas	1	eip3529,eip7623,eip7778,eip8037	Cap the refund at one fifth of pre-refund usage and subtract it
 vm.gas.settle_transaction_gas	2	eip3529,eip7623,eip7778,eip8037	Apply the calldata floor: gas used is the larger of post-refund usage and the floor
 vm.gas.settle_transaction_gas	3	eip3529,eip7623,eip7778,eip8037	Clamp net state gas used to zero for block accounting
 vm.gas.settle_transaction_gas	4	eip3529,eip7623,eip7778,eip8037	Compute block execution gas used: pre-refund usage minus state gas, floored at calldata floor
 vm.gas.settle_transaction_gas	5	eip3529,eip7623,eip7778,eip8037	Return settlement with gas used, gas left (limit minus gas used) and per-dimension amounts
+vm.gas.tx_state_gas_used	0	-	Check the meter's state gas baseline has not risen above the transaction's state gas grant
+vm.gas.tx_state_gas_used	1	-	Compute net state gas used: grant minus state gas left, plus outstanding and committed spill
+vm.gas.withhold_create_gas	0	-	Compute child gas as all but one 64th of gas_left
+vm.gas.withhold_create_gas	1	-	Deduct child gas from the frame's gas_left
+vm.incorporate_child	0	-	Assert the child carries no committed state-gas spill
+vm.incorporate_child	1	-	For a failed child, check its meter arrives settled (no spill, no refunds, state gas at baseline)
+vm.incorporate_child	2	-	Add the child's gas, state gas, spill and refund counter to the parent meter
+vm.incorporate_child	3	-	On success, repay outstanding state-gas spill from the reservoir
+vm.incorporate_child	4	-	On success, merge logs, accounts to delete, and accessed addresses and storage keys into the parent
+vm.instructions.arithmetic.add	0	-	Pop the two operands from the stack
+vm.instructions.arithmetic.add	1	-	Charge the ADD gas cost
+vm.instructions.arithmetic.add	2	-	Compute the 256-bit wrapping sum and push it
+vm.instructions.arithmetic.add	3	-	Advance the program counter by one
+vm.instructions.arithmetic.addmod	0	-	Pop the three operands x, y, z from the stack
+vm.instructions.arithmetic.addmod	1	-	Charge the ADDMOD opcode gas
+vm.instructions.arithmetic.addmod	2	-	Compute (x + y) mod z without 256-bit overflow, or 0 when z is 0, and push the result
+vm.instructions.arithmetic.addmod	3	-	Advance the program counter by 1
+vm.instructions.arithmetic.div	0	-	Pop dividend and divisor from the stack
+vm.instructions.arithmetic.div	1	-	Charge DIV gas
+vm.instructions.arithmetic.div	2	-	Compute quotient, zero if divisor is zero, and push it
+vm.instructions.arithmetic.div	3	-	Advance program counter by one
+vm.instructions.arithmetic.exp	0	-	Pop base and exponent from the stack
+vm.instructions.arithmetic.exp	1	-	Charge base gas plus per-byte gas for the exponent's byte length
+vm.instructions.arithmetic.exp	2	-	Compute base ** exponent mod 2^256 and push the result
+vm.instructions.arithmetic.exp	3	-	Advance the program counter by 1
+vm.instructions.arithmetic.mod	0	-	Pop dividend x and divisor y from the stack
+vm.instructions.arithmetic.mod	1	-	Charge MOD opcode gas
+vm.instructions.arithmetic.mod	2	-	Compute x mod y, or 0 when y is 0, and push the result
+vm.instructions.arithmetic.mod	3	-	Advance the program counter by 1
+vm.instructions.arithmetic.mul	0	-	Pop the two operands from the stack
+vm.instructions.arithmetic.mul	1	-	Charge MUL gas
+vm.instructions.arithmetic.mul	2	-	Multiply modulo 2^256 and push the result
+vm.instructions.arithmetic.mul	3	-	Advance the program counter by 1
+vm.instructions.arithmetic.mulmod	0	-	Pop x, y and modulus z from the stack
+vm.instructions.arithmetic.mulmod	1	-	Charge MULMOD gas
+vm.instructions.arithmetic.mulmod	2	-	Compute (x * y) mod z at full precision, 0 if z is 0, and push it
+vm.instructions.arithmetic.mulmod	3	-	Advance the program counter by 1
+vm.instructions.arithmetic.sdiv	0	-	Pop dividend and divisor from the stack as signed values
+vm.instructions.arithmetic.sdiv	1	-	Charge SDIV gas
+vm.instructions.arithmetic.sdiv	2	-	Compute signed quotient: zero divisor gives 0, MIN/-1 overflow gives MIN, otherwise truncated division toward zero with sign
+vm.instructions.arithmetic.sdiv	3	-	Push the quotient onto the stack
+vm.instructions.arithmetic.sdiv	4	-	Advance the program counter by 1
+vm.instructions.arithmetic.signextend	0	-	Pop byte_num and value from the stack
+vm.instructions.arithmetic.signextend	1	-	Charge SIGNEXTEND gas
+vm.instructions.arithmetic.signextend	2	-	If byte_num > 31, return value unchanged
+vm.instructions.arithmetic.signextend	3	-	Take the low byte_num+1 bytes and read the sign bit
+vm.instructions.arithmetic.signextend	4	-	Fill the upper bytes with 0x00 or 0xFF to match the sign bit
+vm.instructions.arithmetic.signextend	5	-	Push the result and advance pc by 1
+vm.instructions.arithmetic.smod	0	-	Pop the two operands x and y from the stack as signed values
+vm.instructions.arithmetic.smod	1	-	Charge the SMOD gas cost
+vm.instructions.arithmetic.smod	2	-	Compute the signed remainder: 0 if y is 0, otherwise it takes the sign of x
+vm.instructions.arithmetic.smod	3	-	Push the remainder onto the stack
+vm.instructions.arithmetic.smod	4	-	Advance the program counter by 1
+vm.instructions.arithmetic.sub	0	-	Pop the two operands x and y from the stack
+vm.instructions.arithmetic.sub	1	-	Charge the SUB opcode gas cost
+vm.instructions.arithmetic.sub	2	-	Compute x - y with 256-bit wrapping and push the result
+vm.instructions.arithmetic.sub	3	-	Advance the program counter by 1
+vm.instructions.bitwise.bitwise_and	0	-	Pop the two operands x and y from the stack
+vm.instructions.bitwise.bitwise_and	1	-	Charge the AND opcode gas cost
+vm.instructions.bitwise.bitwise_and	2	-	Push x AND y onto the stack
+vm.instructions.bitwise.bitwise_and	3	-	Advance the program counter by 1
+vm.instructions.bitwise.bitwise_not	0	-	Pop operand x from the stack
+vm.instructions.bitwise.bitwise_not	1	-	Charge NOT opcode gas
+vm.instructions.bitwise.bitwise_not	2	-	Push bitwise complement ~x
+vm.instructions.bitwise.bitwise_not	3	-	Advance program counter by 1
+vm.instructions.bitwise.bitwise_or	0	-	Pop the two operands x and y from the stack
+vm.instructions.bitwise.bitwise_or	1	-	Charge the OR opcode gas cost
+vm.instructions.bitwise.bitwise_or	2	-	Push x | y onto the stack
+vm.instructions.bitwise.bitwise_or	3	-	Advance the program counter by 1
+vm.instructions.bitwise.bitwise_sar	0	-	Pop shift and signed value from the stack
+vm.instructions.bitwise.bitwise_sar	1	-	Charge SAR gas
+vm.instructions.bitwise.bitwise_sar	2	-	Compute arithmetic right shift, saturating to 0 or all ones when shift >= 256
+vm.instructions.bitwise.bitwise_sar	3	-	Push result onto the stack
+vm.instructions.bitwise.bitwise_sar	4	-	Advance program counter by 1
+vm.instructions.bitwise.bitwise_shl	0	-	Pop shift and value from the stack
+vm.instructions.bitwise.bitwise_shl	1	-	Charge SHL gas
+vm.instructions.bitwise.bitwise_shl	2	-	Compute value shifted left by shift, truncated to 256 bits, or 0 if shift >= 256
+vm.instructions.bitwise.bitwise_shl	3	-	Push the result onto the stack
+vm.instructions.bitwise.bitwise_shl	4	-	Advance the program counter by 1
+vm.instructions.bitwise.bitwise_shr	0	-	Pop shift and value from the stack
+vm.instructions.bitwise.bitwise_shr	1	-	Charge SHR gas cost
+vm.instructions.bitwise.bitwise_shr	2	-	Compute logical right shift, zero if shift >= 256, and push result
+vm.instructions.bitwise.bitwise_shr	3	-	Advance program counter by 1
+vm.instructions.bitwise.bitwise_xor	0	-	Pop the two operands x and y from the stack
+vm.instructions.bitwise.bitwise_xor	1	-	Charge the XOR opcode gas cost
+vm.instructions.bitwise.bitwise_xor	2	-	Push x XOR y onto the stack
+vm.instructions.bitwise.bitwise_xor	3	-	Advance the program counter by 1
+vm.instructions.bitwise.count_leading_zeros	0	-	Pop the input word from the stack
+vm.instructions.bitwise.count_leading_zeros	1	-	Charge the CLZ opcode gas cost
+vm.instructions.bitwise.count_leading_zeros	2	-	Compute leading zeros as 256 minus the bit length and push it
+vm.instructions.bitwise.count_leading_zeros	3	-	Advance the program counter by one
+vm.instructions.bitwise.get_byte	0	-	Pop byte index and word from the stack
+vm.instructions.bitwise.get_byte	1	-	Charge BYTE opcode gas
+vm.instructions.bitwise.get_byte	2	-	Extract the indexed byte from the word, or 0 if index >= 32
+vm.instructions.bitwise.get_byte	3	-	Push the result onto the stack
+vm.instructions.bitwise.get_byte	4	-	Advance the program counter by 1
+vm.instructions.block.block_hash	0	-	Pop the block number from the stack
+vm.instructions.block.block_hash	1	-	Charge BLOCKHASH gas
+vm.instructions.block.block_hash	2	-	Look up the block's hash, or zero if it is not among the 256 most recent complete blocks
+vm.instructions.block.block_hash	3	-	Push the hash onto the stack
+vm.instructions.block.block_hash	4	-	Advance the program counter
+vm.instructions.block.chain_id	0	-	Charge the CHAINID gas cost
+vm.instructions.block.chain_id	1	-	Push the block environment's chain id onto the stack
+vm.instructions.block.chain_id	2	-	Advance the program counter by one
+vm.instructions.block.coinbase	0	-	Charge the base COINBASE opcode gas
+vm.instructions.block.coinbase	1	-	Push the block's coinbase address onto the stack
+vm.instructions.block.coinbase	2	-	Advance the program counter by 1
+vm.instructions.block.gas_limit	0	-	Charge the GASLIMIT opcode gas cost
+vm.instructions.block.gas_limit	1	-	Push the block gas limit onto the stack
+vm.instructions.block.gas_limit	2	-	Advance the program counter by 1
+vm.instructions.block.number	0	-	Charge the NUMBER opcode gas cost
+vm.instructions.block.number	1	-	Push the current block number onto the stack
+vm.instructions.block.number	2	-	Advance the program counter by one
+vm.instructions.block.prev_randao	0	-	Charge the PREVRANDAO gas cost
+vm.instructions.block.prev_randao	1	-	Push the block's prev_randao value onto the stack
+vm.instructions.block.prev_randao	2	-	Advance the program counter by 1
+vm.instructions.block.slot_number	0	-	Charge the SLOTNUM opcode gas cost
+vm.instructions.block.slot_number	1	-	Push the block's consensus-layer slot number onto the stack
+vm.instructions.block.slot_number	2	-	Advance the program counter by one
+vm.instructions.block.timestamp	0	-	Charge the TIMESTAMP opcode gas
+vm.instructions.block.timestamp	1	-	Push the block timestamp onto the stack
+vm.instructions.block.timestamp	2	-	Advance the program counter by 1
+vm.instructions.comparison.equal	0	-	Pop the two operands off the stack
+vm.instructions.comparison.equal	1	-	Charge the EQ gas cost
+vm.instructions.comparison.equal	2	-	Push 1 if the operands are equal, otherwise 0
+vm.instructions.comparison.equal	3	-	Advance the program counter by one
+vm.instructions.comparison.greater_than	0	-	Pop left and right operands from the stack
+vm.instructions.comparison.greater_than	1	-	Charge GT opcode gas
+vm.instructions.comparison.greater_than	2	-	Compare left > right and push 1 or 0
+vm.instructions.comparison.greater_than	3	-	Advance program counter by 1
+vm.instructions.comparison.is_zero	0	-	Pop the operand x from the stack
+vm.instructions.comparison.is_zero	1	-	Charge the ISZERO gas cost
+vm.instructions.comparison.is_zero	2	-	Push 1 if x is zero, else 0
+vm.instructions.comparison.is_zero	3	-	Advance the program counter by 1
+vm.instructions.comparison.less_than	0	-	Pop left and right operands from the stack
+vm.instructions.comparison.less_than	1	-	Charge LT opcode gas
+vm.instructions.comparison.less_than	2	-	Compute unsigned left < right and push 1 or 0
+vm.instructions.comparison.less_than	3	-	Advance program counter by 1
+vm.instructions.comparison.signed_greater_than	0	-	Pop two operands as signed values
+vm.instructions.comparison.signed_greater_than	1	-	Charge SGT gas
+vm.instructions.comparison.signed_greater_than	2	-	Push 1 if left > right (signed), else 0
+vm.instructions.comparison.signed_greater_than	3	-	Advance program counter by 1
+vm.instructions.comparison.signed_less_than	0	-	Pop two operands and read them as signed two's-complement values
+vm.instructions.comparison.signed_less_than	1	-	Charge SLT gas cost
+vm.instructions.comparison.signed_less_than	2	-	Push 1 if left < right (signed), else 0
+vm.instructions.comparison.signed_less_than	3	-	Advance program counter by 1
+vm.instructions.control_flow.gas_left	0	-	Charge base opcode gas
+vm.instructions.control_flow.gas_left	1	-	Push remaining gas onto the stack
+vm.instructions.control_flow.gas_left	2	-	Advance program counter by one
+vm.instructions.control_flow.jump	0	-	Pop the jump destination from the stack
+vm.instructions.control_flow.jump	1	-	Charge the JUMP gas cost
+vm.instructions.control_flow.jump	2	-	Check the destination is a valid JUMPDEST, else raise InvalidJumpDestError
+vm.instructions.control_flow.jump	3	-	Set the program counter to the destination
+vm.instructions.control_flow.jumpdest	0	-	Charge JUMPDEST gas
+vm.instructions.control_flow.jumpdest	1	-	Advance program counter by 1
+vm.instructions.control_flow.jumpi	0	-	Pop jump destination and condition from the stack
+vm.instructions.control_flow.jumpi	1	-	Charge JUMPI gas
+vm.instructions.control_flow.jumpi	2	-	Pick the next pc if condition is zero, otherwise check the destination is a valid JUMPDEST
+vm.instructions.control_flow.jumpi	3	-	Set the program counter to the destination
+vm.instructions.control_flow.pc	0	-	Charge the PC opcode gas cost
+vm.instructions.control_flow.pc	1	-	Push the current program counter onto the stack
+vm.instructions.control_flow.pc	2	-	Advance the program counter by one
+vm.instructions.control_flow.stop	0	-	Halt execution of the current frame
+vm.instructions.control_flow.stop	1	-	Advance the program counter by one
+vm.instructions.environment.address	0	-	Charge the ADDRESS opcode gas cost
+vm.instructions.environment.address	1	-	Push the current target address onto the stack
+vm.instructions.environment.address	2	-	Advance the program counter by one
+vm.instructions.environment.balance	0	-	Pop the address from the stack and mask it to 20 bytes
+vm.instructions.environment.balance	1	-	Charge warm or cold account access gas, marking the address accessed
+vm.instructions.environment.balance	2	-	Read the account balance from transaction state (0 if absent)
+vm.instructions.environment.balance	3	-	Push the balance onto the stack
+vm.instructions.environment.balance	4	-	Advance the program counter by 1
+vm.instructions.environment.base_fee	0	-	Charge BASEFEE opcode gas
+vm.instructions.environment.base_fee	1	-	Push block base fee per gas onto the stack
+vm.instructions.environment.base_fee	2	-	Advance program counter by 1
+vm.instructions.environment.blob_base_fee	0	-	Charge the BLOBBASEFEE gas cost
+vm.instructions.environment.blob_base_fee	1	-	Compute the blob gas price from the block's excess blob gas and push it
+vm.instructions.environment.blob_base_fee	2	-	Advance the program counter by 1
+vm.instructions.environment.blob_hash	0	-	Pop the blob index from the stack
+vm.instructions.environment.blob_hash	1	-	Charge BLOBHASH gas
+vm.instructions.environment.blob_hash	2	-	Push the transaction's versioned hash at that index, or zero if out of range
+vm.instructions.environment.blob_hash	3	-	Advance the program counter
+vm.instructions.environment.calldatacopy	0	-	Pop memory offset, calldata offset and size from the stack
+vm.instructions.environment.calldatacopy	1	-	Charge base, per-word copy and memory expansion gas
+vm.instructions.environment.calldatacopy	2	-	Expand memory, read calldata zero-padded and write it to memory
+vm.instructions.environment.calldatacopy	3	-	Advance the program counter
+vm.instructions.environment.calldataload	0	-	Pop the calldata offset from the stack
+vm.instructions.environment.calldataload	1	-	Charge the CALLDATALOAD gas cost
+vm.instructions.environment.calldataload	2	-	Read 32 bytes of calldata at the offset, zero-padded past the end, and push them as a word
+vm.instructions.environment.calldataload	3	-	Advance the program counter by 1
+vm.instructions.environment.calldatasize	0	-	Charge the CALLDATASIZE base gas
+vm.instructions.environment.calldatasize	1	-	Push the call data length onto the stack
+vm.instructions.environment.calldatasize	2	-	Advance the program counter by 1
+vm.instructions.environment.caller	0	-	Charge the CALLER opcode gas
+vm.instructions.environment.caller	1	-	Push the caller address onto the stack
+vm.instructions.environment.caller	2	-	Advance the program counter by one
+vm.instructions.environment.callvalue	0	-	Charge CALLVALUE gas
+vm.instructions.environment.callvalue	1	-	Push call value onto stack
+vm.instructions.environment.callvalue	2	-	Advance program counter by 1
+vm.instructions.environment.codecopy	0	-	Pop memory offset, code offset and size from the stack
+vm.instructions.environment.codecopy	1	-	Charge base, per-word copy and memory expansion gas
+vm.instructions.environment.codecopy	2	-	Expand memory
+vm.instructions.environment.codecopy	3	-	Read code slice (zero-padded) and write it to memory
+vm.instructions.environment.codecopy	4	-	Advance the program counter
+vm.instructions.environment.codesize	0	-	Charge the CODESIZE gas cost
+vm.instructions.environment.codesize	1	-	Push the length of the running code onto the stack
+vm.instructions.environment.codesize	2	-	Advance the program counter by one
+vm.instructions.environment.extcodecopy	0	eip8038	Pop address, memory offset, code offset and size from the stack
+vm.instructions.environment.extcodecopy	1	eip8038	Compute copy cost per word and memory expansion cost
+vm.instructions.environment.extcodecopy	2	eip8038	Charge warm or cold account access, marking the address warm, plus the EIP-8038 code read cost
+vm.instructions.environment.extcodecopy	3	eip8038	Charge the total gas
+vm.instructions.environment.extcodecopy	4	eip8038	Expand memory, load the account's code and copy the zero-padded slice into memory
+vm.instructions.environment.extcodecopy	5	eip8038	Advance the program counter
+vm.instructions.environment.extcodehash	0	-	Pop address from stack
+vm.instructions.environment.extcodehash	1	-	Charge warm or cold account access gas, marking address accessed
+vm.instructions.environment.extcodehash	2	-	Load account; codehash is 0 if empty, else its code hash
+vm.instructions.environment.extcodehash	3	-	Push codehash onto stack
+vm.instructions.environment.extcodehash	4	-	Advance program counter
+vm.instructions.environment.extcodesize	0	eip8038	Pop the target address from the stack
+vm.instructions.environment.extcodesize	1	eip8038	Charge warm or cold account access gas and mark the address accessed
+vm.instructions.environment.extcodesize	2	eip8038	Add the EIP-8038 code reading cost and charge gas
+vm.instructions.environment.extcodesize	3	eip8038	Load the account's code by its code hash
+vm.instructions.environment.extcodesize	4	eip8038	Push the code length onto the stack
+vm.instructions.environment.extcodesize	5	eip8038	Advance the program counter
+vm.instructions.environment.gasprice	0	-	Charge the GASPRICE opcode gas cost
+vm.instructions.environment.gasprice	1	-	Push the transaction's effective gas price onto the stack
+vm.instructions.environment.gasprice	2	-	Advance the program counter by 1
+vm.instructions.environment.origin	0	-	Charge the ORIGIN opcode gas cost
+vm.instructions.environment.origin	1	-	Push the transaction origin address onto the stack
+vm.instructions.environment.origin	2	-	Advance the program counter by one
+vm.instructions.environment.returndatacopy	0	-	Pop memory offset, return data offset and size from the stack
+vm.instructions.environment.returndatacopy	1	-	Charge base gas, per-word copy gas and memory expansion gas
+vm.instructions.environment.returndatacopy	2	-	Check the read stays within the return data buffer, else fail with out-of-bounds read
+vm.instructions.environment.returndatacopy	3	-	Expand memory and copy the return data slice into it
+vm.instructions.environment.returndatacopy	4	-	Advance the program counter
+vm.instructions.environment.returndatasize	0	-	Charge RETURNDATASIZE gas
+vm.instructions.environment.returndatasize	1	-	Push return data buffer length onto stack
+vm.instructions.environment.returndatasize	2	-	Advance program counter by 1
+vm.instructions.environment.self_balance	0	-	Charge SELFBALANCE gas
+vm.instructions.environment.self_balance	1	-	Read current account's balance (0 if non-existent) and push it to the stack
+vm.instructions.environment.self_balance	2	-	Advance program counter by 1
+vm.instructions.keccak.keccak	0	-	Pop memory offset and size from the stack
+vm.instructions.keccak.keccak	1	-	Charge base, per-word and memory expansion gas
+vm.instructions.keccak.keccak	2	-	Expand memory and read the data region
+vm.instructions.keccak.keccak	3	-	Hash the data with Keccak-256 and push the result
+vm.instructions.keccak.keccak	4	-	Advance the program counter
+vm.instructions.log.log_n	0	-	Pop memory offset, size and num_topics topics from the stack
+vm.instructions.log.log_n	1	-	Charge log base, per-byte data, per-topic and memory expansion gas
+vm.instructions.log.log_n	2	-	Expand memory
+vm.instructions.log.log_n	3	-	Reject in static context
+vm.instructions.log.log_n	4	-	Build log entry from current address, topics and memory data and append it to the frame logs
+vm.instructions.log.log_n	5	-	Advance the program counter
+vm.instructions.memory.mcopy	0	-	Pop destination, source and length from the stack
+vm.instructions.memory.mcopy	1	-	Compute per-word copy cost and memory expansion cost for source and destination ranges
+vm.instructions.memory.mcopy	2	-	Charge base, copy and memory expansion gas
+vm.instructions.memory.mcopy	3	-	Expand memory and copy length bytes from source to destination
+vm.instructions.memory.mcopy	4	-	Advance the program counter by one
+vm.instructions.memory.mload	0	-	Pop the memory offset from the stack
+vm.instructions.memory.mload	1	-	Charge base gas plus memory expansion cost for 32 bytes at the offset
+vm.instructions.memory.mload	2	-	Expand memory with zero bytes if needed
+vm.instructions.memory.mload	3	-	Read the 32-byte word at the offset and push it to the stack
+vm.instructions.memory.mload	4	-	Advance the program counter by one
+vm.instructions.memory.msize	0	-	Charge the MSIZE base gas cost
+vm.instructions.memory.msize	1	-	Push the current memory size in bytes onto the stack
+vm.instructions.memory.msize	2	-	Advance the program counter by one
+vm.instructions.memory.mstore	0	-	Pop the memory offset and the value word from the stack
+vm.instructions.memory.mstore	1	-	Charge the base gas plus the memory expansion cost for 32 bytes at the offset
+vm.instructions.memory.mstore	2	-	Expand memory and write the 32-byte value at the offset
+vm.instructions.memory.mstore	3	-	Increment the program counter
+vm.instructions.memory.mstore8	0	-	Pop the memory offset and the value from the stack
+vm.instructions.memory.mstore8	1	-	Work out the memory expansion cost for 1 byte at the offset
+vm.instructions.memory.mstore8	2	-	Charge the MSTORE8 base gas plus the expansion cost
+vm.instructions.memory.mstore8	3	-	Grow memory with zero bytes and write the value's low byte at the offset
+vm.instructions.memory.mstore8	4	-	Move the program counter forward by 1
+vm.instructions.stack.dup_n	0	-	Charge the DUP gas cost
+vm.instructions.stack.dup_n	1	-	Check the stack holds more than item_number items, else stack underflow
+vm.instructions.stack.dup_n	2	-	Read the Nth item from the top and push a copy onto the stack
+vm.instructions.stack.dup_n	3	-	Advance the program counter by 1
+vm.instructions.stack.dupn	0	eip8024	Charge the DUPN gas cost
+vm.instructions.stack.dupn	1	eip8024	Read the immediate byte after the opcode and decode it into the item number (EIP-8024)
+vm.instructions.stack.dupn	2	eip8024	Check the stack holds at least item-number items, else stack underflow
+vm.instructions.stack.dupn	3	eip8024	Push a copy of the Nth stack item onto the top
+vm.instructions.stack.dupn	4	eip8024	Advance the program counter by 2
+vm.instructions.stack.exchange	0	eip8024	Charge the EXCHANGE opcode gas cost
+vm.instructions.stack.exchange	1	eip8024	Read the immediate byte and decode it into the index pair (n, m) using EIP-8024 rules
+vm.instructions.stack.exchange	2	eip8024	Check the stack holds at least max(n, m) + 1 items, else stack underflow
+vm.instructions.stack.exchange	3	eip8024	Swap stack items at positions n+1 and m+1 from the top
+vm.instructions.stack.exchange	4	eip8024	Advance the program counter by 2 to skip the immediate byte
+vm.instructions.stack.pop	0	-	Pop the top item off the stack
+vm.instructions.stack.pop	1	-	Charge POP gas cost
+vm.instructions.stack.pop	2	-	Advance program counter by 1
+vm.instructions.stack.push_n	0	-	Charge gas: PUSH0 cost if num_bytes is zero, else PUSH cost
+vm.instructions.stack.push_n	1	-	Read num_bytes immediate bytes after pc from code (zero-padded past end) and push as big-endian U256
+vm.instructions.stack.push_n	2	-	Advance pc past the opcode and its immediate bytes
+vm.instructions.stack.swap_n	0	-	Charge SWAP gas
+vm.instructions.stack.swap_n	1	-	Check stack has more than item_number items, else underflow
+vm.instructions.stack.swap_n	2	-	Swap top of stack with item at depth item_number
+vm.instructions.stack.swap_n	3	-	Advance program counter by 1
+vm.instructions.stack.swapn	0	eip8024	Charge the SWAPN gas cost
+vm.instructions.stack.swapn	1	eip8024	Read the immediate byte after the opcode and decode it with EIP-8024 rules
+vm.instructions.stack.swapn	2	eip8024	Check the stack holds at least n+1 items, else stack underflow
+vm.instructions.stack.swapn	3	eip8024	Swap the top stack item with the item at position n+1
+vm.instructions.stack.swapn	4	eip8024	Advance the program counter by 2
 vm.instructions.storage.sload	0	eip2929	Pop the storage key from the stack
 vm.instructions.storage.sload	1	eip2929	Charge warm or cold storage access gas, marking the slot as accessed if cold
 vm.instructions.storage.sload	2	eip2929	Read the slot value from the current account's storage and push it
 vm.instructions.storage.sload	3	eip2929	Advance the program counter by one
+vm.instructions.storage.sstore	0	eip2200	Reject SSTORE in a static context
+vm.instructions.storage.sstore	1	eip2200	Pop key and new value from the stack
+vm.instructions.storage.sstore	2	eip2200	Price cold or warm slot access and check the EIP-2200 stipend sentry before any state access
+vm.instructions.storage.sstore	3	eip2200	Mark the slot warm and read its original and current values
+vm.instructions.storage.sstore	4	eip2200	Compute write cost, refund counter adjustments and state gas for creating or restoring a zero slot
+vm.instructions.storage.sstore	5	eip2200	Charge execution gas, then state gas, and write the new value to storage
 vm.instructions.storage.tload	0	eip1153	Pop the storage key from the stack
 vm.instructions.storage.tload	1	eip1153	Charge the TLOAD gas cost
 vm.instructions.storage.tload	2	eip1153	Read the key's value from the current account's transient storage and push it
 vm.instructions.storage.tload	3	eip1153	Advance the program counter by one
+vm.instructions.storage.tstore	0	-	Reject if in static context
+vm.instructions.storage.tstore	1	-	Pop key and value from stack
+vm.instructions.storage.tstore	2	-	Charge TSTORE gas
+vm.instructions.storage.tstore	3	-	Write value to transient storage of current target
+vm.instructions.storage.tstore	4	-	Advance program counter
 vm.instructions.system.call	0	eip161,eip214,eip2929,eip7702,eip7928,eip8037	Pop call arguments and reject value transfer in static context
 vm.instructions.system.call	1	eip161,eip214,eip2929,eip7702,eip7928,eip8037	Price memory expansion, cold/warm access and value transfer, and check affordability before state access
 vm.instructions.system.call	2	eip161,eip214,eip2929,eip7702,eip7928,eip8037	Warm target, resolve delegation (adding its access cost and warming the code address), load code and charge execution gas
 vm.instructions.system.call	3	eip161,eip214,eip2929,eip7702,eip7928,eip8037	Charge new-account state gas when value goes to a dead account
 vm.instructions.system.call	4	eip161,eip214,eip2929,eip7702,eip7928,eip8037	Compute and charge child gas (63/64 rule plus stipend) and drain the state gas reservoir to the child
 vm.instructions.system.call	5	eip161,eip214,eip2929,eip7702,eip7928,eip8037	Expand memory, run the message call with the sender-balance check, and advance the PC
+vm.instructions.system.callcode	0	-	Pop gas, code address, value and memory input/output ranges from the stack
+vm.instructions.system.callcode	1	-	Price memory expansion, cold/warm access and value transfer, and check the state-independent gas is affordable
+vm.instructions.system.callcode	2	-	Warm the code address, resolve EIP-7702 delegation with its extra access cost and gas check, and load the target code
+vm.instructions.system.callcode	3	-	Compute the 63/64 child gas, charge the call cost and drain the state gas reservoir for the child
+vm.instructions.system.callcode	4	-	Expand memory and run the message call in the current account's context with the other account's code, flagging insufficient balance
+vm.instructions.system.callcode	5	-	Advance the program counter
 vm.instructions.system.create	0	eip214,eip3860	Reject CREATE in a static context
 vm.instructions.system.create	1	eip214,eip3860	Pop endowment, memory offset and init code size from the stack
 vm.instructions.system.create	2	eip214,eip3860	Charge CREATE base, memory expansion and init code word gas
 vm.instructions.system.create	3	eip214,eip3860	Fail if init code size exceeds MAX_INIT_CODE_SIZE
 vm.instructions.system.create	4	eip214,eip3860	Expand memory and derive contract address from sender address and nonce
 vm.instructions.system.create	5	eip214,eip3860	Run generic contract creation and advance the program counter
+vm.instructions.system.create2	0	-	Reject in static context
+vm.instructions.system.create2	1	-	Pop endowment, memory offset, size and salt from the stack
+vm.instructions.system.create2	2	-	Charge create, keccak per-word, memory expansion and init code gas
+vm.instructions.system.create2	3	-	Fail if init code exceeds max size
+vm.instructions.system.create2	4	-	Expand memory and compute CREATE2 address from sender, salt and init code hash
+vm.instructions.system.create2	5	-	Run generic create and advance program counter
 vm.instructions.system.delegatecall	0	eip7,eip150,eip2929,eip7702,eip7928,eip8037	Pop gas, code address and memory input/output ranges from the stack
 vm.instructions.system.delegatecall	1	eip7,eip150,eip2929,eip7702,eip7928,eip8037	Price memory expansion and warm/cold account access, check it is affordable before touching state
 vm.instructions.system.delegatecall	2	eip7,eip150,eip2929,eip7702,eip7928,eip8037	Mark address accessed, resolve EIP-7702 delegation, add its access cost and recheck gas
 vm.instructions.system.delegatecall	3	eip7,eip150,eip2929,eip7702,eip7928,eip8037	Load the code of the resolved code address
 vm.instructions.system.delegatecall	4	eip7,eip150,eip2929,eip7702,eip7928,eip8037	Compute and charge call gas with the 63/64 child grant, drain the state gas reservoir for the child
 vm.instructions.system.delegatecall	5	eip7,eip150,eip2929,eip7702,eip7928,eip8037	Expand memory and run the child call in the current context with caller and value inherited, no value transfer, then advance pc
+vm.instructions.system.generic_call	0	-	Clear the caller's return data
+vm.instructions.system.generic_call	1	-	Preflight: when the depth limit is exceeded or balance is insufficient, restore the child's gas and state-gas reservoir, refund the new-account charge, push 0 and return
+vm.instructions.system.generic_call	2	-	Read call data from memory and build the child frame with a fresh gas meter, static flag, jump destinations and copied access sets
+vm.instructions.system.generic_call	3	-	Execute the child call
+vm.instructions.system.generic_call	4	-	Incorporate the child's effects and gas, and set return data; on error refund the new-account charge and push 0, otherwise push success
+vm.instructions.system.generic_call	5	-	Write the output to memory, truncated to the requested output size
 vm.instructions.system.generic_create	0	eip150,eip211,eip684,eip2681,eip2929,eip7610,eip8037	Read init code from memory and clear return data
 vm.instructions.system.generic_create	1	eip150,eip211,eip684,eip2681,eip2929,eip7610,eip8037	Preflight: push 0 and abort if sender balance < endowment, sender nonce maxed, or depth limit exceeded
 vm.instructions.system.generic_create	2	eip150,eip211,eip684,eip2681,eip2929,eip7610,eip8037	Mark destination accessed and charge new-account state gas if it is not alive
 vm.instructions.system.generic_create	3	eip150,eip211,eip684,eip2681,eip2929,eip7610,eip8037	Withhold all but 1/64 of gas for the child; on address collision bump sender nonce, push 0 and return
 vm.instructions.system.generic_create	4	eip150,eip211,eip684,eip2681,eip2929,eip7610,eip8037	Drain state gas reservoir, increment sender nonce, and run the child create frame with init code
 vm.instructions.system.generic_create	5	eip150,eip211,eip684,eip2681,eip2929,eip7610,eip8037	Incorporate child result: on error refund new-account state gas, set return data and push 0; else push new address
+vm.instructions.system.return_	0	-	Pop memory offset and size from the stack
+vm.instructions.system.return_	1	-	Charge memory expansion gas
+vm.instructions.system.return_	2	-	Expand memory and set output to the memory slice
+vm.instructions.system.return_	3	-	Halt execution
 vm.instructions.system.revert	0	eip140	Pop memory offset and size from the stack
 vm.instructions.system.revert	1	eip140	Charge gas for memory expansion
 vm.instructions.system.revert	2	eip140	Expand memory and copy the revert data into the frame output
 vm.instructions.system.revert	3	eip140	Halt execution and revert the frame's state changes
+vm.instructions.system.selfdestruct	0	-	Reject in static context
+vm.instructions.system.selfdestruct	1	-	Pop beneficiary address from stack
+vm.instructions.system.selfdestruct	2	-	Price base plus cold-access gas and check it is affordable before state access
+vm.instructions.system.selfdestruct	3	-	Mark beneficiary warm and charge account-write and new-account state gas if a nonzero balance creates a dead beneficiary
+vm.instructions.system.selfdestruct	4	-	Move the full balance to the beneficiary and emit a transfer log if beneficiary differs
+vm.instructions.system.selfdestruct	5	-	Register originator for deletion if created in this transaction, then halt
+vm.instructions.system.staticcall	0	-	Pop gas, target address and memory input/output ranges from the stack
+vm.instructions.system.staticcall	1	-	Price memory expansion and warm/cold access, check it is affordable before touching state
+vm.instructions.system.staticcall	2	-	Mark target accessed, resolve delegation, add delegation access cost and recheck gas
+vm.instructions.system.staticcall	3	-	Load the code to execute from the code address
+vm.instructions.system.staticcall	4	-	Compute child gas (63/64 rule), charge call and memory cost, drain state gas reservoir to child
+vm.instructions.system.staticcall	5	-	Expand memory and run the static message call with zero value, then advance the PC
 vm.interpreter.charge_value_transfer_to_non_alive_account	0	eip161,eip8037	Charge NEW_ACCOUNT state gas when a non-zero value transfer goes to a non-alive recipient
+vm.interpreter.create_evm	0	eip7702	Select call data: empty for contract creation, transaction data otherwise
+vm.interpreter.create_evm	1	eip7702	Apply EIP-7702 authorizations, warm the authorities and commit their state gas
+vm.interpreter.create_evm	2	eip7702	Warm coinbase, precompiles, origin, access-list addresses and target
+vm.interpreter.create_evm	3	eip7702	For creation, reject an address collision, charge new-account state gas if the target was empty in the pre-state, and use the data as code
+vm.interpreter.create_evm	4	eip7702	For calls, charge for value sent to a non-alive account, resolve delegated code address and load its code
+vm.interpreter.create_evm	5	eip7702	Build the depth-0 frame with origin as caller, the jump destination table and the warmed access sets
 vm.interpreter.process_call	0	eip7708,eip8037	Check call depth against the stack depth limit
 vm.interpreter.process_call	1	eip7708,eip8037	Snapshot transaction state
 vm.interpreter.process_call	2	eip7708,eip8037	Transfer value from caller to target (emit transfer log if distinct)
 vm.interpreter.process_call	3	eip7708,eip8037	Run precompile or interpret code opcode by opcode
 vm.interpreter.process_call	4	eip7708,eip8037	On exceptional halt restore state gas and forfeit remaining gas, clearing output; on revert restore state gas only
 vm.interpreter.process_call	5	eip7708,eip8037	Roll back transaction state to snapshot on error
+vm.interpreter.process_create	0	eip6780	Snapshot transaction state before creation
+vm.interpreter.process_create	1	eip6780	Destroy any existing storage at target, mark account created, increment its nonce
+vm.interpreter.process_create	2	eip6780	Execute the init code as a message call
+vm.interpreter.process_create	3	eip6780	Validate returned code: reject 0xEF prefix and size above MAX_CODE_SIZE
+vm.interpreter.process_create	4	eip6780	Charge keccak hashing gas and per-byte state gas for code deposit
+vm.interpreter.process_create	5	eip6780	On failure revert state, restore state gas, burn remaining gas and clear output; on success set the contract code
+vm.interpreter.process_top_level	0	-	Initialize the gas meter from the execution gas grant and state gas reservoir
+vm.interpreter.process_top_level	1	-	Snapshot transaction state and prepare the top-level EVM frame
+vm.interpreter.process_top_level	2	-	On preparation halt, roll back state and state gas, forfeit remaining gas and return a failed output
+vm.interpreter.process_top_level	3	-	Dispatch the frame as a contract creation or a message call
+vm.interpreter.process_top_level	4	-	Drop logs and self-destructs if execution failed
+vm.interpreter.process_top_level	5	-	Return the transaction output with remaining gas, refunds and state gas used
+vm.memory.buffer_read	0	-	Slice buffer from start_position for size bytes
+vm.memory.buffer_read	1	-	Right-pad the slice with zero bytes up to size
+vm.memory.memory_read_bytes	0	-	Return the size bytes of memory starting at start_position
+vm.memory.memory_write	0	-	Write value bytes into memory starting at start_position
+vm.precompiled_contracts.alt_bn128.alt_bn128_add	0	-	Charge the fixed ECADD gas cost
+vm.precompiled_contracts.alt_bn128.alt_bn128_add	1	-	Decode two G1 points from the 128-byte input, failing as out-of-gas if one is invalid
+vm.precompiled_contracts.alt_bn128.alt_bn128_add	2	-	Add the points and normalize the sum to affine coordinates
+vm.precompiled_contracts.alt_bn128.alt_bn128_add	3	-	Write x and y as two 32-byte big-endian words to output
+vm.precompiled_contracts.alt_bn128.alt_bn128_mul	0	-	Charge the fixed ECMUL gas cost
+vm.precompiled_contracts.alt_bn128.alt_bn128_mul	1	-	Decode the G1 point from the first 64 input bytes, failing as out of gas if it is invalid
+vm.precompiled_contracts.alt_bn128.alt_bn128_mul	2	-	Read the 32-byte scalar
+vm.precompiled_contracts.alt_bn128.alt_bn128_mul	3	-	Multiply the point by the scalar and normalize to affine coordinates
+vm.precompiled_contracts.alt_bn128.alt_bn128_mul	4	-	Write x and y as two 32-byte big-endian words to the output
+vm.precompiled_contracts.alt_bn128.alt_bn128_pairing_check	0	-	Charge base gas plus per-pair gas for each 192-byte chunk
+vm.precompiled_contracts.alt_bn128.alt_bn128_pairing_check	1	-	Reject input whose length is not a multiple of 192
+vm.precompiled_contracts.alt_bn128.alt_bn128_pairing_check	2	-	Decode each pair into a G1 and a G2 point, rejecting invalid encodings
+vm.precompiled_contracts.alt_bn128.alt_bn128_pairing_check	3	-	Check each point is in the prime-order subgroup
+vm.precompiled_contracts.alt_bn128.alt_bn128_pairing_check	4	-	Multiply the pairings of all pairs together
+vm.precompiled_contracts.alt_bn128.alt_bn128_pairing_check	5	-	Output 1 if the product equals one, else 0, as 32 bytes
+vm.precompiled_contracts.alt_bn128.bytes_to_g1	0	-	Check the input is exactly 64 bytes
+vm.precompiled_contracts.alt_bn128.bytes_to_g1	1	-	Read x and y as 32-byte big-endian integers
+vm.precompiled_contracts.alt_bn128.bytes_to_g1	2	-	Reject x or y not below the field modulus
+vm.precompiled_contracts.alt_bn128.bytes_to_g1	3	-	Map (0, 0) to the point at infinity, otherwise use z = 1
+vm.precompiled_contracts.alt_bn128.bytes_to_g1	4	-	Reject points not on the curve
+vm.precompiled_contracts.alt_bn128.bytes_to_g2	0	-	Check input is exactly 128 bytes
+vm.precompiled_contracts.alt_bn128.bytes_to_g2	1	-	Read x0, x1, y0, y1 as 32-byte big-endian words
+vm.precompiled_contracts.alt_bn128.bytes_to_g2	2	-	Reject any coordinate not below the field modulus
+vm.precompiled_contracts.alt_bn128.bytes_to_g2	3	-	Build FQ2 coordinates with imaginary part first, mapping (0,0) to the point at infinity
+vm.precompiled_contracts.alt_bn128.bytes_to_g2	4	-	Reject points not on the G2 twist curve
+vm.precompiled_contracts.blake2f.blake2f	0	-	Check input is exactly 213 bytes
+vm.precompiled_contracts.blake2f.blake2f	1	-	Decode rounds, state h, message m, offsets t_0/t_1 and final flag f
+vm.precompiled_contracts.blake2f.blake2f	2	-	Charge per-round gas
+vm.precompiled_contracts.blake2f.blake2f	3	-	Check final flag f is 0 or 1
+vm.precompiled_contracts.blake2f.blake2f	4	-	Run BLAKE2b compression and write result to output
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_add	0	-	Check input is exactly 256 bytes
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_add	1	-	Charge fixed G1ADD gas
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_add	2	-	Decode the two padded G1 points
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_add	3	-	Add the points, failing on invalid input
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_add	4	-	Write the padded sum as output
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_msm	0	-	Reject empty input or input length not a multiple of the pair length
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_msm	1	-	Compute gas from pair count with the k-indexed discount table (capped at max discount) and charge it
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_msm	2	-	Decode each pair into a G1 point (unpadded, validated) and a scalar
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_msm	3	-	Compute the multi-scalar multiplication, failing on invalid points
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_msm	4	-	Write the padded G1 result to output
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_map_fp_to_g1	0	-	Check input is exactly 64 bytes
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_map_fp_to_g1	1	-	Charge G1 map gas
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_map_fp_to_g1	2	-	Decode padded field element from input
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_map_fp_to_g1	3	-	Map field element to G1 point, failing on invalid input
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_map_fp_to_g1	4	-	Write padded G1 point as output
+vm.precompiled_contracts.bls12_381.bls12_381_g2.bls12_g2_add	0	-	Check the input is exactly 512 bytes
+vm.precompiled_contracts.bls12_381.bls12_381_g2.bls12_g2_add	1	-	Charge the fixed G2ADD gas cost
+vm.precompiled_contracts.bls12_381.bls12_381_g2.bls12_g2_add	2	-	Decode the two padded G2 points from the input
+vm.precompiled_contracts.bls12_381.bls12_381_g2.bls12_g2_add	3	-	Add the two G2 points, failing on invalid points
+vm.precompiled_contracts.bls12_381.bls12_381_g2.bls12_g2_add	4	-	Write the padded sum point to the output
+vm.precompiled_contracts.bls12_381.bls12_381_g2.bls12_g2_msm	0	-	Reject empty input or input not a multiple of the pair length
+vm.precompiled_contracts.bls12_381.bls12_381_g2.bls12_g2_msm	1	-	Compute gas from pair count with the k-indexed discount table and charge it
+vm.precompiled_contracts.bls12_381.bls12_381_g2.bls12_g2_msm	2	-	Split input into G2 points and 32-byte scalars, decoding each point
+vm.precompiled_contracts.bls12_381.bls12_381_g2.bls12_g2_msm	3	-	Compute the multi-scalar multiplication, failing on invalid points
+vm.precompiled_contracts.bls12_381.bls12_381_g2.bls12_g2_msm	4	-	Write the padded G2 result to output
+vm.precompiled_contracts.bls12_381.bls12_381_g2.bls12_map_fp2_to_g2	0	-	Check input is exactly 128 bytes
+vm.precompiled_contracts.bls12_381.bls12_381_g2.bls12_map_fp2_to_g2	1	-	Charge G2 map gas
+vm.precompiled_contracts.bls12_381.bls12_381_g2.bls12_map_fp2_to_g2	2	-	Decode Fp2 element, checking both 64-byte halves are padded field elements
+vm.precompiled_contracts.bls12_381.bls12_381_g2.bls12_map_fp2_to_g2	3	-	Map Fp2 element to G2 point, failing on invalid input
+vm.precompiled_contracts.bls12_381.bls12_381_g2.bls12_map_fp2_to_g2	4	-	Write encoded G2 point to output
+vm.precompiled_contracts.bls12_381.bls12_381_pairing.bls12_pairing	0	-	Reject empty input or input length not a multiple of 384
+vm.precompiled_contracts.bls12_381.bls12_381_pairing.bls12_pairing	1	-	Charge 32600 gas per pair plus 37700
+vm.precompiled_contracts.bls12_381.bls12_381_pairing.bls12_pairing	2	-	Decode each 384-byte chunk into a G1 point and a G2 point
+vm.precompiled_contracts.bls12_381.bls12_381_pairing.bls12_pairing	3	-	Run the pairing check, failing on invalid or out-of-subgroup points
+vm.precompiled_contracts.bls12_381.bls12_381_pairing.bls12_pairing	4	-	Output 32-byte word: 1 if pairing product is identity, else 0
+vm.precompiled_contracts.bls12_381.pad_g1	0	-	Split the 96-byte point into 48-byte x and y and prepend 16 zero bytes to each, giving 128 bytes
+vm.precompiled_contracts.bls12_381.pad_g2	0	-	Split the 192-byte G2 point into four 48-byte coordinates and left-pad each with 16 zero bytes to make 256 bytes
+vm.precompiled_contracts.bls12_381.unpad_fp	0	-	Check that the first 16 bytes of the 64-byte element are zero, else raise InvalidParameter
+vm.precompiled_contracts.bls12_381.unpad_fp	1	-	Return the remaining 48 bytes as the unpadded field element
+vm.precompiled_contracts.bls12_381.unpad_g1	0	-	Unpad the x coordinate from the first 64 bytes
+vm.precompiled_contracts.bls12_381.unpad_g1	1	-	Unpad the y coordinate from the last 64 bytes
+vm.precompiled_contracts.bls12_381.unpad_g1	2	-	Return x and y joined as the 96-byte point
+vm.precompiled_contracts.bls12_381.unpad_g2	0	-	Strip and validate the 16-byte zero padding on each of the four 64-byte Fp coordinates (x.c0, x.c1, y.c0, y.c1)
+vm.precompiled_contracts.bls12_381.unpad_g2	1	-	Concatenate the four 48-byte coordinates into the 192-byte raw G2 point
+vm.precompiled_contracts.ecrecover.ecrecover	0	-	Charge the fixed ecrecover gas cost
+vm.precompiled_contracts.ecrecover.ecrecover	1	-	Read hash, v, r, s from zero-padded call data
+vm.precompiled_contracts.ecrecover.ecrecover	2	-	Return empty output unless v is 27 or 28 and r, s are in (0, secp256k1n)
+vm.precompiled_contracts.ecrecover.ecrecover	3	-	Recover the public key, returning empty output on failure
+vm.precompiled_contracts.ecrecover.ecrecover	4	-	Output the keccak256-derived address left-padded to 32 bytes
+vm.precompiled_contracts.identity.identity	0	-	Charge base gas plus per-word gas on the input length rounded up to 32-byte words
+vm.precompiled_contracts.identity.identity	1	-	Set the output to the input call data unchanged
+vm.precompiled_contracts.modexp.complexity	0	-	Take the larger of base and modulus length and round it up to 8-byte words
+vm.precompiled_contracts.modexp.complexity	1	-	Complexity is 16 by default, or 2 × words² if max length exceeds 32 bytes
+vm.precompiled_contracts.modexp.gas_cost	0	-	Compute multiplication complexity from base and modulus lengths
+vm.precompiled_contracts.modexp.gas_cost	1	-	Compute iteration count from exponent length and head
+vm.precompiled_contracts.modexp.gas_cost	2	-	Multiply complexity by iterations and apply 500 gas minimum
+vm.precompiled_contracts.modexp.iterations	0	-	Zero count for a short (≤32 byte) zero exponent
+vm.precompiled_contracts.modexp.iterations	1	-	Short exponent: count is the exponent's highest set bit index
+vm.precompiled_contracts.modexp.iterations	2	-	Long exponent: count is 16 × (length − 32) plus the highest set bit index of the head
+vm.precompiled_contracts.modexp.iterations	3	-	Return the count with a minimum of 1
+vm.precompiled_contracts.modexp.modexp	0	-	Read base, exponent and modulus lengths and halt if any exceeds 1024 bytes
+vm.precompiled_contracts.modexp.modexp	1	-	Read the exponent head and charge gas from lengths and exponent head
+vm.precompiled_contracts.modexp.modexp	2	-	Return empty output when base and modulus lengths are both zero
+vm.precompiled_contracts.modexp.modexp	3	-	Read base, exponent and modulus from call data
+vm.precompiled_contracts.modexp.modexp	4	-	Output zeros if modulus is zero, else base^exp mod modulus padded to modulus length
+vm.precompiled_contracts.p256verify.p256verify	0	-	Charge the fixed P256VERIFY gas cost
+vm.precompiled_contracts.p256verify.p256verify	1	-	Return empty output unless input is exactly 160 bytes
+vm.precompiled_contracts.p256verify.p256verify	2	-	Parse message hash, r, s, qx, qy from input
+vm.precompiled_contracts.p256verify.p256verify	3	-	Check r and s are in (0, n) and qx, qy are in [0, p)
+vm.precompiled_contracts.p256verify.p256verify	4	-	Reject the point at infinity and points not on the secp256r1 curve
+vm.precompiled_contracts.p256verify.p256verify	5	-	Verify the signature and on success output 32-byte 1
+vm.precompiled_contracts.point_evaluation.point_evaluation	0	-	Check input is exactly 192 bytes
+vm.precompiled_contracts.point_evaluation.point_evaluation	1	-	Parse versioned hash, z, y, commitment and proof
+vm.precompiled_contracts.point_evaluation.point_evaluation	2	-	Charge point evaluation gas
+vm.precompiled_contracts.point_evaluation.point_evaluation	3	-	Check commitment matches versioned hash
+vm.precompiled_contracts.point_evaluation.point_evaluation	4	-	Verify KZG proof
+vm.precompiled_contracts.point_evaluation.point_evaluation	5	-	Return FIELD_ELEMENTS_PER_BLOB and BLS_MODULUS
+vm.precompiled_contracts.ripemd160.ripemd160	0	-	Charge base gas plus per-word gas for the input length
+vm.precompiled_contracts.ripemd160.ripemd160	1	-	Compute RIPEMD-160 hash of call data
+vm.precompiled_contracts.ripemd160.ripemd160	2	-	Left-pad hash to 32 bytes and set as output
+vm.precompiled_contracts.sha256.sha256	0	-	Charge base gas plus per-word gas on the input length rounded up to 32-byte words
+vm.precompiled_contracts.sha256.sha256	1	-	Set output to the SHA-256 digest of the call data
+vm.runtime.get_valid_jump_destinations	0	-	Scan the code byte by byte, skipping bytes that aren't valid opcodes
+vm.runtime.get_valid_jump_destinations	1	-	Record each JUMPDEST (0x5B) position as a valid jump destination
+vm.runtime.get_valid_jump_destinations	2	-	Skip PUSH1–PUSH32 immediate data so bytes inside it are never counted as JUMPDESTs
+vm.stack.decode_pair	0	-	Reject immediate bytes in the forbidden range 82–127
+vm.stack.decode_pair	1	-	XOR the byte with 143 and split it into high nibble q and low nibble r
+vm.stack.decode_pair	2	-	Return (q+1, r+1) if q < r, otherwise (r+1, 29-q)
+vm.stack.decode_single	0	-	Reject immediate byte in forbidden range 91-127
+vm.stack.decode_single	1	-	Compute stack index n = (x + 145) mod 256
+vm.stack.pop	0	-	Raise StackUnderflowError if the stack is empty
+vm.stack.pop	1	-	Remove and return the top stack item
+vm.stack.push	0	-	Raise StackOverflowError if the stack already holds 1024 items
+vm.stack.push	1	-	Append the value to the top of the stack

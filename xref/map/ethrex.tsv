@@ -53,6 +53,12 @@ block_access_lists.update_builder_from_tx	4	part	1/2	repos/clients/ethrex/crates
 block_access_lists.update_builder_from_tx	1	missing	-	-	-
 block_access_lists.validate_block_access_list_gas_limit	0,1	part	2/2	repos/clients/ethrex/crates/common/types/block_access_list.rs:439-447	BlockAccessList.item_count
 block_access_lists.validate_block_access_list_gas_limit	2	missing	-	-	-
+blocks.encode_receipt	0,1	entry	2/2	repos/clients/ethrex/crates/common/types/receipt.rs:182-212	Receipt.encode_inner_with_precomputed_bloom
+blocks.encode_receipt	0,1	part	2/2	repos/clients/ethrex/crates/common/types/receipt.rs:413-429	ReceiptWithBloom.encode_inner
+blocks.encode_receipt	0,1	part	1/2	repos/clients/ethrex/crates/common/types/receipt.rs:478-490	ReceiptWithBloom.encode
+bloom.add_to_bloom	0	inlined	2/2	repos/clients/ethrex/crates/common/types/receipt.rs:295-306	bloom_from_logs
+bloom.add_to_bloom	1,2,3	missing	-	-	-
+bloom.logs_bloom	0,1,2	entry	2/2	repos/clients/ethrex/crates/common/types/receipt.rs:295-306	bloom_from_logs
 fork.apply_body	0,1,2,3,4,5	entry	2/2	repos/clients/ethrex/crates/vm/backends/levm/mod.rs:357-592	LEVM.execute_block
 fork.apply_body	2	part	1/2	repos/clients/ethrex/crates/vm/levm/src/db/gen_db.rs:303-307	GeneralizedDatabase.set_bal_index
 fork.apply_body	0,1,2,3,4,5	part	2/2	repos/clients/ethrex/crates/vm/backends/levm/mod.rs:598-1100	LEVM.execute_block_pipeline
@@ -66,6 +72,7 @@ fork.apply_body	-	delegated	2/2	-> fork.process_general_purpose_requests	extract
 fork.apply_body	-	delegated	1/2	-> block_access_lists.build_block_access_list	GeneralizedDatabase.take_bal
 fork.calculate_base_fee_per_gas	0,1,2,3,4	entry	2/2	repos/clients/ethrex/crates/common/types/block.rs:606-651	calculate_base_fee_per_gas
 fork.calculate_base_fee_per_gas	-	delegated	2/2	-> fork.check_gas_limit	check_gas_limit
+fork.check_gas_limit	0,1,2,3	entry	2/2	repos/clients/ethrex/crates/common/types/block.rs:515-521	check_gas_limit
 fork.check_transaction	0,1,2,3,4	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/hooks/default_hook.rs:34-305	DefaultHook.prepare_execution
 fork.check_transaction	2,5	part	2/2	repos/clients/ethrex/crates/vm/backends/levm/mod.rs:3434-3486	LEVM.setup_env_with_config
 fork.check_transaction	-	delegated	2/2	-> transactions.recover_sender	Transaction.sender
@@ -91,6 +98,9 @@ fork.execute_block	-	delegated	2/2	-> fork.apply_body	LEVM.execute_block
 fork.execute_block	-	delegated	2/2	-> fork.apply_body	LEVM.execute_block_pipeline
 fork.execute_block	-	delegated	2/2	-> requests.compute_requests_hash	compute_requests_hash
 fork.execute_block	0	missing	-	-	-
+fork.get_last_256_block_hashes	1	entry	2/2	repos/clients/ethrex/crates/blockchain/vm.rs:755-804	StoreVmDatabase.get_block_hash
+fork.get_last_256_block_hashes	2	part	1/2	repos/clients/ethrex/crates/common/types/block.rs:443-447	BlockHeader.compute_block_hash
+fork.get_last_256_block_hashes	0	missing	-	-	-
 fork.make_receipt	0	part	2/2	repos/clients/ethrex/crates/common/types/receipt.rs:75-84	Receipt.new
 fork.make_receipt	0	inlined	2/2	repos/clients/ethrex/crates/vm/backends/mod.rs:171-216	Evm.execute_tx
 fork.make_receipt	0	part	2/2	repos/clients/ethrex/crates/common/types/receipt.rs:386-394	ReceiptWithBloom.new
@@ -101,6 +111,12 @@ fork.make_receipt	-	delegated	1/2	-> blocks.encode_receipt	Receipt.encode_inner
 fork.make_receipt	-	delegated	2/2	-> blocks.encode_receipt	ReceiptWithBloom.encode_inner
 fork.make_receipt	-	delegated	2/2	-> blocks.encode_receipt	ReceiptWithBloom.encode
 fork.make_receipt	1	missing	-	-	-
+fork.process_checked_system_transaction	2,3	entry	2/2	repos/clients/ethrex/crates/vm/backends/levm/mod.rs:3919-3948	LEVM.read_withdrawal_requests
+fork.process_checked_system_transaction	2,3	part	2/2	repos/clients/ethrex/crates/vm/backends/levm/mod.rs:3950-3979	LEVM.dequeue_consolidation_requests
+fork.process_checked_system_transaction	2,3	part	2/2	repos/clients/ethrex/crates/vm/backends/levm/mod.rs:3981-4010	LEVM.read_builder_deposit_requests
+fork.process_checked_system_transaction	2,3	part	2/2	repos/clients/ethrex/crates/vm/backends/levm/mod.rs:4012-4041	LEVM.dequeue_builder_exit_requests
+fork.process_checked_system_transaction	-	delegated	2/2	-> fork.process_unchecked_system_transaction	generic_system_contract_levm
+fork.process_checked_system_transaction	0,1	missing	-	-	-
 fork.process_general_purpose_requests	0,1,2,3,4	entry	2/2	repos/clients/ethrex/crates/vm/backends/levm/mod.rs:4220-4274	extract_all_requests_levm
 fork.process_general_purpose_requests	-	delegated	2/2	-> requests.parse_deposit_requests	Requests.from_deposit_receipts
 fork.process_general_purpose_requests	-	delegated	2/2	-> fork.process_checked_system_transaction	LEVM.read_withdrawal_requests
@@ -108,11 +124,24 @@ fork.process_general_purpose_requests	-	delegated	2/2	-> fork.process_checked_sy
 fork.process_general_purpose_requests	-	delegated	2/2	-> fork.process_checked_system_transaction	LEVM.read_builder_deposit_requests
 fork.process_general_purpose_requests	-	delegated	2/2	-> fork.process_checked_system_transaction	LEVM.dequeue_builder_exit_requests
 fork.process_general_purpose_requests	-	delegated	1/2	-> requests.parse_deposit_requests	Deposit.from_abi_byte_array
+fork.process_transaction	2	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/vm.rs:1547-1617	VM.execute
+fork.process_transaction	1,2	part	2/2	repos/clients/ethrex/crates/vm/levm/src/hooks/default_hook.rs:34-305	DefaultHook.prepare_execution
+fork.process_transaction	0	part	2/2	repos/clients/ethrex/crates/vm/levm/src/db/gen_db.rs:303-307	GeneralizedDatabase.set_bal_index
+fork.process_transaction	3,5	part	2/2	repos/clients/ethrex/crates/vm/levm/src/hooks/default_hook.rs:312-398	DefaultHook.finalize_execution
+fork.process_transaction	0,4	inlined	2/2	repos/clients/ethrex/crates/vm/backends/levm/mod.rs:357-592	LEVM.execute_block
+fork.process_transaction	3	part	1/2	repos/clients/ethrex/crates/vm/levm/src/hooks/default_hook.rs:419-486	refund_sender
+fork.process_transaction	-	delegated	2/2	-> fork.disburse_gas_fees	pay_coinbase
+fork.process_transaction	-	delegated	1/2	-> state_tracker.clear_account_preserving_balance	delete_self_destruct_accounts
+fork.process_transaction	-	delegated	1/2	-> fork.check_transaction	LEVM.setup_env_with_config
+fork.process_transaction	-	delegated	2/2	-> fork.check_transaction	check_2d_gas_allowance
 fork.process_unchecked_system_transaction	1,2,3	entry	2/2	repos/clients/ethrex/crates/vm/backends/levm/mod.rs:4115-4216	generic_system_contract_levm
 fork.process_unchecked_system_transaction	1	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/hooks/default_hook.rs:34-305	DefaultHook.prepare_execution
 fork.process_unchecked_system_transaction	1	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/utils.rs:530-609	VM.add_intrinsic_gas
 fork.process_unchecked_system_transaction	-	delegated	1/2	-> vm.interpreter.process_top_level	VM.execute
 fork.process_unchecked_system_transaction	0	missing	-	-	-
+fork.process_withdrawals	2,3	entry	2/2	repos/clients/ethrex/crates/vm/backends/levm/mod.rs:3793-3827	LEVM.process_withdrawals
+fork.process_withdrawals	1	part	2/2	repos/clients/ethrex/crates/common/types/block.rs:407-413	compute_withdrawals_root
+fork.process_withdrawals	0	missing	-	-	-
 fork.state_transition	1,2,3	entry	2/2	repos/clients/ethrex/crates/blockchain/blockchain.rs:2579-2614	Blockchain.add_block
 fork.state_transition	0	part	2/2	repos/clients/ethrex/crates/blockchain/vm.rs:502-523	StoreVmDatabase.new
 fork.state_transition	2,3	part	2/2	repos/clients/ethrex/crates/blockchain/blockchain.rs:2552-2577	Blockchain.store_block_with_depth
@@ -121,15 +150,74 @@ fork.state_transition	-	delegated	2/2	-> fork.execute_block	Blockchain.execute_b
 fork.state_transition	-	delegated	2/2	-> fork.get_last_256_block_hashes	StoreVmDatabase.get_block_hash
 fork.state_transition	-	delegated	1/2	-> fork.execute_block	LEVM.execute_block
 fork.state_transition	-	delegated	2/2	-> fork.execute_block	GeneralizedDatabase.get_state_transitions
+fork.update_sender_state	1,3	part	2/2	repos/clients/ethrex/crates/vm/levm/src/hooks/default_hook.rs:885-915	deduct_caller
+fork.update_sender_state	-	delegated	2/2	-> vm.gas.calculate_data_fee	calculate_blob_gas_cost
+fork.update_sender_state	-	delegated	2/2	-> state_tracker.increment_nonce	VM.increment_account_nonce
+fork.update_sender_state	-	delegated	2/2	-> state_tracker.set_account_balance	VM.decrease_account_balance
+fork.update_sender_state	-	delegated	2/2	-> state_tracker.get_account	GeneralizedDatabase.get_account
+fork.validate_header	2,3,4,5	entry	2/2	repos/clients/ethrex/crates/common/types/block.rs:716-770	validate_block_header
+fork.validate_header	1	part	2/2	repos/clients/ethrex/crates/common/types/block.rs:927-945	validate_excess_blob_gas
+fork.validate_header	-	delegated	2/2	-> fork.calculate_base_fee_per_gas	calculate_base_fee_per_gas
+fork.validate_header	-	delegated	2/2	-> vm.gas.calculate_excess_blob_gas	calc_excess_blob_gas
+fork.validate_header	-	delegated	1/2	-> fork.calculate_base_fee_per_gas	check_gas_limit
+fork.validate_header	0	missing	-	-	-
+fork_types.encode_account	0	entry	2/2	repos/clients/ethrex/crates/common/types/account.rs:862-869	AccountState.encode
+requests.compute_requests_hash	0,1	entry	2/2	repos/clients/ethrex/crates/common/types/requests.rs:261-270	compute_requests_hash
+requests.extract_deposit_data	0,1,2,3,4	entry	2/2	repos/clients/ethrex/crates/common/types/requests.rs:149-236	Deposit.from_abi_byte_array
+requests.extract_deposit_data	5	part	2/2	repos/clients/ethrex/crates/common/types/requests.rs:238-253	Deposit.to_summarized_byte_array
+requests.parse_deposit_requests	0,1,2	entry	2/2	repos/clients/ethrex/crates/common/types/requests.rs:99-118	Requests.from_deposit_receipts
+requests.parse_deposit_requests	-	delegated	2/2	-> requests.extract_deposit_data	Deposit.from_abi_byte_array
+state_tracker.account_deployable	0	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/account.rs:114-116	LevmAccount.create_would_collide
+state_tracker.account_deployable	0	part	2/2	repos/clients/ethrex/crates/vm/levm/src/account.rs:106-108	LevmAccount.has_nonce
+state_tracker.account_deployable	0	part	2/2	repos/clients/ethrex/crates/vm/levm/src/account.rs:110-112	LevmAccount.has_code
+state_tracker.account_deployable	-	delegated	1/2	-> state_tracker.get_account	GeneralizedDatabase.get_account_mut
+state_tracker.account_deployable	-	delegated	2/2	-> state_tracker.get_account	GeneralizedDatabase.load_account
+state_tracker.account_exists	0	part	2/2	repos/clients/ethrex/crates/vm/levm/src/account.rs:69-86	LevmAccount.from
+state_tracker.account_exists	-	delegated	1/2	-> state_tracker.get_account_optional	GeneralizedDatabase.get_account
+state_tracker.account_exists	-	delegated	2/2	-> state_tracker.get_account_optional	GeneralizedDatabase.load_account
+state_tracker.account_exists_and_is_empty	1	entry	2/2	repos/clients/ethrex/crates/common/types/account.rs:1020-1022	AccountInfo.is_empty
+state_tracker.account_exists_and_is_empty	-	delegated	2/2	-> state_tracker.get_account_optional	GeneralizedDatabase.load_account
+state_tracker.account_exists_and_is_empty	0	missing	-	-	-
+state_tracker.clear_account_preserving_balance	0,1	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/hooks/default_hook.rs:552-600	delete_self_destruct_accounts
 state_tracker.copy_tx_state	0	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/vm.rs:156-162	Substate.push_backup
 state_tracker.copy_tx_state	0	part	2/2	repos/clients/ethrex/crates/vm/levm/src/call_frame.rs:360-376	CallFrameBackup.backup_account_info
 state_tracker.copy_tx_state	0	part	2/2	repos/clients/ethrex/crates/vm/levm/src/db/gen_db.rs:1131-1146	VM.backup_storage_slot
+state_tracker.create_ether	0	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/db/gen_db.rs:847-875	VM.increase_account_balance
+state_tracker.create_ether	-	delegated	1/2	-> state_tracker.modify_state	GeneralizedDatabase.get_account_mut
+state_tracker.create_ether	-	delegated	2/2	-> state_tracker.modify_state	VM.get_account_mut
+state_tracker.destroy_account	0,1	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/hooks/default_hook.rs:552-600	delete_self_destruct_accounts
+state_tracker.destroy_storage	2	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/hooks/default_hook.rs:552-600	delete_self_destruct_accounts
+state_tracker.destroy_storage	0,1	inlined	2/2	repos/clients/ethrex/crates/common/types/block_access_list.rs:1705-1780	BlockAccessListRecorder.track_selfdestruct
+state_tracker.get_account	0	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/db/gen_db.rs:467-469	GeneralizedDatabase.get_account
+state_tracker.get_account	0	part	2/2	repos/clients/ethrex/crates/vm/backends/levm/db.rs:119-125	DynVmDatabase.get_account_state
+state_tracker.get_account	0	part	1/2	repos/clients/ethrex/crates/vm/levm/src/db/gen_db.rs:353-464	GeneralizedDatabase.load_account
+state_tracker.get_account_optional	0,1,2	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/db/gen_db.rs:353-464	GeneralizedDatabase.load_account
+state_tracker.get_account_optional	0	part	1/2	repos/clients/ethrex/crates/common/types/block_access_list.rs:1096-1101	BlockAccessListRecorder.record_touched_address
+state_tracker.get_account_optional	-	delegated	2/2	-> state_tracker.get_pre_state_account_optional	seed_one_address_info_from_bal
+state_tracker.get_code	1,2,3	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/db/gen_db.rs:482-490	GeneralizedDatabase.get_code
+state_tracker.get_code	0,3	part	2/2	repos/clients/ethrex/crates/blockchain/vm.rs:816-827	StoreVmDatabase.get_account_code
+state_tracker.get_pre_state_account_optional	0,1,2	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/db/gen_db.rs:353-464	GeneralizedDatabase.load_account
+state_tracker.get_storage	1,2,3	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/db/gen_db.rs:1020-1096	VM.get_storage_value
+state_tracker.get_storage	2	part	2/2	repos/clients/ethrex/crates/vm/levm/src/db/gen_db.rs:182-194	seed_one_storage_slot_from_bal
+state_tracker.get_storage	3	part	2/2	repos/clients/ethrex/crates/vm/levm/src/db/gen_db.rs:533-555	GeneralizedDatabase.get_value_from_database
+state_tracker.get_storage	0	part	2/2	repos/clients/ethrex/crates/common/types/block_access_list.rs:1118-1130	BlockAccessListRecorder.record_storage_read
+state_tracker.get_storage_original	1,2,3	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/db/gen_db.rs:989-1007	VM.access_storage_slot_for_sstore
+state_tracker.get_storage_original	-	delegated	2/2	-> state_tracker.get_storage	VM.get_storage_value
+state_tracker.get_storage_original	-	delegated	2/2	-> state_tracker.get_storage	GeneralizedDatabase.get_value_from_database
+state_tracker.get_storage_original	-	delegated	1/2	-> state_tracker.get_storage	seed_one_storage_slot_from_bal
+state_tracker.get_storage_original	0	missing	-	-	-
+state_tracker.get_transient_storage	0	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/vm.rs:402-412	Substate.get_transient
 state_tracker.incorporate_tx_into_block	5	part	2/2	repos/clients/ethrex/crates/vm/levm/src/vm.rs:420-422	Substate.clear_transient_storage
 state_tracker.incorporate_tx_into_block	2,3,4,5	part	2/2	repos/clients/ethrex/crates/vm/levm/src/db/gen_db.rs:684-811	GeneralizedDatabase.get_state_transitions_tx
 state_tracker.incorporate_tx_into_block	0	part	2/2	repos/clients/ethrex/crates/common/types/block_access_list.rs:909-930	BlockAccessListRecorder.set_block_access_index
 state_tracker.incorporate_tx_into_block	0	part	1/2	repos/clients/ethrex/crates/common/types/block_access_list.rs:936-992	BlockAccessListRecorder.filter_net_zero_storage
 state_tracker.incorporate_tx_into_block	0	part	1/2	repos/clients/ethrex/crates/common/types/block_access_list.rs:997-1032	BlockAccessListRecorder.filter_net_zero_code
 state_tracker.incorporate_tx_into_block	1	missing	-	-	-
+state_tracker.increment_nonce	0	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/db/gen_db.rs:969-984	VM.increment_account_nonce
+state_tracker.increment_nonce	-	delegated	2/2	-> state_tracker.modify_state	GeneralizedDatabase.get_account_mut
+state_tracker.increment_nonce	-	delegated	2/2	-> state_tracker.modify_state	VM.get_account_mut
+state_tracker.is_account_alive	0	part	2/2	repos/clients/ethrex/crates/common/types/account.rs:1020-1022	AccountInfo.is_empty
+state_tracker.mark_account_created	0	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/vm.rs:377-389	Substate.add_created_account
 state_tracker.modify_state	0	entry	1/2	repos/clients/ethrex/crates/vm/levm/src/db/gen_db.rs:473-477	GeneralizedDatabase.get_account_mut
 state_tracker.modify_state	0	part	1/2	repos/clients/ethrex/crates/vm/levm/src/account.rs:94-104	LevmAccount.mark_modified
 state_tracker.modify_state	0	part	1/2	repos/clients/ethrex/crates/vm/levm/src/db/gen_db.rs:836-845	VM.get_account_mut
@@ -139,15 +227,44 @@ state_tracker.modify_state	0	part	1/2	repos/clients/ethrex/crates/vm/levm/src/db
 state_tracker.modify_state	0	part	1/2	repos/clients/ethrex/crates/vm/levm/src/db/gen_db.rs:969-984	VM.increment_account_nonce
 state_tracker.modify_state	-	delegated	1/2	-> state_tracker.account_exists_and_is_empty	LevmAccount.is_empty
 state_tracker.modify_state	1	missing	-	-	-
+state_tracker.move_ether	0,1	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/db/gen_db.rs:907-919	VM.transfer
+state_tracker.move_ether	1	part	2/2	repos/clients/ethrex/crates/vm/levm/src/db/gen_db.rs:847-875	VM.increase_account_balance
+state_tracker.move_ether	0	part	2/2	repos/clients/ethrex/crates/vm/levm/src/db/gen_db.rs:877-905	VM.decrease_account_balance
 state_tracker.restore_tx_state	0	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/utils.rs:76-120	restore_cache_state
 state_tracker.restore_tx_state	0	part	2/2	repos/clients/ethrex/crates/vm/levm/src/vm.rs:190-194	Substate.revert_backup
+state_tracker.set_account	0	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/db/gen_db.rs:473-477	GeneralizedDatabase.get_account_mut
+state_tracker.set_account	0	part	2/2	repos/clients/ethrex/crates/vm/levm/src/account.rs:94-104	LevmAccount.mark_modified
+state_tracker.set_account	-	delegated	2/2	-> state_tracker.destroy_account	LevmAccount.mark_destroyed
+state_tracker.set_account_balance	0	part	2/2	repos/clients/ethrex/crates/vm/levm/src/db/gen_db.rs:847-875	VM.increase_account_balance
+state_tracker.set_account_balance	0	part	2/2	repos/clients/ethrex/crates/vm/levm/src/db/gen_db.rs:877-905	VM.decrease_account_balance
+state_tracker.set_account_balance	-	delegated	2/2	-> state_tracker.modify_state	VM.get_account_mut
+state_tracker.set_account_balance	-	delegated	1/2	-> state_tracker.modify_state	GeneralizedDatabase.get_account_mut
+state_tracker.set_account_balance	-	delegated	1/2	-> state_tracker.modify_state	BlockAccessListRecorder.record_balance_change
+state_tracker.set_code	0,1	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/db/gen_db.rs:922-960	VM.update_account_bytecode
+state_tracker.set_code	0	part	2/2	repos/clients/ethrex/crates/common/types/account.rs:169-173	Code.from_bytecode
+state_tracker.set_code	-	delegated	2/2	-> state_tracker.modify_state	GeneralizedDatabase.get_account_mut
+state_tracker.set_code	-	delegated	2/2	-> state_tracker.modify_state	VM.get_account_mut
+state_tracker.set_storage	1	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/db/gen_db.rs:1099-1129	VM.update_account_storage
+state_tracker.set_storage	0	missing	-	-	-
+state_tracker.set_transient_storage	0	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/vm.rs:415-417	Substate.set_transient
 transactions.calculate_effective_gas_price	1,2	entry	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:481-492	Transaction.effective_gas_price
 transactions.calculate_effective_gas_price	0,1	part	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:469-479	Transaction.calc_effective_gas_price
 transactions.calculate_effective_gas_price	0,2	part	2/2	repos/clients/ethrex/crates/vm/levm/src/hooks/default_hook.rs:726-731	validate_sufficient_max_fee_per_gas
+transactions.calculate_intrinsic_cost	0,1,2,3,5	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/utils.rs:615-755	VM.get_intrinsic_gas
+transactions.calculate_intrinsic_cost	1	part	2/2	repos/clients/ethrex/crates/vm/levm/src/gas_cost.rs:318-343	recipient_regular_gas
+transactions.calculate_intrinsic_cost	4	part	2/2	repos/clients/ethrex/crates/vm/levm/src/utils.rs:758-824	VM.get_min_gas_used
+transactions.calculate_intrinsic_cost	0	part	2/2	repos/clients/ethrex/crates/vm/levm/src/gas_cost.rs:799-820	tx_calldata
+transactions.calculate_intrinsic_cost	2,4	part	2/2	repos/clients/ethrex/crates/vm/levm/src/gas_cost.rs:836-838	floor_tokens_in_access_list
+transactions.calculate_intrinsic_cost	0,1,2,3,5	part	2/2	repos/clients/ethrex/crates/vm/levm/src/utils.rs:872-984	intrinsic_gas_dimensions
+transactions.calculate_intrinsic_cost	4	part	2/2	repos/clients/ethrex/crates/vm/levm/src/utils.rs:1003-1048	intrinsic_gas_floor
 transactions.calculate_max_gas_fee	0	inlined	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:494-522	Transaction.cost_without_base_fee
 transactions.calculate_max_gas_fee	0	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/hooks/default_hook.rs:850-883	validate_sender_balance
+transactions.chain_id	3	entry	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:1494-1505	Transaction.chain_id
+transactions.chain_id	0,1,2	inlined	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:1262-1412	Transaction.signing_payload
+transactions.chain_id	0,1,2	part	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:1695-1705	derive_legacy_chain_id
 transactions.check_nonce	0	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/vm.rs:1621-2440	VM.execute_frame_tx
 transactions.check_nonce	0	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/vm.rs:2454-2542	VM.run_frame_validation_prefix
+transactions.count_tokens_in_data	0	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/gas_cost.rs:799-820	tx_calldata
 transactions.decode_transaction	1,2,3,4	entry	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:2707-2737	Transaction.decode_canonical
 transactions.decode_transaction	4	part	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:418-422	EnvelopeTxType.from_type_byte
 transactions.decode_transaction	1,2,3,4	part	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:569-606	Transaction.decode_unfinished
@@ -157,13 +274,40 @@ transactions.decode_transaction	2	part	2/2	repos/clients/ethrex/crates/common/ty
 transactions.decode_transaction	2	part	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:1044-1085	EIP4844Transaction.decode_unfinished
 transactions.decode_transaction	2	part	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:1089-1128	EIP7702Transaction.decode_unfinished
 transactions.decode_transaction	0	missing	-	-	-
+transactions.encode_transaction	0,1	entry	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:2744-2760	Transaction.encode_canonical
+transactions.encode_transaction	1	part	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:456-467	Transaction.tx_type
+transactions.encode_transaction	0	part	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:553-561	Transaction.encode
+transactions.encode_transaction	2	missing	-	-	-
 transactions.has_access_list	0	entry	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:1507-1519	Transaction.access_list
+transactions.recover_sender	1,2,3	entry	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:1414-1426	Transaction.compute_sender
+transactions.recover_sender	1,2	part	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:1262-1412	Transaction.signing_payload
+transactions.recover_sender	1	part	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:1695-1705	derive_legacy_chain_id
+transactions.recover_sender	0	missing	-	-	-
 transactions.signing_hash_155	0	entry	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:1262-1412	Transaction.signing_payload
 transactions.signing_hash_155	0	part	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:1414-1426	Transaction.compute_sender
+transactions.signing_hash_1559	0	entry	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:1262-1412	Transaction.signing_payload
+transactions.signing_hash_1559	0	part	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:1414-1426	Transaction.compute_sender
+transactions.signing_hash_1559	0	inlined	1/2	repos/clients/ethrex/crates/vm/backends/levm/mod.rs:5144-5175	signed_eth_transfer
+transactions.signing_hash_1559	0	inlined	1/2	repos/clients/ethrex/crates/vm/backends/levm/mod.rs:5240-5270	signed_call_tx
 transactions.signing_hash_2930	0	part	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:1262-1412	Transaction.signing_payload
 transactions.signing_hash_2930	0	part	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:1414-1426	Transaction.compute_sender
+transactions.signing_hash_4844	0	part	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:1262-1412	Transaction.signing_payload
+transactions.signing_hash_4844	0	part	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:1414-1426	Transaction.compute_sender
 transactions.signing_hash_7702	0	entry	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:1262-1412	Transaction.signing_payload
 transactions.signing_hash_7702	0	inlined	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:1414-1426	Transaction.compute_sender
+transactions.signing_hash_pre155	0	inlined	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:1262-1412	Transaction.signing_payload
+transactions.signing_hash_pre155	0	part	2/2	repos/clients/ethrex/crates/common/types/transaction.rs:1414-1426	Transaction.compute_sender
+transactions.validate_transaction	0,1,4	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/hooks/default_hook.rs:34-305	DefaultHook.prepare_execution
+transactions.validate_transaction	4	part	2/2	repos/clients/ethrex/crates/vm/levm/src/hooks/default_hook.rs:602-689	validate_min_gas_limit
+transactions.validate_transaction	0	part	2/2	repos/clients/ethrex/crates/vm/levm/src/hooks/default_hook.rs:707-724	validate_init_code_size
+transactions.validate_transaction	2,3	part	2/2	repos/clients/ethrex/crates/vm/levm/src/hooks/default_hook.rs:733-793	validate_4844_tx
+transactions.validate_transaction	3	part	2/2	repos/clients/ethrex/crates/vm/levm/src/hooks/default_hook.rs:795-825	validate_type_4_tx
+transactions.validate_transaction	-	delegated	2/2	-> transactions.calculate_intrinsic_cost	VM.get_intrinsic_gas
+utils.address.compute_contract_address	0,1	missing	-	-	-
+utils.address.compute_create2_contract_address	0,1	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/utils.rs:48-70	calculate_create2_address
+utils.address.to_address_masked	0	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/utils.rs:183-185	word_to_address
+vm.emit_transfer_log	1	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/utils.rs:1094-1112	create_eth_transfer_log
+vm.emit_transfer_log	0,2	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/hooks/default_hook.rs:918-934	transfer_value
 vm.eoa_delegation.calculate_delegation_cost	0,1,2,3,4	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/utils.rs:282-302	eip7702_peek_delegation
 vm.eoa_delegation.calculate_delegation_cost	2	part	2/2	repos/clients/ethrex/crates/vm/levm/src/utils.rs:198-211	get_authorized_address_from_code
 vm.eoa_delegation.calculate_delegation_cost	3	part	1/2	repos/clients/ethrex/crates/vm/levm/src/gas_cost.rs:265-271	cold_account_access_cost
@@ -173,7 +317,10 @@ vm.eoa_delegation.calculate_delegation_cost	-	delegated	2/2	-> vm.eoa_delegation
 vm.eoa_delegation.calculate_delegation_cost	-	delegated	2/2	-> state_tracker.get_code	GeneralizedDatabase.get_account_code
 vm.eoa_delegation.calculate_delegation_cost	-	delegated	2/2	-> state_tracker.get_account	GeneralizedDatabase.get_account
 vm.eoa_delegation.calculate_delegation_cost	-	delegated	2/2	-> state_tracker.get_code	GeneralizedDatabase.get_code
+vm.eoa_delegation.get_delegated_code_address	0	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/utils.rs:198-211	get_authorized_address_from_code
+vm.eoa_delegation.get_delegated_code_address	-	delegated	2/2	-> vm.eoa_delegation.is_valid_delegation	is_eip7702_delegation
 vm.eoa_delegation.is_valid_delegation	0	entry	2/2	repos/clients/ethrex/crates/common/types/account.rs:832-834	is_eip7702_delegation
+vm.eoa_delegation.recover_authority	0,1,2	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/utils.rs:213-246	eip7702_recover_address
 vm.eoa_delegation.resolve_delegated_code_address	0,1,2,3	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/utils.rs:282-302	eip7702_peek_delegation
 vm.eoa_delegation.resolve_delegated_code_address	2,3	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/system.rs:35-223	OpCallHandler.eval
 vm.eoa_delegation.resolve_delegated_code_address	2,3	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/system.rs:229-359	OpCallCodeHandler.eval
@@ -183,33 +330,150 @@ vm.eoa_delegation.resolve_delegated_code_address	2,3	inlined	2/2	repos/clients/e
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> vm.eoa_delegation.get_delegated_code_address	get_authorized_address_from_code
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> vm.eoa_delegation.get_delegated_code_address	code_has_delegation
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> vm.eoa_delegation.get_delegated_code_address	is_eip7702_delegation
+vm.eoa_delegation.set_delegation	0,1,2,3,4,5	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/utils.rs:348-528	VM.eip7702_set_access_code
+vm.eoa_delegation.set_delegation	-	delegated	2/2	-> vm.eoa_delegation.validate_authorization	eip7702_recover_address
+vm.eoa_delegation.set_delegation	-	delegated	2/2	-> vm.eoa_delegation.is_valid_delegation	code_has_delegation
+vm.eoa_delegation.set_delegation	-	delegated	2/2	-> vm.gas.charge_state_gas_from_meter	VM.increase_state_gas
+vm.eoa_delegation.set_delegation	-	delegated	2/2	-> state_tracker.set_code	VM.update_account_bytecode
+vm.eoa_delegation.set_delegation	-	delegated	2/2	-> state_tracker.increment_nonce	VM.increment_account_nonce
+vm.eoa_delegation.set_delegation	-	delegated	2/2	-> state_tracker.get_code	GeneralizedDatabase.get_code
+vm.eoa_delegation.validate_authorization	0,1,2,3,4,5	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/utils.rs:348-528	VM.eip7702_set_access_code
+vm.eoa_delegation.validate_authorization	-	delegated	2/2	-> vm.eoa_delegation.recover_authority	eip7702_recover_address
+vm.eoa_delegation.validate_authorization	-	delegated	2/2	-> vm.eoa_delegation.is_valid_delegation	code_has_delegation
+vm.eoa_delegation.validate_authorization	-	delegated	2/2	-> state_tracker.get_account	GeneralizedDatabase.get_account
+vm.eoa_delegation.validate_authorization	-	delegated	2/2	-> state_tracker.get_code	GeneralizedDatabase.get_code
 vm.gas.allocate_evm_gas	0,1,2	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/utils.rs:530-609	VM.add_intrinsic_gas
+vm.gas.calculate_blob_gas_price	0	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/utils.rs:123-136	get_base_fee_per_blob_gas
+vm.gas.calculate_blob_gas_price	0	part	2/2	repos/clients/ethrex/crates/common/types/block.rs:525-536	calculate_base_fee_per_blob_gas
+vm.gas.calculate_blob_gas_price	0	part	2/2	repos/clients/ethrex/crates/common/types/block.rs:542-590	fake_exponential
 vm.gas.calculate_data_fee	0	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/utils.rs:161-180	calculate_blob_gas_cost
 vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	get_base_fee_per_blob_gas
+vm.gas.calculate_excess_blob_gas	0,1,2,3,4	entry	2/2	repos/clients/ethrex/crates/common/types/block.rs:947-972	calc_excess_blob_gas
+vm.gas.calculate_excess_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	calculate_base_fee_per_blob_gas
 vm.gas.calculate_gas_extend_memory	1,3,5	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/memory.rs:632-641	expansion_cost
 vm.gas.calculate_gas_extend_memory	1,2	part	2/2	repos/clients/ethrex/crates/vm/levm/src/memory.rs:661-670	calculate_memory_size
 vm.gas.calculate_gas_extend_memory	-	delegated	2/2	-> vm.gas.calculate_memory_gas_cost	cost
 vm.gas.calculate_gas_extend_memory	0,4	missing	-	-	-
+vm.gas.calculate_memory_gas_cost	0,1,2,3	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/memory.rs:646-658	cost
+vm.gas.calculate_message_call_gas	0,1,2,3	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/gas_cost.rs:1210-1234	calculate_cost_and_gas_limit_call
+vm.gas.calculate_message_call_gas	-	delegated	2/2	-> vm.gas.max_message_call_gas	max_message_call_gas
 vm.gas.calculate_total_blob_gas	0	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/utils.rs:140-159	get_max_blob_gas_price
 vm.gas.calculate_total_blob_gas	0	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/utils.rs:161-180	calculate_blob_gas_cost
+vm.gas.charge_gas	0	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/call_frame.rs:506-514	CallFrame.increase_consumed_gas
 vm.gas.charge_gas_from_meter	0,1	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/call_frame.rs:506-514	CallFrame.increase_consumed_gas
+vm.gas.charge_state_gas	0	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/vm.rs:1172-1208	VM.increase_state_gas
 vm.gas.charge_state_gas_from_meter	0,1	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/vm.rs:1172-1208	VM.increase_state_gas
 vm.gas.charge_state_gas_from_meter	1,2	part	2/2	repos/clients/ethrex/crates/vm/levm/src/call_frame.rs:506-514	CallFrame.increase_consumed_gas
+vm.gas.check_block_gas_capacity	0,1,2	entry	2/2	repos/clients/ethrex/crates/vm/backends/levm/mod.rs:277-311	check_2d_gas_allowance
+vm.gas.check_gas	0	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/call_frame.rs:519-524	CallFrame.check_gas
 vm.gas.check_max_fee_per_blob_gas	1,2	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/hooks/default_hook.rs:691-705	validate_max_fee_per_blob_gas
 vm.gas.check_max_fee_per_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	get_base_fee_per_blob_gas
 vm.gas.check_max_fee_per_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	calculate_base_fee_per_blob_gas
 vm.gas.check_max_fee_per_blob_gas	0	missing	-	-	-
+vm.gas.commit_state_gas	0,1,2	missing	-	-	-
 vm.gas.credit_state_gas_refund	0,1	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/vm.rs:1220-1253	VM.credit_state_gas_refund
+vm.gas.drain_state_gas_reservoir	0	missing	-	-	-
 vm.gas.forfeit_remaining_gas	1	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/execution_handlers.rs:13-43	VM.handle_precompile_result
 vm.gas.forfeit_remaining_gas	1	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/execution_handlers.rs:46-102	VM.handle_opcode_result
 vm.gas.forfeit_remaining_gas	1	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/execution_handlers.rs:105-137	VM.handle_opcode_error
 vm.gas.forfeit_remaining_gas	0	missing	-	-	-
+vm.gas.init_code_cost	0	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/gas_cost.rs:698-747	compute_gas_create
+vm.gas.init_code_cost	0	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/utils.rs:872-984	intrinsic_gas_dimensions
+vm.gas.max_message_call_gas	0	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/gas_cost.rs:1202-1208	max_message_call_gas
+vm.gas.max_message_call_gas	0	inlined	2/2	repos/clients/ethrex/crates/vm/levm/src/gas_cost.rs:1210-1234	calculate_cost_and_gas_limit_call
 vm.gas.repay_state_gas_spill	0,1,2,3	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/vm.rs:1292-1322	VM.repay_state_gas_spill
+vm.gas.restore_child_gas	0	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/system.rs:1616-1628	VM.early_revert_message_call
+vm.gas.restore_child_gas	1	missing	-	-	-
 vm.gas.restore_state_gas	0,1	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/vm.rs:1345-1396	VM.refill_frame_state_gas
+vm.gas.restore_state_gas_to_entry	0	missing	-	-	-
 vm.gas.settle_transaction_gas	0,3,4	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/hooks/default_hook.rs:312-398	DefaultHook.finalize_execution
 vm.gas.settle_transaction_gas	3,4,5	part	2/2	repos/clients/ethrex/crates/vm/levm/src/hooks/default_hook.rs:419-486	refund_sender
 vm.gas.settle_transaction_gas	1	part	2/2	repos/clients/ethrex/crates/vm/levm/src/hooks/default_hook.rs:489-494	compute_gas_refunded
 vm.gas.settle_transaction_gas	1,2	part	2/2	repos/clients/ethrex/crates/vm/levm/src/hooks/default_hook.rs:497-511	compute_actual_gas_used
+vm.gas.tx_state_gas_used	0	missing	-	-	-
+vm.gas.withhold_create_gas	-	delegated	2/2	-> vm.gas.max_message_call_gas	max_message_call_gas
+vm.incorporate_child	2	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/system.rs:1410-1499	VM.handle_return_call
+vm.incorporate_child	2,4	part	2/2	repos/clients/ethrex/crates/vm/levm/src/vm.rs:167-185	Substate.commit_backup
+vm.incorporate_child	2,3	part	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/system.rs:1502-1593	VM.handle_return_create
+vm.incorporate_child	-	delegated	2/2	-> vm.gas.repay_state_gas_spill	VM.repay_state_gas_spill
+vm.incorporate_child	0,1	missing	-	-	-
+vm.instructions.arithmetic.add	0,1,2	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/arithmetic.rs:29-36	OpAddHandler.eval
+vm.instructions.arithmetic.add	3	part	2/2	repos/clients/ethrex/crates/vm/levm/src/call_frame.rs:633-635	VM.advance_pc
+vm.instructions.arithmetic.add	-	delegated	2/2	-> vm.gas.charge_gas	CallFrame.increase_consumed_gas
+vm.instructions.arithmetic.add	-	delegated	2/2	-> vm.stack.pop	Stack.pop1_and_top_mut
+vm.instructions.arithmetic.addmod	0,1,2	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/arithmetic.rs:169-188	OpAddModHandler.eval
+vm.instructions.arithmetic.addmod	3	part	2/2	repos/clients/ethrex/crates/vm/levm/src/call_frame.rs:633-635	VM.advance_pc
+vm.instructions.arithmetic.addmod	-	delegated	2/2	-> vm.stack.pop	Stack.pop
+vm.instructions.arithmetic.addmod	-	delegated	2/2	-> vm.gas.charge_gas	CallFrame.increase_consumed_gas
+vm.instructions.arithmetic.addmod	-	delegated	2/2	-> vm.stack.push	Stack.push_zero
+vm.instructions.arithmetic.addmod	-	delegated	2/2	-> vm.stack.push	Stack.push
+vm.instructions.arithmetic.div	0,1,2	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/arithmetic.rs:71-78	OpDivHandler.eval
+vm.instructions.arithmetic.div	3	part	2/2	repos/clients/ethrex/crates/vm/levm/src/call_frame.rs:633-635	VM.advance_pc
+vm.instructions.arithmetic.div	-	delegated	2/2	-> vm.stack.pop	Stack.pop1_and_top_mut
+vm.instructions.arithmetic.div	-	delegated	2/2	-> vm.stack.pop	Stack.pop1
+vm.instructions.arithmetic.div	-	delegated	2/2	-> vm.gas.charge_gas	CallFrame.increase_consumed_gas
+vm.instructions.arithmetic.div	-	delegated	1/2	-> vm.stack.pop	Stack.top_mut
+vm.instructions.arithmetic.exp	0,1,2	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/arithmetic.rs:219-228	OpExpHandler.eval
+vm.instructions.arithmetic.exp	1	part	2/2	repos/clients/ethrex/crates/vm/levm/src/gas_cost.rs:419-433	exp
+vm.instructions.arithmetic.exp	-	delegated	2/2	-> vm.stack.pop	Stack.pop
+vm.instructions.arithmetic.exp	-	delegated	2/2	-> vm.gas.charge_gas	CallFrame.increase_consumed_gas
+vm.instructions.arithmetic.exp	-	delegated	2/2	-> vm.stack.push	Stack.push
+vm.instructions.arithmetic.mod	0,1,2	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/arithmetic.rs:121-128	OpModHandler.eval
+vm.instructions.arithmetic.mod	3	part	2/2	repos/clients/ethrex/crates/vm/levm/src/call_frame.rs:633-635	VM.advance_pc
+vm.instructions.arithmetic.mod	-	delegated	2/2	-> vm.gas.charge_gas	CallFrame.increase_consumed_gas
+vm.instructions.arithmetic.mod	-	delegated	2/2	-> vm.stack.pop	Stack.pop1_and_top_mut
+vm.instructions.arithmetic.mul	0,1,2	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/arithmetic.rs:57-64	OpMulHandler.eval
+vm.instructions.arithmetic.mul	0	part	2/2	repos/clients/ethrex/crates/vm/levm/src/call_frame.rs:109-112	Stack.pop1_and_top_mut
+vm.instructions.arithmetic.mul	3	part	2/2	repos/clients/ethrex/crates/vm/levm/src/call_frame.rs:633-635	VM.advance_pc
+vm.instructions.arithmetic.mul	-	delegated	2/2	-> vm.gas.charge_gas	CallFrame.increase_consumed_gas
+vm.instructions.arithmetic.mul	-	delegated	2/2	-> vm.stack.pop	Stack.pop1
+vm.instructions.arithmetic.mulmod	0,1,2	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/arithmetic.rs:195-212	OpMulModHandler.eval
+vm.instructions.arithmetic.mulmod	3	part	2/2	repos/clients/ethrex/crates/vm/levm/src/call_frame.rs:633-635	VM.advance_pc
+vm.instructions.arithmetic.mulmod	-	delegated	2/2	-> vm.stack.pop	Stack.pop
+vm.instructions.arithmetic.mulmod	-	delegated	2/2	-> vm.gas.charge_gas	CallFrame.increase_consumed_gas
+vm.instructions.arithmetic.mulmod	-	delegated	2/2	-> vm.stack.push	Stack.push_zero
+vm.instructions.arithmetic.mulmod	-	delegated	2/2	-> vm.stack.push	Stack.push
+vm.instructions.arithmetic.sdiv	0,1,2,3	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/arithmetic.rs:85-114	OpSDivHandler.eval
+vm.instructions.arithmetic.sdiv	4	part	2/2	repos/clients/ethrex/crates/vm/levm/src/call_frame.rs:633-635	VM.advance_pc
+vm.instructions.arithmetic.sdiv	-	delegated	2/2	-> vm.gas.charge_gas	CallFrame.increase_consumed_gas
+vm.instructions.arithmetic.sdiv	-	delegated	2/2	-> vm.stack.pop	Stack.pop1_and_top_mut
+vm.instructions.arithmetic.sdiv	-	delegated	2/2	-> vm.stack.pop	Stack.pop1
+vm.instructions.arithmetic.signextend	0,1,2,3,4,5	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/arithmetic.rs:235-259	OpSignExtendHandler.eval
+vm.instructions.arithmetic.signextend	-	delegated	2/2	-> vm.gas.charge_gas	CallFrame.increase_consumed_gas
+vm.instructions.arithmetic.signextend	-	delegated	2/2	-> vm.stack.pop	Stack.pop1_and_top_mut
+vm.instructions.arithmetic.signextend	-	delegated	2/2	-> vm.stack.pop	Stack.pop1
+vm.instructions.arithmetic.signextend	-	delegated	1/2	-> vm.stack.pop	Stack.top_mut
+vm.instructions.arithmetic.smod	0,1,2,3	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/arithmetic.rs:135-162	OpSModHandler.eval
+vm.instructions.arithmetic.smod	4	part	2/2	repos/clients/ethrex/crates/vm/levm/src/call_frame.rs:633-635	VM.advance_pc
+vm.instructions.arithmetic.smod	-	delegated	2/2	-> vm.stack.pop	Stack.pop1_and_top_mut
+vm.instructions.arithmetic.smod	-	delegated	2/2	-> vm.gas.charge_gas	CallFrame.increase_consumed_gas
+vm.instructions.arithmetic.smod	-	delegated	2/2	-> vm.stack.pop	Stack.pop1
+vm.instructions.arithmetic.smod	-	delegated	1/2	-> vm.stack.push	Stack.top_mut
+vm.instructions.arithmetic.sub	0,1,2	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/arithmetic.rs:43-50	OpSubHandler.eval
+vm.instructions.arithmetic.sub	3	part	2/2	repos/clients/ethrex/crates/vm/levm/src/call_frame.rs:633-635	VM.advance_pc
+vm.instructions.arithmetic.sub	-	delegated	1/2	-> vm.stack.pop	Stack.pop1_and_top_mut
+vm.instructions.arithmetic.sub	-	delegated	2/2	-> vm.gas.charge_gas	CallFrame.increase_consumed_gas
+vm.instructions.arithmetic.sub	-	delegated	2/2	-> vm.stack.pop	Stack.pop1
+vm.instructions.arithmetic.sub	-	delegated	1/2	-> vm.stack.pop	Stack.top_mut
+vm.instructions.bitwise.bitwise_and	0,1,2	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/bitwise_comparison.rs:143-150	OpAndHandler.eval
+vm.instructions.bitwise.bitwise_and	3	part	2/2	repos/clients/ethrex/crates/vm/levm/src/call_frame.rs:633-635	VM.advance_pc
+vm.instructions.bitwise.bitwise_and	-	delegated	2/2	-> vm.stack.pop	Stack.pop1_and_top_mut
+vm.instructions.bitwise.bitwise_and	-	delegated	2/2	-> vm.gas.charge_gas	CallFrame.increase_consumed_gas
+vm.instructions.bitwise.bitwise_and	-	delegated	2/2	-> vm.stack.pop	Stack.pop1
+vm.instructions.bitwise.bitwise_not	0,1,2	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/bitwise_comparison.rs:185-193	OpNotHandler.eval
+vm.instructions.bitwise.bitwise_not	0	part	1/2	repos/clients/ethrex/crates/vm/levm/src/call_frame.rs:84-88	Stack.top_mut
+vm.instructions.bitwise.bitwise_not	3	part	2/2	repos/clients/ethrex/crates/vm/levm/src/call_frame.rs:633-635	VM.advance_pc
+vm.instructions.bitwise.bitwise_not	-	delegated	2/2	-> vm.gas.charge_gas	CallFrame.increase_consumed_gas
+vm.instructions.bitwise.bitwise_or	0,1,2	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/bitwise_comparison.rs:157-164	OpOrHandler.eval
+vm.instructions.bitwise.bitwise_or	3	part	2/2	repos/clients/ethrex/crates/vm/levm/src/call_frame.rs:633-635	VM.advance_pc
+vm.instructions.bitwise.bitwise_or	-	delegated	2/2	-> vm.stack.pop	Stack.pop1_and_top_mut
+vm.instructions.bitwise.bitwise_or	-	delegated	2/2	-> vm.gas.charge_gas	CallFrame.increase_consumed_gas
+vm.instructions.bitwise.bitwise_or	-	delegated	2/2	-> vm.stack.pop	Stack.pop1
+vm.instructions.bitwise.bitwise_xor	0,1,2	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/bitwise_comparison.rs:171-178	OpXorHandler.eval
+vm.instructions.bitwise.bitwise_xor	3	part	2/2	repos/clients/ethrex/crates/vm/levm/src/call_frame.rs:633-635	VM.advance_pc
+vm.instructions.bitwise.bitwise_xor	-	delegated	2/2	-> vm.stack.pop	Stack.pop1_and_top_mut
+vm.instructions.bitwise.bitwise_xor	-	delegated	2/2	-> vm.gas.charge_gas	CallFrame.increase_consumed_gas
+vm.instructions.bitwise.bitwise_xor	-	delegated	2/2	-> vm.stack.pop	Stack.pop1
 vm.instructions.storage.sload	0,1,2	entry	2/2	repos/clients/ethrex/crates/vm/levm/src/opcode_handlers/stack_memory_storage_flow.rs:241-271	OpSLoadHandler.eval
 vm.instructions.storage.sload	1	part	2/2	repos/clients/ethrex/crates/vm/levm/src/gas_cost.rs:274-280	cold_storage_access_cost
 vm.instructions.storage.sload	1	part	2/2	repos/clients/ethrex/crates/vm/levm/src/vm.rs:281-305	Substate.add_accessed_slot
