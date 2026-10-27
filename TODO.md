@@ -54,10 +54,13 @@ updated, and round again. Nothing waits for an EELS release.
   through each client's runner with coverage, and diff against tests that
   do not. Use it to confirm rows for EIPs under active work.
 - [ ] Teams confirm their own client's rows, with a verified flag per row.
-- [ ] Differential fuzzing of pure functions (gas formulas, fees, intrinsic
-  cost, memory expansion, blob gas): the EELS function and the paired
-  client function on thousands of edge and random inputs, one harness per
-  client. Start with 5 geth gas functions.
+- [x] Differential fuzzing for geth (`fuzz/`): memory, memory extension,
+  the 63/64 call rule, blob base fee, excess blob gas and intrinsic gas
+  with the calldata floor. 13,579 cases, no differences.
+- [ ] Fuzz the other clients, starting with revm, through their own test
+  harnesses.
+- [ ] Fuzz more pairs, chosen from the xref map: every pure function with a
+  confident match.
 - [ ] Prove equal for all inputs, with an SMT solver, the few formulas that
   matter most, such as `fake_exponential` and intrinsic gas.
 
