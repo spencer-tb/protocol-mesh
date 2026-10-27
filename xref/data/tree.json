@@ -13681,5 +13681,301 @@
   "erigon": "fac3dfde06f6cec9b72be5921005136e28b7096b",
   "ethrex": "58a85f3f2dbaaf674d424337f7b4cd637ec394b9",
   "nimbus-eth1": "fff52de2bae500284928bffce5f37c2b6127d035"
+ },
+ "eips": {
+  "fork.process_general_purpose_requests": {
+   "hash": "69687fb22cbc0568",
+   "eips": [
+    6110,
+    7002,
+    7251,
+    7685,
+    7732
+   ]
+  },
+  "fork.state_transition": {
+   "hash": "26c020a9a6b92934",
+   "eips": []
+  },
+  "fork.make_receipt": {
+   "hash": "2d071237fecaaaba",
+   "eips": [
+    658
+   ]
+  },
+  "fork.apply_body": {
+   "hash": "9828ebaccf6db04b",
+   "eips": [
+    2935,
+    4788,
+    7928
+   ]
+  },
+  "fork.calculate_base_fee_per_gas": {
+   "hash": "a3f825680a6c6ee2",
+   "eips": [
+    1559
+   ]
+  },
+  "fork.process_unchecked_system_transaction": {
+   "hash": "32dfefb03cedaa3d",
+   "eips": [
+    4788,
+    7928,
+    8037
+   ]
+  },
+  "fork.check_transaction": {
+   "hash": "4bbef653f2f36c37",
+   "eips": [
+    1559,
+    2930,
+    3607,
+    4844,
+    7702,
+    8037
+   ]
+  },
+  "fork.execute_block": {
+   "hash": "d12a33804a92ca25",
+   "eips": [
+    3675,
+    4844,
+    4895,
+    7685,
+    7843,
+    7928,
+    7934,
+    8037
+   ]
+  },
+  "transactions.calculate_effective_gas_price": {
+   "hash": "a80adb3302210b2f",
+   "eips": [
+    1559
+   ]
+  },
+  "transactions.decode_transaction": {
+   "hash": "4d199dea2013e23c",
+   "eips": [
+    1559,
+    2718,
+    2930,
+    4844,
+    7702
+   ]
+  },
+  "transactions.calculate_max_gas_fee": {
+   "hash": "be1b87797ff350bc",
+   "eips": [
+    1559
+   ]
+  },
+  "transactions.signing_hash_155": {
+   "hash": "77e5234e2c92923f",
+   "eips": [
+    155
+   ]
+  },
+  "transactions.check_nonce": {
+   "hash": "0807912d55af599f",
+   "eips": []
+  },
+  "transactions.signing_hash_2930": {
+   "hash": "d80b26804a4c2f74",
+   "eips": [
+    2718,
+    2930
+   ]
+  },
+  "transactions.signing_hash_7702": {
+   "hash": "5009536342dbb4aa",
+   "eips": [
+    7702
+   ]
+  },
+  "transactions.calculate_intrinsic_cost": {
+   "hash": "44adc5f50b0c2f47",
+   "eips": [
+    2780,
+    2930,
+    3860,
+    7623,
+    7702,
+    7976,
+    7981,
+    8037
+   ]
+  },
+  "vm.eoa_delegation.is_valid_delegation": {
+   "hash": "f17a43aec08a9f32",
+   "eips": [
+    7702
+   ]
+  },
+  "transactions.has_access_list": {
+   "hash": "885f49475299644d",
+   "eips": [
+    2930
+   ]
+  },
+  "vm.eoa_delegation.resolve_delegated_code_address": {
+   "hash": "d9c2ef9ef6bd2df0",
+   "eips": [
+    7702
+   ]
+  },
+  "vm.gas.charge_gas_from_meter": {
+   "hash": "ed9c5770885aae4e",
+   "eips": []
+  },
+  "vm.eoa_delegation.calculate_delegation_cost": {
+   "hash": "6a4719eb4d9f05b5",
+   "eips": [
+    2929,
+    7702
+   ]
+  },
+  "vm.gas.restore_state_gas": {
+   "hash": "48110f47951214ef",
+   "eips": [
+    8037
+   ]
+  },
+  "vm.gas.credit_state_gas_refund": {
+   "hash": "1821efd174100866",
+   "eips": [
+    8037
+   ]
+  },
+  "vm.gas.repay_state_gas_spill": {
+   "hash": "68dbd7e22633922c",
+   "eips": [
+    8037
+   ]
+  },
+  "vm.gas.forfeit_remaining_gas": {
+   "hash": "48bfe8871955645d",
+   "eips": [
+    8037
+   ]
+  },
+  "vm.gas.calculate_total_blob_gas": {
+   "hash": "b1312a632b8bb9d3",
+   "eips": [
+    4844
+   ]
+  },
+  "vm.gas.charge_state_gas_from_meter": {
+   "hash": "7ace554f4ccdcc7e",
+   "eips": [
+    8037
+   ]
+  },
+  "vm.gas.calculate_gas_extend_memory": {
+   "hash": "d05b08e7b44e7b50",
+   "eips": []
+  },
+  "vm.gas.check_max_fee_per_blob_gas": {
+   "hash": "752f3e1e4f01292e",
+   "eips": [
+    4844
+   ]
+  },
+  "vm.gas.calculate_data_fee": {
+   "hash": "b4f30476a580cc6c",
+   "eips": [
+    4844
+   ]
+  },
+  "vm.instructions.storage.tload": {
+   "hash": "c3c56bb131b2b6da",
+   "eips": [
+    1153
+   ]
+  },
+  "vm.gas.allocate_evm_gas": {
+   "hash": "193a5035d0b45d2f",
+   "eips": [
+    7825,
+    8037
+   ]
+  },
+  "vm.instructions.storage.sload": {
+   "hash": "8f039419a18797b8",
+   "eips": [
+    2929
+   ]
+  },
+  "vm.instructions.system.revert": {
+   "hash": "90efd163b03ae9bd",
+   "eips": [
+    140
+   ]
+  },
+  "vm.instructions.system.create": {
+   "hash": "53136648fb411de7",
+   "eips": [
+    214,
+    3860
+   ]
+  },
+  "vm.gas.settle_transaction_gas": {
+   "hash": "edacc8c3e29cc1b8",
+   "eips": [
+    3529,
+    7623,
+    7778,
+    8037
+   ]
+  },
+  "vm.instructions.system.generic_create": {
+   "hash": "375d4dddb9decb3b",
+   "eips": [
+    150,
+    211,
+    684,
+    2681,
+    2929,
+    7610,
+    8037
+   ]
+  },
+  "vm.interpreter.charge_value_transfer_to_non_alive_account": {
+   "hash": "01f94f00c8c568af",
+   "eips": [
+    161,
+    8037
+   ]
+  },
+  "vm.instructions.system.delegatecall": {
+   "hash": "309d07d898bad54f",
+   "eips": [
+    7,
+    150,
+    2929,
+    7702,
+    7928,
+    8037
+   ]
+  },
+  "vm.interpreter.process_call": {
+   "hash": "340f79508b342836",
+   "eips": [
+    7708,
+    8037
+   ]
+  },
+  "vm.instructions.system.call": {
+   "hash": "7ea224085d029ff0",
+   "eips": [
+    161,
+    214,
+    2929,
+    7702,
+    7928,
+    8037
+   ]
+  }
  }
 }

@@ -1,148 +1,148 @@
 # eels	step	eips	what it does
-fork.apply_body	0	eip7928	Run the system calls that store the parent beacon block root (EIP-4788) and the parent block hash (EIP-2935)
-fork.apply_body	1	eip7928	Decode and execute each transaction in order
-fork.apply_body	2	eip7928	Set the block access list index to N+1 for post-execution operations
-fork.apply_body	3	eip7928	Process withdrawals
-fork.apply_body	4	eip7928	Process general-purpose requests (deposits, withdrawal and consolidation requests)
-fork.apply_body	5	eip7928	Build the block access list and check it against the block gas limit
-fork.calculate_base_fee_per_gas	0	-	Compute parent gas target as parent gas limit divided by elasticity multiplier
-fork.calculate_base_fee_per_gas	1	-	Check block gas limit against parent gas limit, reject block if invalid
-fork.calculate_base_fee_per_gas	2	-	Keep parent base fee when parent gas used equals target
-fork.calculate_base_fee_per_gas	3	-	Increase base fee by max(parent fee × excess gas / target / 8, 1) when parent used more than target
-fork.calculate_base_fee_per_gas	4	-	Decrease base fee by parent fee × gas shortfall / target / 8 when parent used less than target
-fork.check_transaction	0	-	Recover sender and statically validate the transaction (intrinsic gas)
-fork.check_transaction	1	-	Check the tx gas and blob gas fit the block's remaining capacity
-fork.check_transaction	2	-	Compute effective gas price and max fee, checking blob fee cap for blob txs
-fork.check_transaction	3	-	Check sender nonce, balance covers max fee plus value, and sender is EOA or delegated
-fork.check_transaction	4	-	Split EVM gas into execution-gas grant and state gas reservoir
-fork.check_transaction	5	-	Build tx environment: access list, authorizations, recipient/create address, paid-write accounts, tx hash
-fork.execute_block	0	-	Check the RLP-encoded block size against MAX_RLP_BLOCK_SIZE
-fork.execute_block	1	-	Validate the header against the parent and require no ommers
-fork.execute_block	2	-	Set up the block state and block environment, including the access list builder
-fork.execute_block	3	-	Apply the block body (transactions and withdrawals)
-fork.execute_block	4	-	Compute the block diff, state root, tries, logs bloom, requests hash and access list hash
-fork.execute_block	5	-	Check gas used (max of regular and state gas) and every computed root and hash against the header
-fork.make_receipt	0	-	Build the receipt: success status, cumulative gas used, logs bloom and logs
-fork.make_receipt	1	-	Encode the receipt according to the transaction type
-fork.process_general_purpose_requests	0	-	Parse deposit requests from block logs and append them if non-empty
-fork.process_general_purpose_requests	1	-	Call withdrawal request predeploy and append returned withdrawal requests
-fork.process_general_purpose_requests	2	-	Call consolidation request predeploy and append returned consolidation requests
-fork.process_general_purpose_requests	3	-	Call builder deposit contract and append returned builder deposit requests
-fork.process_general_purpose_requests	4	-	Call builder exit contract and append returned builder exit requests
-fork.process_unchecked_system_transaction	0	-	Open a transaction-scoped state layered on the block state
-fork.process_unchecked_system_transaction	1	-	Build the system transaction environment: SYSTEM_ADDRESS caller, zero value, SYSTEM_TRANSACTION_GAS limit and grant, base-fee gas price, state-gas reservoir for SYSTEM_MAX_SSTORES_PER_CALL storage sets, no access list or paid writes
-fork.process_unchecked_system_transaction	2	-	Execute the top-level call to the target contract without checking code or failure
-fork.process_unchecked_system_transaction	3	-	Commit the transaction state into the block state and record it in the block access list
+fork.apply_body	0	eip2935,eip4788,eip7928	Run the system calls that store the parent beacon block root (EIP-4788) and the parent block hash (EIP-2935)
+fork.apply_body	1	eip2935,eip4788,eip7928	Decode and execute each transaction in order
+fork.apply_body	2	eip2935,eip4788,eip7928	Set the block access list index to N+1 for post-execution operations
+fork.apply_body	3	eip2935,eip4788,eip7928	Process withdrawals
+fork.apply_body	4	eip2935,eip4788,eip7928	Process general-purpose requests (deposits, withdrawal and consolidation requests)
+fork.apply_body	5	eip2935,eip4788,eip7928	Build the block access list and check it against the block gas limit
+fork.calculate_base_fee_per_gas	0	eip1559	Compute parent gas target as parent gas limit divided by elasticity multiplier
+fork.calculate_base_fee_per_gas	1	eip1559	Check block gas limit against parent gas limit, reject block if invalid
+fork.calculate_base_fee_per_gas	2	eip1559	Keep parent base fee when parent gas used equals target
+fork.calculate_base_fee_per_gas	3	eip1559	Increase base fee by max(parent fee × excess gas / target / 8, 1) when parent used more than target
+fork.calculate_base_fee_per_gas	4	eip1559	Decrease base fee by parent fee × gas shortfall / target / 8 when parent used less than target
+fork.check_transaction	0	eip1559,eip2930,eip3607,eip4844,eip7702,eip8037	Recover sender and statically validate the transaction (intrinsic gas)
+fork.check_transaction	1	eip1559,eip2930,eip3607,eip4844,eip7702,eip8037	Check the tx gas and blob gas fit the block's remaining capacity
+fork.check_transaction	2	eip1559,eip2930,eip3607,eip4844,eip7702,eip8037	Compute effective gas price and max fee, checking blob fee cap for blob txs
+fork.check_transaction	3	eip1559,eip2930,eip3607,eip4844,eip7702,eip8037	Check sender nonce, balance covers max fee plus value, and sender is EOA or delegated
+fork.check_transaction	4	eip1559,eip2930,eip3607,eip4844,eip7702,eip8037	Split EVM gas into execution-gas grant and state gas reservoir
+fork.check_transaction	5	eip1559,eip2930,eip3607,eip4844,eip7702,eip8037	Build tx environment: access list, authorizations, recipient/create address, paid-write accounts, tx hash
+fork.execute_block	0	eip3675,eip4844,eip4895,eip7685,eip7843,eip7928,eip7934,eip8037	Check the RLP-encoded block size against MAX_RLP_BLOCK_SIZE
+fork.execute_block	1	eip3675,eip4844,eip4895,eip7685,eip7843,eip7928,eip7934,eip8037	Validate the header against the parent and require no ommers
+fork.execute_block	2	eip3675,eip4844,eip4895,eip7685,eip7843,eip7928,eip7934,eip8037	Set up the block state and block environment, including the access list builder
+fork.execute_block	3	eip3675,eip4844,eip4895,eip7685,eip7843,eip7928,eip7934,eip8037	Apply the block body (transactions and withdrawals)
+fork.execute_block	4	eip3675,eip4844,eip4895,eip7685,eip7843,eip7928,eip7934,eip8037	Compute the block diff, state root, tries, logs bloom, requests hash and access list hash
+fork.execute_block	5	eip3675,eip4844,eip4895,eip7685,eip7843,eip7928,eip7934,eip8037	Check gas used (max of regular and state gas) and every computed root and hash against the header
+fork.make_receipt	0	eip658	Build the receipt: success status, cumulative gas used, logs bloom and logs
+fork.make_receipt	1	eip658	Encode the receipt according to the transaction type
+fork.process_general_purpose_requests	0	eip6110,eip7002,eip7251,eip7685,eip7732	Parse deposit requests from block logs and append them if non-empty
+fork.process_general_purpose_requests	1	eip6110,eip7002,eip7251,eip7685,eip7732	Call withdrawal request predeploy and append returned withdrawal requests
+fork.process_general_purpose_requests	2	eip6110,eip7002,eip7251,eip7685,eip7732	Call consolidation request predeploy and append returned consolidation requests
+fork.process_general_purpose_requests	3	eip6110,eip7002,eip7251,eip7685,eip7732	Call builder deposit contract and append returned builder deposit requests
+fork.process_general_purpose_requests	4	eip6110,eip7002,eip7251,eip7685,eip7732	Call builder exit contract and append returned builder exit requests
+fork.process_unchecked_system_transaction	0	eip4788,eip7928,eip8037	Open a transaction-scoped state layered on the block state
+fork.process_unchecked_system_transaction	1	eip4788,eip7928,eip8037	Build the system transaction environment: SYSTEM_ADDRESS caller, zero value, SYSTEM_TRANSACTION_GAS limit and grant, base-fee gas price, state-gas reservoir for SYSTEM_MAX_SSTORES_PER_CALL storage sets, no access list or paid writes
+fork.process_unchecked_system_transaction	2	eip4788,eip7928,eip8037	Execute the top-level call to the target contract without checking code or failure
+fork.process_unchecked_system_transaction	3	eip4788,eip7928,eip8037	Commit the transaction state into the block state and record it in the block access list
 fork.state_transition	0	-	Build chain context: chain id, last 256 block hashes, parent header
 fork.state_transition	1	-	Execute the block against the current state to get the state diff
 fork.state_transition	2	-	Apply the block's state diff to the chain state
 fork.state_transition	3	-	Append the block to the chain and keep only the last 255 blocks
-transactions.calculate_effective_gas_price	0	-	Fee-market tx: check max fee per gas covers the base fee
-transactions.calculate_effective_gas_price	1	-	Fee-market tx: compute priority fee as min of max priority fee and max fee minus base fee, and return base fee plus priority fee
-transactions.calculate_effective_gas_price	2	-	Legacy-priced tx: check gas price covers the base fee and return gas price
-transactions.calculate_intrinsic_cost	0	eip2780,eip7623,eip7976	Compute calldata token cost
-transactions.calculate_intrinsic_cost	1	eip2780,eip7623,eip7976	Compute recipient cost (create access plus initcode, or cold account access plus value cost, skipped for self-transfers)
-transactions.calculate_intrinsic_cost	2	eip2780,eip7623,eip7976	Compute access list entry charges and access list data surcharge
-transactions.calculate_intrinsic_cost	3	eip2780,eip7623,eip7976	Compute per-authorization base cost for set-code transactions
-transactions.calculate_intrinsic_cost	4	eip2780,eip7623,eip7976	Compute calldata floor gas anchored on base plus recipient gas, including access list surcharge
-transactions.calculate_intrinsic_cost	5	eip2780,eip7623,eip7976	Sum intrinsic execution gas and return it with the floor
-transactions.calculate_max_gas_fee	0	-	Multiply gas_limit by the fee cap: max_fee_per_gas for fee-market transactions, gas_price for legacy ones
+transactions.calculate_effective_gas_price	0	eip1559	Fee-market tx: check max fee per gas covers the base fee
+transactions.calculate_effective_gas_price	1	eip1559	Fee-market tx: compute priority fee as min of max priority fee and max fee minus base fee, and return base fee plus priority fee
+transactions.calculate_effective_gas_price	2	eip1559	Legacy-priced tx: check gas price covers the base fee and return gas price
+transactions.calculate_intrinsic_cost	0	eip2780,eip2930,eip3860,eip7623,eip7702,eip7976,eip7981,eip8037	Compute calldata token cost
+transactions.calculate_intrinsic_cost	1	eip2780,eip2930,eip3860,eip7623,eip7702,eip7976,eip7981,eip8037	Compute recipient cost (create access plus initcode, or cold account access plus value cost, skipped for self-transfers)
+transactions.calculate_intrinsic_cost	2	eip2780,eip2930,eip3860,eip7623,eip7702,eip7976,eip7981,eip8037	Compute access list entry charges and access list data surcharge
+transactions.calculate_intrinsic_cost	3	eip2780,eip2930,eip3860,eip7623,eip7702,eip7976,eip7981,eip8037	Compute per-authorization base cost for set-code transactions
+transactions.calculate_intrinsic_cost	4	eip2780,eip2930,eip3860,eip7623,eip7702,eip7976,eip7981,eip8037	Compute calldata floor gas anchored on base plus recipient gas, including access list surcharge
+transactions.calculate_intrinsic_cost	5	eip2780,eip2930,eip3860,eip7623,eip7702,eip7976,eip7981,eip8037	Sum intrinsic execution gas and return it with the floor
+transactions.calculate_max_gas_fee	0	eip1559	Multiply gas_limit by the fee cap: max_fee_per_gas for fee-market transactions, gas_price for legacy ones
 transactions.check_nonce	0	-	Reject the transaction unless its nonce equals the sender's account nonce (too low or too high)
-transactions.decode_transaction	0	eip2718	Pass through an already-decoded legacy transaction unchanged
-transactions.decode_transaction	1	eip2718	Reject an empty transaction byte string
-transactions.decode_transaction	2	eip2718	Decode typed transactions (types 1-4) from the RLP payload after the type byte
-transactions.decode_transaction	3	eip2718	Decode a legacy transaction as RLP when the first byte is a list prefix (0xC0-0xFE)
-transactions.decode_transaction	4	eip2718	Reject any other transaction type byte
+transactions.decode_transaction	0	eip1559,eip2718,eip2930,eip4844,eip7702	Pass through an already-decoded legacy transaction unchanged
+transactions.decode_transaction	1	eip1559,eip2718,eip2930,eip4844,eip7702	Reject an empty transaction byte string
+transactions.decode_transaction	2	eip1559,eip2718,eip2930,eip4844,eip7702	Decode typed transactions (types 1-4) from the RLP payload after the type byte
+transactions.decode_transaction	3	eip1559,eip2718,eip2930,eip4844,eip7702	Decode a legacy transaction as RLP when the first byte is a list prefix (0xC0-0xFE)
+transactions.decode_transaction	4	eip1559,eip2718,eip2930,eip4844,eip7702	Reject any other transaction type byte
 transactions.has_access_list	0	eip2930	Check whether the transaction is a type that carries an EIP-2930 access list
 transactions.signing_hash_155	0	eip155	Keccak256-hash the RLP encoding of (nonce, gas_price, gas, to, value, data, chain_id, 0, 0) to get the EIP-155 signing hash
-transactions.signing_hash_2930	0	eip2930	Hash the 0x01 type byte followed by the RLP of the unsigned fields (chain_id, nonce, gas_price, gas, to, value, data, access_list) with keccak256
+transactions.signing_hash_2930	0	eip2718,eip2930	Hash the 0x01 type byte followed by the RLP of the unsigned fields (chain_id, nonce, gas_price, gas, to, value, data, access_list) with keccak256
 transactions.signing_hash_7702	0	eip7702	Hash keccak256 of 0x04 prefix plus RLP of the set-code transaction's unsigned fields (chain_id through authorizations)
-vm.eoa_delegation.calculate_delegation_cost	0	-	Load the code of the target account
-vm.eoa_delegation.calculate_delegation_cost	1	-	Return no delegation and zero cost if the code is not a valid delegation designator
-vm.eoa_delegation.calculate_delegation_cost	2	-	Extract the delegated address from the code after the marker
-vm.eoa_delegation.calculate_delegation_cost	3	-	Charge warm access if the delegated address is already accessed, else cold account access
-vm.eoa_delegation.calculate_delegation_cost	4	-	Return the delegation flag, delegated address and gas cost
-vm.eoa_delegation.is_valid_delegation	0	-	Check the code has the delegated-code length and starts with the delegation marker
-vm.eoa_delegation.resolve_delegated_code_address	0	-	Load the target's code and parse its delegation designation
-vm.eoa_delegation.resolve_delegated_code_address	1	-	Return the target unchanged when it has no delegation
-vm.eoa_delegation.resolve_delegated_code_address	2	-	Charge warm or cold access for the delegated address and warm it
-vm.eoa_delegation.resolve_delegated_code_address	3	-	Return the delegated address with the delegation flag set
-vm.gas.allocate_evm_gas	0	-	Subtract the intrinsic execution cost from the tx gas limit to get the EVM gas
-vm.gas.allocate_evm_gas	1	-	Grant execution gas: the EVM gas, capped at TX_MAX_GAS_LIMIT minus the intrinsic execution cost
-vm.gas.allocate_evm_gas	2	-	Put the EVM gas above that cap into the state gas reservoir
-vm.gas.calculate_data_fee	0	-	Multiply the transaction's total blob gas by the blob gas price derived from excess_blob_gas to get the blob data fee
+vm.eoa_delegation.calculate_delegation_cost	0	eip2929,eip7702	Load the code of the target account
+vm.eoa_delegation.calculate_delegation_cost	1	eip2929,eip7702	Return no delegation and zero cost if the code is not a valid delegation designator
+vm.eoa_delegation.calculate_delegation_cost	2	eip2929,eip7702	Extract the delegated address from the code after the marker
+vm.eoa_delegation.calculate_delegation_cost	3	eip2929,eip7702	Charge warm access if the delegated address is already accessed, else cold account access
+vm.eoa_delegation.calculate_delegation_cost	4	eip2929,eip7702	Return the delegation flag, delegated address and gas cost
+vm.eoa_delegation.is_valid_delegation	0	eip7702	Check the code has the delegated-code length and starts with the delegation marker
+vm.eoa_delegation.resolve_delegated_code_address	0	eip7702	Load the target's code and parse its delegation designation
+vm.eoa_delegation.resolve_delegated_code_address	1	eip7702	Return the target unchanged when it has no delegation
+vm.eoa_delegation.resolve_delegated_code_address	2	eip7702	Charge warm or cold access for the delegated address and warm it
+vm.eoa_delegation.resolve_delegated_code_address	3	eip7702	Return the delegated address with the delegation flag set
+vm.gas.allocate_evm_gas	0	eip7825,eip8037	Subtract the intrinsic execution cost from the tx gas limit to get the EVM gas
+vm.gas.allocate_evm_gas	1	eip7825,eip8037	Grant execution gas: the EVM gas, capped at TX_MAX_GAS_LIMIT minus the intrinsic execution cost
+vm.gas.allocate_evm_gas	2	eip7825,eip8037	Put the EVM gas above that cap into the state gas reservoir
+vm.gas.calculate_data_fee	0	eip4844	Multiply the transaction's total blob gas by the blob gas price derived from excess_blob_gas to get the blob data fee
 vm.gas.calculate_gas_extend_memory	0	-	Initialize the extension total, the cost owed and the current memory size
 vm.gas.calculate_gas_extend_memory	1	-	Skip zero-size extensions and those that fit in the current word-rounded memory
 vm.gas.calculate_gas_extend_memory	2	-	Add the word-rounded growth to the extension size
 vm.gas.calculate_gas_extend_memory	3	-	Charge the memory cost difference between the new and old sizes
 vm.gas.calculate_gas_extend_memory	4	-	Advance the current size to the extended size
 vm.gas.calculate_gas_extend_memory	5	-	Return the total cost and extension size
-vm.gas.calculate_total_blob_gas	0	-	Compute blob gas as PER_BLOB times the number of blob versioned hashes for blob transactions, zero otherwise
+vm.gas.calculate_total_blob_gas	0	eip4844	Compute blob gas as PER_BLOB times the number of blob versioned hashes for blob transactions, zero otherwise
 vm.gas.charge_gas_from_meter	0	-	Raise OutOfGasError if gas_left is less than amount
 vm.gas.charge_gas_from_meter	1	-	Subtract amount from gas_left
-vm.gas.charge_state_gas_from_meter	0	-	If the state gas reservoir covers the amount, deduct it from the reservoir
-vm.gas.charge_state_gas_from_meter	1	-	Otherwise, if reservoir plus gas_left covers it, empty the reservoir, take the remainder from gas_left and add it to state_gas_spilled
-vm.gas.charge_state_gas_from_meter	2	-	Otherwise raise out-of-gas
-vm.gas.check_max_fee_per_blob_gas	0	-	Skip the check for transactions without blobs
-vm.gas.check_max_fee_per_blob_gas	1	-	Compute the blob gas price from the block's excess blob gas
-vm.gas.check_max_fee_per_blob_gas	2	-	Reject if max fee per blob gas is below the blob gas price
-vm.gas.credit_state_gas_refund	0	-	Refund to gas_left up to the spilled state gas and reduce the spill by that amount
-vm.gas.credit_state_gas_refund	1	-	Credit the remainder of the refund to the state gas reservoir
-vm.gas.forfeit_remaining_gas	0	-	Check that no state gas spill is outstanding
-vm.gas.forfeit_remaining_gas	1	-	Burn all remaining execution gas
-vm.gas.repay_state_gas_spill	0	-	Compute repayment as the smaller of the state gas reservoir and the outstanding spill
-vm.gas.repay_state_gas_spill	1	-	Credit the repayment back to gas_left
-vm.gas.repay_state_gas_spill	2	-	Deduct the repayment from the reservoir and from the outstanding spill
-vm.gas.repay_state_gas_spill	3	-	Check that the reservoir or the spill is now zero
-vm.gas.restore_state_gas	0	-	Credit the spilled state gas back to gas_left and zero the spill
-vm.gas.restore_state_gas	1	-	Reset the state gas reservoir to the frame's baseline
-vm.gas.restore_state_gas	2	-	Discard the refunds accrued in the frame
-vm.gas.settle_transaction_gas	0	eip7778	Compute pre-refund gas used: gas limit minus returned execution gas and state gas reservoir
-vm.gas.settle_transaction_gas	1	eip7778	Cap the refund at one fifth of pre-refund usage and subtract it
-vm.gas.settle_transaction_gas	2	eip7778	Apply the calldata floor: gas used is the larger of post-refund usage and the floor
-vm.gas.settle_transaction_gas	3	eip7778	Clamp net state gas used to zero for block accounting
-vm.gas.settle_transaction_gas	4	eip7778	Compute block execution gas used: pre-refund usage minus state gas, floored at calldata floor
-vm.gas.settle_transaction_gas	5	eip7778	Return settlement with gas used, gas left (limit minus gas used) and per-dimension amounts
-vm.instructions.storage.sload	0	-	Pop the storage key from the stack
-vm.instructions.storage.sload	1	-	Charge warm or cold storage access gas, marking the slot as accessed if cold
-vm.instructions.storage.sload	2	-	Read the slot value from the current account's storage and push it
-vm.instructions.storage.sload	3	-	Advance the program counter by one
-vm.instructions.storage.tload	0	-	Pop the storage key from the stack
-vm.instructions.storage.tload	1	-	Charge the TLOAD gas cost
-vm.instructions.storage.tload	2	-	Read the key's value from the current account's transient storage and push it
-vm.instructions.storage.tload	3	-	Advance the program counter by one
-vm.instructions.system.call	0	-	Pop call arguments and reject value transfer in static context
-vm.instructions.system.call	1	-	Price memory expansion, cold/warm access and value transfer, and check affordability before state access
-vm.instructions.system.call	2	-	Warm target, resolve delegation (adding its access cost and warming the code address), load code and charge execution gas
-vm.instructions.system.call	3	-	Charge new-account state gas when value goes to a dead account
-vm.instructions.system.call	4	-	Compute and charge child gas (63/64 rule plus stipend) and drain the state gas reservoir to the child
-vm.instructions.system.call	5	-	Expand memory, run the message call with the sender-balance check, and advance the PC
-vm.instructions.system.create	0	-	Reject CREATE in a static context
-vm.instructions.system.create	1	-	Pop endowment, memory offset and init code size from the stack
-vm.instructions.system.create	2	-	Charge CREATE base, memory expansion and init code word gas
-vm.instructions.system.create	3	-	Fail if init code size exceeds MAX_INIT_CODE_SIZE
-vm.instructions.system.create	4	-	Expand memory and derive contract address from sender address and nonce
-vm.instructions.system.create	5	-	Run generic contract creation and advance the program counter
-vm.instructions.system.delegatecall	0	-	Pop gas, code address and memory input/output ranges from the stack
-vm.instructions.system.delegatecall	1	-	Price memory expansion and warm/cold account access, check it is affordable before touching state
-vm.instructions.system.delegatecall	2	-	Mark address accessed, resolve EIP-7702 delegation, add its access cost and recheck gas
-vm.instructions.system.delegatecall	3	-	Load the code of the resolved code address
-vm.instructions.system.delegatecall	4	-	Compute and charge call gas with the 63/64 child grant, drain the state gas reservoir for the child
-vm.instructions.system.delegatecall	5	-	Expand memory and run the child call in the current context with caller and value inherited, no value transfer, then advance pc
-vm.instructions.system.generic_create	0	-	Read init code from memory and clear return data
-vm.instructions.system.generic_create	1	-	Preflight: push 0 and abort if sender balance < endowment, sender nonce maxed, or depth limit exceeded
-vm.instructions.system.generic_create	2	-	Mark destination accessed and charge new-account state gas if it is not alive
-vm.instructions.system.generic_create	3	-	Withhold all but 1/64 of gas for the child; on address collision bump sender nonce, push 0 and return
-vm.instructions.system.generic_create	4	-	Drain state gas reservoir, increment sender nonce, and run the child create frame with init code
-vm.instructions.system.generic_create	5	-	Incorporate child result: on error refund new-account state gas, set return data and push 0; else push new address
-vm.instructions.system.revert	0	-	Pop memory offset and size from the stack
-vm.instructions.system.revert	1	-	Charge gas for memory expansion
-vm.instructions.system.revert	2	-	Expand memory and copy the revert data into the frame output
-vm.instructions.system.revert	3	-	Halt execution and revert the frame's state changes
-vm.interpreter.charge_value_transfer_to_non_alive_account	0	-	Charge NEW_ACCOUNT state gas when a non-zero value transfer goes to a non-alive recipient
-vm.interpreter.process_call	0	-	Check call depth against the stack depth limit
-vm.interpreter.process_call	1	-	Snapshot transaction state
-vm.interpreter.process_call	2	-	Transfer value from caller to target (emit transfer log if distinct)
-vm.interpreter.process_call	3	-	Run precompile or interpret code opcode by opcode
-vm.interpreter.process_call	4	-	On exceptional halt restore state gas and forfeit remaining gas, clearing output; on revert restore state gas only
-vm.interpreter.process_call	5	-	Roll back transaction state to snapshot on error
+vm.gas.charge_state_gas_from_meter	0	eip8037	If the state gas reservoir covers the amount, deduct it from the reservoir
+vm.gas.charge_state_gas_from_meter	1	eip8037	Otherwise, if reservoir plus gas_left covers it, empty the reservoir, take the remainder from gas_left and add it to state_gas_spilled
+vm.gas.charge_state_gas_from_meter	2	eip8037	Otherwise raise out-of-gas
+vm.gas.check_max_fee_per_blob_gas	0	eip4844	Skip the check for transactions without blobs
+vm.gas.check_max_fee_per_blob_gas	1	eip4844	Compute the blob gas price from the block's excess blob gas
+vm.gas.check_max_fee_per_blob_gas	2	eip4844	Reject if max fee per blob gas is below the blob gas price
+vm.gas.credit_state_gas_refund	0	eip8037	Refund to gas_left up to the spilled state gas and reduce the spill by that amount
+vm.gas.credit_state_gas_refund	1	eip8037	Credit the remainder of the refund to the state gas reservoir
+vm.gas.forfeit_remaining_gas	0	eip8037	Check that no state gas spill is outstanding
+vm.gas.forfeit_remaining_gas	1	eip8037	Burn all remaining execution gas
+vm.gas.repay_state_gas_spill	0	eip8037	Compute repayment as the smaller of the state gas reservoir and the outstanding spill
+vm.gas.repay_state_gas_spill	1	eip8037	Credit the repayment back to gas_left
+vm.gas.repay_state_gas_spill	2	eip8037	Deduct the repayment from the reservoir and from the outstanding spill
+vm.gas.repay_state_gas_spill	3	eip8037	Check that the reservoir or the spill is now zero
+vm.gas.restore_state_gas	0	eip8037	Credit the spilled state gas back to gas_left and zero the spill
+vm.gas.restore_state_gas	1	eip8037	Reset the state gas reservoir to the frame's baseline
+vm.gas.restore_state_gas	2	eip8037	Discard the refunds accrued in the frame
+vm.gas.settle_transaction_gas	0	eip3529,eip7623,eip7778,eip8037	Compute pre-refund gas used: gas limit minus returned execution gas and state gas reservoir
+vm.gas.settle_transaction_gas	1	eip3529,eip7623,eip7778,eip8037	Cap the refund at one fifth of pre-refund usage and subtract it
+vm.gas.settle_transaction_gas	2	eip3529,eip7623,eip7778,eip8037	Apply the calldata floor: gas used is the larger of post-refund usage and the floor
+vm.gas.settle_transaction_gas	3	eip3529,eip7623,eip7778,eip8037	Clamp net state gas used to zero for block accounting
+vm.gas.settle_transaction_gas	4	eip3529,eip7623,eip7778,eip8037	Compute block execution gas used: pre-refund usage minus state gas, floored at calldata floor
+vm.gas.settle_transaction_gas	5	eip3529,eip7623,eip7778,eip8037	Return settlement with gas used, gas left (limit minus gas used) and per-dimension amounts
+vm.instructions.storage.sload	0	eip2929	Pop the storage key from the stack
+vm.instructions.storage.sload	1	eip2929	Charge warm or cold storage access gas, marking the slot as accessed if cold
+vm.instructions.storage.sload	2	eip2929	Read the slot value from the current account's storage and push it
+vm.instructions.storage.sload	3	eip2929	Advance the program counter by one
+vm.instructions.storage.tload	0	eip1153	Pop the storage key from the stack
+vm.instructions.storage.tload	1	eip1153	Charge the TLOAD gas cost
+vm.instructions.storage.tload	2	eip1153	Read the key's value from the current account's transient storage and push it
+vm.instructions.storage.tload	3	eip1153	Advance the program counter by one
+vm.instructions.system.call	0	eip161,eip214,eip2929,eip7702,eip7928,eip8037	Pop call arguments and reject value transfer in static context
+vm.instructions.system.call	1	eip161,eip214,eip2929,eip7702,eip7928,eip8037	Price memory expansion, cold/warm access and value transfer, and check affordability before state access
+vm.instructions.system.call	2	eip161,eip214,eip2929,eip7702,eip7928,eip8037	Warm target, resolve delegation (adding its access cost and warming the code address), load code and charge execution gas
+vm.instructions.system.call	3	eip161,eip214,eip2929,eip7702,eip7928,eip8037	Charge new-account state gas when value goes to a dead account
+vm.instructions.system.call	4	eip161,eip214,eip2929,eip7702,eip7928,eip8037	Compute and charge child gas (63/64 rule plus stipend) and drain the state gas reservoir to the child
+vm.instructions.system.call	5	eip161,eip214,eip2929,eip7702,eip7928,eip8037	Expand memory, run the message call with the sender-balance check, and advance the PC
+vm.instructions.system.create	0	eip214,eip3860	Reject CREATE in a static context
+vm.instructions.system.create	1	eip214,eip3860	Pop endowment, memory offset and init code size from the stack
+vm.instructions.system.create	2	eip214,eip3860	Charge CREATE base, memory expansion and init code word gas
+vm.instructions.system.create	3	eip214,eip3860	Fail if init code size exceeds MAX_INIT_CODE_SIZE
+vm.instructions.system.create	4	eip214,eip3860	Expand memory and derive contract address from sender address and nonce
+vm.instructions.system.create	5	eip214,eip3860	Run generic contract creation and advance the program counter
+vm.instructions.system.delegatecall	0	eip7,eip150,eip2929,eip7702,eip7928,eip8037	Pop gas, code address and memory input/output ranges from the stack
+vm.instructions.system.delegatecall	1	eip7,eip150,eip2929,eip7702,eip7928,eip8037	Price memory expansion and warm/cold account access, check it is affordable before touching state
+vm.instructions.system.delegatecall	2	eip7,eip150,eip2929,eip7702,eip7928,eip8037	Mark address accessed, resolve EIP-7702 delegation, add its access cost and recheck gas
+vm.instructions.system.delegatecall	3	eip7,eip150,eip2929,eip7702,eip7928,eip8037	Load the code of the resolved code address
+vm.instructions.system.delegatecall	4	eip7,eip150,eip2929,eip7702,eip7928,eip8037	Compute and charge call gas with the 63/64 child grant, drain the state gas reservoir for the child
+vm.instructions.system.delegatecall	5	eip7,eip150,eip2929,eip7702,eip7928,eip8037	Expand memory and run the child call in the current context with caller and value inherited, no value transfer, then advance pc
+vm.instructions.system.generic_create	0	eip150,eip211,eip684,eip2681,eip2929,eip7610,eip8037	Read init code from memory and clear return data
+vm.instructions.system.generic_create	1	eip150,eip211,eip684,eip2681,eip2929,eip7610,eip8037	Preflight: push 0 and abort if sender balance < endowment, sender nonce maxed, or depth limit exceeded
+vm.instructions.system.generic_create	2	eip150,eip211,eip684,eip2681,eip2929,eip7610,eip8037	Mark destination accessed and charge new-account state gas if it is not alive
+vm.instructions.system.generic_create	3	eip150,eip211,eip684,eip2681,eip2929,eip7610,eip8037	Withhold all but 1/64 of gas for the child; on address collision bump sender nonce, push 0 and return
+vm.instructions.system.generic_create	4	eip150,eip211,eip684,eip2681,eip2929,eip7610,eip8037	Drain state gas reservoir, increment sender nonce, and run the child create frame with init code
+vm.instructions.system.generic_create	5	eip150,eip211,eip684,eip2681,eip2929,eip7610,eip8037	Incorporate child result: on error refund new-account state gas, set return data and push 0; else push new address
+vm.instructions.system.revert	0	eip140	Pop memory offset and size from the stack
+vm.instructions.system.revert	1	eip140	Charge gas for memory expansion
+vm.instructions.system.revert	2	eip140	Expand memory and copy the revert data into the frame output
+vm.instructions.system.revert	3	eip140	Halt execution and revert the frame's state changes
+vm.interpreter.charge_value_transfer_to_non_alive_account	0	eip161,eip8037	Charge NEW_ACCOUNT state gas when a non-zero value transfer goes to a non-alive recipient
+vm.interpreter.process_call	0	eip7708,eip8037	Check call depth against the stack depth limit
+vm.interpreter.process_call	1	eip7708,eip8037	Snapshot transaction state
+vm.interpreter.process_call	2	eip7708,eip8037	Transfer value from caller to target (emit transfer log if distinct)
+vm.interpreter.process_call	3	eip7708,eip8037	Run precompile or interpret code opcode by opcode
+vm.interpreter.process_call	4	eip7708,eip8037	On exceptional halt restore state gas and forfeit remaining gas, clearing output; on revert restore state gas only
+vm.interpreter.process_call	5	eip7708,eip8037	Roll back transaction state to snapshot on error
