@@ -5,6 +5,8 @@ from pathlib import Path
 
 from . import config as config_module
 from . import index
+from .build import build as build_tree
+from .build import render_tsv, tsv_target
 from .evaluate import evaluate
 from .link import Settings, link
 from .lookup import diff, find
@@ -87,6 +89,22 @@ def main() -> None:
     commands.add_parser("render", help="write data/MAP.md")
     commands.add_parser("eval", help="score the map against eval/gold.toml")
 
+    builder = commands.add_parser(
+        "build", help="map spec functions as step tables (agent, calls, judge)"
+    )
+    builder.add_argument(
+        "--only", default="", help="spec ids, comma separated"
+    )
+    builder.add_argument("--modules", default="", help="spec module prefixes")
+    builder.add_argument("--clients", default="", help="comma separated")
+    builder.add_argument("--workers", type=int, default=4)
+    builder.add_argument(
+        "--rejudge",
+        action="store_true",
+        help="judge existing tables again from their matches, no search",
+    )
+    commands.add_parser("tsv", help="write map.tsv from data/tree.json")
+
     args = parser.parse_args()
     config = config_module.load(args.config)
 
@@ -132,6 +150,17 @@ def main() -> None:
         render_markdown(config)
     elif args.command == "eval":
         evaluate(config)
+    elif args.command == "build":
+        build_tree(
+            config,
+            split(args.only),
+            split(args.modules),
+            split(args.clients),
+            args.workers,
+            args.rejudge,
+        )
+    elif args.command == "tsv":
+        render_tsv(config, tsv_target(config))
 
 
 def split(value: str) -> list[str]:
