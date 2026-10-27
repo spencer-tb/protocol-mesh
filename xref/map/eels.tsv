@@ -1,4 +1,57 @@
 # eels	step	eips	what it does
+block_access_lists._build_from_builder	0	-	Sort each storage slot's changes by block access index
+block_access_lists._build_from_builder	1	-	Keep storage reads only for slots with no storage changes
+block_access_lists._build_from_builder	2	-	Sort balance, nonce and code changes by block access index
+block_access_lists._build_from_builder	3	-	Sort storage changes by slot and storage reads lexicographically
+block_access_lists._build_from_builder	4	-	Assemble the account's changes and add them to the list
+block_access_lists._build_from_builder	5	-	Sort accounts by address
+block_access_lists._get_pre_tx_account	0	-	Look up the account in the cumulative pre-transaction state, falling back to the block pre-state (None if it does not exist)
+block_access_lists._get_pre_tx_storage	0	-	Return the value written earlier in the block for this address and key
+block_access_lists._get_pre_tx_storage	1	-	Return zero if the address's storage was wiped earlier in the block
+block_access_lists._get_pre_tx_storage	2	-	Otherwise read the storage value from the pre-block state
+block_access_lists._index_start_account	0	-	Capture the account's state at the start of the current block access index on first use (from cumulative block state or pre-state)
+block_access_lists._index_start_account	1	-	Return the cached index-start account
+block_access_lists._index_start_storage	0	-	On first use at the current block access index, capture the storage slot's pre-transaction value into the index-start cache
+block_access_lists._index_start_storage	1	-	Return the cached index-start storage value
+block_access_lists.add_balance_change	0	-	Ensure the account has an entry in the block access list builder
+block_access_lists.add_balance_change	1	-	If a balance change already exists for this block access index, overwrite its post-balance and stop
+block_access_lists.add_balance_change	2	-	Otherwise append a new balance change with the index and post-balance
+block_access_lists.add_code_change	0	-	Ensure the account has an entry in the block access list builder
+block_access_lists.add_code_change	1	-	If a code change already exists at this block access index, replace it with the new code
+block_access_lists.add_code_change	2	-	Otherwise append a new code change for this block access index
+block_access_lists.add_nonce_change	0	-	Ensure the account has an entry in the block access list builder
+block_access_lists.add_nonce_change	1	-	If a nonce change already exists for this block access index, keep the higher nonce and stop
+block_access_lists.add_nonce_change	2	-	Otherwise append a new nonce change for this block access index
+block_access_lists.add_storage_read	0	eip7928	Ensure the account has an entry in the block access list builder
+block_access_lists.add_storage_read	1	eip7928	Record the storage slot in the account's set of storage reads
+block_access_lists.add_storage_write	0	-	Ensure the account has an entry in the builder
+block_access_lists.add_storage_write	1	-	Create an empty change list for the slot if it has none
+block_access_lists.add_storage_write	2	-	If the slot already has a change at this block access index, overwrite it with the new value
+block_access_lists.add_storage_write	3	-	Otherwise append a new storage change for this index and value
+block_access_lists.add_touched_account	0	-	Ensure the address has an entry in the block access list builder (recorded as accessed with no state changes)
+block_access_lists.build_block_access_list	0	-	Record the block's accumulated storage reads in the access list builder
+block_access_lists.build_block_access_list	1	-	Record the block's touched (read) accounts in the access list builder
+block_access_lists.build_block_access_list	2	-	Build the final sorted block access list from the builder
+block_access_lists.ensure_account	0	-	Add an empty account entry for the address to the block access list builder if it is not already tracked
+block_access_lists.hash_block_access_list	0	-	Hash the RLP encoding of the block access list with keccak256
+block_access_lists.remove_balance_change	0	-	Return early if the account has no entry in the builder
+block_access_lists.remove_balance_change	1	-	Remove the account's balance changes recorded at the given block access index
+block_access_lists.remove_code_change	0	-	Return early if the account has no entry in the builder
+block_access_lists.remove_code_change	1	-	Remove the account's code changes recorded at the given block access index
+block_access_lists.remove_nonce_change	0	-	Do nothing if the account has no entry in the block access list builder
+block_access_lists.remove_nonce_change	1	-	Remove the account's nonce changes recorded at this block access index
+block_access_lists.remove_storage_write	0	-	Return early if the account or slot has no recorded storage changes
+block_access_lists.remove_storage_write	1	-	Remove the slot's storage changes recorded at this block access index
+block_access_lists.remove_storage_write	2	-	Delete the slot's entry if no storage changes remain
+block_access_lists.update_builder_from_tx	0	eip7928	Get the block state and current block access index
+block_access_lists.update_builder_from_tx	1	eip7928	For each written account, load its state at the start of the index
+block_access_lists.update_builder_from_tx	2	eip7928	Record the balance change if the balance differs, otherwise drop any recorded one
+block_access_lists.update_builder_from_tx	3	eip7928	Record the nonce change if the nonce differs, otherwise drop any recorded one
+block_access_lists.update_builder_from_tx	4	eip7928	Record the new code if the code hash differs, otherwise drop any recorded code change
+block_access_lists.update_builder_from_tx	5	eip7928	For each written storage slot, record the write if the value differs from the index start, otherwise drop any recorded one
+block_access_lists.validate_block_access_list_gas_limit	0	-	Count one item per account address in the block access list
+block_access_lists.validate_block_access_list_gas_limit	1	-	Count each account's unique storage keys across storage changes and reads
+block_access_lists.validate_block_access_list_gas_limit	2	-	Reject the block if the item count exceeds block_gas_limit // BLOCK_ACCESS_LIST_ITEM
 fork.apply_body	0	eip2935,eip4788,eip7928	Run the system calls that store the parent beacon block root (EIP-4788) and the parent block hash (EIP-2935)
 fork.apply_body	1	eip2935,eip4788,eip7928	Decode and execute each transaction in order
 fork.apply_body	2	eip2935,eip4788,eip7928	Set the block access list index to N+1 for post-execution operations
@@ -37,6 +90,18 @@ fork.state_transition	0	-	Build chain context: chain id, last 256 block hashes, 
 fork.state_transition	1	-	Execute the block against the current state to get the state diff
 fork.state_transition	2	-	Apply the block's state diff to the chain state
 fork.state_transition	3	-	Append the block to the chain and keep only the last 255 blocks
+state_tracker.copy_tx_state	0	-	Snapshot the transaction state: deep-copy account, storage and code writes, storage clears and transient storage so they can be rolled back
+state_tracker.copy_tx_state	1	-	Share the parent, created accounts, storage reads and account reads with the snapshot so they are not rolled back
+state_tracker.get_pre_state_account	0	-	Look up the account as it was before the current transaction, defaulting to EMPTY_ACCOUNT if none existed
+state_tracker.incorporate_tx_into_block	0	-	Update the BAL builder by diffing the transaction's writes against the block state
+state_tracker.incorporate_tx_into_block	1	-	Merge the transaction's storage and account reads into the block read sets
+state_tracker.incorporate_tx_into_block	2	-	Merge account writes into block state
+state_tracker.incorporate_tx_into_block	3	-	Apply storage clears, dropping the block's earlier storage writes for cleared accounts
+state_tracker.incorporate_tx_into_block	4	-	Merge storage slot writes and code writes into block state
+state_tracker.incorporate_tx_into_block	5	-	Reset the transaction state, including transient storage, for reuse
+state_tracker.modify_state	0	-	Apply the modification to the account and write it back to the transaction state
+state_tracker.modify_state	1	-	Destroy the account if it exists and is empty (zero nonce, zero balance, no code)
+state_tracker.restore_tx_state	0	-	Restore the transaction's account, storage, code, storage-clear and transient-storage writes from the snapshot
 transactions.calculate_effective_gas_price	0	eip1559	Fee-market tx: check max fee per gas covers the base fee
 transactions.calculate_effective_gas_price	1	eip1559	Fee-market tx: compute priority fee as min of max priority fee and max fee minus base fee, and return base fee plus priority fee
 transactions.calculate_effective_gas_price	2	eip1559	Legacy-priced tx: check gas price covers the base fee and return gas price
