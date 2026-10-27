@@ -5,11 +5,12 @@ never read a file whole:
 
     rg calculate_intrinsic_cost xref/map/     every client, one call
     rg IntrinsicGas xref/map/                 which EELS function a client function is
+    rg eip7702 xref/map/eels.tsv              the EELS functions for an EIP, then grep those
 
 `eels.tsv` lists each EELS function's steps once:
 
-| eels | step | what it does |
-|---|---|---|
+| eels | step | eips | what it does |
+|---|---|---|---|
 
 Each client has its own file, one row per client function:
 
@@ -17,6 +18,9 @@ Each client has its own file, one row per client function:
 |---|---|---|---|---|
 
 - `steps` are ids from `eels.tsv`.
+- `eips` are the EIPs the EELS function's code and docstrings name. A
+  function that implements an EIP without naming it is not tagged, so fall
+  back to searching when an EIP's list looks short.
 - `role` is `entry` (the main function), `part` (does some steps),
   `inlined` (the steps sit inside a function doing other work),
   `delegated` (the code belongs to another EELS function, `location` says
