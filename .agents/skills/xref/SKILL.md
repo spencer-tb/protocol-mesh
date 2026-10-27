@@ -11,9 +11,9 @@ commit-pinned links. Run it from the protocol-mesh directory.
 
 ## Start with the map
 
-`rg <spec function or client function> xref/map/` answers in one call for
-every client: the client functions behind each step of the spec function,
-the steps a client lacks, and code that belongs to another spec function.
+`rg <EELS function or client function> xref/map/` answers in one call for
+every client: the client functions behind each step of the EELS function,
+the steps a client lacks, and code that belongs to another EELS function.
 `xref/map/README.md` explains the columns. Never read a map file whole.
 Open the listed lines before claiming anything about them.
 

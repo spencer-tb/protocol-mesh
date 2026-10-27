@@ -1,4 +1,4 @@
-# spec	steps	role	location	function
+# eels	steps	role	location	function
 fork.apply_body	0,1,3,4	entry	alloy-evm/crates/evm/src/block/mod.rs:449-463	BlockExecutor.execute_block
 fork.apply_body	0	part	alloy-evm/crates/evm/src/eth/block.rs:182-188	EthBlockExecutor.apply_pre_execution_changes
 fork.apply_body	2	part	repos/clients/reth/crates/ethereum/evm/src/executor.rs:191-196	EthBlockExecutor.set_transaction_block_access_index

@@ -644,7 +644,7 @@ def render_tsv(config: Config, target: Path) -> None:
     """
     Write the map as grep-able files in `target`.
 
-    `spec.tsv` lists each spec function's steps once. Each client gets its
+    `eels.tsv` lists each EELS function's steps once. Each client gets its
     own file with one row per client function, pointing at step ids, plus
     a row for the steps it lacks.
     """
@@ -654,9 +654,9 @@ def render_tsv(config: Config, target: Path) -> None:
         for name, where in config.checkouts.items()
     }
     target.mkdir(parents=True, exist_ok=True)
-    spec_rows = ["# spec\tstep\twhat it does"]
+    spec_rows = ["# eels\tstep\twhat it does"]
     client_rows: dict[str, list[str]] = defaultdict(
-        lambda: ["# spec\tsteps\trole\tlocation\tfunction"]
+        lambda: ["# eels\tsteps\trole\tlocation\tfunction"]
     )
     for spec_id, entry in sorted(data["entries"].items()):
         for step in entry.get("steps", []):
@@ -681,7 +681,7 @@ def render_tsv(config: Config, target: Path) -> None:
             if table.get("missing"):
                 missing = ",".join(str(step) for step in table["missing"])
                 rows.append(f"{spec_id}\t{missing}\tmissing\t-\t-")
-    (target / "spec.tsv").write_text("\n".join(spec_rows) + "\n")
+    (target / "eels.tsv").write_text("\n".join(spec_rows) + "\n")
     for client, rows in sorted(client_rows.items()):
         (target / f"{client}.tsv").write_text("\n".join(rows) + "\n")
         print(f"{client:<12} {len(rows) - 1} rows")
