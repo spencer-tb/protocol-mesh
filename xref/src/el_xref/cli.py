@@ -103,7 +103,7 @@ def main() -> None:
         action="store_true",
         help="judge existing tables again from their matches, no search",
     )
-    commands.add_parser("tsv", help="write map.tsv from data/tree.json")
+    commands.add_parser("tsv", help="write map/ from data/tree.json")
 
     args = parser.parse_args()
     config = config_module.load(args.config)

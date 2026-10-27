@@ -9,6 +9,14 @@ description: Find where each execution client (geth, reth and revm, nethermind, 
 (amsterdam) to the client functions that implement it, with
 commit-pinned links. Run it from the protocol-mesh directory.
 
+## Start with the map
+
+`rg <spec function or client function> xref/map/` answers in one call for
+every client: the client functions behind each step of the spec function,
+the steps a client lacks, and code that belongs to another spec function.
+`xref/map/README.md` explains the columns. Never read a map file whole.
+Open the listed lines before claiming anything about them.
+
 ## Commands
 
 - `./xref.sh show <spec fn>`: client locations from the shared map.
