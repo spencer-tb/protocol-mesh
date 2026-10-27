@@ -1,7 +1,36 @@
 # protocol-mesh
 
-One command to set up a workspace where agents work on EIPs across the spec,
-the tests and every execution client.
+A shared workspace where execution layer client developers, researchers and
+their agents work on EIPs together. It brings the spec (EELS), every EL
+client and EVM, hive, the ethPandaOps tooling and the EIPs into one place,
+with skills to move through all of it.
+
+The aim is faster EIP development, for Hegota, I* and older forks:
+
+- Find holes in an EIP, its spec or a client sooner, by checking against
+  every EL client in minutes rather than days.
+- Stop duplicating work. Today several people redo the same EIP work in
+  separate places. Here it is pooled and built on.
+- Build tooling that everyone can use to do things fast.
+
+It runs on everyone's own machine and on GitHub, and joining is opt in. It is
+execution layer only for now. If it works, a consensus layer version follows.
+
+## Where it is going
+
+First, validation that is easy to run and to repeat:
+
+- A recipe for every kind of check, "to validate X, run Y, then Z", written
+  into `AGENTS.md` and the skills.
+- Fast, throwaway runs that reproduce a finding with low token use.
+- Findings ranked and verified before anyone acts on them, with templated
+  output so agent work stays easy to review.
+
+Then coordination: agents post verified findings as issues for the team
+that owns the fix, and that team or its agent fixes it in its own repo.
+
+Today it holds the setup, the context skills and a review profile that a
+review agent runs on.
 
 ## Setup
 
