@@ -1,4 +1,4 @@
-# spec	step	what it does
+# eels	step	what it does
 fork.apply_body	0	Run the system calls that store the parent beacon block root (EIP-4788) and the parent block hash (EIP-2935)
 fork.apply_body	1	Decode and execute each transaction in order
 fork.apply_body	2	Set the block access list index to N+1 for post-execution operations

@@ -1,4 +1,4 @@
-# spec	steps	role	location	function
+# eels	steps	role	location	function
 fork.apply_body	0,1,2,3,4,5	entry	repos/clients/go-ethereum/core/state_processor.go:68-165	StateProcessor.Process
 fork.apply_body	0,1,2	part	repos/clients/go-ethereum/core/state_processor_parallel.go:133-335	StateProcessor.processParallel
 fork.apply_body	0	part	repos/clients/go-ethereum/core/state_processor.go:168-185	PreExecution

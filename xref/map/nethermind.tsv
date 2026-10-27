@@ -1,4 +1,4 @@
-# spec	steps	role	location	function
+# eels	steps	role	location	function
 fork.apply_body	0,1	entry	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Processing/BlockProcessor.cs:211-244	BlockProcessor.ProcessBlock
 fork.apply_body	1	part	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Processing/BlockProcessor.BlockValidationTransactionsExecutor.cs:37-61	BlockProcessor.BlockValidationTransactionsExecutor.ProcessTransactions
 fork.apply_body	3,4,5	part	repos/clients/nethermind/src/Nethermind/Nethermind.Consensus/Processing/BlockProcessor.cs:254-344	BlockProcessor.FinalizeBlock
