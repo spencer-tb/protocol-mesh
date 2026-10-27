@@ -104,6 +104,12 @@ def main() -> None:
         action="store_true",
         help="judge existing tables again from their matches, no search",
     )
+    builder.add_argument(
+        "--max-usd",
+        type=float,
+        default=0.0,
+        help="start no new pair once this much is spent, 0 = no cap",
+    )
     commands.add_parser("tsv", help="write map/ from data/tree.json")
     tagger = commands.add_parser(
         "tag", help="tag spec functions with the EIPs they implement"
@@ -165,6 +171,7 @@ def main() -> None:
             split(args.clients),
             args.workers,
             args.rejudge,
+            args.max_usd,
         )
     elif args.command == "tsv":
         render_tsv(config, tsv_target(config))

@@ -18,6 +18,7 @@ file per client, for agents to grep.
 import fnmatch
 import json
 import subprocess
+import threading
 import time
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor
@@ -682,12 +683,14 @@ def build(
     clients: list[str],
     workers: int,
     rejudge: bool = False,
+    max_usd: float = 0.0,
 ) -> None:
     """
     Build step tables for the chosen spec functions and clients.
 
     With `rejudge`, judge existing tables again from their matches,
-    without a search.
+    without a search. With `max_usd`, start no new pair once that much is
+    spent, so the pairs already running can overshoot it a little.
     """
     every = load(index_path(config, config.spec.repo))
     specs = [s for s in select_specs(every, modules, only) if is_spec(s)]
@@ -721,8 +724,13 @@ def build(
             or current(s, n).get("pipeline") != PIPELINE
         ]
 
-    def one(item: tuple[Symbol, str]) -> tuple[Symbol, str, Json]:
+    spent = [0.0]
+    lock = threading.Lock()
+
+    def one(item: tuple[Symbol, str]) -> tuple[Symbol, str, Json | None]:
         spec, n = item
+        if max_usd and spent[0] >= max_usd:
+            return spec, n, None
         earlier = current(spec, n).get("matches") if rejudge else None
         reference = None
         if n != REFERENCE:
@@ -744,6 +752,8 @@ def build(
             )
         except RuntimeError as error:
             return spec, n, {"error": str(error)[:300]}
+        with lock:
+            spent[0] += table.get("cost_usd", 0)
         return spec, n, table | {"spec_hash": spec.hash, "pipeline": PIPELINE}
 
     first = [item for item in todo if item[1] == REFERENCE]
@@ -753,6 +763,8 @@ def build(
         with ThreadPoolExecutor(workers) as pool:
             for spec, n, table in pool.map(one, batch):
                 done += 1
+                if table is None:
+                    continue
                 entries[spec.id].setdefault("clients", {})[n] = table
                 path.write_text(json.dumps(data, indent=1))
                 print(
@@ -761,6 +773,10 @@ def build(
                     f"${table.get('cost_usd', 0):.2f} "
                     f"{table.get('search_seconds', 0):.0f}s searching"
                 )
+    capped = (
+        " (cap reached, rerun to go on)" if spent[0] >= max_usd > 0 else ""
+    )
+    print(f"spent ${spent[0]:.2f}{capped}")
 
 
 def render_tsv(config: Config, target: Path) -> None:
