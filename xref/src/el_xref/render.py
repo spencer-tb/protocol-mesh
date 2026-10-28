@@ -1,7 +1,9 @@
-"""Query and render `map.json`."""
+"""Query the latest map and render the legacy Markdown export."""
 
 from .config import Config, Json
 from .link import CONFIDENT, load_map, map_path
+from .mapped import find_ids, location, matches, print_entry, role
+from .mapped import load_map as load_current_map
 
 LINK_LIMIT = 3
 
@@ -14,71 +16,42 @@ def permalink(data: Json, repo: str, path: str, line: int, end: int) -> str:
 
 def find(data: Json, query: str) -> list[str]:
     """Return spec ids equal to, ending with, or containing `query`."""
-    ids = sorted(data["entries"])
-    for test in (
-        lambda i: i == query,
-        lambda i: i.endswith("." + query),
-        lambda i: query in i,
-    ):
-        hits = [i for i in ids if test(i)]
-        if hits:
-            return hits
-    return []
+    return find_ids(data, query)
 
 
 def show(config: Config, query: str, clients: list[str], low: bool) -> None:
     """Print where each client implements the spec functions matching."""
-    data = load_map(config)
+    data = load_current_map(config)
     ids = find(data, query)
     if not ids:
         print(f"no spec function matches {query!r}")
         return
-    spec_repo = data["spec"]["repo"]
     for sid in ids:
-        entry = data["entries"][sid]
-        url = permalink(
-            data, spec_repo, entry["path"], entry["line"], entry["end_line"]
-        )
-        print(f"{sid}\n  spec  {url}")
-        for client, result in sorted(entry["clients"].items()):
-            if clients and client not in clients:
-                continue
-            matches = [
-                m
-                for m in result["matches"]
-                if low or m["confidence"] in CONFIDENT
-            ]
-            if not matches:
-                hint = ", ".join(result.get("hints", [])) or "-"
-                print(f"  {client:<10} no match (hints: {hint})")
-                continue
-            for i, m in enumerate(matches):
-                label = client if i == 0 else ""
-                link = permalink(
-                    data, m["repo"], m["path"], m["line"], m["end_line"]
-                )
-                print(
-                    f"  {label:<10} {m['qualname']}  "
-                    f"[{m['relation']}, {m['confidence']}]\n"
-                    f"  {'':<10} {link}\n"
-                    f"  {'':<10} {m['note']}"
-                )
-        print()
+        print_entry(config, data, sid, clients, low=low, details=True)
 
 
 def where(config: Config, query: str) -> None:
     """Print the spec functions a client function is mapped to."""
-    data = load_map(config)
+    data = load_current_map(config)
     lowered = query.lower()
     found = False
     for sid, entry in sorted(data["entries"].items()):
         for client, result in sorted(entry["clients"].items()):
-            for m in result["matches"]:
+            for m in matches(result):
                 if lowered in m["qualname"].lower() or lowered in m["path"]:
                     found = True
                     print(
                         f"{client:<10} {m['qualname']}  ->  {sid}  "
-                        f"[{m['relation']}, {m['confidence']}]"
+                        f"[{role(m)}, {m['confidence']}]\n"
+                        f"           {location(config, data, m)}"
+                    )
+            for m in result.get("delegated", []):
+                if lowered in m["qualname"].lower() or lowered in m["path"]:
+                    found = True
+                    print(
+                        f"{client:<10} {m['qualname']}  ->  {m['spec']}  "
+                        f"[delegated from {sid}]\n"
+                        f"           {location(config, data, m)}"
                     )
     if not found:
         print(f"no client function matches {query!r}")

@@ -27,6 +27,7 @@ from pathlib import Path
 from .config import Config, Json
 from .index import Symbol, index_path, load, read_body
 from .link import head, select_specs
+from .mapped import location
 
 MODEL = "claude-opus-5-5"
 # The search only has to surface candidates, the Opus judges decide.
@@ -799,10 +800,6 @@ def render_tsv(config: Config, target: Path) -> None:
     a row for the steps it lacks.
     """
     data = json.loads(tree_path(config).read_text())
-    local = {
-        name: Path(where).as_posix().removeprefix("../")
-        for name, where in config.checkouts.items()
-    }
     target.mkdir(parents=True, exist_ok=True)
     # The EIPs each EELS function's code and docstrings name, so a grep for
     # an EIP finds its functions.
@@ -822,18 +819,22 @@ def render_tsv(config: Config, target: Path) -> None:
                 f"{spec_id}\t{step['id']}\t{eips.get(spec_id, '-')}\t"
                 f"{step['text']}"
             )
-        for client, table in sorted(entry.get("clients", {}).items()):
+        for client in sorted(config.clients):
+            table = entry.get("clients", {}).get(client)
             rows = client_rows[client]
+            if table is None or "error" in table:
+                status = "unbuilt" if table is None else "failed"
+                rows.append(f"{spec_id}\t-\t{status}\t-\t-\t-")
+                continue
             for match in table.get("matches", []):
                 if match["confidence"] == "low":
                     continue
-                root = local.get(match["repo"], match["repo"])
                 steps = ",".join(str(step) for step in match["steps"])
                 rows.append(
                     f"{spec_id}\t{steps or '-'}\t{match['role']}\t"
                     f"{match.get('votes', 2)}/2\t"
-                    f"{root}/{match['path']}:{match['line']}-"
-                    f"{match['end_line']}\t{match['qualname']}"
+                    f"{location(config, data, match, relative=True)}\t"
+                    f"{match['qualname']}"
                 )
             for item in table.get("delegated", []):
                 rows.append(

@@ -1,42 +1,42 @@
 # eels	steps	role	votes	location	function
-block_access_lists._build_from_builder	1,3,4,5	entry	2/2	repos/clients/evmone/test/state/bal.cpp:117-147	BalBuilder.build
+block_access_lists._build_from_builder	1,3,4,5	entry	2/2	xref/cache/repos/evmone/test/state/bal.cpp:117-147	BalBuilder.build
 block_access_lists._get_pre_tx_account	0	missing	-	-	-
 block_access_lists._get_pre_tx_storage	0,1,2	missing	-	-	-
-block_access_lists._index_start_account	0	inlined	2/2	repos/clients/evmone/test/state/bal.cpp:68-115	BalBuilder.record_diff
+block_access_lists._index_start_account	0	inlined	2/2	xref/cache/repos/evmone/test/state/bal.cpp:68-115	BalBuilder.record_diff
 block_access_lists._index_start_storage	0,1	missing	-	-	-
-block_access_lists.add_balance_change	1,2	entry	2/2	repos/clients/evmone/test/state/bal.cpp:57-65	record
-block_access_lists.add_balance_change	0	part	2/2	repos/clients/evmone/test/state/bal.cpp:68-115	BalBuilder.record_diff
-block_access_lists.add_code_change	1,2	part	2/2	repos/clients/evmone/test/state/bal.cpp:57-65	record
-block_access_lists.add_code_change	0	inlined	2/2	repos/clients/evmone/test/state/bal.cpp:68-115	BalBuilder.record_diff
-block_access_lists.add_nonce_change	1,2	part	2/2	repos/clients/evmone/test/state/bal.cpp:57-65	record
-block_access_lists.add_nonce_change	0	inlined	2/2	repos/clients/evmone/test/state/bal.cpp:68-115	BalBuilder.record_diff
-block_access_lists.add_storage_read	0,1	inlined	2/2	repos/clients/evmone/test/state/bal.cpp:68-115	BalBuilder.record_diff
-block_access_lists.add_storage_read	1	part	2/2	repos/clients/evmone/test/state/state.cpp:375-438	State.build_diff
-block_access_lists.add_storage_write	0,1,3	inlined	2/2	repos/clients/evmone/test/state/bal.cpp:68-115	BalBuilder.record_diff
+block_access_lists.add_balance_change	1,2	entry	2/2	xref/cache/repos/evmone/test/state/bal.cpp:57-65	record
+block_access_lists.add_balance_change	0	part	2/2	xref/cache/repos/evmone/test/state/bal.cpp:68-115	BalBuilder.record_diff
+block_access_lists.add_code_change	1,2	part	2/2	xref/cache/repos/evmone/test/state/bal.cpp:57-65	record
+block_access_lists.add_code_change	0	inlined	2/2	xref/cache/repos/evmone/test/state/bal.cpp:68-115	BalBuilder.record_diff
+block_access_lists.add_nonce_change	1,2	part	2/2	xref/cache/repos/evmone/test/state/bal.cpp:57-65	record
+block_access_lists.add_nonce_change	0	inlined	2/2	xref/cache/repos/evmone/test/state/bal.cpp:68-115	BalBuilder.record_diff
+block_access_lists.add_storage_read	0,1	inlined	2/2	xref/cache/repos/evmone/test/state/bal.cpp:68-115	BalBuilder.record_diff
+block_access_lists.add_storage_read	1	part	2/2	xref/cache/repos/evmone/test/state/state.cpp:375-438	State.build_diff
+block_access_lists.add_storage_write	0,1,3	inlined	2/2	xref/cache/repos/evmone/test/state/bal.cpp:68-115	BalBuilder.record_diff
 block_access_lists.add_storage_write	2	missing	-	-	-
-block_access_lists.add_touched_account	0	inlined	2/2	repos/clients/evmone/test/state/bal.cpp:68-115	BalBuilder.record_diff
-block_access_lists.add_touched_account	0	part	2/2	repos/clients/evmone/test/state/state.cpp:375-438	State.build_diff
-block_access_lists.build_block_access_list	0,1	inlined	2/2	repos/clients/evmone/test/state/bal.cpp:68-115	BalBuilder.record_diff
+block_access_lists.add_touched_account	0	inlined	2/2	xref/cache/repos/evmone/test/state/bal.cpp:68-115	BalBuilder.record_diff
+block_access_lists.add_touched_account	0	part	2/2	xref/cache/repos/evmone/test/state/state.cpp:375-438	State.build_diff
+block_access_lists.build_block_access_list	0,1	inlined	2/2	xref/cache/repos/evmone/test/state/bal.cpp:68-115	BalBuilder.record_diff
 block_access_lists.build_block_access_list	-	delegated	2/2	-> block_access_lists._build_from_builder	BalBuilder.build
 block_access_lists.build_block_access_list	2	missing	-	-	-
-block_access_lists.ensure_account	0	inlined	2/2	repos/clients/evmone/test/state/bal.cpp:68-115	BalBuilder.record_diff
-block_access_lists.hash_block_access_list	0	entry	2/2	repos/clients/evmone/test/state/bal.cpp:38-41	BlockAccessList.hash
-block_access_lists.hash_block_access_list	0	part	2/2	repos/clients/evmone/test/state/bal.cpp:31-36	BlockAccessList.rlp_encode
-block_access_lists.remove_balance_change	1	inlined	2/2	repos/clients/evmone/test/state/bal.cpp:57-65	record
+block_access_lists.ensure_account	0	inlined	2/2	xref/cache/repos/evmone/test/state/bal.cpp:68-115	BalBuilder.record_diff
+block_access_lists.hash_block_access_list	0	entry	2/2	xref/cache/repos/evmone/test/state/bal.cpp:38-41	BlockAccessList.hash
+block_access_lists.hash_block_access_list	0	part	2/2	xref/cache/repos/evmone/test/state/bal.cpp:31-36	BlockAccessList.rlp_encode
+block_access_lists.remove_balance_change	1	inlined	2/2	xref/cache/repos/evmone/test/state/bal.cpp:57-65	record
 block_access_lists.remove_balance_change	0	missing	-	-	-
-block_access_lists.remove_code_change	1	part	2/2	repos/clients/evmone/test/state/bal.cpp:57-65	record
+block_access_lists.remove_code_change	1	part	2/2	xref/cache/repos/evmone/test/state/bal.cpp:57-65	record
 block_access_lists.remove_code_change	0	missing	-	-	-
-block_access_lists.remove_nonce_change	1	part	2/2	repos/clients/evmone/test/state/bal.cpp:57-65	record
+block_access_lists.remove_nonce_change	1	part	2/2	xref/cache/repos/evmone/test/state/bal.cpp:57-65	record
 block_access_lists.remove_nonce_change	0	missing	-	-	-
 block_access_lists.remove_storage_write	0,2	missing	-	-	-
-block_access_lists.update_builder_from_tx	0,1,2,3,4,5	entry	2/2	repos/clients/evmone/test/state/bal.cpp:68-115	BalBuilder.record_diff
-block_access_lists.update_builder_from_tx	2,3,4	part	2/2	repos/clients/evmone/test/state/bal.cpp:57-65	record
-block_access_lists.validate_block_access_list_gas_limit	0,1,2	entry	2/2	repos/clients/evmone/test/state/bal.cpp:43-49	BlockAccessList.exceeds_gas_limit
+block_access_lists.update_builder_from_tx	0,1,2,3,4,5	entry	2/2	xref/cache/repos/evmone/test/state/bal.cpp:68-115	BalBuilder.record_diff
+block_access_lists.update_builder_from_tx	2,3,4	part	2/2	xref/cache/repos/evmone/test/state/bal.cpp:57-65	record
+block_access_lists.validate_block_access_list_gas_limit	0,1,2	entry	2/2	xref/cache/repos/evmone/test/state/bal.cpp:43-49	BlockAccessList.exceeds_gas_limit
 blocks.encode_receipt	0,1	missing	-	-	-
-bloom.add_to_bloom	0,1,2,3	entry	2/2	repos/clients/evmone/test/state/bloom_filter.cpp:16-29	add_to
-bloom.logs_bloom	0,1,2	entry	2/2	repos/clients/evmone/test/state/bloom_filter.cpp:33-44	compute_bloom_filter
+bloom.add_to_bloom	0,1,2,3	entry	2/2	xref/cache/repos/evmone/test/state/bloom_filter.cpp:16-29	add_to
+bloom.logs_bloom	0,1,2	entry	2/2	xref/cache/repos/evmone/test/state/bloom_filter.cpp:33-44	compute_bloom_filter
 bloom.logs_bloom	-	delegated	2/2	-> bloom.add_to_bloom	add_to
-fork.apply_body	0	part	2/2	repos/clients/evmone/test/state/system_contracts.cpp:107-132	system_call_block_start
+fork.apply_body	0	part	2/2	xref/cache/repos/evmone/test/state/system_contracts.cpp:107-132	system_call_block_start
 fork.apply_body	-	delegated	2/2	-> fork.process_transaction	transition
 fork.apply_body	-	delegated	1/2	-> fork.process_unchecked_system_transaction	execute_system_call
 fork.apply_body	-	delegated	2/2	-> fork.process_withdrawals	finalize
@@ -44,15 +44,15 @@ fork.apply_body	-	delegated	2/2	-> fork.process_general_purpose_requests	system_
 fork.apply_body	-	delegated	2/2	-> block_access_lists.build_block_access_list	BalBuilder.build
 fork.apply_body	-	delegated	2/2	-> block_access_lists.validate_block_access_list_gas_limit	BlockAccessList.exceeds_gas_limit
 fork.apply_body	1,2,3,4,5	missing	-	-	-
-fork.calculate_base_fee_per_gas	0,2,3,4	entry	2/2	repos/clients/evmone/test/state/block.cpp:13-39	calc_base_fee
+fork.calculate_base_fee_per_gas	0,2,3,4	entry	2/2	xref/cache/repos/evmone/test/state/block.cpp:13-39	calc_base_fee
 fork.calculate_base_fee_per_gas	1	missing	-	-	-
 fork.check_gas_limit	0,1,2,3	missing	-	-	-
-fork.check_transaction	0,1,2,3,4	entry	2/2	repos/clients/evmone/test/state/state.cpp:648-781	validate_transaction
-fork.check_transaction	5	part	2/2	repos/clients/evmone/test/state/state.cpp:274-293	build_message
+fork.check_transaction	0,1,2,3,4	entry	2/2	xref/cache/repos/evmone/test/state/state.cpp:648-781	validate_transaction
+fork.check_transaction	5	part	2/2	xref/cache/repos/evmone/test/state/state.cpp:274-293	build_message
 fork.check_transaction	-	delegated	2/2	-> transactions.validate_transaction	compute_tx_intrinsic_cost
 fork.check_transaction	-	delegated	2/2	-> transactions.recover_sender	recover_sender
 fork.check_transaction	-	delegated	2/2	-> vm.gas.calculate_total_blob_gas	Transaction.blob_gas_used
-fork.disburse_gas_fees	0,1,2,3	inlined	2/2	repos/clients/evmone/test/state/state.cpp:810-902	transition
+fork.disburse_gas_fees	0,1,2,3	inlined	2/2	xref/cache/repos/evmone/test/state/state.cpp:810-902	transition
 fork.execute_block	-	delegated	2/2	-> block_access_lists.hash_block_access_list	BlockAccessList.hash
 fork.execute_block	-	delegated	2/2	-> state_tracker.extract_block_diff	State.build_diff
 fork.execute_block	-	delegated	2/2	-> bloom.logs_bloom	compute_bloom_filter
@@ -61,293 +61,723 @@ fork.execute_block	0,1,2,3,4,5	missing	-	-	-
 fork.get_last_256_block_hashes	0,1,2	missing	-	-	-
 fork.make_receipt	-	delegated	2/2	-> bloom.logs_bloom	compute_bloom_filter
 fork.make_receipt	1	missing	-	-	-
-fork.process_checked_system_transaction	0,1,2,3	inlined	2/2	repos/clients/evmone/test/state/system_contracts.cpp:134-155	system_call_block_end
+fork.process_checked_system_transaction	0,1,2,3	inlined	2/2	xref/cache/repos/evmone/test/state/system_contracts.cpp:134-155	system_call_block_end
 fork.process_checked_system_transaction	-	delegated	2/2	-> fork.process_unchecked_system_transaction	execute_system_call
 fork.process_checked_system_transaction	-	delegated	2/2	-> state_tracker.get_code	State.get_code
-fork.process_general_purpose_requests	1,2,3,4	entry	2/2	repos/clients/evmone/test/state/system_contracts.cpp:134-155	system_call_block_end
+fork.process_general_purpose_requests	1,2,3,4	entry	2/2	xref/cache/repos/evmone/test/state/system_contracts.cpp:134-155	system_call_block_end
 fork.process_general_purpose_requests	-	delegated	2/2	-> fork.process_checked_system_transaction	execute_system_call
 fork.process_general_purpose_requests	-	delegated	2/2	-> requests.parse_deposit_requests	collect_deposit_requests
 fork.process_general_purpose_requests	0	missing	-	-	-
-fork.process_transaction	2,3,4,5	entry	2/2	repos/clients/evmone/test/state/state.cpp:810-902	transition
-fork.process_transaction	5	part	2/2	repos/clients/evmone/test/state/state.cpp:375-438	State.build_diff
-fork.process_transaction	1	part	1/2	repos/clients/evmone/test/state/state.cpp:648-781	validate_transaction
+fork.process_transaction	2,3,4,5	entry	2/2	xref/cache/repos/evmone/test/state/state.cpp:810-902	transition
+fork.process_transaction	5	part	2/2	xref/cache/repos/evmone/test/state/state.cpp:375-438	State.build_diff
+fork.process_transaction	1	part	1/2	xref/cache/repos/evmone/test/state/state.cpp:648-781	validate_transaction
 fork.process_transaction	-	delegated	2/2	-> vm.interpreter.process_top_level	process_top_level
 fork.process_transaction	-	delegated	1/2	-> vm.interpreter.process_top_level	build_message
 fork.process_transaction	-	delegated	2/2	-> state_tracker.incorporate_tx_into_block	BalBuilder.record_diff
 fork.process_transaction	0	missing	-	-	-
-fork.process_unchecked_system_transaction	1,2	entry	2/2	repos/clients/evmone/test/state/system_contracts.cpp:87-104	execute_system_call
-fork.process_unchecked_system_transaction	0,3	inlined	2/2	repos/clients/evmone/test/state/system_contracts.cpp:107-132	system_call_block_start
-fork.process_withdrawals	2	part	2/2	repos/clients/evmone/test/state/block.hpp:28-31	Withdrawal.get_amount
-fork.process_withdrawals	0,2	inlined	2/2	repos/clients/evmone/test/state/state.cpp:783-808	finalize
+fork.process_unchecked_system_transaction	1,2	entry	2/2	xref/cache/repos/evmone/test/state/system_contracts.cpp:87-104	execute_system_call
+fork.process_unchecked_system_transaction	0,3	inlined	2/2	xref/cache/repos/evmone/test/state/system_contracts.cpp:107-132	system_call_block_start
+fork.process_withdrawals	2	part	2/2	xref/cache/repos/evmone/test/state/block.hpp:28-31	Withdrawal.get_amount
+fork.process_withdrawals	0,2	inlined	2/2	xref/cache/repos/evmone/test/state/state.cpp:783-808	finalize
 fork.process_withdrawals	-	delegated	2/2	-> state_tracker.incorporate_tx_into_block	BalBuilder.record_diff
 fork.process_withdrawals	-	delegated	1/2	-> state_tracker.incorporate_tx_into_block	State.build_diff
 fork.process_withdrawals	1,3	missing	-	-	-
 fork.state_transition	0,1,2,3	missing	-	-	-
-fork.update_sender_state	0,1,2,3	inlined	2/2	repos/clients/evmone/test/state/state.cpp:810-902	transition
+fork.update_sender_state	0,1,2,3	inlined	2/2	xref/cache/repos/evmone/test/state/state.cpp:810-902	transition
 fork.validate_header	-	delegated	2/2	-> vm.gas.calculate_excess_blob_gas	calc_excess_blob_gas
 fork.validate_header	-	delegated	2/2	-> fork.calculate_base_fee_per_gas	calc_base_fee
 fork.validate_header	0,1,2,3,4,5	missing	-	-	-
 fork_types.encode_account	0	missing	-	-	-
-requests.compute_requests_hash	0,1	entry	2/2	repos/clients/evmone/test/state/requests.cpp:18-38	calculate_requests_hash
+requests.compute_requests_hash	0,1	entry	2/2	xref/cache/repos/evmone/test/state/requests.cpp:18-38	calculate_requests_hash
 requests.compute_requests_hash	-	delegated	2/2	-> vm.precompiled_contracts.sha256.sha256	sha256
-requests.extract_deposit_data	0,1,2,3,4,5	inlined	2/2	repos/clients/evmone/test/state/requests.cpp:40-150	collect_deposit_requests
-requests.parse_deposit_requests	0,1,2	entry	2/2	repos/clients/evmone/test/state/requests.cpp:40-150	collect_deposit_requests
-state_tracker.account_deployable	0	entry	2/2	repos/clients/evmone/test/state/host.cpp:87-104	is_create_collision
+requests.extract_deposit_data	0,1,2,3,4,5	inlined	2/2	xref/cache/repos/evmone/test/state/requests.cpp:40-150	collect_deposit_requests
+requests.parse_deposit_requests	0,1,2	entry	2/2	xref/cache/repos/evmone/test/state/requests.cpp:40-150	collect_deposit_requests
+state_tracker.account_deployable	0	entry	2/2	xref/cache/repos/evmone/test/state/host.cpp:87-104	is_create_collision
 state_tracker.account_deployable	-	delegated	1/2	-> state_tracker.get_account	State.get_or_create
-state_tracker.account_exists	0	entry	2/2	repos/clients/evmone/test/state/host.cpp:13-17	Host.account_exists
-state_tracker.account_exists_and_is_empty	1	part	2/2	repos/clients/evmone/test/state/account.hpp:99-102	Account.is_empty
+state_tracker.account_exists	0	entry	2/2	xref/cache/repos/evmone/test/state/host.cpp:13-17	Host.account_exists
+state_tracker.account_exists_and_is_empty	1	part	2/2	xref/cache/repos/evmone/test/state/account.hpp:99-102	Account.is_empty
 state_tracker.account_exists_and_is_empty	0	missing	-	-	-
-state_tracker.clear_account_preserving_balance	1	inlined	2/2	repos/clients/evmone/test/state/state.cpp:375-438	State.build_diff
+state_tracker.clear_account_preserving_balance	1	inlined	2/2	xref/cache/repos/evmone/test/state/state.cpp:375-438	State.build_diff
 state_tracker.clear_account_preserving_balance	0	missing	-	-	-
-state_tracker.copy_tx_state	0	entry	2/2	repos/clients/evmone/test/state/state.hpp:105-105	State.checkpoint
-state_tracker.copy_tx_state	0	part	2/2	repos/clients/evmone/test/state/state.cpp:534-537	State.journal_balance_change
-state_tracker.copy_tx_state	0	part	2/2	repos/clients/evmone/test/state/state.cpp:539-543	State.journal_storage_change
-state_tracker.copy_tx_state	0	part	2/2	repos/clients/evmone/test/state/state.cpp:545-548	State.journal_transient_storage_change
-state_tracker.copy_tx_state	0	part	2/2	repos/clients/evmone/test/state/state.cpp:550-553	State.journal_bump_nonce
+state_tracker.copy_tx_state	0	entry	2/2	xref/cache/repos/evmone/test/state/state.hpp:105-105	State.checkpoint
+state_tracker.copy_tx_state	0	part	2/2	xref/cache/repos/evmone/test/state/state.cpp:534-537	State.journal_balance_change
+state_tracker.copy_tx_state	0	part	2/2	xref/cache/repos/evmone/test/state/state.cpp:539-543	State.journal_storage_change
+state_tracker.copy_tx_state	0	part	2/2	xref/cache/repos/evmone/test/state/state.cpp:545-548	State.journal_transient_storage_change
+state_tracker.copy_tx_state	0	part	2/2	xref/cache/repos/evmone/test/state/state.cpp:550-553	State.journal_bump_nonce
 state_tracker.copy_tx_state	1	missing	-	-	-
-state_tracker.create_ether	0	inlined	2/2	repos/clients/evmone/test/state/state.cpp:783-808	finalize
-state_tracker.destroy_account	0,1	inlined	2/2	repos/clients/evmone/test/state/state.cpp:375-438	State.build_diff
-state_tracker.destroy_storage	0,1	part	2/2	repos/clients/evmone/test/state/state.cpp:375-438	State.build_diff
+state_tracker.create_ether	0	inlined	2/2	xref/cache/repos/evmone/test/state/state.cpp:783-808	finalize
+state_tracker.destroy_account	0,1	inlined	2/2	xref/cache/repos/evmone/test/state/state.cpp:375-438	State.build_diff
+state_tracker.destroy_storage	0,1	part	2/2	xref/cache/repos/evmone/test/state/state.cpp:375-438	State.build_diff
 state_tracker.destroy_storage	2	missing	-	-	-
 state_tracker.get_account	0	missing	-	-	-
 state_tracker.get_account_optional	1,2	missing	-	-	-
-state_tracker.get_code	0,1,2,3	entry	2/2	repos/clients/evmone/test/state/state.cpp:490-499	State.get_code
-state_tracker.get_pre_state_account	0	inlined	2/2	repos/clients/evmone/test/state/bal.cpp:68-115	BalBuilder.record_diff
+state_tracker.get_code	0,1,2,3	entry	2/2	xref/cache/repos/evmone/test/state/state.cpp:490-499	State.get_code
+state_tracker.get_pre_state_account	0	inlined	2/2	xref/cache/repos/evmone/test/state/bal.cpp:68-115	BalBuilder.record_diff
 state_tracker.get_pre_state_account_optional	1	missing	-	-	-
 state_tracker.get_storage	0	missing	-	-	-
 state_tracker.get_storage_original	0,1,2,3	missing	-	-	-
-state_tracker.get_transient_storage	0	entry	2/2	repos/clients/evmone/test/state/host.cpp:416-421	Host.get_transient_storage
+state_tracker.get_transient_storage	0	entry	2/2	xref/cache/repos/evmone/test/state/host.cpp:416-421	Host.get_transient_storage
 state_tracker.incorporate_tx_into_block	-	delegated	2/2	-> block_access_lists.update_builder_from_tx	BalBuilder.record_diff
 state_tracker.incorporate_tx_into_block	-	delegated	1/2	-> block_access_lists.update_builder_from_tx	record
 state_tracker.incorporate_tx_into_block	0,5	missing	-	-	-
-state_tracker.increment_nonce	0	inlined	2/2	repos/clients/evmone/test/state/host.cpp:179-265	Host.create
-state_tracker.is_account_alive	0	entry	2/2	repos/clients/evmone/test/state/host.cpp:13-17	Host.account_exists
-state_tracker.is_account_alive	0	part	2/2	repos/clients/evmone/test/state/account.hpp:99-102	Account.is_empty
-state_tracker.mark_account_created	0	inlined	2/2	repos/clients/evmone/test/state/host.cpp:179-265	Host.create
-state_tracker.modify_state	1	inlined	2/2	repos/clients/evmone/test/state/state.cpp:375-438	State.build_diff
+state_tracker.increment_nonce	0	inlined	2/2	xref/cache/repos/evmone/test/state/host.cpp:179-265	Host.create
+state_tracker.is_account_alive	0	entry	2/2	xref/cache/repos/evmone/test/state/host.cpp:13-17	Host.account_exists
+state_tracker.is_account_alive	0	part	2/2	xref/cache/repos/evmone/test/state/account.hpp:99-102	Account.is_empty
+state_tracker.mark_account_created	0	inlined	2/2	xref/cache/repos/evmone/test/state/host.cpp:179-265	Host.create
+state_tracker.modify_state	1	inlined	2/2	xref/cache/repos/evmone/test/state/state.cpp:375-438	State.build_diff
 state_tracker.modify_state	-	delegated	2/2	-> state_tracker.account_exists_and_is_empty	Account.is_empty
 state_tracker.modify_state	0	missing	-	-	-
-state_tracker.move_ether	0,1	inlined	2/2	repos/clients/evmone/test/state/host.cpp:179-265	Host.create
-state_tracker.move_ether	0,1	inlined	2/2	repos/clients/evmone/test/state/host.cpp:267-311	Host.execute_message
-state_tracker.restore_tx_state	0	entry	2/2	repos/clients/evmone/test/state/state.cpp:580-644	State.rollback
-state_tracker.restore_tx_state	0	part	2/2	repos/clients/evmone/test/state/state.cpp:570-577	clear_value
-state_tracker.set_account	0	part	2/2	repos/clients/evmone/test/state/state.cpp:440-450	State.get_or_create
-state_tracker.set_account_balance	0	inlined	2/2	repos/clients/evmone/test/state/host.cpp:132-177	Host.selfdestruct
-state_tracker.set_storage	0,1	entry	2/2	repos/clients/evmone/test/state/host.cpp:24-71	Host.set_storage
-state_tracker.set_transient_storage	0	entry	2/2	repos/clients/evmone/test/state/host.cpp:423-431	Host.set_transient_storage
-transactions.calculate_effective_gas_price	1	inlined	2/2	repos/clients/evmone/test/state/host.cpp:351-375	Host.get_tx_context
-transactions.calculate_effective_gas_price	1,2	inlined	2/2	repos/clients/evmone/test/state/state.cpp:810-902	transition
-transactions.calculate_intrinsic_cost	0,1,2,3,4,5	entry	2/2	repos/clients/evmone/test/state/state.cpp:63-144	compute_tx_intrinsic_cost
-transactions.calculate_intrinsic_cost	2	part	2/2	repos/clients/evmone/test/state/state.cpp:48-54	count_access_list
+state_tracker.move_ether	0,1	inlined	2/2	xref/cache/repos/evmone/test/state/host.cpp:179-265	Host.create
+state_tracker.move_ether	0,1	inlined	2/2	xref/cache/repos/evmone/test/state/host.cpp:267-311	Host.execute_message
+state_tracker.restore_tx_state	0	entry	2/2	xref/cache/repos/evmone/test/state/state.cpp:580-644	State.rollback
+state_tracker.restore_tx_state	0	part	2/2	xref/cache/repos/evmone/test/state/state.cpp:570-577	clear_value
+state_tracker.set_account	0	part	2/2	xref/cache/repos/evmone/test/state/state.cpp:440-450	State.get_or_create
+state_tracker.set_account_balance	0	inlined	2/2	xref/cache/repos/evmone/test/state/host.cpp:132-177	Host.selfdestruct
+state_tracker.set_storage	0,1	entry	2/2	xref/cache/repos/evmone/test/state/host.cpp:24-71	Host.set_storage
+state_tracker.set_transient_storage	0	entry	2/2	xref/cache/repos/evmone/test/state/host.cpp:423-431	Host.set_transient_storage
+transactions.calculate_effective_gas_price	1	inlined	2/2	xref/cache/repos/evmone/test/state/host.cpp:351-375	Host.get_tx_context
+transactions.calculate_effective_gas_price	1,2	inlined	2/2	xref/cache/repos/evmone/test/state/state.cpp:810-902	transition
+transactions.calculate_intrinsic_cost	0,1,2,3,4,5	entry	2/2	xref/cache/repos/evmone/test/state/state.cpp:63-144	compute_tx_intrinsic_cost
+transactions.calculate_intrinsic_cost	2	part	2/2	xref/cache/repos/evmone/test/state/state.cpp:48-54	count_access_list
 transactions.calculate_intrinsic_cost	-	delegated	2/2	-> transactions.count_tokens_in_data	compute_tx_data_tokens
-transactions.chain_id	3	inlined	2/2	repos/clients/evmone/test/state/transaction.cpp:29-133	decode_transaction_body
-transactions.chain_id	0	part	2/2	repos/clients/evmone/test/state/transaction.hpp:62-65	Transaction.chain_id_protected
+transactions.chain_id	3	inlined	2/2	xref/cache/repos/evmone/test/state/transaction.cpp:29-133	decode_transaction_body
+transactions.chain_id	0	part	2/2	xref/cache/repos/evmone/test/state/transaction.hpp:62-65	Transaction.chain_id_protected
 transactions.chain_id	1,2	missing	-	-	-
-transactions.count_tokens_in_data	0	entry	2/2	repos/clients/evmone/test/state/state.cpp:33-40	compute_tx_data_tokens
-transactions.decode_transaction	1,2,3,4	entry	2/2	repos/clients/evmone/test/state/transaction.cpp:29-133	decode_transaction_body
-transactions.decode_transaction	2,3	part	2/2	repos/clients/evmone/test/state/transaction.cpp:136-142	decode_transaction
+transactions.count_tokens_in_data	0	entry	2/2	xref/cache/repos/evmone/test/state/state.cpp:33-40	compute_tx_data_tokens
+transactions.decode_transaction	1,2,3,4	entry	2/2	xref/cache/repos/evmone/test/state/transaction.cpp:29-133	decode_transaction_body
+transactions.decode_transaction	2,3	part	2/2	xref/cache/repos/evmone/test/state/transaction.cpp:136-142	decode_transaction
 transactions.decode_transaction	0	missing	-	-	-
 transactions.encode_transaction	0,1,2	missing	-	-	-
-transactions.recover_sender	0,3	entry	2/2	repos/clients/evmone/lib/evmone_precompiles/secp256k1.cpp:97-107	ecrecover
-transactions.recover_sender	3	part	2/2	repos/clients/evmone/lib/evmone_precompiles/secp256k1.cpp:32-38	to_address
-transactions.recover_sender	0	part	2/2	repos/clients/evmone/lib/evmone_precompiles/secp256k1.cpp:47-95	secp256k1_ecdsa_recover
-transactions.recover_sender	0	part	2/2	repos/clients/evmone/lib/evmone_precompiles/ecc.hpp:63-72	FieldElement.from_bytes
+transactions.recover_sender	0,3	entry	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/secp256k1.cpp:97-107	ecrecover
+transactions.recover_sender	3	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/secp256k1.cpp:32-38	to_address
+transactions.recover_sender	0	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/secp256k1.cpp:47-95	secp256k1_ecdsa_recover
+transactions.recover_sender	0	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/ecc.hpp:63-72	FieldElement.from_bytes
 transactions.recover_sender	1,2	missing	-	-	-
-transactions.signing_hash_155	0	inlined	2/2	repos/clients/evmone/test/state/transaction.cpp:144-175	recover_sender
-transactions.signing_hash_1559	0	inlined	2/2	repos/clients/evmone/test/state/transaction.cpp:144-175	recover_sender
-transactions.signing_hash_2930	0	inlined	2/2	repos/clients/evmone/test/state/transaction.cpp:144-175	recover_sender
-transactions.signing_hash_4844	0	inlined	2/2	repos/clients/evmone/test/state/transaction.cpp:144-175	recover_sender
-transactions.signing_hash_7702	0	inlined	2/2	repos/clients/evmone/test/state/transaction.cpp:144-175	recover_sender
-transactions.signing_hash_pre155	0	inlined	2/2	repos/clients/evmone/test/state/transaction.cpp:144-175	recover_sender
-transactions.validate_transaction	0,1,2,3,4	entry	2/2	repos/clients/evmone/test/state/state.cpp:648-781	validate_transaction
+transactions.signing_hash_155	0	inlined	2/2	xref/cache/repos/evmone/test/state/transaction.cpp:144-175	recover_sender
+transactions.signing_hash_1559	0	inlined	2/2	xref/cache/repos/evmone/test/state/transaction.cpp:144-175	recover_sender
+transactions.signing_hash_2930	0	inlined	2/2	xref/cache/repos/evmone/test/state/transaction.cpp:144-175	recover_sender
+transactions.signing_hash_4844	0	inlined	2/2	xref/cache/repos/evmone/test/state/transaction.cpp:144-175	recover_sender
+transactions.signing_hash_7702	0	inlined	2/2	xref/cache/repos/evmone/test/state/transaction.cpp:144-175	recover_sender
+transactions.signing_hash_pre155	0	inlined	2/2	xref/cache/repos/evmone/test/state/transaction.cpp:144-175	recover_sender
+transactions.validate_transaction	0,1,2,3,4	entry	2/2	xref/cache/repos/evmone/test/state/state.cpp:648-781	validate_transaction
 transactions.validate_transaction	-	delegated	2/2	-> transactions.calculate_intrinsic_cost	compute_tx_intrinsic_cost
-utils.address.compute_contract_address	0,1	entry	2/2	repos/clients/evmone/lib/evmone/create_address.cpp:13-47	compute_create_address
-utils.address.compute_create2_contract_address	0,1	entry	2/2	repos/clients/evmone/lib/evmone/create_address.cpp:49-64	compute_create2_address
-utils.address.to_address_masked	0	inlined	2/2	repos/clients/evmone/lib/evmone/instructions_calls.cpp:98-245	call_impl
-utils.address.to_address_masked	0	inlined	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:462-475	balance
-utils.address.to_address_masked	0	inlined	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:618-631	extcodesize
-utils.address.to_address_masked	0	inlined	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:633-664	extcodecopy
-utils.address.to_address_masked	0	inlined	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:699-712	extcodehash
-utils.address.to_address_masked	0	inlined	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:1108-1153	selfdestruct
-vm.emit_transfer_log	0,1,2	entry	2/2	repos/clients/evmone/test/state/system_contracts.cpp:157-172	emit_transfer_log
-vm.eoa_delegation.calculate_delegation_cost	1,3,4	entry	2/2	repos/clients/evmone/lib/evmone/instructions_calls.cpp:23-48	get_target_address
-vm.eoa_delegation.calculate_delegation_cost	0,1,2	part	2/2	repos/clients/evmone/lib/evmone/delegation.cpp:9-28	get_delegate_address
+utils.address.compute_contract_address	0,1	entry	2/2	xref/cache/repos/evmone/lib/evmone/create_address.cpp:13-47	compute_create_address
+utils.address.compute_create2_contract_address	0,1	entry	2/2	xref/cache/repos/evmone/lib/evmone/create_address.cpp:49-64	compute_create2_address
+utils.address.to_address_masked	0	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions_calls.cpp:98-245	call_impl
+utils.address.to_address_masked	0	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:462-475	balance
+utils.address.to_address_masked	0	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:618-631	extcodesize
+utils.address.to_address_masked	0	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:633-664	extcodecopy
+utils.address.to_address_masked	0	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:699-712	extcodehash
+utils.address.to_address_masked	0	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:1108-1153	selfdestruct
+vm.emit_transfer_log	0,1,2	entry	2/2	xref/cache/repos/evmone/test/state/system_contracts.cpp:157-172	emit_transfer_log
+vm.eoa_delegation.calculate_delegation_cost	1,3,4	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions_calls.cpp:23-48	get_target_address
+vm.eoa_delegation.calculate_delegation_cost	0,1,2	part	2/2	xref/cache/repos/evmone/lib/evmone/delegation.cpp:9-28	get_delegate_address
 vm.eoa_delegation.calculate_delegation_cost	-	delegated	2/2	-> vm.eoa_delegation.is_valid_delegation	is_code_delegated
 vm.eoa_delegation.calculate_delegation_cost	-	delegated	1/2	-> state_tracker.get_code	Host.copy_code
 vm.eoa_delegation.calculate_delegation_cost	-	delegated	2/2	-> state_tracker.get_code	State.get_code
-vm.eoa_delegation.get_delegated_code_address	0	entry	2/2	repos/clients/evmone/lib/evmone/delegation.cpp:9-28	get_delegate_address
+vm.eoa_delegation.get_delegated_code_address	0	entry	2/2	xref/cache/repos/evmone/lib/evmone/delegation.cpp:9-28	get_delegate_address
 vm.eoa_delegation.get_delegated_code_address	-	delegated	2/2	-> vm.eoa_delegation.is_valid_delegation	is_code_delegated
-vm.eoa_delegation.is_valid_delegation	0	entry	2/2	repos/clients/evmone/lib/evmone/delegation.hpp:20-23	is_code_delegated
-vm.eoa_delegation.recover_authority	0,1,2	entry	2/2	repos/clients/evmone/test/state/authorization.cpp:29-39	recover_authority
-vm.eoa_delegation.recover_authority	1	part	2/2	repos/clients/evmone/test/state/authorization.cpp:19-26	compute_authorization_signing_hash
-vm.eoa_delegation.recover_authority	2	part	2/2	repos/clients/evmone/lib/evmone_precompiles/secp256k1.cpp:32-38	to_address
-vm.eoa_delegation.recover_authority	0,2	part	2/2	repos/clients/evmone/lib/evmone_precompiles/secp256k1.cpp:47-95	secp256k1_ecdsa_recover
-vm.eoa_delegation.recover_authority	0	part	1/2	repos/clients/evmone/lib/evmone_precompiles/ecc.hpp:63-72	FieldElement.from_bytes
-vm.eoa_delegation.recover_authority	2	part	1/2	repos/clients/evmone/lib/evmone_precompiles/secp256k1.cpp:97-107	ecrecover
-vm.eoa_delegation.resolve_delegated_code_address	0,1,2,3	entry	2/2	repos/clients/evmone/lib/evmone/instructions_calls.cpp:23-48	get_target_address
-vm.eoa_delegation.resolve_delegated_code_address	2	part	1/2	repos/clients/evmone/test/state/host.cpp:388-403	Host.access_account
+vm.eoa_delegation.is_valid_delegation	0	entry	2/2	xref/cache/repos/evmone/lib/evmone/delegation.hpp:20-23	is_code_delegated
+vm.eoa_delegation.recover_authority	0,1,2	entry	2/2	xref/cache/repos/evmone/test/state/authorization.cpp:29-39	recover_authority
+vm.eoa_delegation.recover_authority	1	part	2/2	xref/cache/repos/evmone/test/state/authorization.cpp:19-26	compute_authorization_signing_hash
+vm.eoa_delegation.recover_authority	2	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/secp256k1.cpp:32-38	to_address
+vm.eoa_delegation.recover_authority	0,2	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/secp256k1.cpp:47-95	secp256k1_ecdsa_recover
+vm.eoa_delegation.recover_authority	0	part	1/2	xref/cache/repos/evmone/lib/evmone_precompiles/ecc.hpp:63-72	FieldElement.from_bytes
+vm.eoa_delegation.recover_authority	2	part	1/2	xref/cache/repos/evmone/lib/evmone_precompiles/secp256k1.cpp:97-107	ecrecover
+vm.eoa_delegation.resolve_delegated_code_address	0,1,2,3	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions_calls.cpp:23-48	get_target_address
+vm.eoa_delegation.resolve_delegated_code_address	2	part	1/2	xref/cache/repos/evmone/test/state/host.cpp:388-403	Host.access_account
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	1/2	-> vm.eoa_delegation.get_delegated_code_address	get_delegate_address
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	1/2	-> vm.eoa_delegation.get_delegated_code_address	is_code_delegated
 vm.eoa_delegation.resolve_delegated_code_address	-	delegated	2/2	-> state_tracker.get_code	State.get_code
-vm.eoa_delegation.set_delegation	0,1,2,3,4,5	entry	2/2	repos/clients/evmone/test/state/state.cpp:156-272	process_authorization_list
+vm.eoa_delegation.set_delegation	0,1,2,3,4,5	entry	2/2	xref/cache/repos/evmone/test/state/state.cpp:156-272	process_authorization_list
 vm.eoa_delegation.set_delegation	-	delegated	2/2	-> vm.eoa_delegation.is_valid_delegation	is_code_delegated
 vm.eoa_delegation.set_delegation	-	delegated	1/2	-> vm.eoa_delegation.validate_authorization	recover_authority
 vm.eoa_delegation.set_delegation	-	delegated	2/2	-> state_tracker.get_code	State.get_code
 vm.eoa_delegation.set_delegation	-	delegated	1/2	-> state_tracker.account_exists	Account.is_empty
 vm.eoa_delegation.set_delegation	-	delegated	2/2	-> vm.gas.charge_state_gas_from_meter	StateGas.charge
-vm.eoa_delegation.validate_authorization	0,1,2,3,4,5	inlined	2/2	repos/clients/evmone/test/state/state.cpp:156-272	process_authorization_list
+vm.eoa_delegation.validate_authorization	0,1,2,3,4,5	inlined	2/2	xref/cache/repos/evmone/test/state/state.cpp:156-272	process_authorization_list
 vm.eoa_delegation.validate_authorization	-	delegated	2/2	-> vm.eoa_delegation.recover_authority	recover_authority
 vm.eoa_delegation.validate_authorization	-	delegated	2/2	-> vm.eoa_delegation.is_valid_delegation	is_code_delegated
 vm.eoa_delegation.validate_authorization	-	delegated	2/2	-> state_tracker.get_code	State.get_code
-vm.gas.calculate_blob_gas_price	0	entry	2/2	repos/clients/evmone/test/state/block.cpp:47-75	compute_blob_gas_price
-vm.gas.calculate_data_fee	0	inlined	2/2	repos/clients/evmone/test/state/state.cpp:810-902	transition
+vm.gas.calculate_blob_gas_price	0	entry	2/2	xref/cache/repos/evmone/test/state/block.cpp:47-75	compute_blob_gas_price
+vm.gas.calculate_data_fee	0	inlined	2/2	xref/cache/repos/evmone/test/state/state.cpp:810-902	transition
 vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	compute_blob_gas_price
 vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_total_blob_gas	Transaction.blob_gas_used
-vm.gas.calculate_excess_blob_gas	1,2,3,4	entry	2/2	repos/clients/evmone/test/state/block.cpp:77-93	calc_excess_blob_gas
+vm.gas.calculate_excess_blob_gas	1,2,3,4	entry	2/2	xref/cache/repos/evmone/test/state/block.cpp:77-93	calc_excess_blob_gas
 vm.gas.calculate_excess_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	compute_blob_gas_price
 vm.gas.calculate_excess_blob_gas	0	missing	-	-	-
-vm.gas.calculate_gas_extend_memory	0,3,4,5	entry	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:118-136	grow_memory_general
-vm.gas.calculate_gas_extend_memory	4	part	1/2	repos/clients/evmone/lib/evmone/execution_state.hpp:105-127	Memory.grow
-vm.gas.calculate_gas_extend_memory	3,4	part	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:150-173	grow_memory
-vm.gas.calculate_gas_extend_memory	1	part	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:197-210	check_memory
+vm.gas.calculate_gas_extend_memory	0,3,4,5	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:118-136	grow_memory_general
+vm.gas.calculate_gas_extend_memory	4	part	1/2	xref/cache/repos/evmone/lib/evmone/execution_state.hpp:105-127	Memory.grow
+vm.gas.calculate_gas_extend_memory	3,4	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:150-173	grow_memory
+vm.gas.calculate_gas_extend_memory	1	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:197-210	check_memory
 vm.gas.calculate_gas_extend_memory	2	missing	-	-	-
-vm.gas.calculate_memory_gas_cost	0,1,2,3	entry	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:118-136	grow_memory_general
-vm.gas.calculate_memory_gas_cost	0	part	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:105-108	num_words
-vm.gas.calculate_memory_gas_cost	1,2,3	inlined	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:150-173	grow_memory
-vm.gas.calculate_message_call_gas	0,1,2,3	entry	2/2	repos/clients/evmone/lib/evmone/instructions_calls.cpp:98-245	call_impl
-vm.gas.calculate_total_blob_gas	0	entry	2/2	repos/clients/evmone/test/state/transaction.hpp:59-59	Transaction.blob_gas_used
-vm.gas.charge_gas	0	inlined	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
-vm.gas.charge_gas	0	inlined	2/2	repos/clients/evmone/lib/evmone/advanced_instructions.cpp:113-127	opx_beginblock
-vm.gas.charge_gas	0	inlined	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:118-136	grow_memory_general
-vm.gas.charge_gas	0	inlined	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:150-173	grow_memory
-vm.gas.charge_gas_from_meter	0,1	inlined	2/2	repos/clients/evmone/lib/evmone/state_gas.hpp:18-34	StateGas.charge
+vm.gas.calculate_memory_gas_cost	0,1,2,3	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:118-136	grow_memory_general
+vm.gas.calculate_memory_gas_cost	0	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:105-108	num_words
+vm.gas.calculate_memory_gas_cost	1,2,3	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:150-173	grow_memory
+vm.gas.calculate_message_call_gas	0,1,2,3	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions_calls.cpp:98-245	call_impl
+vm.gas.calculate_total_blob_gas	0	entry	2/2	xref/cache/repos/evmone/test/state/transaction.hpp:59-59	Transaction.blob_gas_used
+vm.gas.charge_gas	0	inlined	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.gas.charge_gas	0	inlined	2/2	xref/cache/repos/evmone/lib/evmone/advanced_instructions.cpp:113-127	opx_beginblock
+vm.gas.charge_gas	0	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:118-136	grow_memory_general
+vm.gas.charge_gas	0	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:150-173	grow_memory
+vm.gas.charge_gas_from_meter	0,1	inlined	2/2	xref/cache/repos/evmone/lib/evmone/state_gas.hpp:18-34	StateGas.charge
 vm.gas.charge_state_gas	-	delegated	2/2	-> vm.gas.charge_state_gas_from_meter	StateGas.charge
 vm.gas.charge_state_gas	0	missing	-	-	-
-vm.gas.charge_state_gas_from_meter	0,1,2	entry	2/2	repos/clients/evmone/lib/evmone/state_gas.hpp:18-34	StateGas.charge
-vm.gas.check_block_gas_capacity	1,2,3	inlined	2/2	repos/clients/evmone/test/state/state.cpp:648-781	validate_transaction
+vm.gas.charge_state_gas_from_meter	0,1,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/state_gas.hpp:18-34	StateGas.charge
+vm.gas.check_block_gas_capacity	1,2,3	inlined	2/2	xref/cache/repos/evmone/test/state/state.cpp:648-781	validate_transaction
 vm.gas.check_block_gas_capacity	0	missing	-	-	-
-vm.gas.check_gas	0	inlined	2/2	repos/clients/evmone/lib/evmone/instructions_storage.cpp:124-160	sstore
-vm.gas.check_max_fee_per_blob_gas	0,2	inlined	2/2	repos/clients/evmone/test/state/state.cpp:648-781	validate_transaction
+vm.gas.check_gas	0	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions_storage.cpp:124-160	sstore
+vm.gas.check_max_fee_per_blob_gas	0,2	inlined	2/2	xref/cache/repos/evmone/test/state/state.cpp:648-781	validate_transaction
 vm.gas.check_max_fee_per_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	compute_blob_gas_price
 vm.gas.check_max_fee_per_blob_gas	1	missing	-	-	-
 vm.gas.commit_state_gas	0	missing	-	-	-
-vm.gas.credit_state_gas_refund	0,1	entry	2/2	repos/clients/evmone/lib/evmone/state_gas.hpp:39-46	StateGas.refill
-vm.gas.drain_state_gas_reservoir	0	part	1/2	repos/clients/evmone/lib/evmone/instructions_calls.cpp:51-72	absorb_child_state_gas
-vm.gas.forfeit_remaining_gas	1	inlined	2/2	repos/clients/evmone/lib/evmone/execution_state.hpp:212-232	make_execution_result
+vm.gas.credit_state_gas_refund	0,1	entry	2/2	xref/cache/repos/evmone/lib/evmone/state_gas.hpp:39-46	StateGas.refill
+vm.gas.drain_state_gas_reservoir	0	part	1/2	xref/cache/repos/evmone/lib/evmone/instructions_calls.cpp:51-72	absorb_child_state_gas
+vm.gas.forfeit_remaining_gas	1	inlined	2/2	xref/cache/repos/evmone/lib/evmone/execution_state.hpp:212-232	make_execution_result
 vm.gas.forfeit_remaining_gas	0	missing	-	-	-
-vm.gas.init_code_cost	0	inlined	2/2	repos/clients/evmone/test/state/state.cpp:63-144	compute_tx_intrinsic_cost
-vm.gas.init_code_cost	0	inlined	2/2	repos/clients/evmone/lib/evmone/instructions_calls.cpp:257-344	create_impl
-vm.gas.max_message_call_gas	0	inlined	2/2	repos/clients/evmone/lib/evmone/instructions_calls.cpp:98-245	call_impl
-vm.gas.max_message_call_gas	0	inlined	2/2	repos/clients/evmone/lib/evmone/instructions_calls.cpp:257-344	create_impl
-vm.gas.repay_state_gas_spill	2	entry	2/2	repos/clients/evmone/lib/evmone/instructions_calls.cpp:51-72	absorb_child_state_gas
-vm.gas.repay_state_gas_spill	0,1,2	part	2/2	repos/clients/evmone/lib/evmone/state_gas.hpp:39-46	StateGas.refill
+vm.gas.init_code_cost	0	inlined	2/2	xref/cache/repos/evmone/test/state/state.cpp:63-144	compute_tx_intrinsic_cost
+vm.gas.init_code_cost	0	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions_calls.cpp:257-344	create_impl
+vm.gas.max_message_call_gas	0	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions_calls.cpp:98-245	call_impl
+vm.gas.max_message_call_gas	0	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions_calls.cpp:257-344	create_impl
+vm.gas.repay_state_gas_spill	2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions_calls.cpp:51-72	absorb_child_state_gas
+vm.gas.repay_state_gas_spill	0,1,2	part	2/2	xref/cache/repos/evmone/lib/evmone/state_gas.hpp:39-46	StateGas.refill
 vm.gas.repay_state_gas_spill	3	missing	-	-	-
 vm.gas.restore_child_gas	0	missing	-	-	-
-vm.gas.restore_state_gas	0,1,2	inlined	2/2	repos/clients/evmone/lib/evmone/execution_state.hpp:212-232	make_execution_result
+vm.gas.restore_state_gas	0,1,2	inlined	2/2	xref/cache/repos/evmone/lib/evmone/execution_state.hpp:212-232	make_execution_result
 vm.gas.restore_state_gas_to_entry	0	missing	-	-	-
-vm.gas.settle_transaction_gas	0,1,2,3,4,5	inlined	2/2	repos/clients/evmone/test/state/state.cpp:810-902	transition
+vm.gas.settle_transaction_gas	0,1,2,3,4,5	inlined	2/2	xref/cache/repos/evmone/test/state/state.cpp:810-902	transition
 vm.gas.tx_state_gas_used	0	missing	-	-	-
-vm.incorporate_child	1,2	entry	2/2	repos/clients/evmone/lib/evmone/instructions_calls.cpp:51-72	absorb_child_state_gas
-vm.incorporate_child	1,4	part	2/2	repos/clients/evmone/test/state/host.cpp:313-349	Host.call
+vm.incorporate_child	1,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions_calls.cpp:51-72	absorb_child_state_gas
+vm.incorporate_child	1,4	part	2/2	xref/cache/repos/evmone/test/state/host.cpp:313-349	Host.call
 vm.incorporate_child	-	delegated	2/2	-> vm.gas.repay_state_gas_spill	StateGas.refill
 vm.incorporate_child	0,3	missing	-	-	-
-vm.instructions.arithmetic.add	0,2	entry	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:236-239	add
-vm.instructions.arithmetic.add	0,1	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
-vm.instructions.arithmetic.add	3	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
-vm.instructions.arithmetic.addmod	0,2	entry	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:275-281	addmod
-vm.instructions.arithmetic.addmod	1	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
-vm.instructions.arithmetic.addmod	3	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
-vm.instructions.arithmetic.div	0,2	entry	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:251-255	div
-vm.instructions.arithmetic.div	1	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
-vm.instructions.arithmetic.div	3	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
-vm.instructions.arithmetic.div	0	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:149-161	invoke
-vm.instructions.arithmetic.exp	0,1,2	entry	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:291-305	exp
-vm.instructions.arithmetic.exp	0,1	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.arithmetic.add	0,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:236-239	add
+vm.instructions.arithmetic.add	0,1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.arithmetic.add	3	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
+vm.instructions.arithmetic.addmod	0,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:275-281	addmod
+vm.instructions.arithmetic.addmod	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.arithmetic.addmod	3	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
+vm.instructions.arithmetic.div	0,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:251-255	div
+vm.instructions.arithmetic.div	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.arithmetic.div	3	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
+vm.instructions.arithmetic.div	0	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:149-161	invoke
+vm.instructions.arithmetic.exp	0,1,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:291-305	exp
+vm.instructions.arithmetic.exp	0,1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
 vm.instructions.arithmetic.exp	3	missing	-	-	-
-vm.instructions.arithmetic.mod	0,2	entry	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:263-267	mod
-vm.instructions.arithmetic.mod	1	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
-vm.instructions.arithmetic.mod	3	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
-vm.instructions.arithmetic.mul	0,2	entry	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:241-244	mul
-vm.instructions.arithmetic.mul	0,1	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
-vm.instructions.arithmetic.mul	3	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
-vm.instructions.arithmetic.mulmod	0,2	entry	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:283-289	mulmod
-vm.instructions.arithmetic.mulmod	0,1	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
-vm.instructions.arithmetic.mulmod	3	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
-vm.instructions.arithmetic.sdiv	0,2,3	entry	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:257-261	sdiv
-vm.instructions.arithmetic.sdiv	1	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.arithmetic.mod	0,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:263-267	mod
+vm.instructions.arithmetic.mod	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.arithmetic.mod	3	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
+vm.instructions.arithmetic.mul	0,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:241-244	mul
+vm.instructions.arithmetic.mul	0,1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.arithmetic.mul	3	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
+vm.instructions.arithmetic.mulmod	0,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:283-289	mulmod
+vm.instructions.arithmetic.mulmod	0,1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.arithmetic.mulmod	3	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
+vm.instructions.arithmetic.sdiv	0,2,3	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:257-261	sdiv
+vm.instructions.arithmetic.sdiv	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
 vm.instructions.arithmetic.sdiv	4	missing	-	-	-
-vm.instructions.arithmetic.signextend	0,2,3,4,5	entry	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:307-338	signextend
-vm.instructions.arithmetic.signextend	5	part	1/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
+vm.instructions.arithmetic.signextend	0,2,3,4,5	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:307-338	signextend
+vm.instructions.arithmetic.signextend	5	part	1/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
 vm.instructions.arithmetic.signextend	-	delegated	1/2	-> vm.gas.charge_gas	check_requirements
 vm.instructions.arithmetic.signextend	1	missing	-	-	-
-vm.instructions.arithmetic.smod	0,2,3	entry	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:269-273	smod
-vm.instructions.arithmetic.smod	1	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
-vm.instructions.arithmetic.smod	4	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
-vm.instructions.arithmetic.sub	0,2	entry	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:246-249	sub
-vm.instructions.arithmetic.sub	0,1	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
-vm.instructions.arithmetic.sub	3	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
-vm.instructions.arithmetic.sub	0	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:149-161	invoke
-vm.instructions.bitwise.bitwise_and	0,2	entry	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:374-377	and_
-vm.instructions.bitwise.bitwise_and	1	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
-vm.instructions.bitwise.bitwise_and	3	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
-vm.instructions.bitwise.bitwise_not	0,2	entry	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:389-392	not_
-vm.instructions.bitwise.bitwise_not	1	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
-vm.instructions.bitwise.bitwise_not	3	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
-vm.instructions.bitwise.bitwise_or	0,2	entry	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:379-382	or_
-vm.instructions.bitwise.bitwise_or	1	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
-vm.instructions.bitwise.bitwise_or	3	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
-vm.instructions.bitwise.bitwise_xor	0,2	entry	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:384-387	xor_
-vm.instructions.bitwise.bitwise_xor	1	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.arithmetic.smod	0,2,3	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:269-273	smod
+vm.instructions.arithmetic.smod	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.arithmetic.smod	4	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
+vm.instructions.arithmetic.sub	0,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:246-249	sub
+vm.instructions.arithmetic.sub	0,1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.arithmetic.sub	3	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
+vm.instructions.arithmetic.sub	0	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:149-161	invoke
+vm.instructions.bitwise.bitwise_and	0,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:374-377	and_
+vm.instructions.bitwise.bitwise_and	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.bitwise.bitwise_and	3	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
+vm.instructions.bitwise.bitwise_not	0,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:389-392	not_
+vm.instructions.bitwise.bitwise_not	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.bitwise.bitwise_not	3	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
+vm.instructions.bitwise.bitwise_or	0,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:379-382	or_
+vm.instructions.bitwise.bitwise_or	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.bitwise.bitwise_or	3	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
+vm.instructions.bitwise.bitwise_sar	0,2,3	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:419-429	sar
+vm.instructions.bitwise.bitwise_sar	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.bitwise.bitwise_sar	4	missing	-	-	-
+vm.instructions.bitwise.bitwise_shl	0,2,3	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:409-412	shl
+vm.instructions.bitwise.bitwise_shl	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.bitwise.bitwise_shl	4	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
+vm.instructions.bitwise.bitwise_shr	0,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:414-417	shr
+vm.instructions.bitwise.bitwise_shr	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.bitwise.bitwise_shr	3	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
+vm.instructions.bitwise.bitwise_xor	0,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:384-387	xor_
+vm.instructions.bitwise.bitwise_xor	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
 vm.instructions.bitwise.bitwise_xor	3	missing	-	-	-
-vm.instructions.storage.sload	0,1,2	entry	2/2	repos/clients/evmone/lib/evmone/instructions_storage.cpp:105-122	sload
-vm.instructions.storage.sload	1	part	2/2	repos/clients/evmone/test/state/host.cpp:405-413	Host.access_storage
+vm.instructions.bitwise.count_leading_zeros	0,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:431-434	clz
+vm.instructions.bitwise.count_leading_zeros	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.bitwise.count_leading_zeros	3	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
+vm.instructions.bitwise.get_byte	0,2,3	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:394-407	byte
+vm.instructions.bitwise.get_byte	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.bitwise.get_byte	4	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
+vm.instructions.block.block_hash	0,2,3	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:715-725	blockhash
+vm.instructions.block.block_hash	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.block.block_hash	4	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:123-128	invoke
+vm.instructions.block.chain_id	1	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:754-757	chainid
+vm.instructions.block.chain_id	0	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.block.chain_id	2	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:123-128	invoke
+vm.instructions.block.chain_id	-	delegated	2/2	-> vm.stack.push	StackTop.push
+vm.instructions.block.coinbase	1	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:727-730	coinbase
+vm.instructions.block.coinbase	0	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.block.coinbase	2	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:123-128	invoke
+vm.instructions.block.coinbase	-	delegated	2/2	-> vm.stack.push	StackTop.push
+vm.instructions.block.gas_limit	1	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:749-752	gaslimit
+vm.instructions.block.gas_limit	0	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.block.gas_limit	-	delegated	2/2	-> vm.stack.push	StackTop.push
+vm.instructions.block.gas_limit	2	missing	-	-	-
+vm.instructions.block.number	1	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:738-742	number
+vm.instructions.block.number	0	inlined	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.block.number	-	delegated	2/2	-> vm.stack.push	StackTop.push
+vm.instructions.block.number	2	missing	-	-	-
+vm.instructions.block.prev_randao	1	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:744-747	prevrandao
+vm.instructions.block.prev_randao	0	part	1/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.block.prev_randao	-	delegated	2/2	-> vm.stack.push	StackTop.push
+vm.instructions.block.prev_randao	2	missing	-	-	-
+vm.instructions.block.slot_number	1	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:613-616	slotnum
+vm.instructions.block.slot_number	0	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.block.slot_number	-	delegated	2/2	-> vm.stack.push	StackTop.push
+vm.instructions.block.slot_number	2	missing	-	-	-
+vm.instructions.block.timestamp	1	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:732-736	timestamp
+vm.instructions.block.timestamp	0	part	1/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.block.timestamp	-	delegated	2/2	-> vm.stack.push	StackTop.push
+vm.instructions.block.timestamp	2	missing	-	-	-
+vm.instructions.comparison.equal	0,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:364-367	eq
+vm.instructions.comparison.equal	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.comparison.equal	3	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
+vm.instructions.comparison.greater_than	0,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:346-350	gt
+vm.instructions.comparison.greater_than	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.comparison.greater_than	0,3	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:149-161	invoke
+vm.instructions.comparison.is_zero	0,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:369-372	iszero
+vm.instructions.comparison.is_zero	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.comparison.is_zero	3	missing	-	-	-
+vm.instructions.comparison.less_than	0,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:340-344	lt
+vm.instructions.comparison.less_than	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.comparison.less_than	3	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
+vm.instructions.comparison.signed_greater_than	0,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:358-362	sgt
+vm.instructions.comparison.signed_greater_than	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.comparison.signed_greater_than	3	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
+vm.instructions.comparison.signed_less_than	0,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:352-356	slt
+vm.instructions.comparison.signed_less_than	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.comparison.signed_less_than	3	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
+vm.instructions.control_flow.gas_left	1	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:845-849	gas
+vm.instructions.control_flow.gas_left	0	part	1/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.control_flow.gas_left	1,2	part	2/2	xref/cache/repos/evmone/lib/evmone/advanced_instructions.cpp:162-168	op_gas
+vm.instructions.control_flow.gas_left	-	delegated	2/2	-> vm.stack.push	StackTop.push
+vm.instructions.control_flow.jump	0	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:821-824	jump
+vm.instructions.control_flow.jump	1	inlined	1/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.control_flow.jump	0,2,3	part	2/2	xref/cache/repos/evmone/lib/evmone/advanced_instructions.cpp:129-138	op_jump
+vm.instructions.control_flow.jump	2	part	2/2	xref/cache/repos/evmone/lib/evmone/advanced_analysis.hpp:152-160	find_jumpdest
+vm.instructions.control_flow.jump	2,3	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:805-818	jump_impl
+vm.instructions.control_flow.jumpdest	-	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:223-223	noop
+vm.instructions.control_flow.jumpdest	0	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.control_flow.jumpdest	0,1	inlined	1/2	xref/cache/repos/evmone/lib/evmone/advanced_instructions.cpp:113-127	opx_beginblock
+vm.instructions.control_flow.jumpi	0,2,3	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:827-832	jumpi
+vm.instructions.control_flow.jumpi	1	inlined	1/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.control_flow.jumpi	0,2,3	part	1/2	xref/cache/repos/evmone/lib/evmone/advanced_instructions.cpp:129-138	op_jump
+vm.instructions.control_flow.jumpi	0,2,3	part	2/2	xref/cache/repos/evmone/lib/evmone/advanced_instructions.cpp:140-154	op_jumpi
+vm.instructions.control_flow.jumpi	2	part	2/2	xref/cache/repos/evmone/lib/evmone/advanced_analysis.hpp:152-160	find_jumpdest
+vm.instructions.control_flow.jumpi	2,3	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:805-818	jump_impl
+vm.instructions.control_flow.pc	1,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:834-838	pc
+vm.instructions.control_flow.pc	1,2	part	2/2	xref/cache/repos/evmone/lib/evmone/advanced_instructions.cpp:156-160	op_pc
+vm.instructions.control_flow.pc	-	delegated	1/2	-> vm.gas.charge_gas	check_requirements
+vm.instructions.control_flow.pc	-	delegated	2/2	-> vm.stack.push	StackTop.push
+vm.instructions.control_flow.stop	0	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:228-232	stop_impl
+vm.instructions.control_flow.stop	0	part	1/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:137-145	invoke
+vm.instructions.control_flow.stop	1	missing	-	-	-
+vm.instructions.environment.address	1	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:457-460	address
+vm.instructions.environment.address	0	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.environment.address	2	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:123-128	invoke
+vm.instructions.environment.address	-	delegated	2/2	-> vm.stack.push	StackTop.push
+vm.instructions.environment.balance	0,1,2,3	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:462-475	balance
+vm.instructions.environment.balance	1	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions_traits.hpp:27-30	cold_account_access
+vm.instructions.environment.balance	1	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions_traits.hpp:36-39	additional_cold_account_access
+vm.instructions.environment.balance	1	part	1/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.environment.balance	2	part	2/2	xref/cache/repos/evmone/test/state/host.cpp:73-76	Host.get_balance
+vm.instructions.environment.balance	1	part	2/2	xref/cache/repos/evmone/test/state/host.cpp:388-403	Host.access_account
+vm.instructions.environment.base_fee	1	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:593-596	basefee
+vm.instructions.environment.base_fee	0	part	1/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.environment.base_fee	2	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:123-128	invoke
+vm.instructions.environment.base_fee	-	delegated	2/2	-> vm.stack.push	StackTop.push
+vm.instructions.environment.blob_base_fee	1	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:608-611	blobbasefee
+vm.instructions.environment.blob_base_fee	0	part	1/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.environment.blob_base_fee	2	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:123-128	invoke
+vm.instructions.environment.blob_base_fee	1	part	1/2	xref/cache/repos/evmone/test/state/host.cpp:351-375	Host.get_tx_context
+vm.instructions.environment.blob_base_fee	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	compute_blob_gas_price
+vm.instructions.environment.blob_base_fee	-	delegated	2/2	-> vm.stack.push	StackTop.push
+vm.instructions.environment.blob_hash	0,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:598-606	blobhash
+vm.instructions.environment.blob_hash	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.environment.blob_hash	3	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:123-128	invoke
+vm.instructions.environment.calldatacopy	0,1,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:525-550	calldatacopy
+vm.instructions.environment.calldatacopy	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.environment.calldatacopy	2	part	2/2	xref/cache/repos/evmone/lib/evmone/execution_state.hpp:105-127	Memory.grow
+vm.instructions.environment.calldatacopy	1	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:111-115	copy_cost
+vm.instructions.environment.calldatacopy	1,2	part	1/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:118-136	grow_memory_general
+vm.instructions.environment.calldatacopy	1,2	part	1/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:150-173	grow_memory
+vm.instructions.environment.calldatacopy	1,2	part	1/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:176-194	check_memory
+vm.instructions.environment.calldatacopy	1,2	part	1/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:197-210	check_memory
+vm.instructions.environment.calldatacopy	3	missing	-	-	-
+vm.instructions.environment.calldataload	0,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:492-518	calldataload
+vm.instructions.environment.calldataload	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.environment.calldataload	3	missing	-	-	-
+vm.instructions.environment.calldatasize	1	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:520-523	calldatasize
+vm.instructions.environment.calldatasize	0	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.environment.calldatasize	-	delegated	2/2	-> vm.stack.push	StackTop.push
+vm.instructions.environment.calldatasize	2	missing	-	-	-
+vm.instructions.environment.caller	1	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:482-485	caller
+vm.instructions.environment.caller	0	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.environment.caller	2	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:123-128	invoke
+vm.instructions.environment.caller	-	delegated	2/2	-> vm.stack.push	StackTop.push
+vm.instructions.environment.callvalue	1	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:487-490	callvalue
+vm.instructions.environment.callvalue	0	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.environment.callvalue	-	delegated	2/2	-> vm.stack.push	StackTop.push
+vm.instructions.environment.callvalue	2	missing	-	-	-
+vm.instructions.environment.codecopy	0,1,2,3	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:557-585	codecopy
+vm.instructions.environment.codecopy	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.environment.codecopy	2	part	2/2	xref/cache/repos/evmone/lib/evmone/execution_state.hpp:105-127	Memory.grow
+vm.instructions.environment.codecopy	1	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:111-115	copy_cost
+vm.instructions.environment.codecopy	1,2	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:118-136	grow_memory_general
+vm.instructions.environment.codecopy	1,2	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:150-173	grow_memory
+vm.instructions.environment.codecopy	1,2	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:176-194	check_memory
+vm.instructions.environment.codecopy	1,2	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:197-210	check_memory
+vm.instructions.environment.codecopy	4	missing	-	-	-
+vm.instructions.environment.codesize	1	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:552-555	codesize
+vm.instructions.environment.codesize	0	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.environment.codesize	2	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:123-128	invoke
+vm.instructions.environment.codesize	-	delegated	2/2	-> vm.stack.push	StackTop.push
+vm.instructions.environment.extcodecopy	0,1,2,3,4	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:633-664	extcodecopy
+vm.instructions.environment.extcodecopy	2	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions_traits.hpp:27-30	cold_account_access
+vm.instructions.environment.extcodecopy	2	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions_traits.hpp:36-39	additional_cold_account_access
+vm.instructions.environment.extcodecopy	2,3	part	1/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.environment.extcodecopy	1	part	1/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:105-108	num_words
+vm.instructions.environment.extcodecopy	4	part	2/2	xref/cache/repos/evmone/lib/evmone/execution_state.hpp:105-127	Memory.grow
+vm.instructions.environment.extcodecopy	1	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:111-115	copy_cost
+vm.instructions.environment.extcodecopy	4	part	2/2	xref/cache/repos/evmone/test/state/host.cpp:122-130	Host.copy_code
+vm.instructions.environment.extcodecopy	2	part	2/2	xref/cache/repos/evmone/test/state/host.cpp:388-403	Host.access_account
+vm.instructions.environment.extcodecopy	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	check_memory
+vm.instructions.environment.extcodecopy	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	grow_memory
+vm.instructions.environment.extcodecopy	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	grow_memory_general
+vm.instructions.environment.extcodecopy	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	check_memory
+vm.instructions.environment.extcodecopy	-	delegated	2/2	-> state_tracker.get_code	State.get_code
+vm.instructions.environment.extcodecopy	5	missing	-	-	-
+vm.instructions.environment.extcodehash	0,1,2,3	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:699-712	extcodehash
+vm.instructions.environment.extcodehash	1	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions_traits.hpp:27-30	cold_account_access
+vm.instructions.environment.extcodehash	1	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions_traits.hpp:36-39	additional_cold_account_access
+vm.instructions.environment.extcodehash	2	part	2/2	xref/cache/repos/evmone/test/state/account.hpp:99-102	Account.is_empty
+vm.instructions.environment.extcodehash	2	part	2/2	xref/cache/repos/evmone/test/state/host.cpp:113-120	Host.get_code_hash
+vm.instructions.environment.extcodehash	1	part	2/2	xref/cache/repos/evmone/test/state/host.cpp:388-403	Host.access_account
+vm.instructions.environment.extcodehash	4	missing	-	-	-
+vm.instructions.environment.extcodesize	0,1,3,4	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:618-631	extcodesize
+vm.instructions.environment.extcodesize	1	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions_traits.hpp:27-30	cold_account_access
+vm.instructions.environment.extcodesize	1	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions_traits.hpp:36-39	additional_cold_account_access
+vm.instructions.environment.extcodesize	3,4	part	2/2	xref/cache/repos/evmone/test/state/host.cpp:107-111	Host.get_code_size
+vm.instructions.environment.extcodesize	1	part	2/2	xref/cache/repos/evmone/test/state/host.cpp:388-403	Host.access_account
+vm.instructions.environment.extcodesize	-	delegated	2/2	-> state_tracker.get_code	State.get_code
+vm.instructions.environment.extcodesize	2,5	missing	-	-	-
+vm.instructions.environment.gasprice	1	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:588-591	gasprice
+vm.instructions.environment.gasprice	0	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.environment.gasprice	1	part	2/2	xref/cache/repos/evmone/test/state/host.cpp:351-375	Host.get_tx_context
+vm.instructions.environment.gasprice	-	delegated	2/2	-> vm.stack.push	StackTop.push
+vm.instructions.environment.gasprice	2	missing	-	-	-
+vm.instructions.environment.origin	1	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:477-480	origin
+vm.instructions.environment.origin	0	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.environment.origin	2	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:123-128	invoke
+vm.instructions.environment.origin	-	delegated	2/2	-> vm.stack.push	StackTop.push
+vm.instructions.environment.returndatacopy	0,1,2,3	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:671-697	returndatacopy
+vm.instructions.environment.returndatacopy	3	part	2/2	xref/cache/repos/evmone/lib/evmone/execution_state.hpp:105-127	Memory.grow
+vm.instructions.environment.returndatacopy	1	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:111-115	copy_cost
+vm.instructions.environment.returndatacopy	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	check_memory
+vm.instructions.environment.returndatacopy	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	grow_memory
+vm.instructions.environment.returndatacopy	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	grow_memory_general
+vm.instructions.environment.returndatacopy	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	check_memory
+vm.instructions.environment.returndatasize	1	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:666-669	returndatasize
+vm.instructions.environment.returndatasize	0	part	1/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.environment.returndatasize	2	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:123-128	invoke
+vm.instructions.environment.returndatasize	-	delegated	2/2	-> vm.stack.push	StackTop.push
+vm.instructions.environment.self_balance	1	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:759-763	selfbalance
+vm.instructions.environment.self_balance	0	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.environment.self_balance	-	delegated	2/2	-> vm.stack.push	StackTop.push
+vm.instructions.environment.self_balance	-	delegated	2/2	-> state_tracker.get_account	Host.get_balance
+vm.instructions.environment.self_balance	2	missing	-	-	-
+vm.instructions.keccak.keccak	0,1,2,3	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:436-454	keccak256
+vm.instructions.keccak.keccak	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.keccak.keccak	2	part	2/2	xref/cache/repos/evmone/lib/evmone/execution_state.hpp:105-127	Memory.grow
+vm.instructions.keccak.keccak	1,2	part	1/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:118-136	grow_memory_general
+vm.instructions.keccak.keccak	1,2	part	1/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:150-173	grow_memory
+vm.instructions.keccak.keccak	1,2	part	1/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:176-194	check_memory
+vm.instructions.keccak.keccak	1	part	1/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:197-210	check_memory
+vm.instructions.keccak.keccak	4	missing	-	-	-
+vm.instructions.log.log_n	0,1,2,3,4	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:1046-1076	log
+vm.instructions.log.log_n	2	part	2/2	xref/cache/repos/evmone/lib/evmone/execution_state.hpp:105-127	Memory.grow
+vm.instructions.log.log_n	4	part	2/2	xref/cache/repos/evmone/test/state/host.cpp:382-386	Host.emit_log
+vm.instructions.log.log_n	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	check_memory
+vm.instructions.log.log_n	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	grow_memory
+vm.instructions.log.log_n	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	grow_memory_general
+vm.instructions.log.log_n	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	check_memory
+vm.instructions.log.log_n	5	missing	-	-	-
+vm.instructions.memory.mcopy	0,1,2,3	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:1023-1043	mcopy
+vm.instructions.memory.mcopy	0,2	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.memory.mcopy	3	part	2/2	xref/cache/repos/evmone/lib/evmone/execution_state.hpp:105-127	Memory.grow
+vm.instructions.memory.mcopy	4	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:109-121	invoke
+vm.instructions.memory.mcopy	1	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:111-115	copy_cost
+vm.instructions.memory.mcopy	1,2,3	part	1/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:118-136	grow_memory_general
+vm.instructions.memory.mcopy	1,2,3	part	1/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:150-173	grow_memory
+vm.instructions.memory.mcopy	1,2,3	part	1/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:176-194	check_memory
+vm.instructions.memory.mcopy	1,2,3	part	1/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:197-210	check_memory
+vm.instructions.memory.mload	0,1,3	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:765-774	mload
+vm.instructions.memory.mload	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.memory.mload	2	part	2/2	xref/cache/repos/evmone/lib/evmone/execution_state.hpp:105-127	Memory.grow
+vm.instructions.memory.mload	4	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:109-121	invoke
+vm.instructions.memory.mload	1,2	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:118-136	grow_memory_general
+vm.instructions.memory.mload	1,2	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:150-173	grow_memory
+vm.instructions.memory.mload	1,2	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:176-194	check_memory
+vm.instructions.memory.msize	1	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:840-843	msize
+vm.instructions.memory.msize	0	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.memory.msize	-	delegated	2/2	-> vm.stack.push	StackTop.push
+vm.instructions.memory.msize	2	missing	-	-	-
+vm.instructions.memory.mstore	0,1,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:776-786	mstore
+vm.instructions.memory.mstore	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.memory.mstore	2	part	2/2	xref/cache/repos/evmone/lib/evmone/execution_state.hpp:105-127	Memory.grow
+vm.instructions.memory.mstore	1,2	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:118-136	grow_memory_general
+vm.instructions.memory.mstore	1,2	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:150-173	grow_memory
+vm.instructions.memory.mstore	1	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:176-194	check_memory
+vm.instructions.memory.mstore	3	missing	-	-	-
+vm.instructions.memory.mstore8	0,3	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:788-798	mstore8
+vm.instructions.memory.mstore8	2	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.memory.mstore8	3	part	2/2	xref/cache/repos/evmone/lib/evmone/execution_state.hpp:105-127	Memory.grow
+vm.instructions.memory.mstore8	1,2,3	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:118-136	grow_memory_general
+vm.instructions.memory.mstore8	1,2,3	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:150-173	grow_memory
+vm.instructions.memory.mstore8	1,2	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:176-194	check_memory
+vm.instructions.memory.mstore8	4	missing	-	-	-
+vm.instructions.stack.dup_n	2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:948-952	dup
+vm.instructions.stack.dup_n	0,1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.stack.dup_n	3	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
+vm.instructions.stack.dup_n	-	delegated	2/2	-> vm.stack.push	StackTop.push
+vm.instructions.stack.dupn	1,2,3,4	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:963-982	dupn
+vm.instructions.stack.dupn	0	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.stack.dupn	-	delegated	2/2	-> vm.stack.decode_single	decode_dupn_swapn_imm
+vm.instructions.stack.dupn	-	delegated	2/2	-> vm.stack.push	StackTop.push
+vm.instructions.stack.exchange	1,2,3,4	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:1003-1021	exchange
+vm.instructions.stack.exchange	0	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.stack.exchange	-	delegated	2/2	-> vm.stack.decode_pair	decode_exchange_imm
+vm.instructions.stack.pop	0,1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.stack.pop	2	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:102-107	invoke
+vm.instructions.stack.pop	0	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:149-161	invoke
+vm.instructions.stack.push_n	1,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:915-943	push
+vm.instructions.stack.push_n	1	inlined	2/2	xref/cache/repos/evmone/lib/evmone/baseline_analysis.cpp:35-60	analyze_legacy
+vm.instructions.stack.push_n	1	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:870-873	push0
+vm.instructions.stack.push_n	1	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:877-883	load_partial_push_data
+vm.instructions.stack.push_n	-	delegated	2/2	-> vm.stack.push	StackTop.push
+vm.instructions.stack.push_n	0	missing	-	-	-
+vm.instructions.stack.swap_n	2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:957-961	swap
+vm.instructions.stack.swap_n	0,1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.stack.swap_n	2	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:60-75	fast_swap
+vm.instructions.stack.swap_n	3	missing	-	-	-
+vm.instructions.stack.swapn	1,2,3,4	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:984-1001	swapn
+vm.instructions.stack.swapn	3	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:60-75	fast_swap
+vm.instructions.stack.swapn	-	delegated	2/2	-> vm.stack.decode_single	decode_dupn_swapn_imm
+vm.instructions.stack.swapn	-	delegated	1/2	-> vm.gas.charge_gas	check_requirements
+vm.instructions.stack.swapn	0	missing	-	-	-
+vm.instructions.storage.sload	0,1,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions_storage.cpp:105-122	sload
+vm.instructions.storage.sload	1	part	2/2	xref/cache/repos/evmone/test/state/host.cpp:405-413	Host.access_storage
 vm.instructions.storage.sload	-	delegated	2/2	-> state_tracker.get_storage	Host.get_storage
 vm.instructions.storage.sload	3	missing	-	-	-
-vm.instructions.storage.tload	0,2	entry	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:851-857	tload
-vm.instructions.storage.tload	1	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
-vm.instructions.storage.tload	3	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:123-128	invoke
+vm.instructions.storage.sstore	0,1,2,3,4,5	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions_storage.cpp:124-160	sstore
+vm.instructions.storage.sstore	3,4,5	part	2/2	xref/cache/repos/evmone/test/state/host.cpp:24-71	Host.set_storage
+vm.instructions.storage.sstore	2,3	part	2/2	xref/cache/repos/evmone/test/state/host.cpp:405-413	Host.access_storage
+vm.instructions.storage.sstore	-	delegated	2/2	-> vm.gas.credit_state_gas_refund	StateGas.refill
+vm.instructions.storage.sstore	-	delegated	2/2	-> vm.gas.charge_state_gas	StateGas.charge
+vm.instructions.storage.sstore	-	delegated	1/2	-> state_tracker.get_storage	Host.get_storage
+vm.instructions.storage.tload	0,2	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:851-857	tload
+vm.instructions.storage.tload	1	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.storage.tload	3	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:123-128	invoke
 vm.instructions.storage.tload	-	delegated	2/2	-> state_tracker.get_transient_storage	Host.get_transient_storage
-vm.instructions.system.call	0,1,2,3,4,5	entry	2/2	repos/clients/evmone/lib/evmone/instructions_calls.cpp:98-245	call_impl
-vm.instructions.system.call	2	part	1/2	repos/clients/evmone/lib/evmone/instructions_calls.cpp:23-48	get_target_address
+vm.instructions.storage.tstore	0,1,3	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:859-868	tstore
+vm.instructions.storage.tstore	2	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:44-90	check_requirements
+vm.instructions.storage.tstore	-	delegated	2/2	-> state_tracker.set_transient_storage	Host.set_transient_storage
+vm.instructions.storage.tstore	4	missing	-	-	-
+vm.instructions.system.call	0,1,2,3,4,5	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions_calls.cpp:98-245	call_impl
+vm.instructions.system.call	2	part	1/2	xref/cache/repos/evmone/lib/evmone/instructions_calls.cpp:23-48	get_target_address
 vm.instructions.system.call	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	check_memory
 vm.instructions.system.call	-	delegated	2/2	-> vm.gas.charge_state_gas	StateGas.charge
 vm.instructions.system.call	-	delegated	1/2	-> vm.instructions.system.generic_call	absorb_child_state_gas
 vm.instructions.system.call	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	check_memory
 vm.instructions.system.call	-	delegated	2/2	-> state_tracker.is_account_alive	Host.account_exists
-vm.instructions.system.create	0,1,2,3,4,5	entry	2/2	repos/clients/evmone/lib/evmone/instructions_calls.cpp:257-344	create_impl
+vm.instructions.system.callcode	0,1,2,3,4	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions_calls.cpp:98-245	call_impl
+vm.instructions.system.callcode	1,2	part	1/2	xref/cache/repos/evmone/test/state/host.cpp:388-403	Host.access_account
+vm.instructions.system.callcode	-	delegated	1/2	-> vm.eoa_delegation.calculate_delegation_cost	get_target_address
+vm.instructions.system.callcode	-	delegated	2/2	-> vm.eoa_delegation.calculate_delegation_cost	get_delegate_address
+vm.instructions.system.callcode	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	check_memory
+vm.instructions.system.callcode	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	check_memory
+vm.instructions.system.create	0,1,2,3,4,5	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions_calls.cpp:257-344	create_impl
 vm.instructions.system.create	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	check_memory
 vm.instructions.system.create	-	delegated	2/2	-> utils.address.compute_contract_address	compute_create_address
 vm.instructions.system.create	-	delegated	1/2	-> vm.instructions.system.generic_create	Host.create
 vm.instructions.system.create	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	check_memory
 vm.instructions.system.create	-	delegated	2/2	-> state_tracker.get_account	Host.get_nonce
-vm.instructions.system.delegatecall	0,1,2,4,5	entry	2/2	repos/clients/evmone/lib/evmone/instructions_calls.cpp:98-245	call_impl
-vm.instructions.system.delegatecall	2	part	1/2	repos/clients/evmone/lib/evmone/instructions_calls.cpp:23-48	get_target_address
+vm.instructions.system.create2	0,1,2,3,4,5	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions_calls.cpp:257-344	create_impl
+vm.instructions.system.create2	2,4	part	1/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:176-194	check_memory
+vm.instructions.system.create2	-	delegated	2/2	-> utils.address.compute_create2_contract_address	compute_create2_address
+vm.instructions.system.delegatecall	0,1,2,4,5	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions_calls.cpp:98-245	call_impl
+vm.instructions.system.delegatecall	2	part	1/2	xref/cache/repos/evmone/lib/evmone/instructions_calls.cpp:23-48	get_target_address
 vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.eoa_delegation.calculate_delegation_cost	get_delegate_address
 vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	check_memory
 vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.instructions.system.generic_call	absorb_child_state_gas
 vm.instructions.system.delegatecall	-	delegated	2/2	-> state_tracker.get_code	State.get_code
 vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	check_memory
-vm.instructions.system.generic_create	0,1,2,3,4,5	entry	2/2	repos/clients/evmone/lib/evmone/instructions_calls.cpp:257-344	create_impl
-vm.instructions.system.generic_create	3	inlined	2/2	repos/clients/evmone/test/state/host.cpp:179-265	Host.create
-vm.instructions.system.generic_create	3,4	inlined	2/2	repos/clients/evmone/test/state/host.cpp:313-349	Host.call
+vm.instructions.system.generic_call	0,1,2,3,4,5	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions_calls.cpp:98-245	call_impl
+vm.instructions.system.generic_call	-	delegated	2/2	-> vm.incorporate_child	absorb_child_state_gas
+vm.instructions.system.generic_call	-	delegated	2/2	-> vm.interpreter.process_call	Host.call
+vm.instructions.system.generic_call	-	delegated	2/2	-> vm.interpreter.process_call	Host.execute_message
+vm.instructions.system.generic_call	-	delegated	2/2	-> vm.runtime.get_valid_jump_destinations	analyze
+vm.instructions.system.generic_call	-	delegated	2/2	-> vm.stack.push	StackTop.push
+vm.instructions.system.generic_create	0,1,2,3,4,5	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions_calls.cpp:257-344	create_impl
+vm.instructions.system.generic_create	3	inlined	2/2	xref/cache/repos/evmone/test/state/host.cpp:179-265	Host.create
+vm.instructions.system.generic_create	3,4	inlined	2/2	xref/cache/repos/evmone/test/state/host.cpp:313-349	Host.call
 vm.instructions.system.generic_create	-	delegated	2/2	-> state_tracker.account_deployable	is_create_collision
 vm.instructions.system.generic_create	-	delegated	2/2	-> vm.gas.charge_state_gas	StateGas.charge
-vm.instructions.system.revert	0,1,2,3	entry	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:1092-1104	return_impl
-vm.instructions.system.revert	2	part	2/2	repos/clients/evmone/lib/evmone/execution_state.hpp:105-127	Memory.grow
-vm.instructions.system.revert	1,2	part	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:118-136	grow_memory_general
-vm.instructions.system.revert	1,2	part	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:150-173	grow_memory
-vm.instructions.system.revert	1	part	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:176-194	check_memory
-vm.instructions.system.revert	1	part	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:197-210	check_memory
-vm.interpreter.charge_value_transfer_to_non_alive_account	0	inlined	2/2	repos/clients/evmone/lib/evmone/instructions_calls.cpp:98-245	call_impl
-vm.interpreter.charge_value_transfer_to_non_alive_account	0	inlined	2/2	repos/clients/evmone/lib/evmone/instructions.hpp:1108-1153	selfdestruct
+vm.instructions.system.return_	0,1,2,3	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:1092-1104	return_impl
+vm.instructions.system.return_	1,2	part	1/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:118-136	grow_memory_general
+vm.instructions.system.return_	1,2	part	1/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:150-173	grow_memory
+vm.instructions.system.return_	1,2	part	1/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:176-194	check_memory
+vm.instructions.system.return_	1,2	part	1/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:197-210	check_memory
+vm.instructions.system.revert	0,1,2,3	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:1092-1104	return_impl
+vm.instructions.system.revert	2	part	2/2	xref/cache/repos/evmone/lib/evmone/execution_state.hpp:105-127	Memory.grow
+vm.instructions.system.revert	1,2	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:118-136	grow_memory_general
+vm.instructions.system.revert	1,2	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:150-173	grow_memory
+vm.instructions.system.revert	1	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:176-194	check_memory
+vm.instructions.system.revert	1	part	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:197-210	check_memory
+vm.instructions.system.selfdestruct	0,1,2,3,5	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:1108-1153	selfdestruct
+vm.instructions.system.selfdestruct	4,5	part	2/2	xref/cache/repos/evmone/test/state/host.cpp:132-177	Host.selfdestruct
+vm.instructions.system.selfdestruct	2,3	part	1/2	xref/cache/repos/evmone/test/state/host.cpp:388-403	Host.access_account
+vm.instructions.system.selfdestruct	-	delegated	2/2	-> vm.emit_transfer_log	emit_transfer_log
+vm.instructions.system.selfdestruct	-	delegated	2/2	-> state_tracker.is_account_alive	Host.account_exists
+vm.instructions.system.selfdestruct	-	delegated	2/2	-> state_tracker.get_account	Host.get_balance
+vm.instructions.system.selfdestruct	-	delegated	2/2	-> vm.gas.charge_state_gas	StateGas.charge
+vm.instructions.system.staticcall	0,1,2,4,5	entry	2/2	xref/cache/repos/evmone/lib/evmone/instructions_calls.cpp:98-245	call_impl
+vm.instructions.system.staticcall	2	part	1/2	xref/cache/repos/evmone/lib/evmone/instructions_calls.cpp:23-48	get_target_address
+vm.instructions.system.staticcall	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	check_memory
+vm.instructions.system.staticcall	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	grow_memory
+vm.instructions.system.staticcall	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	grow_memory_general
+vm.instructions.system.staticcall	-	delegated	2/2	-> vm.eoa_delegation.calculate_delegation_cost	get_delegate_address
+vm.instructions.system.staticcall	-	delegated	1/2	-> vm.instructions.system.generic_call	absorb_child_state_gas
+vm.instructions.system.staticcall	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	check_memory
+vm.interpreter.charge_value_transfer_to_non_alive_account	0	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions_calls.cpp:98-245	call_impl
+vm.interpreter.charge_value_transfer_to_non_alive_account	0	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:1108-1153	selfdestruct
 vm.interpreter.charge_value_transfer_to_non_alive_account	-	delegated	2/2	-> state_tracker.is_account_alive	Host.account_exists
 vm.interpreter.charge_value_transfer_to_non_alive_account	-	delegated	2/2	-> vm.gas.charge_state_gas_from_meter	StateGas.charge
-vm.interpreter.process_call	1,5	entry	2/2	repos/clients/evmone/test/state/host.cpp:313-349	Host.call
-vm.interpreter.process_call	3	part	2/2	repos/clients/evmone/lib/evmone/baseline_execution.cpp:165-212	dispatch
-vm.interpreter.process_call	4	part	2/2	repos/clients/evmone/lib/evmone/execution_state.hpp:212-232	make_execution_result
-vm.interpreter.process_call	2,3	part	2/2	repos/clients/evmone/test/state/host.cpp:267-311	Host.execute_message
-vm.interpreter.process_call	3,4	part	1/2	repos/clients/evmone/test/state/precompiles.cpp:845-882	call_precompile
+vm.interpreter.create_evm	1,3,4	entry	2/2	xref/cache/repos/evmone/test/state/state.cpp:296-372	process_top_level
+vm.interpreter.create_evm	0,3	inlined	2/2	xref/cache/repos/evmone/test/state/host.cpp:179-265	Host.create
+vm.interpreter.create_evm	0,5	part	2/2	xref/cache/repos/evmone/test/state/state.cpp:274-293	build_message
+vm.interpreter.create_evm	2	part	2/2	xref/cache/repos/evmone/test/state/state.cpp:810-902	transition
+vm.interpreter.create_evm	-	delegated	2/2	-> vm.eoa_delegation.set_delegation	process_authorization_list
+vm.interpreter.create_evm	-	delegated	2/2	-> vm.eoa_delegation.resolve_delegated_code_address	get_delegate_address
+vm.interpreter.create_evm	-	delegated	2/2	-> vm.runtime.get_valid_jump_destinations	analyze
+vm.interpreter.create_evm	-	delegated	1/2	-> state_tracker.account_deployable	is_create_collision
+vm.interpreter.process_call	1,5	entry	2/2	xref/cache/repos/evmone/test/state/host.cpp:313-349	Host.call
+vm.interpreter.process_call	3	part	2/2	xref/cache/repos/evmone/lib/evmone/baseline_execution.cpp:165-212	dispatch
+vm.interpreter.process_call	4	part	2/2	xref/cache/repos/evmone/lib/evmone/execution_state.hpp:212-232	make_execution_result
+vm.interpreter.process_call	2,3	part	2/2	xref/cache/repos/evmone/test/state/host.cpp:267-311	Host.execute_message
+vm.interpreter.process_call	3,4	part	1/2	xref/cache/repos/evmone/test/state/precompiles.cpp:845-882	call_precompile
 vm.interpreter.process_call	-	delegated	2/2	-> state_tracker.copy_tx_state	State.checkpoint
 vm.interpreter.process_call	-	delegated	2/2	-> state_tracker.restore_tx_state	State.rollback
 vm.interpreter.process_call	-	delegated	2/2	-> vm.emit_transfer_log	emit_transfer_log
 vm.interpreter.process_call	0	missing	-	-	-
+vm.interpreter.process_create	0,1,2,3,4,5	entry	2/2	xref/cache/repos/evmone/test/state/host.cpp:179-265	Host.create
+vm.interpreter.process_create	-	delegated	2/2	-> vm.gas.charge_state_gas	StateGas.charge
+vm.interpreter.process_top_level	0,1,2,3,5	entry	2/2	xref/cache/repos/evmone/test/state/state.cpp:296-372	process_top_level
+vm.interpreter.process_top_level	-	delegated	1/2	-> vm.interpreter.process_create	Host.create
+vm.memory.buffer_read	0,1	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:492-518	calldataload
+vm.memory.buffer_read	0,1	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:525-550	calldatacopy
+vm.memory.buffer_read	0,1	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:557-585	codecopy
+vm.memory.memory_read_bytes	0	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions_calls.cpp:257-344	create_impl
+vm.memory.memory_read_bytes	0	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:436-454	keccak256
+vm.memory.memory_read_bytes	0	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:1046-1076	log
+vm.memory.memory_write	0	part	2/2	xref/cache/repos/evmone/test/state/host.cpp:122-130	Host.copy_code
+vm.memory.memory_write	0	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:525-550	calldatacopy
+vm.memory.memory_write	0	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:557-585	codecopy
+vm.memory.memory_write	0	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:633-664	extcodecopy
+vm.memory.memory_write	0	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:671-697	returndatacopy
+vm.memory.memory_write	0	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:776-786	mstore
+vm.memory.memory_write	0	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:788-798	mstore8
+vm.memory.memory_write	0	inlined	2/2	xref/cache/repos/evmone/lib/evmone/instructions.hpp:1023-1043	mcopy
+vm.precompiled_contracts.alt_bn128.alt_bn128_add	1,2,3	entry	2/2	xref/cache/repos/evmone/test/state/precompiles.cpp:488-512	ecadd_execute
+vm.precompiled_contracts.alt_bn128.alt_bn128_add	3	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/ecc.hpp:74-77	FieldElement.to_bytes
+vm.precompiled_contracts.alt_bn128.alt_bn128_add	0	part	2/2	xref/cache/repos/evmone/test/state/precompiles.cpp:83-86	ecadd_analyze
+vm.precompiled_contracts.alt_bn128.alt_bn128_add	3	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/ecc.hpp:171-175	AffinePoint.to_bytes
+vm.precompiled_contracts.alt_bn128.alt_bn128_add	2	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/ecc.hpp:228-261	add_affine
+vm.precompiled_contracts.alt_bn128.alt_bn128_add	-	delegated	2/2	-> vm.precompiled_contracts.alt_bn128.bytes_to_g1	AffinePoint.from_bytes
+vm.precompiled_contracts.alt_bn128.alt_bn128_add	-	delegated	2/2	-> vm.precompiled_contracts.alt_bn128.bytes_to_g1	validate
+vm.precompiled_contracts.alt_bn128.alt_bn128_add	-	delegated	2/2	-> vm.precompiled_contracts.alt_bn128.bytes_to_g1	FieldElement.from_bytes
+vm.precompiled_contracts.alt_bn128.alt_bn128_mul	1,2,3,4	entry	2/2	xref/cache/repos/evmone/test/state/precompiles.cpp:514-537	ecmul_execute
+vm.precompiled_contracts.alt_bn128.alt_bn128_mul	3	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/bn254.cpp:19-35	mul
+vm.precompiled_contracts.alt_bn128.alt_bn128_mul	4	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/ecc.hpp:74-77	FieldElement.to_bytes
+vm.precompiled_contracts.alt_bn128.alt_bn128_mul	0	part	2/2	xref/cache/repos/evmone/test/state/precompiles.cpp:88-91	ecmul_analyze
+vm.precompiled_contracts.alt_bn128.alt_bn128_mul	4	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/ecc.hpp:171-175	AffinePoint.to_bytes
+vm.precompiled_contracts.alt_bn128.alt_bn128_mul	3	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/ecc.hpp:212-219	to_affine
+vm.precompiled_contracts.alt_bn128.alt_bn128_mul	3	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/ecc.hpp:474-503	msm
+vm.precompiled_contracts.alt_bn128.alt_bn128_mul	3	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/ecc.hpp:562-615	decompose
+vm.precompiled_contracts.alt_bn128.alt_bn128_mul	-	delegated	2/2	-> vm.precompiled_contracts.alt_bn128.bytes_to_g1	AffinePoint.from_bytes
+vm.precompiled_contracts.alt_bn128.alt_bn128_mul	-	delegated	2/2	-> vm.precompiled_contracts.alt_bn128.bytes_to_g1	FieldElement.from_bytes
+vm.precompiled_contracts.alt_bn128.alt_bn128_mul	-	delegated	2/2	-> vm.precompiled_contracts.alt_bn128.bytes_to_g1	validate
+vm.precompiled_contracts.alt_bn128.alt_bn128_pairing_check	1,2,5	entry	2/2	xref/cache/repos/evmone/test/state/precompiles.cpp:539-577	ecpairing_execute
+vm.precompiled_contracts.alt_bn128.alt_bn128_pairing_check	4	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/pairing/bn254/pairing.cpp:54-114	multi_miller_loop
+vm.precompiled_contracts.alt_bn128.alt_bn128_pairing_check	2	part	1/2	xref/cache/repos/evmone/lib/evmone_precompiles/ecc.hpp:63-72	FieldElement.from_bytes
+vm.precompiled_contracts.alt_bn128.alt_bn128_pairing_check	0	part	2/2	xref/cache/repos/evmone/test/state/precompiles.cpp:93-99	ecpairing_analyze
+vm.precompiled_contracts.alt_bn128.alt_bn128_pairing_check	4	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/pairing/bn254/pairing.cpp:118-151	final_exp
+vm.precompiled_contracts.alt_bn128.alt_bn128_pairing_check	2,3,4,5	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/pairing/bn254/pairing.cpp:154-172	pairing_check
+vm.precompiled_contracts.alt_bn128.alt_bn128_pairing_check	3	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/pairing/bn254/utils.hpp:245-260	g2_subgroup_check
+vm.precompiled_contracts.alt_bn128.alt_bn128_pairing_check	-	delegated	2/2	-> vm.precompiled_contracts.alt_bn128.bytes_to_g1	AffinePoint.from_bytes
+vm.precompiled_contracts.alt_bn128.alt_bn128_pairing_check	-	delegated	2/2	-> vm.precompiled_contracts.alt_bn128.bytes_to_g1	validate
+vm.precompiled_contracts.alt_bn128.alt_bn128_pairing_check	-	delegated	2/2	-> vm.precompiled_contracts.alt_bn128.bytes_to_g2	is_on_twisted_curve
+vm.precompiled_contracts.alt_bn128.bytes_to_g1	0,1,2	entry	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/ecc.hpp:161-169	AffinePoint.from_bytes
+vm.precompiled_contracts.alt_bn128.bytes_to_g1	3,4	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/bn254.cpp:11-17	validate
+vm.precompiled_contracts.alt_bn128.bytes_to_g1	1,2	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/ecc.hpp:63-72	FieldElement.from_bytes
+vm.precompiled_contracts.alt_bn128.bytes_to_g2	4	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/pairing/bn254/utils.hpp:47-53	is_on_twisted_curve
+vm.precompiled_contracts.alt_bn128.bytes_to_g2	1,2	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/ecc.hpp:63-72	FieldElement.from_bytes
+vm.precompiled_contracts.alt_bn128.bytes_to_g2	4	inlined	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/pairing/bn254/pairing.cpp:154-172	pairing_check
+vm.precompiled_contracts.alt_bn128.bytes_to_g2	1,2,3	inlined	2/2	xref/cache/repos/evmone/test/state/precompiles.cpp:539-577	ecpairing_execute
+vm.precompiled_contracts.alt_bn128.bytes_to_g2	0	missing	-	-	-
+vm.precompiled_contracts.blake2f.blake2f	1,3,4	entry	2/2	xref/cache/repos/evmone/test/state/precompiles.cpp:587-617	blake2bf_execute
+vm.precompiled_contracts.blake2f.blake2f	4	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/blake2b.cpp:23-35	g
+vm.precompiled_contracts.blake2f.blake2f	4	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/blake2b.cpp:38-85	blake2b_compress
+vm.precompiled_contracts.blake2f.blake2f	0,2	part	2/2	xref/cache/repos/evmone/test/state/precompiles.cpp:101-105	blake2bf_analyze
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_add	0,3,4	entry	2/2	xref/cache/repos/evmone/test/state/precompiles.cpp:642-654	bls12_g1add_execute
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_add	2,3,4	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/bls.cpp:94-115	g1_add
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_add	1	part	2/2	xref/cache/repos/evmone/test/state/precompiles.cpp:208-212	bls12_g1add_analyze
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_add	-	delegated	2/2	-> vm.precompiled_contracts.bls12_381.unpad_g1	validate_p1
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_add	-	delegated	2/2	-> vm.precompiled_contracts.bls12_381.unpad_g1	validate_fp
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_add	-	delegated	2/2	-> vm.precompiled_contracts.bls12_381.pad_g1	store
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_msm	-	failed	-	-	-
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_map_fp_to_g1	-	failed	-	-	-
+vm.precompiled_contracts.bls12_381.bls12_381_g2.bls12_g2_add	-	failed	-	-	-
+vm.precompiled_contracts.bls12_381.bls12_381_g2.bls12_g2_msm	-	failed	-	-	-
+vm.precompiled_contracts.bls12_381.bls12_381_g2.bls12_map_fp2_to_g2	-	failed	-	-	-
+vm.precompiled_contracts.bls12_381.bls12_381_pairing.bls12_pairing	-	failed	-	-	-
+vm.precompiled_contracts.bls12_381.pad_g1	0	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/bls.cpp:79-83	store
+vm.precompiled_contracts.bls12_381.pad_g2	0	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/bls.cpp:79-83	store
+vm.precompiled_contracts.bls12_381.pad_g2	0	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/bls.cpp:86-90	store
+vm.precompiled_contracts.bls12_381.unpad_fp	0,1	entry	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/bls.cpp:16-24	validate_fp
+vm.precompiled_contracts.bls12_381.unpad_g1	0,1,2	entry	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/bls.cpp:28-43	validate_p1
+vm.precompiled_contracts.bls12_381.unpad_g1	-	delegated	2/2	-> vm.precompiled_contracts.bls12_381.unpad_fp	validate_fp
+vm.precompiled_contracts.bls12_381.unpad_g2	0,1	entry	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/bls.cpp:60-76	validate_p2
+vm.precompiled_contracts.bls12_381.unpad_g2	0,1	part	2/2	xref/cache/repos/evmone/lib/evmone_precompiles/bls.cpp:46-56	validate_fp2
+vm.precompiled_contracts.bls12_381.unpad_g2	-	delegated	2/2	-> vm.precompiled_contracts.bls12_381.unpad_fp	validate_fp
+vm.precompiled_contracts.ecrecover.ecrecover	-	failed	-	-	-
+vm.precompiled_contracts.identity.identity	-	failed	-	-	-
+vm.precompiled_contracts.modexp.complexity	-	failed	-	-	-
+vm.precompiled_contracts.modexp.gas_cost	-	failed	-	-	-
+vm.precompiled_contracts.modexp.iterations	-	failed	-	-	-
+vm.precompiled_contracts.modexp.modexp	-	failed	-	-	-
+vm.precompiled_contracts.p256verify.p256verify	-	failed	-	-	-
+vm.precompiled_contracts.point_evaluation.point_evaluation	-	failed	-	-	-
+vm.precompiled_contracts.ripemd160.ripemd160	-	failed	-	-	-
+vm.precompiled_contracts.sha256.sha256	-	failed	-	-	-
+vm.runtime.get_valid_jump_destinations	-	failed	-	-	-
+vm.stack.decode_pair	-	failed	-	-	-
+vm.stack.decode_single	-	failed	-	-	-
+vm.stack.pop	-	failed	-	-	-
+vm.stack.push	-	failed	-	-	-

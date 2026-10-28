@@ -66,7 +66,12 @@ def main() -> None:
     )
     finder2.add_argument("query", help="spec id, suffix or substring")
     finder2.add_argument("--clients", default="", help="comma separated")
-    finder2.add_argument("-n", type=int, default=4, help="candidates each")
+    finder2.add_argument("-n", type=int, default=4, help="matches per client")
+    finder2.add_argument(
+        "--search",
+        action="store_true",
+        help="search current source even when saved mappings exist",
+    )
     add_checkout_options(finder2)
 
     differ = commands.add_parser(
@@ -159,7 +164,16 @@ def main() -> None:
     elif args.command == "touch":
         touch(config, args.repo, args.revisions, args.fork)
     elif args.command == "find":
-        find(config, args.query, split(args.clients), checkouts(args), args.n)
+        if args.n < 1:
+            parser.error("-n must be positive")
+        find(
+            config,
+            args.query,
+            split(args.clients),
+            checkouts(args),
+            args.n,
+            args.search,
+        )
     elif args.command == "diff":
         diff(
             config,

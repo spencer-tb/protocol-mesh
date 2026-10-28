@@ -1,85 +1,76 @@
 # el-xref
 
-Maps every function of an EELS fork to the code that implements it in
-each execution client, with commit-pinned links.
+Find where each execution client implements an EELS spec function. Run
+commands from the protocol-mesh directory.
 
-```console
-$ uv run el-xref show charge_state_gas --clients geth
-vm.gas.charge_state_gas
-  spec  https://github.com/ethereum/execution-specs/blob/dc1bb6b.../vm/gas.py#L439-L456
-  geth       Contract.chargeState  [equivalent, high]
-             https://github.com/ethereum/go-ethereum/blob/d01e869.../core/vm/contract.go#L144-L153
-             Contract.chargeState charges state gas through the budget and emits a gas-change trace event ...
+```sh
+./xref.sh find calculate_memory_gas_cost
+./xref.sh find calculate_intrinsic_cost --clients geth,reth -n 2
+./xref.sh show calculate_memory_gas_cost --clients reth
+./xref.sh where GasParams.memory_cost
 ```
 
-## Why not a generic code graph
+`find`, `show`, `where` and `touch` read `data/tree.json`, including the
+latest build results before a TSV export. Older checkouts without a tree
+can still read `data/map.json`.
 
-Tools like graphify build one graph per repo. Nothing in those graphs
-says that geth's `IntrinsicGas` and EELS's `calculate_intrinsic_cost`
-do the same job, and that link is the useful part for spec work. Here
-the spec is the anchor: each spec function gets the matching function
-in every client.
+`find` uses saved matches first. It searches current client source only
+for clients with failed, unbuilt or incomplete mappings. Search results
+are keyword candidates and need to be checked. A complete mapping needs
+no client parsing or source index, and no lookup calls a model.
 
-## Pipeline
+Use `find --search` to search all selected clients explicitly. `--at
+REPO=PATH[@REF]` and `--upstream` also use source search. This preserves
+searches of working trees and branches. Source searches require `sync`
+and `index` once, and cache their parsed functions.
 
-1. `sync`: shallow, sparse, blobless clones of the spec and client
-   repos listed in `xref.toml` (about 85 MB, 25 s for everything).
-2. `index`: function-level symbols. The spec goes through `ast`,
-   clients through tree-sitter (Go, Rust, C#, Java, Nim). About 10 s.
-3. `link`: for each spec function and client, BM25 over identifier
-   subwords, comments and EIP numbers picks 15 candidates. Claude reads
-   the spec function and the candidates and says which ones implement
-   it (`equivalent` or `partial`, with a confidence and a note). If none
-   fits, Claude names identifiers to search for and gets a second round
-   with those. Results go to `data/map.json`.
-4. `render`: `data/MAP.md`, one table per spec module.
-
-`link` is incremental. An answer is reused while the spec function and
-every matched client function keep the same content hash, so a refresh
-only pays for what changed.
+Saved locations carry the recorded commits. Paths point to an existing
+local checkout, cached source, or a pinned upstream URL. Local line
+numbers may drift; open the code or use `find --search` for current
+locations. A missing step means the map has not located its implementation.
 
 ## Commands
 
 | command | does |
 |---|---|
-| `show <spec fn>` | client locations for a spec function (id, bare name or substring) |
-| `where <client fn>` | spec functions mapped to a client function or path |
-| `touch <range> --repo <execution-specs>` | client code behind every spec function changed in a git range, `--fork bogota` for EIP branches |
-| `link --clients geth --modules vm.gas` | judge a subset, `--dry-run` counts the calls first |
-| `eval` | score the map against `eval/gold.toml` |
+| `find <spec fn>` | saved matches, with source search for gaps; `--clients` and `-n` narrow output |
+| `find <spec fn> --search` | keyword candidates from current source, including `--at REPO=PATH[@REF]` |
+| `show <spec fn>` | full saved mapping, steps, evidence notes and gaps; `--low` includes low confidence |
+| `where <client fn>` | reverse lookup by client function name or path |
+| `touch <range> --repo <execution-specs>` | saved client mappings for changed spec functions; `--fork` selects the changed fork |
+| `diff <client> <base> [head]` | changed client functions; `--spec` narrows the comparison |
+| `tsv` | export the latest tree to `map/` for direct grep |
+| `sync` / `index` | fetch sparse clones / extract function symbols |
+| `build --max-usd <cap>` | build missing or stale step mappings with Claude |
+| `refresh --max-usd <cap>` | sync, relocate rows and rebuild stale mappings |
 
-`just nightly` runs sync, index, link (capped at 300 judge calls) and
-render.
+The free grep path is also available:
 
-## Clients
+```sh
+rg calculate_memory_gas_cost xref/map/
+```
 
-| client | repos |
-|---|---|
-| geth | go-ethereum |
-| reth | revm, alloy-evm, reth |
-| nethermind | nethermind |
-| besu | besu |
-| erigon | erigon |
-| ethrex | ethrex |
-| nimbus | nimbus-eth1 |
+TSVs are snapshots: run `./xref.sh tsv` after a build to include its new
+results. Failed mappings have explicit `failed` rows instead of silently
+disappearing. See `map/README.md` for the columns.
 
-## Judge calls
+## Building the map
 
-Calls go through `claude -p` with no tools and `--strict-mcp-config`.
-Without that flag every MCP tool definition rides along, about 54k
-tokens a call. Locally this uses the Claude Code login. With
-`ANTHROPIC_API_KEY` set it runs `--bare` on the key, which is what the
-GitHub workflow does.
+The anchor is the amsterdam EELS fork. `build` splits each spec function
+into steps, searches client code, expands candidates, and uses two judges
+to map the steps. It records evidence, confidence, votes and commits in
+`data/tree.json`. Existing completed pairs are reused.
 
-Default model `claude-opus-5-5` at `medium` effort, about $0.09 a call
-at list price.
+Supported clients: geth, reth with evm2, nethermind, besu, erigon, ethrex,
+nimbus and evmone. evmone is an EVM; some block-level steps do not apply.
 
-## Automation
+`build`, `refresh` and `tag` call Claude and cost money; obtain approval
+before running them. `--max-usd` stops new pairs once the cap is reached;
+already running pairs can overshoot it. `link`, `render` and `eval` are
+legacy commands for `data/map.json`; the lookup commands prefer the tree.
 
-- `.github/workflows/nightly.yml`: daily refresh that commits
-  `data/map.json` and `data/MAP.md`. Needs an `ANTHROPIC_API_KEY`
-  secret once the repo has a remote.
-- `contrib/el-xref.nightly.plist`: the same on a local launchd timer.
-  Not installed.
-- `.claude/skills/el-xref`: tells Claude Code when and how to query the
-  map.
+## Checks
+
+```sh
+uv run --project xref python -m unittest discover -s xref/tests -v
+```

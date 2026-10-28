@@ -14,8 +14,7 @@ from pathlib import Path
 
 from .config import Config
 from .index import spec_module, walk_python
-from .link import CONFIDENT, load_map
-from .render import permalink
+from .mapped import load_map, print_entry
 
 HUNK = re.compile(r"^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@", re.M)
 
@@ -83,25 +82,4 @@ def touch(config: Config, repo: Path, revisions: str, fork: str) -> None:
     data = load_map(config)
     print(f"{len(changed)} spec functions changed in {revisions} ({fork})\n")
     for sid in changed:
-        entry = data["entries"].get(sid)
-        print(sid)
-        if entry is None:
-            print("  not in the map (new function, or module not linked)\n")
-            continue
-        if not entry["clients"]:
-            print("  not judged yet, run `el-xref link`\n")
-            continue
-        for client, result in sorted(entry["clients"].items()):
-            matches = [
-                m for m in result["matches"] if m["confidence"] in CONFIDENT
-            ]
-            if not matches:
-                print(f"  {client:<10} no match")
-                continue
-            for i, m in enumerate(matches):
-                label = client if i == 0 else ""
-                link = permalink(
-                    data, m["repo"], m["path"], m["line"], m["end_line"]
-                )
-                print(f"  {label:<10} {m['qualname']}  {link}")
-        print()
+        print_entry(config, data, sid, [])
