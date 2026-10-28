@@ -1,9 +1,9 @@
 # protocol-mesh
 
-A shared workspace where execution layer client developers, researchers and
-their agents work on EIPs together. It brings the spec (EELS), every EL
-client and EVM, hive, the ethPandaOps tooling and the EIPs into one place,
-with skills to move through all of it.
+An agent harness for Ethereum's execution layer: a shared workspace of
+tools, skills and reusable context for client developers, researchers and
+their agents. It brings the spec (EELS), execution clients and EVMs, hive,
+the ethPandaOps tooling and the EIPs into one place.
 
 The aim is faster EIP development, for Hegota, I* and older forks:
 
@@ -16,6 +16,24 @@ The aim is faster EIP development, for Hegota, I* and older forks:
 It runs on everyone's own machine and on GitHub, and joining is opt in. It is
 execution layer only for now. If it works, a consensus layer version follows.
 
+## Design priorities
+
+Make both the tools and the way agents use them fast. Measure progress by
+the time, tool calls and tokens needed to reach a correct, reproducible
+result.
+
+- Fast lookups: use local indexes, shared maps and cached results, with
+  source searches for gaps. Refresh results when their inputs change.
+- Focused output: return the relevant code, evidence and next action,
+  with details available when needed.
+- Direct workflows: skills tell agents which tools to use and in what
+  order. Reuse setup, builds and fixtures across related checks.
+- Shared knowledge: keep mappings and recipes in the workspace so people
+  and different agents can inspect and reuse them. Record source commits
+  and distinguish candidates from verified findings.
+- Repeatable validation: make findings easy to reproduce and compare
+  across clients, from spec changes through testing and release.
+
 ## Where it is going
 
 First, validation that is easy to run and to repeat:
@@ -26,11 +44,17 @@ First, validation that is easy to run and to repeat:
 - Findings ranked and verified before anyone acts on them, with templated
   output so agent work stays easy to review.
 
+Spec and test releases should be made through the same workflow: select
+the source revisions and fork targets, generate fixtures, validate them
+across clients, and package the artifacts with release notes and a record
+of the source commits, tool versions and test results. Release tooling is
+planned in `TODO.md`.
+
 Then coordination: agents post verified findings as issues for the team
 that owns the fix, and that team or its agent fixes it in its own repo.
 
-Today it holds the setup, the context skills and a review profile that a
-review agent runs on.
+Today it holds the setup, context skills, the spec-to-client map, a small
+differential fuzzing prototype and a review profile for agents.
 
 ## Setup
 
@@ -91,10 +115,12 @@ Code. `sources.md` lists where each kind of context lives.
 
 ## Cross-client map
 
-`./xref.sh` maps every EELS spec function to the code that implements it in
-each execution client. `./xref.sh show charge_state_gas` reads the shared
-map, and `./xref.sh find` ranks candidates locally for free. See
-`xref/README.md`.
+`./xref.sh` maps EELS protocol functions to the code that implements them
+across eight execution clients and EVMs. `./xref.sh find
+calculate_memory_gas_cost` reads the latest saved map and searches current
+client source for gaps. `show` gives the full mapping, and `where` finds
+the spec functions behind client code. Lookups are local and make no
+model calls. See `xref/README.md`.
 
 ## Differential fuzzing
 

@@ -1,9 +1,9 @@
 """
 Free, local lookups for debugging: `find` and `diff`.
 
-Both read the checkouts you are working in (local clones, any branch, the
-working tree by default) and use keyword retrieval only, so they make no
-model calls. Answers already judged into `map.json` are shown first.
+Find reads the latest saved map first, and searches current client source
+for gaps. Explicit checkout options or --search always search the source.
+Neither command makes model calls.
 """
 
 import difflib
@@ -14,7 +14,7 @@ from collections.abc import Callable
 from .checkout import Checkout, git, parsed, resolve
 from .config import Client, Config, Json, Repo
 from .index import Symbol, index_path, load, read_body
-from .link import CONFIDENT, load_map
+from .mapped import find_ids, load_map, matches, print_entry, role
 from .retrieve import Corpus, spec_query, symbol_tokens
 from .tokens import tokenize
 
@@ -27,7 +27,10 @@ SpecGuesser = Callable[[Symbol, str, int], list[str]]
 
 def spec_symbols(config: Config) -> list[Symbol]:
     """Return the indexed spec functions."""
-    return load(index_path(config, config.spec.repo))
+    path = index_path(config, config.spec.repo)
+    if not path.exists():
+        raise SystemExit("spec index unavailable; run sync and index first")
+    return load(path)
 
 
 def match_specs(specs: list[Symbol], query: str) -> list[Symbol]:
@@ -73,7 +76,7 @@ def judged(data: Json, spec: Symbol, client: str) -> list[Json]:
     result = entry.get("clients", {}).get(client)
     if not result:
         return []
-    return [m for m in result["matches"] if m["confidence"] in CONFIDENT]
+    return matches(result)
 
 
 def find(
@@ -82,25 +85,68 @@ def find(
     clients: list[str],
     at: dict[str, str],
     count: int,
+    search: bool = False,
 ) -> None:
-    """Print each client's candidates for the spec functions matching."""
-    specs = match_specs(spec_symbols(config), query)
-    if not specs:
-        print(f"no spec function matches {query!r}")
-        return
-    if len(specs) > 3:
-        print(f"{len(specs)} spec functions match, narrow it down:")
-        for spec in specs:
-            print(f"  {spec.id}")
-        return
+    """Use saved mappings first; search source only when needed or asked."""
     data = load_map(config)
     names = clients or list(config.clients)
-    indexes = {
-        name: client_index(config, config.clients[name], at) for name in names
-    }
-    for spec in specs:
-        print(f"{spec.id}  ({spec.path}:{spec.line})")
+    unknown = set(names) - config.clients.keys()
+    if unknown:
+        raise SystemExit(f"unknown clients: {', '.join(sorted(unknown))}")
+    ids = find_ids(data, query)
+    specs: dict[str, Symbol] = {}
+    if not ids:
+        specs = {s.id: s for s in match_specs(spec_symbols(config), query)}
+        ids = list(specs)
+    if not ids:
+        print(f"no spec function matches {query!r}")
+        return
+    if len(ids) > 3:
+        print(f"{len(ids)} spec functions match, narrow it down:")
+        for sid in ids:
+            print(f"  {sid}")
+        return
+    indexes = {}
+    for sid in ids:
+        tables = data.get("entries", {}).get(sid, {}).get("clients", {})
+        needed = []
         for name in names:
+            table = tables.get(name, {})
+            if (
+                search
+                or at
+                or "error" in table
+                or not matches(table)
+                or table.get("missing")
+                or table.get("pipeline") == 0
+            ):
+                needed.append(name)
+        if not (search or at):
+            print_entry(config, data, sid, names, limit=count)
+        if not needed:
+            continue
+        if not specs:
+            specs = {s.id: s for s in spec_symbols(config)}
+        spec = specs.get(sid)
+        if spec is None:
+            print(f"  no indexed spec for {sid}; run index to search\n")
+            continue
+        for name in needed:
+            if name not in indexes:
+                try:
+                    indexes[name] = client_index(
+                        config, config.clients[name], at
+                    )
+                except (FileNotFoundError, subprocess.CalledProcessError):
+                    print(
+                        f"  {name}: source unavailable at requested checkout;"
+                        " run sync or provide --at REPO=PATH"
+                    )
+        print("Keyword candidates from current source (unverified):")
+        print(f"{spec.id}  ({spec.path}:{spec.line})")
+        for name in needed:
+            if name not in indexes:
+                continue
             checkouts, symbols, bodies = indexes[name]
             by_repo = {c.repo.name: c for c in checkouts}
             labels = ", ".join(c.label() for c in checkouts)
@@ -110,15 +156,16 @@ def find(
             for match in judged(data, spec, name):
                 key = (match["repo"], match["path"], match["qualname"])
                 current = by_key.get(key)
-                if current is None:
+                if current is None or current.hash != match.get("hash"):
                     continue
                 seen.add(current.id)
-                print(
-                    f"    judged  {current.qualname}  "
-                    f"[{match['relation']}, {match['confidence']}]\n"
-                    f"            "
-                    f"{shown_path(by_repo[current.repo], current)}"
-                )
+                if search or at:
+                    print(
+                        f"    mapped  {current.qualname}  "
+                        f"[{role(match)}, {match['confidence']}]\n"
+                        f"            "
+                        f"{shown_path(by_repo[current.repo], current)}"
+                    )
             corpus = Corpus.of(
                 symbols, [symbol_tokens(s, bodies[s.id]) for s in symbols]
             )

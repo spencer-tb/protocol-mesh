@@ -14,8 +14,8 @@ never read a file whole:
 
 Each client has its own file, one row per client function:
 
-| eels | steps | role | location | function |
-|---|---|---|---|---|
+| eels | steps | role | votes | location | function |
+|---|---|---|---|---|---|
 
 - `steps` are ids from `eels.tsv`.
 - `eips` are the EIPs the EELS function's code and docstrings name. A
@@ -25,10 +25,18 @@ Each client has its own file, one row per client function:
   `inlined` (the steps sit inside a function doing other work),
   `delegated` (the code belongs to another EELS function, `location` says
   which, look that one up) or `missing` (the client has no code for these
-  steps).
-- `location` is a path from the protocol-mesh root and a line range.
+  steps). `failed` means the mapping call failed; `unbuilt` means it has
+  not run. Neither is evidence that the client lacks the implementation.
+- `votes` is how many of the two judges accepted the row.
+- `location` is an existing source path relative to the protocol-mesh
+  root and a line range, falling back to a pinned upstream link if the
+  source is unavailable locally.
 
 Built by `./xref.sh build` and written by `./xref.sh tsv`, from
 `xref/data/tree.json`, which also holds each match's quoted line, note and
 confidence. Line numbers are from the commits in `tree.json`, so open the
 file before trusting them.
+
+`./xref.sh find <spec fn>` reads `tree.json` directly, including results
+added since the last TSV export, and searches current client source for
+gaps. `show` prints the full saved mapping; `where` searches it in reverse.

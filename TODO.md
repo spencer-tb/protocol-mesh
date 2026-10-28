@@ -38,6 +38,11 @@ updated, and round again. Nothing waits for an EELS release.
 - [ ] **Local fixtures into hive.** Pack the filled fixtures and run
   `consume-engine`, `enginex` and `rlp` with `--sim.buildarg
   fixtures=/fixtures`, with clients built from their worktrees.
+- [ ] **Spec and test releases.** Drive releases from this workspace:
+  select source revisions and fork targets, generate fixtures, validate
+  across the selected clients, and package and publish the artifacts with
+  release notes. Record source commits, tool versions, artifact hashes and
+  validation results so a release can be reproduced.
 
 ## Cross-client map (xref)
 

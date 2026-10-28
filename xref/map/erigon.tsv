@@ -1,60 +1,60 @@
 # eels	steps	role	votes	location	function
-block_access_lists._build_from_builder	0,2,3	part	2/2	repos/clients/erigon/execution/types/block_access_list.go:432-463	AccountChanges.Normalize
+block_access_lists._build_from_builder	0,2,3	part	2/2	xref/cache/repos/erigon/execution/types/block_access_list.go:432-463	AccountChanges.Normalize
 block_access_lists._build_from_builder	1,4,5	missing	-	-	-
 block_access_lists._get_pre_tx_account	0	missing	-	-	-
 block_access_lists._get_pre_tx_storage	0,1,2	missing	-	-	-
 block_access_lists._index_start_account	0,1	missing	-	-	-
 block_access_lists._index_start_storage	0,1	missing	-	-	-
-block_access_lists.add_balance_change	1	part	2/2	repos/clients/erigon/execution/types/block_access_list.go:669-682	dedupByIndex
+block_access_lists.add_balance_change	1	part	2/2	xref/cache/repos/erigon/execution/types/block_access_list.go:669-682	dedupByIndex
 block_access_lists.add_balance_change	0,2	missing	-	-	-
-block_access_lists.add_code_change	1	inlined	2/2	repos/clients/erigon/execution/types/block_access_list.go:432-463	AccountChanges.Normalize
+block_access_lists.add_code_change	1	inlined	2/2	xref/cache/repos/erigon/execution/types/block_access_list.go:432-463	AccountChanges.Normalize
 block_access_lists.add_code_change	0,2	missing	-	-	-
-block_access_lists.add_nonce_change	1	inlined	2/2	repos/clients/erigon/execution/types/block_access_list.go:432-463	AccountChanges.Normalize
-block_access_lists.add_nonce_change	1	part	1/2	repos/clients/erigon/execution/types/block_access_list.go:669-682	dedupByIndex
+block_access_lists.add_nonce_change	1	inlined	2/2	xref/cache/repos/erigon/execution/types/block_access_list.go:432-463	AccountChanges.Normalize
+block_access_lists.add_nonce_change	1	part	1/2	xref/cache/repos/erigon/execution/types/block_access_list.go:669-682	dedupByIndex
 block_access_lists.add_nonce_change	0,2	missing	-	-	-
 block_access_lists.add_storage_read	0,1	missing	-	-	-
 block_access_lists.add_storage_write	0,1,3	missing	-	-	-
 block_access_lists.add_touched_account	0	missing	-	-	-
-block_access_lists.build_block_access_list	0,1,2	entry	2/2	repos/clients/erigon/execution/bal/process.go:34-44	Create
+block_access_lists.build_block_access_list	0,1,2	entry	2/2	xref/cache/repos/erigon/execution/bal/process.go:34-44	Create
 block_access_lists.ensure_account	0	missing	-	-	-
-block_access_lists.hash_block_access_list	0	entry	2/2	repos/clients/erigon/execution/types/block_access_list.go:966-971	BlockAccessList.Hash
-block_access_lists.hash_block_access_list	0	part	1/2	repos/clients/erigon/execution/types/block_access_list.go:316-327	encodeSlotChanges
-block_access_lists.hash_block_access_list	0	part	1/2	repos/clients/erigon/execution/types/block_access_list.go:344-375	AccountChanges.EncodeRLP
-block_access_lists.hash_block_access_list	0	part	1/2	repos/clients/erigon/execution/types/block_access_list.go:726-744	encodeBlockAccessList
-block_access_lists.hash_block_access_list	0	part	1/2	repos/clients/erigon/execution/types/block_access_list.go:746-760	encodeHashList
-block_access_lists.hash_block_access_list	0	part	1/2	repos/clients/erigon/execution/types/block_access_list.go:846-861	encodeAccountChanges
+block_access_lists.hash_block_access_list	0	entry	2/2	xref/cache/repos/erigon/execution/types/block_access_list.go:966-971	BlockAccessList.Hash
+block_access_lists.hash_block_access_list	0	part	1/2	xref/cache/repos/erigon/execution/types/block_access_list.go:316-327	encodeSlotChanges
+block_access_lists.hash_block_access_list	0	part	1/2	xref/cache/repos/erigon/execution/types/block_access_list.go:344-375	AccountChanges.EncodeRLP
+block_access_lists.hash_block_access_list	0	part	1/2	xref/cache/repos/erigon/execution/types/block_access_list.go:726-744	encodeBlockAccessList
+block_access_lists.hash_block_access_list	0	part	1/2	xref/cache/repos/erigon/execution/types/block_access_list.go:746-760	encodeHashList
+block_access_lists.hash_block_access_list	0	part	1/2	xref/cache/repos/erigon/execution/types/block_access_list.go:846-861	encodeAccountChanges
 block_access_lists.remove_balance_change	0,1	missing	-	-	-
 block_access_lists.remove_code_change	0,1	missing	-	-	-
 block_access_lists.remove_nonce_change	0,1	missing	-	-	-
 block_access_lists.remove_storage_write	0,1,2	missing	-	-	-
 block_access_lists.update_builder_from_tx	0,1,2,3,4,5	missing	-	-	-
-block_access_lists.validate_block_access_list_gas_limit	0,1,2	entry	2/2	repos/clients/erigon/execution/types/block_access_list.go:1044-1056	BlockAccessList.ValidateMaxItems
-blocks.encode_receipt	0,1	entry	2/2	repos/clients/erigon/execution/types/receipt.go:583-602	Receipts.EncodeIndex
-blocks.encode_receipt	0	part	2/2	repos/clients/erigon/execution/types/tx_registry.go:101-108	hasStandardReceiptPayload
-blocks.encode_receipt	0	part	2/2	repos/clients/erigon/execution/types/receipt.go:181-184	Receipt.encodeTyped
-bloom.add_to_bloom	3	entry	2/2	repos/clients/erigon/execution/types/bloom9.go:81-86	Bloom.add
-bloom.add_to_bloom	0,1,2	part	2/2	repos/clients/erigon/execution/types/bloom9.go:167-180	bloomValues
-bloom.logs_bloom	0,1,2	entry	2/2	repos/clients/erigon/execution/types/bloom9.go:143-157	CreateBloom
-fork.apply_body	1	entry	2/2	repos/clients/erigon/execution/protocol/block_exec.go:75-199	ExecuteBlockEphemerally
-fork.apply_body	0	part	2/2	repos/clients/erigon/execution/protocol/misc/eip4788.go:27-42	ApplyBeaconRootEip4788
-fork.apply_body	5	part	2/2	repos/clients/erigon/execution/bal/process.go:67-115	Process
-fork.apply_body	3,4	part	2/2	repos/clients/erigon/execution/protocol/rules/merge/merge.go:157-280	Merge.Finalize
-fork.apply_body	0	part	2/2	repos/clients/erigon/execution/protocol/rules/merge/merge.go:438-492	Merge.Initialize
+block_access_lists.validate_block_access_list_gas_limit	0,1,2	entry	2/2	xref/cache/repos/erigon/execution/types/block_access_list.go:1044-1056	BlockAccessList.ValidateMaxItems
+blocks.encode_receipt	0,1	entry	2/2	xref/cache/repos/erigon/execution/types/receipt.go:583-602	Receipts.EncodeIndex
+blocks.encode_receipt	0	part	2/2	xref/cache/repos/erigon/execution/types/tx_registry.go:101-108	hasStandardReceiptPayload
+blocks.encode_receipt	0	part	2/2	xref/cache/repos/erigon/execution/types/receipt.go:181-184	Receipt.encodeTyped
+bloom.add_to_bloom	3	entry	2/2	xref/cache/repos/erigon/execution/types/bloom9.go:81-86	Bloom.add
+bloom.add_to_bloom	0,1,2	part	2/2	xref/cache/repos/erigon/execution/types/bloom9.go:167-180	bloomValues
+bloom.logs_bloom	0,1,2	entry	2/2	xref/cache/repos/erigon/execution/types/bloom9.go:143-157	CreateBloom
+fork.apply_body	1	entry	2/2	xref/cache/repos/erigon/execution/protocol/block_exec.go:75-199	ExecuteBlockEphemerally
+fork.apply_body	0	part	2/2	xref/cache/repos/erigon/execution/protocol/misc/eip4788.go:27-42	ApplyBeaconRootEip4788
+fork.apply_body	5	part	2/2	xref/cache/repos/erigon/execution/bal/process.go:67-115	Process
+fork.apply_body	3,4	part	2/2	xref/cache/repos/erigon/execution/protocol/rules/merge/merge.go:157-280	Merge.Finalize
+fork.apply_body	0	part	2/2	xref/cache/repos/erigon/execution/protocol/rules/merge/merge.go:438-492	Merge.Initialize
 fork.apply_body	-	delegated	2/2	-> fork.process_unchecked_system_transaction	sysCallContract
 fork.apply_body	-	delegated	2/2	-> fork.process_transaction	ApplyTransaction
 fork.apply_body	-	delegated	2/2	-> fork.process_general_purpose_requests	ParseDepositLogs
 fork.apply_body	-	delegated	2/2	-> block_access_lists.build_block_access_list	Create
 fork.apply_body	-	delegated	2/2	-> block_access_lists.validate_block_access_list_gas_limit	BlockAccessList.ValidateMaxItems
 fork.apply_body	2	missing	-	-	-
-fork.calculate_base_fee_per_gas	0,2,3,4	entry	2/2	repos/clients/erigon/execution/protocol/misc/eip1559.go:90-128	CalcBaseFee
-fork.calculate_base_fee_per_gas	1	part	1/2	repos/clients/erigon/execution/protocol/misc/gaslimit.go:50-56	VerifyParentGasLimit
+fork.calculate_base_fee_per_gas	0,2,3,4	entry	2/2	xref/cache/repos/erigon/execution/protocol/misc/eip1559.go:90-128	CalcBaseFee
+fork.calculate_base_fee_per_gas	1	part	1/2	xref/cache/repos/erigon/execution/protocol/misc/gaslimit.go:50-56	VerifyParentGasLimit
 fork.calculate_base_fee_per_gas	-	delegated	2/2	-> fork.check_gas_limit	VerifyGaslimit
-fork.check_gas_limit	0,1,2,3	entry	2/2	repos/clients/erigon/execution/protocol/misc/gaslimit.go:32-46	VerifyGaslimit
-fork.check_transaction	1,2,3	entry	2/2	repos/clients/erigon/execution/protocol/txn_executor.go:249-423	TxnExecutor.preCheck
-fork.check_transaction	0,2,5	part	2/2	repos/clients/erigon/execution/types/blob_tx.go:94-127	BlobTx.AsMessage
-fork.check_transaction	5	part	2/2	repos/clients/erigon/execution/protocol/evm.go:105-111	NewEVMTxContext
-fork.check_transaction	0,2,5	part	2/2	repos/clients/erigon/execution/types/set_code_tx.go:118-160	SetCodeTransaction.AsMessage
-fork.check_transaction	0,2	part	2/2	repos/clients/erigon/execution/types/dynamic_fee_tx.go:278-315	DynamicFeeTransaction.AsMessage
+fork.check_gas_limit	0,1,2,3	entry	2/2	xref/cache/repos/erigon/execution/protocol/misc/gaslimit.go:32-46	VerifyGaslimit
+fork.check_transaction	1,2,3	entry	2/2	xref/cache/repos/erigon/execution/protocol/txn_executor.go:249-423	TxnExecutor.preCheck
+fork.check_transaction	0,2,5	part	2/2	xref/cache/repos/erigon/execution/types/blob_tx.go:94-127	BlobTx.AsMessage
+fork.check_transaction	5	part	2/2	xref/cache/repos/erigon/execution/protocol/evm.go:105-111	NewEVMTxContext
+fork.check_transaction	0,2,5	part	2/2	xref/cache/repos/erigon/execution/types/set_code_tx.go:118-160	SetCodeTransaction.AsMessage
+fork.check_transaction	0,2	part	2/2	xref/cache/repos/erigon/execution/types/dynamic_fee_tx.go:278-315	DynamicFeeTransaction.AsMessage
 fork.check_transaction	-	delegated	1/2	-> transactions.validate_transaction	TxnExecutor.calcIntrinsicGas
 fork.check_transaction	-	delegated	2/2	-> transactions.validate_transaction	CalcIntrinsicGas
 fork.check_transaction	-	delegated	2/2	-> vm.gas.allocate_evm_gas	SplitTxnGasLimit
@@ -62,21 +62,21 @@ fork.check_transaction	-	delegated	2/2	-> vm.gas.check_block_gas_capacity	CheckB
 fork.check_transaction	-	delegated	2/2	-> vm.gas.check_block_gas_capacity	InclusionContributions
 fork.check_transaction	-	delegated	2/2	-> transactions.calculate_effective_gas_price	CheckEip1559TxGasFeeCap
 fork.check_transaction	4	missing	-	-	-
-fork.disburse_gas_fees	0,2	part	2/2	repos/clients/erigon/execution/protocol/txn_executor.go:971-984	TxnExecutor.refundGas
-fork.execute_block	2,3	entry	2/2	repos/clients/erigon/execution/protocol/block_exec.go:75-199	ExecuteBlockEphemerally
-fork.execute_block	4,5	part	2/2	repos/clients/erigon/execution/bal/process.go:67-115	Process
-fork.execute_block	1	part	2/2	repos/clients/erigon/execution/protocol/rules/merge/merge.go:124-132	Merge.VerifyUncles
-fork.execute_block	4,5	part	2/2	repos/clients/erigon/execution/protocol/rules/rules.go:206-248	DefaultBlockPostValidation
-fork.execute_block	4,5	part	2/2	repos/clients/erigon/execution/types/block.go:659-683	Body.MatchesHeader
-fork.execute_block	0	part	2/2	repos/clients/erigon/execution/types/block.go:787-807	RawBlock.ValidateMaxRlpSize
+fork.disburse_gas_fees	0,2	part	2/2	xref/cache/repos/erigon/execution/protocol/txn_executor.go:971-984	TxnExecutor.refundGas
+fork.execute_block	2,3	entry	2/2	xref/cache/repos/erigon/execution/protocol/block_exec.go:75-199	ExecuteBlockEphemerally
+fork.execute_block	4,5	part	2/2	xref/cache/repos/erigon/execution/bal/process.go:67-115	Process
+fork.execute_block	1	part	2/2	xref/cache/repos/erigon/execution/protocol/rules/merge/merge.go:124-132	Merge.VerifyUncles
+fork.execute_block	4,5	part	2/2	xref/cache/repos/erigon/execution/protocol/rules/rules.go:206-248	DefaultBlockPostValidation
+fork.execute_block	4,5	part	2/2	xref/cache/repos/erigon/execution/types/block.go:659-683	Body.MatchesHeader
+fork.execute_block	0	part	2/2	xref/cache/repos/erigon/execution/types/block.go:787-807	RawBlock.ValidateMaxRlpSize
 fork.execute_block	-	delegated	2/2	-> fork.validate_header	Merge.VerifyHeader
 fork.execute_block	-	delegated	2/2	-> fork.validate_header	Merge.verifyHeader
 fork.execute_block	-	delegated	2/2	-> fork.apply_body	InitializeBlockExecution
 fork.execute_block	-	delegated	2/2	-> fork.apply_body	FinalizeBlockExecution
 fork.execute_block	-	delegated	2/2	-> block_access_lists.hash_block_access_list	BlockAccessList.Hash
-fork.get_last_256_block_hashes	1	entry	2/2	repos/clients/erigon/execution/protocol/evm.go:114-192	GetHashFn
+fork.get_last_256_block_hashes	1	entry	2/2	xref/cache/repos/erigon/execution/protocol/evm.go:114-192	GetHashFn
 fork.get_last_256_block_hashes	0,2	missing	-	-	-
-fork.make_receipt	0	entry	2/2	repos/clients/erigon/execution/protocol/state_processor.go:154-189	MakeReceipt
+fork.make_receipt	0	entry	2/2	xref/cache/repos/erigon/execution/protocol/state_processor.go:154-189	MakeReceipt
 fork.make_receipt	-	delegated	2/2	-> blocks.encode_receipt	Receipt.MarshalBinary
 fork.make_receipt	-	delegated	2/2	-> blocks.encode_receipt	Receipt.encodeTyped
 fork.make_receipt	-	delegated	2/2	-> blocks.encode_receipt	Receipt.EncodeRLP
@@ -86,363 +86,638 @@ fork.make_receipt	-	delegated	1/2	-> blocks.encode_receipt	hasStandardReceiptPay
 fork.make_receipt	-	delegated	2/2	-> blocks.encode_receipt	Receipt.statusEncoding
 fork.make_receipt	-	delegated	1/2	-> bloom.logs_bloom	Bloom.add
 fork.make_receipt	1	missing	-	-	-
-fork.process_checked_system_transaction	0,1,2,3	inlined	2/2	repos/clients/erigon/execution/protocol/misc/eip7002.go:30-48	DequeueWithdrawalRequests7002
-fork.process_checked_system_transaction	0,1,2,3	inlined	2/2	repos/clients/erigon/execution/protocol/misc/eip7251.go:30-48	DequeueConsolidationRequests7251
-fork.process_checked_system_transaction	0,1,2,3	inlined	2/2	repos/clients/erigon/execution/protocol/misc/eip8282.go:46-64	DequeueBuilderDepositRequests
-fork.process_checked_system_transaction	0,1,2,3	inlined	2/2	repos/clients/erigon/execution/protocol/misc/eip8282.go:67-85	DequeueBuilderExitRequests
+fork.process_checked_system_transaction	0,1,2,3	inlined	2/2	xref/cache/repos/erigon/execution/protocol/misc/eip7002.go:30-48	DequeueWithdrawalRequests7002
+fork.process_checked_system_transaction	0,1,2,3	inlined	2/2	xref/cache/repos/erigon/execution/protocol/misc/eip7251.go:30-48	DequeueConsolidationRequests7251
+fork.process_checked_system_transaction	0,1,2,3	inlined	2/2	xref/cache/repos/erigon/execution/protocol/misc/eip8282.go:46-64	DequeueBuilderDepositRequests
+fork.process_checked_system_transaction	0,1,2,3	inlined	2/2	xref/cache/repos/erigon/execution/protocol/misc/eip8282.go:67-85	DequeueBuilderExitRequests
 fork.process_checked_system_transaction	-	delegated	2/2	-> fork.process_unchecked_system_transaction	sysCallContract
-fork.process_general_purpose_requests	0,1,2,3,4	entry	2/2	repos/clients/erigon/execution/protocol/rules/merge/merge.go:157-280	Merge.Finalize
-fork.process_general_purpose_requests	1	part	2/2	repos/clients/erigon/execution/protocol/misc/eip7002.go:30-48	DequeueWithdrawalRequests7002
-fork.process_general_purpose_requests	2	part	2/2	repos/clients/erigon/execution/protocol/misc/eip7251.go:30-48	DequeueConsolidationRequests7251
-fork.process_general_purpose_requests	3	part	2/2	repos/clients/erigon/execution/protocol/misc/eip8282.go:46-64	DequeueBuilderDepositRequests
-fork.process_general_purpose_requests	4	part	2/2	repos/clients/erigon/execution/protocol/misc/eip8282.go:67-85	DequeueBuilderExitRequests
+fork.process_general_purpose_requests	0,1,2,3,4	entry	2/2	xref/cache/repos/erigon/execution/protocol/rules/merge/merge.go:157-280	Merge.Finalize
+fork.process_general_purpose_requests	1	part	2/2	xref/cache/repos/erigon/execution/protocol/misc/eip7002.go:30-48	DequeueWithdrawalRequests7002
+fork.process_general_purpose_requests	2	part	2/2	xref/cache/repos/erigon/execution/protocol/misc/eip7251.go:30-48	DequeueConsolidationRequests7251
+fork.process_general_purpose_requests	3	part	2/2	xref/cache/repos/erigon/execution/protocol/misc/eip8282.go:46-64	DequeueBuilderDepositRequests
+fork.process_general_purpose_requests	4	part	2/2	xref/cache/repos/erigon/execution/protocol/misc/eip8282.go:67-85	DequeueBuilderExitRequests
 fork.process_general_purpose_requests	-	delegated	2/2	-> requests.parse_deposit_requests	ParseDepositLogs
 fork.process_general_purpose_requests	-	delegated	2/2	-> requests.parse_deposit_requests	unpackDepositLog
-fork.process_transaction	1,2,4,5	entry	2/2	repos/clients/erigon/execution/protocol/state_processor.go:67-123	applyTransaction
-fork.process_transaction	4	part	2/2	repos/clients/erigon/execution/protocol/state_processor.go:49-53	GasUsed.AddResult
-fork.process_transaction	1,2,3	part	2/2	repos/clients/erigon/execution/protocol/txn_executor.go:540-820	TxnExecutor.Execute
-fork.process_transaction	5	part	2/2	repos/clients/erigon/execution/state/intra_block_state.go:2595-2645	IntraBlockState.FinalizeTx
-fork.process_transaction	0	part	2/2	repos/clients/erigon/execution/state/intra_block_state.go:2950-2964	IntraBlockState.SetTxContext
+fork.process_transaction	1,2,4,5	entry	2/2	xref/cache/repos/erigon/execution/protocol/state_processor.go:67-123	applyTransaction
+fork.process_transaction	4	part	2/2	xref/cache/repos/erigon/execution/protocol/state_processor.go:49-53	GasUsed.AddResult
+fork.process_transaction	1,2,3	part	2/2	xref/cache/repos/erigon/execution/protocol/txn_executor.go:540-820	TxnExecutor.Execute
+fork.process_transaction	5	part	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:2595-2645	IntraBlockState.FinalizeTx
+fork.process_transaction	0	part	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:2950-2964	IntraBlockState.SetTxContext
 fork.process_transaction	-	delegated	2/2	-> fork.check_transaction	TxnExecutor.preCheck
 fork.process_transaction	-	delegated	2/2	-> fork.update_sender_state	TxnExecutor.buyGas
 fork.process_transaction	-	delegated	2/2	-> fork.disburse_gas_fees	TxnExecutor.refundGas
 fork.process_transaction	-	delegated	2/2	-> fork.check_transaction	CheckBlockGasInclusion
 fork.process_transaction	-	delegated	2/2	-> fork.make_receipt	MakeReceipt
-fork.process_unchecked_system_transaction	1,2	entry	2/2	repos/clients/erigon/execution/protocol/block_exec.go:223-266	sysCallContract
+fork.process_unchecked_system_transaction	1,2	entry	2/2	xref/cache/repos/erigon/execution/protocol/block_exec.go:223-266	sysCallContract
 fork.process_unchecked_system_transaction	-	delegated	2/2	-> vm.interpreter.process_top_level	EVM.Call
 fork.process_unchecked_system_transaction	0	missing	-	-	-
-fork.process_withdrawals	1	part	2/2	repos/clients/erigon/execution/types/withdrawal.go:128-130	Withdrawals.EncodeIndex
-fork.process_withdrawals	2	inlined	2/2	repos/clients/erigon/execution/protocol/rules/merge/merge.go:157-280	Merge.Finalize
-fork.process_withdrawals	0,3	inlined	2/2	repos/clients/erigon/execution/exec/block_assembler.go:411-462	BlockAssembler.AssembleBlock
-fork.process_withdrawals	1	inlined	2/2	repos/clients/erigon/execution/types/block.go:1111-1160	NewBlock
+fork.process_withdrawals	1	part	2/2	xref/cache/repos/erigon/execution/types/withdrawal.go:128-130	Withdrawals.EncodeIndex
+fork.process_withdrawals	2	inlined	2/2	xref/cache/repos/erigon/execution/protocol/rules/merge/merge.go:157-280	Merge.Finalize
+fork.process_withdrawals	0,3	inlined	2/2	xref/cache/repos/erigon/execution/exec/block_assembler.go:411-462	BlockAssembler.AssembleBlock
+fork.process_withdrawals	1	inlined	2/2	xref/cache/repos/erigon/execution/types/block.go:1111-1160	NewBlock
 fork.process_withdrawals	-	delegated	2/2	-> state_tracker.create_ether	IntraBlockState.AddBalance
-fork.state_transition	2	part	2/2	repos/clients/erigon/execution/protocol/block_exec.go:303-342	FinalizeBlockExecution
+fork.state_transition	2	part	2/2	xref/cache/repos/erigon/execution/protocol/block_exec.go:303-342	FinalizeBlockExecution
 fork.state_transition	-	delegated	1/2	-> fork.execute_block	ExecuteBlockEphemerally
 fork.state_transition	-	delegated	2/2	-> fork.get_last_256_block_hashes	GetHashFn
 fork.state_transition	0,1,3	missing	-	-	-
-fork.update_sender_state	3	entry	2/2	repos/clients/erigon/execution/protocol/txn_executor.go:213-234	TxnExecutor.buyGas
-fork.update_sender_state	2	inlined	2/2	repos/clients/erigon/execution/protocol/txn_executor.go:540-820	TxnExecutor.Execute
+fork.update_sender_state	3	entry	2/2	xref/cache/repos/erigon/execution/protocol/txn_executor.go:213-234	TxnExecutor.buyGas
+fork.update_sender_state	2	inlined	2/2	xref/cache/repos/erigon/execution/protocol/txn_executor.go:540-820	TxnExecutor.Execute
 fork.update_sender_state	-	delegated	2/2	-> state_tracker.set_account_balance	IntraBlockState.SubBalance
-fork.validate_header	1,2,4	entry	2/2	repos/clients/erigon/execution/protocol/rules/merge/merge.go:320-411	Merge.verifyHeader
-fork.validate_header	3	part	2/2	repos/clients/erigon/execution/protocol/misc/eip1559.go:37-47	VerifyEip1559Header
+fork.validate_header	1,2,4	entry	2/2	xref/cache/repos/erigon/execution/protocol/rules/merge/merge.go:320-411	Merge.verifyHeader
+fork.validate_header	3	part	2/2	xref/cache/repos/erigon/execution/protocol/misc/eip1559.go:37-47	VerifyEip1559Header
 fork.validate_header	-	delegated	2/2	-> fork.calculate_base_fee_per_gas	CalcBaseFee
 fork.validate_header	-	delegated	2/2	-> vm.gas.calculate_excess_blob_gas	CalcExcessBlobGas
 fork.validate_header	-	delegated	2/2	-> fork.calculate_base_fee_per_gas	VerifyParentGasLimit
 fork.validate_header	0	missing	-	-	-
-fork_types.encode_account	0	entry	2/2	repos/clients/erigon/execution/types/accounts/account.go:194-255	Account.EncodeForHashing
-fork_types.encode_account	0	part	2/2	repos/clients/erigon/execution/types/accounts/account.go:81-85	Account.EncodingLengthForHashing
-requests.compute_requests_hash	0,1	entry	2/2	repos/clients/erigon/execution/types/eip7685_requests.go:60-77	FlatRequests.Hash
-requests.extract_deposit_data	2,3,4,5	entry	2/2	repos/clients/erigon/execution/protocol/misc/eip6110.go:101-117	unpackDepositLog
-requests.extract_deposit_data	0,1,2,3,4	part	2/2	repos/clients/erigon/execution/protocol/misc/eip6110.go:66-98	validateDepositLog
-requests.parse_deposit_requests	1,2	entry	2/2	repos/clients/erigon/execution/protocol/misc/eip6110.go:121-139	ParseDepositLogs
-requests.parse_deposit_requests	0	part	2/2	repos/clients/erigon/execution/protocol/rules/merge/merge.go:157-280	Merge.Finalize
+fork_types.encode_account	0	entry	2/2	xref/cache/repos/erigon/execution/types/accounts/account.go:194-255	Account.EncodeForHashing
+fork_types.encode_account	0	part	2/2	xref/cache/repos/erigon/execution/types/accounts/account.go:81-85	Account.EncodingLengthForHashing
+requests.compute_requests_hash	0,1	entry	2/2	xref/cache/repos/erigon/execution/types/eip7685_requests.go:60-77	FlatRequests.Hash
+requests.extract_deposit_data	2,3,4,5	entry	2/2	xref/cache/repos/erigon/execution/protocol/misc/eip6110.go:101-117	unpackDepositLog
+requests.extract_deposit_data	0,1,2,3,4	part	2/2	xref/cache/repos/erigon/execution/protocol/misc/eip6110.go:66-98	validateDepositLog
+requests.parse_deposit_requests	1,2	entry	2/2	xref/cache/repos/erigon/execution/protocol/misc/eip6110.go:121-139	ParseDepositLogs
+requests.parse_deposit_requests	0	part	2/2	xref/cache/repos/erigon/execution/protocol/rules/merge/merge.go:157-280	Merge.Finalize
 requests.parse_deposit_requests	-	delegated	2/2	-> requests.extract_deposit_data	unpackDepositLog
 requests.parse_deposit_requests	-	delegated	2/2	-> requests.extract_deposit_data	validateDepositLog
-state_tracker.account_deployable	0	entry	2/2	repos/clients/erigon/execution/vm/evm.go:647-661	EVM.hasCreateCollision
-state_tracker.account_exists	0	entry	2/2	repos/clients/erigon/execution/state/intra_block_state.go:621-643	IntraBlockState.Exist
+state_tracker.account_deployable	0	entry	2/2	xref/cache/repos/erigon/execution/vm/evm.go:647-661	EVM.hasCreateCollision
+state_tracker.account_exists	0	entry	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:621-643	IntraBlockState.Exist
 state_tracker.account_exists	-	delegated	2/2	-> state_tracker.get_account_optional	IntraBlockState.getStateObject
 state_tracker.account_exists	-	delegated	2/2	-> state_tracker.get_account_optional	IntraBlockState.versionedAccountBase
-state_tracker.account_exists_and_is_empty	0,1	entry	2/2	repos/clients/erigon/execution/state/intra_block_state.go:647-701	IntraBlockState.Empty
-state_tracker.account_exists_and_is_empty	1	part	2/2	repos/clients/erigon/execution/state/account_view.go:177-180	VersionedAccountView.Empty
-state_tracker.account_exists_and_is_empty	1	part	2/2	repos/clients/erigon/execution/types/accounts/account.go:262-264	Account.Empty
-state_tracker.account_exists_and_is_empty	1	part	2/2	repos/clients/erigon/execution/state/intra_block_state.go:708-728	IntraBlockState.emptyFromVersionedFields
+state_tracker.account_exists_and_is_empty	0,1	entry	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:647-701	IntraBlockState.Empty
+state_tracker.account_exists_and_is_empty	1	part	2/2	xref/cache/repos/erigon/execution/state/account_view.go:177-180	VersionedAccountView.Empty
+state_tracker.account_exists_and_is_empty	1	part	2/2	xref/cache/repos/erigon/execution/types/accounts/account.go:262-264	Account.Empty
+state_tracker.account_exists_and_is_empty	1	part	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:708-728	IntraBlockState.emptyFromVersionedFields
 state_tracker.account_exists_and_is_empty	-	delegated	2/2	-> state_tracker.get_account_optional	IntraBlockState.getStateObject
 state_tracker.account_exists_and_is_empty	-	delegated	2/2	-> state_tracker.get_account_optional	IntraBlockState.versionedAccountBase
-state_tracker.clear_account_preserving_balance	0,1	inlined	2/2	repos/clients/erigon/execution/state/intra_block_state.go:2501-2574	updateAccount
-state_tracker.clear_account_preserving_balance	1	inlined	2/2	repos/clients/erigon/execution/state/intra_block_state.go:2595-2645	IntraBlockState.FinalizeTx
-state_tracker.clear_account_preserving_balance	0,1	inlined	2/2	repos/clients/erigon/execution/state/intra_block_state.go:2883-2936	IntraBlockState.WriteFlushedTo
+state_tracker.clear_account_preserving_balance	0,1	inlined	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:2501-2574	updateAccount
+state_tracker.clear_account_preserving_balance	1	inlined	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:2595-2645	IntraBlockState.FinalizeTx
+state_tracker.clear_account_preserving_balance	0,1	inlined	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:2883-2936	IntraBlockState.WriteFlushedTo
 state_tracker.clear_account_preserving_balance	-	delegated	2/2	-> state_tracker.destroy_storage	Writer.CreateContract
 state_tracker.copy_tx_state	0,1	missing	-	-	-
-state_tracker.create_ether	0	entry	2/2	repos/clients/erigon/execution/state/intra_block_state.go:1078-1158	IntraBlockState.AddBalance
+state_tracker.create_ether	0	entry	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:1078-1158	IntraBlockState.AddBalance
 state_tracker.create_ether	-	delegated	2/2	-> state_tracker.modify_state	IntraBlockState.writeBalanceVersioned
-state_tracker.destroy_account	0,1	entry	2/2	repos/clients/erigon/execution/state/rw_v3.go:811-820	Writer.DeleteAccount
-state_tracker.destroy_account	1	part	2/2	repos/clients/erigon/execution/state/rw_v3.go:575-589	versionedWriteCollector.DeleteAccount
-state_tracker.destroy_account	1	inlined	2/2	repos/clients/erigon/execution/state/intra_block_state.go:2501-2574	updateAccount
-state_tracker.destroy_account	1	inlined	1/2	repos/clients/erigon/execution/state/intra_block_state.go:2883-2936	IntraBlockState.WriteFlushedTo
-state_tracker.destroy_storage	0,1	inlined	2/2	repos/clients/erigon/execution/state/intra_block_state.go:2595-2645	IntraBlockState.FinalizeTx
-state_tracker.destroy_storage	0,1	inlined	2/2	repos/clients/erigon/execution/state/intra_block_state.go:2715-2769	IntraBlockState.MakeWriteSet
+state_tracker.destroy_account	0,1	entry	2/2	xref/cache/repos/erigon/execution/state/rw_v3.go:811-820	Writer.DeleteAccount
+state_tracker.destroy_account	1	part	2/2	xref/cache/repos/erigon/execution/state/rw_v3.go:575-589	versionedWriteCollector.DeleteAccount
+state_tracker.destroy_account	1	inlined	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:2501-2574	updateAccount
+state_tracker.destroy_account	1	inlined	1/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:2883-2936	IntraBlockState.WriteFlushedTo
+state_tracker.destroy_storage	0,1	inlined	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:2595-2645	IntraBlockState.FinalizeTx
+state_tracker.destroy_storage	0,1	inlined	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:2715-2769	IntraBlockState.MakeWriteSet
 state_tracker.get_account	-	delegated	2/2	-> state_tracker.get_account_optional	IntraBlockState.getStateObject
-state_tracker.get_account_optional	1,2	entry	2/2	repos/clients/erigon/execution/state/intra_block_state.go:2023-2163	IntraBlockState.getStateObject
-state_tracker.get_account_optional	1,2	part	2/2	repos/clients/erigon/execution/state/read_paths.go:1693-1719	refreshAccount
-state_tracker.get_account_optional	0	part	2/2	repos/clients/erigon/execution/state/intra_block_state.go:3141-3165	IntraBlockState.accountRead
-state_tracker.get_code	0,1,2,3	entry	2/2	repos/clients/erigon/execution/state/state_object.go:419-473	stateObject.CodeTyped
-state_tracker.get_code	1,2,3	part	2/2	repos/clients/erigon/execution/state/read_paths.go:1243-1295	readCode
+state_tracker.get_account_optional	1,2	entry	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:2023-2163	IntraBlockState.getStateObject
+state_tracker.get_account_optional	1,2	part	2/2	xref/cache/repos/erigon/execution/state/read_paths.go:1693-1719	refreshAccount
+state_tracker.get_account_optional	0	part	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:3141-3165	IntraBlockState.accountRead
+state_tracker.get_code	0,1,2,3	entry	2/2	xref/cache/repos/erigon/execution/state/state_object.go:419-473	stateObject.CodeTyped
+state_tracker.get_code	1,2,3	part	2/2	xref/cache/repos/erigon/execution/state/read_paths.go:1243-1295	readCode
 state_tracker.get_pre_state_account	0	missing	-	-	-
-state_tracker.get_pre_state_account_optional	1,2	entry	2/2	repos/clients/erigon/execution/state/intra_block_state.go:2023-2163	IntraBlockState.getStateObject
-state_tracker.get_pre_state_account_optional	0,1	part	2/2	repos/clients/erigon/execution/state/read_paths.go:1693-1719	refreshAccount
-state_tracker.get_storage	0,1,2,3	entry	1/2	repos/clients/erigon/execution/state/intra_block_state.go:998-1006	IntraBlockState.GetState
-state_tracker.get_storage	3	part	2/2	repos/clients/erigon/execution/state/read_paths.go:60-85	IntraBlockState.originStorageDirect
-state_tracker.get_storage	1,3	part	2/2	repos/clients/erigon/execution/state/state_object.go:163-178	stateObject.GetState
-state_tracker.get_storage	2,3	part	2/2	repos/clients/erigon/execution/state/state_object.go:187-234	stateObject.GetCommittedState
-state_tracker.get_storage	0	part	2/2	repos/clients/erigon/execution/state/versionedio.go:228-238	ReadSet.SetStorage
-state_tracker.get_storage	1,2,3	part	2/2	repos/clients/erigon/execution/state/read_paths.go:280-818	versionedReadCore
-state_tracker.get_storage	2,3	part	2/2	repos/clients/erigon/execution/state/versionmap.go:665-679	VersionMap.ReadStorageLife
-state_tracker.get_storage	0,1,2,3	part	2/2	repos/clients/erigon/execution/state/read_paths.go:1480-1544	readStateForSet
-state_tracker.get_storage	1	part	2/2	repos/clients/erigon/execution/state/intra_block_state.go:3507-3567	IntraBlockState.versionedWriteHit
-state_tracker.get_storage_original	1,2,3	entry	2/2	repos/clients/erigon/execution/state/read_paths.go:1547-1596	readCommittedState
-state_tracker.get_storage_original	0,3	part	2/2	repos/clients/erigon/execution/state/state_object.go:187-234	stateObject.GetCommittedState
-state_tracker.get_storage_original	1,2	part	2/2	repos/clients/erigon/execution/state/read_paths.go:280-818	versionedReadCore
-state_tracker.get_transient_storage	0	entry	2/2	repos/clients/erigon/execution/state/transient_storage.go:75-82	transientStorage.Get
-state_tracker.get_transient_storage	0	part	2/2	repos/clients/erigon/execution/state/transient_storage.go:103-116	transientSlots.find
-state_tracker.incorporate_tx_into_block	0,1,2,4,5	inlined	2/2	repos/clients/erigon/execution/bal/rederive.go:46-153	RederiveBlockAccessList
+state_tracker.get_pre_state_account_optional	1,2	entry	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:2023-2163	IntraBlockState.getStateObject
+state_tracker.get_pre_state_account_optional	0,1	part	2/2	xref/cache/repos/erigon/execution/state/read_paths.go:1693-1719	refreshAccount
+state_tracker.get_storage	0,1,2,3	entry	1/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:998-1006	IntraBlockState.GetState
+state_tracker.get_storage	3	part	2/2	xref/cache/repos/erigon/execution/state/read_paths.go:60-85	IntraBlockState.originStorageDirect
+state_tracker.get_storage	1,3	part	2/2	xref/cache/repos/erigon/execution/state/state_object.go:163-178	stateObject.GetState
+state_tracker.get_storage	2,3	part	2/2	xref/cache/repos/erigon/execution/state/state_object.go:187-234	stateObject.GetCommittedState
+state_tracker.get_storage	0	part	2/2	xref/cache/repos/erigon/execution/state/versionedio.go:228-238	ReadSet.SetStorage
+state_tracker.get_storage	1,2,3	part	2/2	xref/cache/repos/erigon/execution/state/read_paths.go:280-818	versionedReadCore
+state_tracker.get_storage	2,3	part	2/2	xref/cache/repos/erigon/execution/state/versionmap.go:665-679	VersionMap.ReadStorageLife
+state_tracker.get_storage	0,1,2,3	part	2/2	xref/cache/repos/erigon/execution/state/read_paths.go:1480-1544	readStateForSet
+state_tracker.get_storage	1	part	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:3507-3567	IntraBlockState.versionedWriteHit
+state_tracker.get_storage_original	1,2,3	entry	2/2	xref/cache/repos/erigon/execution/state/read_paths.go:1547-1596	readCommittedState
+state_tracker.get_storage_original	0,3	part	2/2	xref/cache/repos/erigon/execution/state/state_object.go:187-234	stateObject.GetCommittedState
+state_tracker.get_storage_original	1,2	part	2/2	xref/cache/repos/erigon/execution/state/read_paths.go:280-818	versionedReadCore
+state_tracker.get_transient_storage	0	entry	2/2	xref/cache/repos/erigon/execution/state/transient_storage.go:75-82	transientStorage.Get
+state_tracker.get_transient_storage	0	part	2/2	xref/cache/repos/erigon/execution/state/transient_storage.go:103-116	transientSlots.find
+state_tracker.incorporate_tx_into_block	0,1,2,4,5	inlined	2/2	xref/cache/repos/erigon/execution/bal/rederive.go:46-153	RederiveBlockAccessList
 state_tracker.incorporate_tx_into_block	3	missing	-	-	-
-state_tracker.increment_nonce	0	inlined	2/2	repos/clients/erigon/execution/vm/evm.go:608-645	EVM.prepareCreate
-state_tracker.increment_nonce	0	inlined	2/2	repos/clients/erigon/execution/vm/evm.go:677-827	EVM.createWithPreparation
-state_tracker.is_account_alive	0	entry	2/2	repos/clients/erigon/execution/state/intra_block_state.go:647-701	IntraBlockState.Empty
-state_tracker.is_account_alive	0	part	2/2	repos/clients/erigon/execution/state/account_view.go:177-180	VersionedAccountView.Empty
-state_tracker.is_account_alive	0	part	2/2	repos/clients/erigon/execution/types/accounts/account.go:262-264	Account.Empty
-state_tracker.is_account_alive	0	part	2/2	repos/clients/erigon/execution/state/intra_block_state.go:708-728	IntraBlockState.emptyFromVersionedFields
+state_tracker.increment_nonce	0	inlined	2/2	xref/cache/repos/erigon/execution/vm/evm.go:608-645	EVM.prepareCreate
+state_tracker.increment_nonce	0	inlined	2/2	xref/cache/repos/erigon/execution/vm/evm.go:677-827	EVM.createWithPreparation
+state_tracker.is_account_alive	0	entry	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:647-701	IntraBlockState.Empty
+state_tracker.is_account_alive	0	part	2/2	xref/cache/repos/erigon/execution/state/account_view.go:177-180	VersionedAccountView.Empty
+state_tracker.is_account_alive	0	part	2/2	xref/cache/repos/erigon/execution/types/accounts/account.go:262-264	Account.Empty
+state_tracker.is_account_alive	0	part	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:708-728	IntraBlockState.emptyFromVersionedFields
 state_tracker.is_account_alive	-	delegated	2/2	-> state_tracker.get_account_optional	IntraBlockState.getStateObject
 state_tracker.is_account_alive	-	delegated	2/2	-> state_tracker.get_account_optional	IntraBlockState.versionedAccountBase
-state_tracker.mark_account_created	0	inlined	2/2	repos/clients/erigon/execution/state/intra_block_state.go:2192-2234	IntraBlockState.createObject
+state_tracker.mark_account_created	0	inlined	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:2192-2234	IntraBlockState.createObject
 state_tracker.modify_state	0,1	missing	-	-	-
-state_tracker.move_ether	0,1	entry	2/2	repos/clients/erigon/execution/protocol/misc/eip7708.go:53-68	Transfer
-state_tracker.move_ether	0	part	2/2	repos/clients/erigon/execution/protocol/evm.go:196-213	CanTransfer
-state_tracker.move_ether	1	part	2/2	repos/clients/erigon/execution/state/intra_block_state.go:1078-1158	IntraBlockState.AddBalance
-state_tracker.move_ether	0	part	2/2	repos/clients/erigon/execution/state/intra_block_state.go:1429-1464	IntraBlockState.SubBalance
+state_tracker.move_ether	0,1	entry	2/2	xref/cache/repos/erigon/execution/protocol/misc/eip7708.go:53-68	Transfer
+state_tracker.move_ether	0	part	2/2	xref/cache/repos/erigon/execution/protocol/evm.go:196-213	CanTransfer
+state_tracker.move_ether	1	part	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:1078-1158	IntraBlockState.AddBalance
+state_tracker.move_ether	0	part	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:1429-1464	IntraBlockState.SubBalance
 state_tracker.restore_tx_state	0	missing	-	-	-
-state_tracker.set_account	0	entry	2/2	repos/clients/erigon/execution/state/intra_block_state.go:2165-2176	IntraBlockState.setStateObject
-state_tracker.set_account_balance	0	entry	2/2	repos/clients/erigon/execution/state/intra_block_state.go:1467-1482	IntraBlockState.SetBalance
-state_tracker.set_account_balance	0	part	2/2	repos/clients/erigon/execution/state/state_object.go:382-388	stateObject.SetBalance
-state_tracker.set_account_balance	0	part	2/2	repos/clients/erigon/execution/state/state_object.go:390-392	stateObject.setBalance
-state_tracker.set_account_balance	0	part	2/2	repos/clients/erigon/execution/state/intra_block_state.go:1038-1074	IntraBlockState.writeBalanceVersioned
-state_tracker.set_account_balance	0	part	2/2	repos/clients/erigon/execution/state/intra_block_state.go:3177-3193	IntraBlockState.recordWriteBalance
+state_tracker.set_account	0	entry	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:2165-2176	IntraBlockState.setStateObject
+state_tracker.set_account_balance	0	entry	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:1467-1482	IntraBlockState.SetBalance
+state_tracker.set_account_balance	0	part	2/2	xref/cache/repos/erigon/execution/state/state_object.go:382-388	stateObject.SetBalance
+state_tracker.set_account_balance	0	part	2/2	xref/cache/repos/erigon/execution/state/state_object.go:390-392	stateObject.setBalance
+state_tracker.set_account_balance	0	part	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:1038-1074	IntraBlockState.writeBalanceVersioned
+state_tracker.set_account_balance	0	part	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:3177-3193	IntraBlockState.recordWriteBalance
 state_tracker.set_account_balance	-	delegated	2/2	-> state_tracker.modify_state	IntraBlockState.GetOrNewStateObject
-state_tracker.set_code	0,1	entry	2/2	repos/clients/erigon/execution/state/intra_block_state.go:1570-1636	IntraBlockState.SetCode
-state_tracker.set_code	0	part	2/2	repos/clients/erigon/execution/types/accounts/code.go:37-42	NewCode
-state_tracker.set_code	1	part	2/2	repos/clients/erigon/execution/state/state_object.go:475-490	stateObject.SetCode
-state_tracker.set_code	0,1	part	2/2	repos/clients/erigon/execution/state/state_object.go:492-496	stateObject.setCode
-state_tracker.set_code	0,1	part	2/2	repos/clients/erigon/execution/state/intra_block_state.go:1640-1650	IntraBlockState.writeCode
-state_tracker.set_code	1	part	2/2	repos/clients/erigon/execution/state/intra_block_state.go:1665-1690	IntraBlockState.setCreatedCode
-state_tracker.set_storage	1	entry	2/2	repos/clients/erigon/execution/state/intra_block_state.go:1727-1756	IntraBlockState.setState
-state_tracker.set_storage	1	part	2/2	repos/clients/erigon/execution/state/state_object.go:237-279	stateObject.SetState
-state_tracker.set_storage	1	part	2/2	repos/clients/erigon/execution/state/state_object.go:300-302	stateObject.setState
-state_tracker.set_storage	1	part	2/2	repos/clients/erigon/execution/state/intra_block_state.go:1762-1786	IntraBlockState.setStateVersioned
-state_tracker.set_storage	1	part	2/2	repos/clients/erigon/execution/state/intra_block_state.go:3384-3402	IntraBlockState.recordWriteStorage
+state_tracker.set_code	0,1	entry	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:1570-1636	IntraBlockState.SetCode
+state_tracker.set_code	0	part	2/2	xref/cache/repos/erigon/execution/types/accounts/code.go:37-42	NewCode
+state_tracker.set_code	1	part	2/2	xref/cache/repos/erigon/execution/state/state_object.go:475-490	stateObject.SetCode
+state_tracker.set_code	0,1	part	2/2	xref/cache/repos/erigon/execution/state/state_object.go:492-496	stateObject.setCode
+state_tracker.set_code	0,1	part	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:1640-1650	IntraBlockState.writeCode
+state_tracker.set_code	1	part	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:1665-1690	IntraBlockState.setCreatedCode
+state_tracker.set_storage	1	entry	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:1727-1756	IntraBlockState.setState
+state_tracker.set_storage	1	part	2/2	xref/cache/repos/erigon/execution/state/state_object.go:237-279	stateObject.SetState
+state_tracker.set_storage	1	part	2/2	xref/cache/repos/erigon/execution/state/state_object.go:300-302	stateObject.setState
+state_tracker.set_storage	1	part	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:1762-1786	IntraBlockState.setStateVersioned
+state_tracker.set_storage	1	part	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:3384-3402	IntraBlockState.recordWriteStorage
 state_tracker.set_storage	-	delegated	1/2	-> state_tracker.get_account_optional	IntraBlockState.getStateObject
 state_tracker.set_storage	0	missing	-	-	-
-state_tracker.set_transient_storage	0	entry	2/2	repos/clients/erigon/execution/state/transient_storage.go:52-64	transientStorage.Set
-state_tracker.set_transient_storage	0	part	1/2	repos/clients/erigon/execution/state/transient_storage.go:84-91	transientStorage.find
-transactions.calculate_effective_gas_price	1	inlined	1/2	repos/clients/erigon/execution/protocol/aa/aa_gas.go:18-58	chargeGas
-transactions.calculate_effective_gas_price	1	part	2/2	repos/clients/erigon/execution/types/transaction.go:129-144	CalcEffectiveGasTip
-transactions.calculate_effective_gas_price	0,2	part	2/2	repos/clients/erigon/execution/protocol/txn_executor.go:236-244	CheckEip1559TxGasFeeCap
-transactions.calculate_effective_gas_price	1	inlined	2/2	repos/clients/erigon/execution/types/dynamic_fee_tx.go:278-315	DynamicFeeTransaction.AsMessage
-transactions.calculate_intrinsic_cost	0,1,2,3,4,5	entry	2/2	repos/clients/erigon/execution/protocol/mdgas/intrinsic_gas.go:69-284	CalcIntrinsicGas
-transactions.calculate_intrinsic_cost	1	part	2/2	repos/clients/erigon/execution/protocol/txn_executor.go:986-1005	TxnExecutor.calcIntrinsicGas
+state_tracker.set_transient_storage	0	entry	2/2	xref/cache/repos/erigon/execution/state/transient_storage.go:52-64	transientStorage.Set
+state_tracker.set_transient_storage	0	part	1/2	xref/cache/repos/erigon/execution/state/transient_storage.go:84-91	transientStorage.find
+transactions.calculate_effective_gas_price	1	inlined	1/2	xref/cache/repos/erigon/execution/protocol/aa/aa_gas.go:18-58	chargeGas
+transactions.calculate_effective_gas_price	1	part	2/2	xref/cache/repos/erigon/execution/types/transaction.go:129-144	CalcEffectiveGasTip
+transactions.calculate_effective_gas_price	0,2	part	2/2	xref/cache/repos/erigon/execution/protocol/txn_executor.go:236-244	CheckEip1559TxGasFeeCap
+transactions.calculate_effective_gas_price	1	inlined	2/2	xref/cache/repos/erigon/execution/types/dynamic_fee_tx.go:278-315	DynamicFeeTransaction.AsMessage
+transactions.calculate_intrinsic_cost	0,1,2,3,4,5	entry	2/2	xref/cache/repos/erigon/execution/protocol/mdgas/intrinsic_gas.go:69-284	CalcIntrinsicGas
+transactions.calculate_intrinsic_cost	1	part	2/2	xref/cache/repos/erigon/execution/protocol/txn_executor.go:986-1005	TxnExecutor.calcIntrinsicGas
 transactions.calculate_intrinsic_cost	-	delegated	2/2	-> transactions.count_tokens_in_data	CountNonZeroBytes
-transactions.chain_id	0,1,2	entry	2/2	repos/clients/erigon/execution/types/transaction_signing.go:431-444	DeriveChainId
-transactions.chain_id	3	part	2/2	repos/clients/erigon/execution/types/aa_transaction.go:101-103	AccountAbstractionTransaction.GetChainID
-transactions.chain_id	3	part	2/2	repos/clients/erigon/execution/types/dynamic_fee_tx.go:366-368	DynamicFeeTransaction.GetChainID
-transactions.chain_id	3	part	2/2	repos/clients/erigon/execution/types/access_list_tx.go:497-499	AccessListTx.GetChainID
+transactions.chain_id	0,1,2	entry	2/2	xref/cache/repos/erigon/execution/types/transaction_signing.go:431-444	DeriveChainId
+transactions.chain_id	3	part	2/2	xref/cache/repos/erigon/execution/types/aa_transaction.go:101-103	AccountAbstractionTransaction.GetChainID
+transactions.chain_id	3	part	2/2	xref/cache/repos/erigon/execution/types/dynamic_fee_tx.go:366-368	DynamicFeeTransaction.GetChainID
+transactions.chain_id	3	part	2/2	xref/cache/repos/erigon/execution/types/access_list_tx.go:497-499	AccessListTx.GetChainID
 transactions.chain_id	-	delegated	1/2	-> vm.instructions.block.chain_id	enable1344
-transactions.check_nonce	0	inlined	2/2	repos/clients/erigon/execution/protocol/txn_executor.go:249-423	TxnExecutor.preCheck
-transactions.count_tokens_in_data	0	part	2/2	repos/clients/erigon/execution/protocol/mdgas/intrinsic_gas.go:54-56	CountNonZeroBytes
-transactions.count_tokens_in_data	0	inlined	2/2	repos/clients/erigon/execution/protocol/mdgas/intrinsic_gas.go:69-284	CalcIntrinsicGas
-transactions.decode_transaction	1,2,3	entry	2/2	repos/clients/erigon/execution/types/transaction.go:218-233	DecodeTransaction
-transactions.decode_transaction	3	part	2/2	repos/clients/erigon/execution/types/transaction.go:157-199	DecodeRLPTransaction
-transactions.decode_transaction	2	part	1/2	repos/clients/erigon/execution/types/dynamic_fee_tx.go:230-275	DynamicFeeTransaction.DecodeRLP
-transactions.decode_transaction	2,4	part	2/2	repos/clients/erigon/execution/types/transaction.go:236-276	UnmarshalTransactionFromBinary
-transactions.decode_transaction	2	part	1/2	repos/clients/erigon/execution/types/set_code_tx.go:239-300	SetCodeTransaction.DecodeRLP
-transactions.decode_transaction	3	part	1/2	repos/clients/erigon/execution/types/legacy_tx.go:273-309	LegacyTx.DecodeRLP
-transactions.decode_transaction	2	part	1/2	repos/clients/erigon/execution/types/access_list_tx.go:358-403	AccessListTx.DecodeRLP
-transactions.decode_transaction	2	part	1/2	repos/clients/erigon/execution/types/blob_tx.go:360-425	BlobTx.DecodeRLP
+transactions.check_nonce	0	inlined	2/2	xref/cache/repos/erigon/execution/protocol/txn_executor.go:249-423	TxnExecutor.preCheck
+transactions.count_tokens_in_data	0	part	2/2	xref/cache/repos/erigon/execution/protocol/mdgas/intrinsic_gas.go:54-56	CountNonZeroBytes
+transactions.count_tokens_in_data	0	inlined	2/2	xref/cache/repos/erigon/execution/protocol/mdgas/intrinsic_gas.go:69-284	CalcIntrinsicGas
+transactions.decode_transaction	1,2,3	entry	2/2	xref/cache/repos/erigon/execution/types/transaction.go:218-233	DecodeTransaction
+transactions.decode_transaction	3	part	2/2	xref/cache/repos/erigon/execution/types/transaction.go:157-199	DecodeRLPTransaction
+transactions.decode_transaction	2	part	1/2	xref/cache/repos/erigon/execution/types/dynamic_fee_tx.go:230-275	DynamicFeeTransaction.DecodeRLP
+transactions.decode_transaction	2,4	part	2/2	xref/cache/repos/erigon/execution/types/transaction.go:236-276	UnmarshalTransactionFromBinary
+transactions.decode_transaction	2	part	1/2	xref/cache/repos/erigon/execution/types/set_code_tx.go:239-300	SetCodeTransaction.DecodeRLP
+transactions.decode_transaction	3	part	1/2	xref/cache/repos/erigon/execution/types/legacy_tx.go:273-309	LegacyTx.DecodeRLP
+transactions.decode_transaction	2	part	1/2	xref/cache/repos/erigon/execution/types/access_list_tx.go:358-403	AccessListTx.DecodeRLP
+transactions.decode_transaction	2	part	1/2	xref/cache/repos/erigon/execution/types/blob_tx.go:360-425	BlobTx.DecodeRLP
 transactions.decode_transaction	0	missing	-	-	-
-transactions.encode_transaction	1	part	2/2	repos/clients/erigon/execution/types/set_code_tx.go:100-116	SetCodeTransaction.MarshalBinary
-transactions.encode_transaction	1	part	2/2	repos/clients/erigon/execution/types/dynamic_fee_tx.go:134-147	DynamicFeeTransaction.MarshalBinary
-transactions.encode_transaction	1	part	2/2	repos/clients/erigon/execution/types/dynamic_fee_tx.go:149-207	DynamicFeeTransaction.encodePayload
-transactions.encode_transaction	1	part	2/2	repos/clients/erigon/execution/types/access_list_tx.go:192-205	AccessListTx.MarshalBinary
-transactions.encode_transaction	1	part	2/2	repos/clients/erigon/execution/types/access_list_tx.go:207-261	AccessListTx.encodePayload
-transactions.encode_transaction	1	inlined	2/2	repos/clients/erigon/execution/types/dynamic_fee_tx.go:209-228	DynamicFeeTransaction.EncodeRLP
-transactions.encode_transaction	0	part	2/2	repos/clients/erigon/execution/types/legacy_tx.go:218-226	LegacyTx.MarshalBinary
-transactions.encode_transaction	1	inlined	2/2	repos/clients/erigon/execution/types/set_code_tx.go:218-237	SetCodeTransaction.EncodeRLP
-transactions.encode_transaction	0	part	2/2	repos/clients/erigon/execution/types/legacy_tx.go:228-261	LegacyTx.encodePayload
-transactions.encode_transaction	1	part	2/2	repos/clients/erigon/execution/types/blob_tx.go:246-316	BlobTx.encodePayload
-transactions.encode_transaction	0	part	2/2	repos/clients/erigon/execution/types/legacy_tx.go:263-271	LegacyTx.EncodeRLP
-transactions.encode_transaction	1	inlined	2/2	repos/clients/erigon/execution/types/access_list_tx.go:264-283	AccessListTx.EncodeRLP
-transactions.encode_transaction	1	part	2/2	repos/clients/erigon/execution/types/set_code_tx.go:302-368	SetCodeTransaction.encodePayload
-transactions.encode_transaction	1	inlined	2/2	repos/clients/erigon/execution/types/blob_tx.go:318-340	BlobTx.EncodeRLP
-transactions.encode_transaction	1	part	2/2	repos/clients/erigon/execution/types/blob_tx.go:342-358	BlobTx.MarshalBinary
+transactions.encode_transaction	1	part	2/2	xref/cache/repos/erigon/execution/types/set_code_tx.go:100-116	SetCodeTransaction.MarshalBinary
+transactions.encode_transaction	1	part	2/2	xref/cache/repos/erigon/execution/types/dynamic_fee_tx.go:134-147	DynamicFeeTransaction.MarshalBinary
+transactions.encode_transaction	1	part	2/2	xref/cache/repos/erigon/execution/types/dynamic_fee_tx.go:149-207	DynamicFeeTransaction.encodePayload
+transactions.encode_transaction	1	part	2/2	xref/cache/repos/erigon/execution/types/access_list_tx.go:192-205	AccessListTx.MarshalBinary
+transactions.encode_transaction	1	part	2/2	xref/cache/repos/erigon/execution/types/access_list_tx.go:207-261	AccessListTx.encodePayload
+transactions.encode_transaction	1	inlined	2/2	xref/cache/repos/erigon/execution/types/dynamic_fee_tx.go:209-228	DynamicFeeTransaction.EncodeRLP
+transactions.encode_transaction	0	part	2/2	xref/cache/repos/erigon/execution/types/legacy_tx.go:218-226	LegacyTx.MarshalBinary
+transactions.encode_transaction	1	inlined	2/2	xref/cache/repos/erigon/execution/types/set_code_tx.go:218-237	SetCodeTransaction.EncodeRLP
+transactions.encode_transaction	0	part	2/2	xref/cache/repos/erigon/execution/types/legacy_tx.go:228-261	LegacyTx.encodePayload
+transactions.encode_transaction	1	part	2/2	xref/cache/repos/erigon/execution/types/blob_tx.go:246-316	BlobTx.encodePayload
+transactions.encode_transaction	0	part	2/2	xref/cache/repos/erigon/execution/types/legacy_tx.go:263-271	LegacyTx.EncodeRLP
+transactions.encode_transaction	1	inlined	2/2	xref/cache/repos/erigon/execution/types/access_list_tx.go:264-283	AccessListTx.EncodeRLP
+transactions.encode_transaction	1	part	2/2	xref/cache/repos/erigon/execution/types/set_code_tx.go:302-368	SetCodeTransaction.encodePayload
+transactions.encode_transaction	1	inlined	2/2	xref/cache/repos/erigon/execution/types/blob_tx.go:318-340	BlobTx.EncodeRLP
+transactions.encode_transaction	1	part	2/2	xref/cache/repos/erigon/execution/types/blob_tx.go:342-358	BlobTx.MarshalBinary
 transactions.encode_transaction	2	missing	-	-	-
 transactions.has_access_list	0	missing	-	-	-
-transactions.recover_sender	0,1,2,3	entry	2/2	repos/clients/erigon/execution/types/transaction_signing.go:401-426	recoverPlain
-transactions.recover_sender	1	part	2/2	repos/clients/erigon/execution/types/transaction.go:370-377	isProtectedV
-transactions.signing_hash_155	0	entry	2/2	repos/clients/erigon/execution/types/legacy_tx.go:376-398	LegacyTx.SigningHash
-transactions.signing_hash_1559	0	entry	2/2	repos/clients/erigon/execution/types/dynamic_fee_tx.go:342-357	DynamicFeeTransaction.SigningHash
-transactions.signing_hash_1559	0	part	1/2	repos/clients/erigon/execution/types/hashing.go:199-207	prefixedRlpHash
-transactions.signing_hash_2930	0	entry	2/2	repos/clients/erigon/execution/types/access_list_tx.go:475-489	AccessListTx.SigningHash
-transactions.signing_hash_2930	0	part	1/2	repos/clients/erigon/execution/types/hashing.go:199-207	prefixedRlpHash
-transactions.signing_hash_4844	0	entry	2/2	repos/clients/erigon/execution/types/blob_tx.go:176-193	BlobTx.SigningHash
-transactions.signing_hash_7702	0	entry	2/2	repos/clients/erigon/execution/types/set_code_tx.go:200-216	SetCodeTransaction.SigningHash
-transactions.signing_hash_pre155	0	entry	2/2	repos/clients/erigon/execution/types/legacy_tx.go:376-398	LegacyTx.SigningHash
-transactions.validate_transaction	0,1,2	entry	2/2	repos/clients/erigon/execution/protocol/txn_executor.go:249-423	TxnExecutor.preCheck
-transactions.validate_transaction	2,3	part	2/2	repos/clients/erigon/execution/types/blob_tx.go:43-59	ValidateBlobPrerequisites
-transactions.validate_transaction	0	part	2/2	repos/clients/erigon/execution/vm/common.go:104-118	CheckMaxInitCodeSize
-transactions.validate_transaction	1	part	2/2	repos/clients/erigon/execution/protocol/txn_executor.go:236-244	CheckEip1559TxGasFeeCap
-transactions.validate_transaction	0,4	inlined	2/2	repos/clients/erigon/execution/protocol/txn_executor.go:426-525	TxnExecutor.ApplyFrame
-transactions.validate_transaction	3	part	2/2	repos/clients/erigon/execution/protocol/txn_executor.go:822-836	validateSetCodePrerequisites
+transactions.recover_sender	0,1,2,3	entry	2/2	xref/cache/repos/erigon/execution/types/transaction_signing.go:401-426	recoverPlain
+transactions.recover_sender	1	part	2/2	xref/cache/repos/erigon/execution/types/transaction.go:370-377	isProtectedV
+transactions.signing_hash_155	0	entry	2/2	xref/cache/repos/erigon/execution/types/legacy_tx.go:376-398	LegacyTx.SigningHash
+transactions.signing_hash_1559	0	entry	2/2	xref/cache/repos/erigon/execution/types/dynamic_fee_tx.go:342-357	DynamicFeeTransaction.SigningHash
+transactions.signing_hash_1559	0	part	1/2	xref/cache/repos/erigon/execution/types/hashing.go:199-207	prefixedRlpHash
+transactions.signing_hash_2930	0	entry	2/2	xref/cache/repos/erigon/execution/types/access_list_tx.go:475-489	AccessListTx.SigningHash
+transactions.signing_hash_2930	0	part	1/2	xref/cache/repos/erigon/execution/types/hashing.go:199-207	prefixedRlpHash
+transactions.signing_hash_4844	0	entry	2/2	xref/cache/repos/erigon/execution/types/blob_tx.go:176-193	BlobTx.SigningHash
+transactions.signing_hash_7702	0	entry	2/2	xref/cache/repos/erigon/execution/types/set_code_tx.go:200-216	SetCodeTransaction.SigningHash
+transactions.signing_hash_pre155	0	entry	2/2	xref/cache/repos/erigon/execution/types/legacy_tx.go:376-398	LegacyTx.SigningHash
+transactions.validate_transaction	0,1,2	entry	2/2	xref/cache/repos/erigon/execution/protocol/txn_executor.go:249-423	TxnExecutor.preCheck
+transactions.validate_transaction	2,3	part	2/2	xref/cache/repos/erigon/execution/types/blob_tx.go:43-59	ValidateBlobPrerequisites
+transactions.validate_transaction	0	part	2/2	xref/cache/repos/erigon/execution/vm/common.go:104-118	CheckMaxInitCodeSize
+transactions.validate_transaction	1	part	2/2	xref/cache/repos/erigon/execution/protocol/txn_executor.go:236-244	CheckEip1559TxGasFeeCap
+transactions.validate_transaction	0,4	inlined	2/2	xref/cache/repos/erigon/execution/protocol/txn_executor.go:426-525	TxnExecutor.ApplyFrame
+transactions.validate_transaction	3	part	2/2	xref/cache/repos/erigon/execution/protocol/txn_executor.go:822-836	validateSetCodePrerequisites
 transactions.validate_transaction	-	delegated	2/2	-> transactions.calculate_intrinsic_cost	TxnExecutor.calcIntrinsicGas
 transactions.validate_transaction	-	delegated	2/2	-> transactions.calculate_intrinsic_cost	IntrinsicGas
 transactions.validate_transaction	-	delegated	2/2	-> transactions.calculate_intrinsic_cost	CalcIntrinsicGas
-utils.address.compute_contract_address	0,1	entry	2/2	repos/clients/erigon/execution/types/create_address.go:32-41	CreateAddress
-utils.address.compute_create2_contract_address	0,1	entry	2/2	repos/clients/erigon/execution/types/create_address.go:46-56	CreateAddress2
-vm.emit_transfer_log	1	entry	2/2	repos/clients/erigon/execution/protocol/misc/eip7708.go:39-50	EthTransferLog
-vm.emit_transfer_log	0,2	part	2/2	repos/clients/erigon/execution/protocol/misc/eip7708.go:53-68	Transfer
-vm.emit_transfer_log	2	part	1/2	repos/clients/erigon/execution/state/intra_block_state.go:562-570	IntraBlockState.AddLog
-vm.emit_transfer_log	0,2	inlined	2/2	repos/clients/erigon/execution/vm/instructions.go:1443-1508	opSelfdestruct6780
-vm.eoa_delegation.calculate_delegation_cost	0,3,4	inlined	2/2	repos/clients/erigon/execution/vm/operations_acl.go:323-425	makeCallVariantGasCallEIP7702
-vm.eoa_delegation.calculate_delegation_cost	1,2	part	2/2	repos/clients/erigon/execution/types/set_code_tx.go:371-378	ParseDelegation
-vm.eoa_delegation.get_delegated_code_address	0	entry	2/2	repos/clients/erigon/execution/types/set_code_tx.go:371-378	ParseDelegation
-vm.eoa_delegation.is_valid_delegation	0	entry	2/2	repos/clients/erigon/execution/types/set_code_tx.go:371-378	ParseDelegation
-vm.eoa_delegation.recover_authority	1,2	entry	2/2	repos/clients/erigon/execution/types/authorization.go:70-77	Authorization.RecoverSigner
-vm.eoa_delegation.recover_authority	1	part	2/2	repos/clients/erigon/execution/types/authorization.go:47-62	encodeSigningPayload
-vm.eoa_delegation.recover_authority	1	part	2/2	repos/clients/erigon/execution/types/authorization.go:64-68	authorizationSigningHash
-vm.eoa_delegation.recover_authority	0,2	part	2/2	repos/clients/erigon/execution/types/authorization.go:109-134	recoverSignerFromHash
-vm.eoa_delegation.recover_authority	1	part	1/2	repos/clients/erigon/execution/types/hashing.go:223-230	prefixedPayloadHash
-vm.eoa_delegation.resolve_delegated_code_address	0,1,2,3	inlined	2/2	repos/clients/erigon/execution/vm/operations_acl.go:323-425	makeCallVariantGasCallEIP7702
-vm.eoa_delegation.set_delegation	0,1,2,3,4,5	entry	2/2	repos/clients/erigon/execution/protocol/txn_executor.go:860-969	TxnExecutor.verifyAuthorities
-vm.eoa_delegation.set_delegation	4	part	2/2	repos/clients/erigon/execution/types/set_code_tx.go:381-384	AddressToDelegation
+utils.address.compute_contract_address	0,1	entry	2/2	xref/cache/repos/erigon/execution/types/create_address.go:32-41	CreateAddress
+utils.address.compute_create2_contract_address	0,1	entry	2/2	xref/cache/repos/erigon/execution/types/create_address.go:46-56	CreateAddress2
+vm.emit_transfer_log	1	entry	2/2	xref/cache/repos/erigon/execution/protocol/misc/eip7708.go:39-50	EthTransferLog
+vm.emit_transfer_log	0,2	part	2/2	xref/cache/repos/erigon/execution/protocol/misc/eip7708.go:53-68	Transfer
+vm.emit_transfer_log	2	part	1/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:562-570	IntraBlockState.AddLog
+vm.emit_transfer_log	0,2	inlined	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1443-1508	opSelfdestruct6780
+vm.eoa_delegation.calculate_delegation_cost	0,3,4	inlined	2/2	xref/cache/repos/erigon/execution/vm/operations_acl.go:323-425	makeCallVariantGasCallEIP7702
+vm.eoa_delegation.calculate_delegation_cost	1,2	part	2/2	xref/cache/repos/erigon/execution/types/set_code_tx.go:371-378	ParseDelegation
+vm.eoa_delegation.get_delegated_code_address	0	entry	2/2	xref/cache/repos/erigon/execution/types/set_code_tx.go:371-378	ParseDelegation
+vm.eoa_delegation.is_valid_delegation	0	entry	2/2	xref/cache/repos/erigon/execution/types/set_code_tx.go:371-378	ParseDelegation
+vm.eoa_delegation.recover_authority	1,2	entry	2/2	xref/cache/repos/erigon/execution/types/authorization.go:70-77	Authorization.RecoverSigner
+vm.eoa_delegation.recover_authority	1	part	2/2	xref/cache/repos/erigon/execution/types/authorization.go:47-62	encodeSigningPayload
+vm.eoa_delegation.recover_authority	1	part	2/2	xref/cache/repos/erigon/execution/types/authorization.go:64-68	authorizationSigningHash
+vm.eoa_delegation.recover_authority	0,2	part	2/2	xref/cache/repos/erigon/execution/types/authorization.go:109-134	recoverSignerFromHash
+vm.eoa_delegation.recover_authority	1	part	1/2	xref/cache/repos/erigon/execution/types/hashing.go:223-230	prefixedPayloadHash
+vm.eoa_delegation.resolve_delegated_code_address	0,1,2,3	inlined	2/2	xref/cache/repos/erigon/execution/vm/operations_acl.go:323-425	makeCallVariantGasCallEIP7702
+vm.eoa_delegation.set_delegation	0,1,2,3,4,5	entry	2/2	xref/cache/repos/erigon/execution/protocol/txn_executor.go:860-969	TxnExecutor.verifyAuthorities
+vm.eoa_delegation.set_delegation	4	part	2/2	xref/cache/repos/erigon/execution/types/set_code_tx.go:381-384	AddressToDelegation
 vm.eoa_delegation.set_delegation	-	delegated	2/2	-> vm.eoa_delegation.validate_authorization	Authorization.RecoverSigner
 vm.eoa_delegation.set_delegation	-	delegated	2/2	-> vm.eoa_delegation.is_valid_delegation	IntraBlockState.GetDelegatedDesignation
 vm.eoa_delegation.set_delegation	-	delegated	2/2	-> state_tracker.account_exists	IntraBlockState.Exist
 vm.eoa_delegation.set_delegation	-	delegated	1/2	-> vm.gas.charge_gas_from_meter	consumeGas
-vm.eoa_delegation.validate_authorization	1	part	2/2	repos/clients/erigon/execution/types/authorization.go:70-77	Authorization.RecoverSigner
-vm.eoa_delegation.validate_authorization	0,2,3,4,5	inlined	2/2	repos/clients/erigon/execution/protocol/txn_executor.go:860-969	TxnExecutor.verifyAuthorities
-vm.eoa_delegation.validate_authorization	3	part	1/2	repos/clients/erigon/execution/state/intra_block_state.go:3052-3058	IntraBlockState.AddAddressToAccessList
-vm.eoa_delegation.validate_authorization	3	part	1/2	repos/clients/erigon/execution/state/intra_block_state.go:3092-3107	IntraBlockState.MarkAddressAccess
+vm.eoa_delegation.validate_authorization	1	part	2/2	xref/cache/repos/erigon/execution/types/authorization.go:70-77	Authorization.RecoverSigner
+vm.eoa_delegation.validate_authorization	0,2,3,4,5	inlined	2/2	xref/cache/repos/erigon/execution/protocol/txn_executor.go:860-969	TxnExecutor.verifyAuthorities
+vm.eoa_delegation.validate_authorization	3	part	1/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:3052-3058	IntraBlockState.AddAddressToAccessList
+vm.eoa_delegation.validate_authorization	3	part	1/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:3092-3107	IntraBlockState.MarkAddressAccess
 vm.eoa_delegation.validate_authorization	-	delegated	2/2	-> vm.eoa_delegation.recover_authority	recoverSignerFromHash
 vm.eoa_delegation.validate_authorization	-	delegated	2/2	-> vm.eoa_delegation.is_valid_delegation	IntraBlockState.GetDelegatedDesignation
 vm.eoa_delegation.validate_authorization	-	delegated	2/2	-> vm.eoa_delegation.recover_authority	authorizationSigningHash
-vm.gas.allocate_evm_gas	0,1,2	entry	2/2	repos/clients/erigon/execution/protocol/mdgas/md_gas.go:158-171	SplitTxnGasLimit
-vm.gas.calculate_blob_gas_price	0	entry	2/2	repos/clients/erigon/execution/protocol/misc/eip4844.go:136-138	GetBlobGasPrice
-vm.gas.calculate_blob_gas_price	0	part	2/2	repos/clients/erigon/execution/protocol/misc/eip4844.go:82-106	FakeExponential
-vm.gas.calculate_data_fee	0	inlined	2/2	repos/clients/erigon/execution/protocol/txn_executor.go:249-423	TxnExecutor.preCheck
+vm.gas.allocate_evm_gas	0,1,2	entry	2/2	xref/cache/repos/erigon/execution/protocol/mdgas/md_gas.go:158-171	SplitTxnGasLimit
+vm.gas.calculate_blob_gas_price	0	entry	2/2	xref/cache/repos/erigon/execution/protocol/misc/eip4844.go:136-138	GetBlobGasPrice
+vm.gas.calculate_blob_gas_price	0	part	2/2	xref/cache/repos/erigon/execution/protocol/misc/eip4844.go:82-106	FakeExponential
+vm.gas.calculate_data_fee	0	inlined	2/2	xref/cache/repos/erigon/execution/protocol/txn_executor.go:249-423	TxnExecutor.preCheck
 vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	GetBlobGasPrice
 vm.gas.calculate_data_fee	-	delegated	2/2	-> vm.gas.calculate_total_blob_gas	Message.BlobGas
-vm.gas.calculate_excess_blob_gas	0,1,2,3,4	entry	2/2	repos/clients/erigon/execution/protocol/misc/eip4844.go:52-78	CalcExcessBlobGas
+vm.gas.calculate_excess_blob_gas	0,1,2,3,4	entry	2/2	xref/cache/repos/erigon/execution/protocol/misc/eip4844.go:52-78	CalcExcessBlobGas
 vm.gas.calculate_excess_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	GetBlobGasPrice
-vm.gas.calculate_gas_extend_memory	1,3,4,5	entry	2/2	repos/clients/erigon/execution/vm/gas_table.go:59-86	memoryGasCost
-vm.gas.calculate_gas_extend_memory	1	part	2/2	repos/clients/erigon/execution/vm/common.go:45-58	calcMemSize64WithUint
+vm.gas.calculate_gas_extend_memory	1,3,4,5	entry	2/2	xref/cache/repos/erigon/execution/vm/gas_table.go:59-86	memoryGasCost
+vm.gas.calculate_gas_extend_memory	1	part	2/2	xref/cache/repos/erigon/execution/vm/common.go:45-58	calcMemSize64WithUint
 vm.gas.calculate_gas_extend_memory	0,2	missing	-	-	-
-vm.gas.calculate_memory_gas_cost	0,1,2,3	entry	2/2	repos/clients/erigon/execution/vm/gas_table.go:59-86	memoryGasCost
-vm.gas.calculate_memory_gas_cost	0	part	2/2	repos/clients/erigon/execution/vm/common.go:75-81	ToWordSize
-vm.gas.calculate_message_call_gas	2	entry	2/2	repos/clients/erigon/execution/vm/gas.go:40-56	callGas
-vm.gas.calculate_message_call_gas	1,3	part	2/2	repos/clients/erigon/execution/vm/gas_table.go:478-534	statelessGasCall
-vm.gas.calculate_message_call_gas	1,3	part	2/2	repos/clients/erigon/execution/vm/gas_table.go:604-646	statelessGasCallCode
-vm.gas.calculate_message_call_gas	0,3	part	2/2	repos/clients/erigon/execution/vm/instructions.go:1182-1231	opCall
-vm.gas.calculate_message_call_gas	0,3	part	2/2	repos/clients/erigon/execution/vm/instructions.go:1243-1280	opCallCode
-vm.gas.calculate_total_blob_gas	0	entry	2/2	repos/clients/erigon/execution/types/transaction.go:517-517	Message.BlobGas
-vm.gas.charge_gas	0	entry	2/2	repos/clients/erigon/execution/vm/interpreter.go:256-264	CallContext.useMdGas
-vm.gas.charge_gas	0	part	2/2	repos/clients/erigon/execution/vm/interpreter.go:303-313	useMdGas
+vm.gas.calculate_memory_gas_cost	0,1,2,3	entry	2/2	xref/cache/repos/erigon/execution/vm/gas_table.go:59-86	memoryGasCost
+vm.gas.calculate_memory_gas_cost	0	part	2/2	xref/cache/repos/erigon/execution/vm/common.go:75-81	ToWordSize
+vm.gas.calculate_message_call_gas	2	entry	2/2	xref/cache/repos/erigon/execution/vm/gas.go:40-56	callGas
+vm.gas.calculate_message_call_gas	1,3	part	2/2	xref/cache/repos/erigon/execution/vm/gas_table.go:478-534	statelessGasCall
+vm.gas.calculate_message_call_gas	1,3	part	2/2	xref/cache/repos/erigon/execution/vm/gas_table.go:604-646	statelessGasCallCode
+vm.gas.calculate_message_call_gas	0,3	part	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1182-1231	opCall
+vm.gas.calculate_message_call_gas	0,3	part	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1243-1280	opCallCode
+vm.gas.calculate_total_blob_gas	0	entry	2/2	xref/cache/repos/erigon/execution/types/transaction.go:517-517	Message.BlobGas
+vm.gas.charge_gas	0	entry	2/2	xref/cache/repos/erigon/execution/vm/interpreter.go:256-264	CallContext.useMdGas
+vm.gas.charge_gas	0	part	2/2	xref/cache/repos/erigon/execution/vm/interpreter.go:303-313	useMdGas
 vm.gas.charge_gas	-	delegated	2/2	-> vm.gas.charge_gas_from_meter	Consume
-vm.gas.charge_gas_from_meter	0,1	entry	2/2	repos/clients/erigon/execution/protocol/mdgas/md_gas.go:92-115	Consume
-vm.gas.charge_gas_from_meter	1	part	2/2	repos/clients/erigon/execution/vm/interpreter.go:256-264	CallContext.useMdGas
-vm.gas.charge_state_gas	0	entry	2/2	repos/clients/erigon/execution/vm/interpreter.go:256-264	CallContext.useMdGas
-vm.gas.charge_state_gas	0	part	1/2	repos/clients/erigon/execution/vm/interpreter.go:303-313	useMdGas
+vm.gas.charge_gas_from_meter	0,1	entry	2/2	xref/cache/repos/erigon/execution/protocol/mdgas/md_gas.go:92-115	Consume
+vm.gas.charge_gas_from_meter	1	part	2/2	xref/cache/repos/erigon/execution/vm/interpreter.go:256-264	CallContext.useMdGas
+vm.gas.charge_state_gas	0	entry	2/2	xref/cache/repos/erigon/execution/vm/interpreter.go:256-264	CallContext.useMdGas
+vm.gas.charge_state_gas	0	part	1/2	xref/cache/repos/erigon/execution/vm/interpreter.go:303-313	useMdGas
 vm.gas.charge_state_gas	-	delegated	2/2	-> vm.gas.charge_state_gas_from_meter	Consume
-vm.gas.charge_state_gas_from_meter	0,1,2	entry	2/2	repos/clients/erigon/execution/protocol/mdgas/md_gas.go:92-115	Consume
-vm.gas.charge_state_gas_from_meter	1	part	2/2	repos/clients/erigon/execution/vm/interpreter.go:256-264	CallContext.useMdGas
-vm.gas.check_block_gas_capacity	0,1,2,3	entry	2/2	repos/clients/erigon/execution/protocol/gaspool.go:179-195	CheckBlockGasInclusion
-vm.gas.check_block_gas_capacity	1,2	part	2/2	repos/clients/erigon/execution/protocol/gaspool.go:211-219	InclusionContributions
-vm.gas.check_gas	0	inlined	2/2	repos/clients/erigon/execution/vm/operations_acl.go:323-425	makeCallVariantGasCallEIP7702
-vm.gas.check_max_fee_per_blob_gas	0,2	entry	2/2	repos/clients/erigon/execution/protocol/txn_executor.go:249-423	TxnExecutor.preCheck
-vm.gas.check_max_fee_per_blob_gas	1	part	2/2	repos/clients/erigon/execution/protocol/evm.go:41-102	NewEVMBlockContext
+vm.gas.charge_state_gas_from_meter	0,1,2	entry	2/2	xref/cache/repos/erigon/execution/protocol/mdgas/md_gas.go:92-115	Consume
+vm.gas.charge_state_gas_from_meter	1	part	2/2	xref/cache/repos/erigon/execution/vm/interpreter.go:256-264	CallContext.useMdGas
+vm.gas.check_block_gas_capacity	0,1,2,3	entry	2/2	xref/cache/repos/erigon/execution/protocol/gaspool.go:179-195	CheckBlockGasInclusion
+vm.gas.check_block_gas_capacity	1,2	part	2/2	xref/cache/repos/erigon/execution/protocol/gaspool.go:211-219	InclusionContributions
+vm.gas.check_gas	0	inlined	2/2	xref/cache/repos/erigon/execution/vm/operations_acl.go:323-425	makeCallVariantGasCallEIP7702
+vm.gas.check_max_fee_per_blob_gas	0,2	entry	2/2	xref/cache/repos/erigon/execution/protocol/txn_executor.go:249-423	TxnExecutor.preCheck
+vm.gas.check_max_fee_per_blob_gas	1	part	2/2	xref/cache/repos/erigon/execution/protocol/evm.go:41-102	NewEVMBlockContext
 vm.gas.check_max_fee_per_blob_gas	-	delegated	2/2	-> vm.gas.calculate_blob_gas_price	GetBlobGasPrice
 vm.gas.commit_state_gas	0,1,2	missing	-	-	-
-vm.gas.credit_state_gas_refund	0,1	entry	2/2	repos/clients/erigon/execution/vm/interpreter.go:286-301	CallContext.refillStateGas
-vm.gas.credit_state_gas_refund	0,1	part	2/2	repos/clients/erigon/execution/protocol/mdgas/md_gas.go:118-132	Refill
-vm.gas.drain_state_gas_reservoir	0	entry	2/2	repos/clients/erigon/execution/vm/interpreter.go:385-396	CallContext.forwardStateGas
-vm.gas.drain_state_gas_reservoir	0	part	2/2	repos/clients/erigon/execution/vm/interpreter.go:400-405	CallContext.callGas
-vm.gas.drain_state_gas_reservoir	0	inlined	2/2	repos/clients/erigon/execution/vm/instructions.go:1070-1168	execCreate
-vm.gas.forfeit_remaining_gas	0,1	inlined	2/2	repos/clients/erigon/execution/vm/evm.go:191-218	EVM.handleFrameRevert
-vm.gas.init_code_cost	0	inlined	2/2	repos/clients/erigon/execution/protocol/mdgas/intrinsic_gas.go:69-284	CalcIntrinsicGas
-vm.gas.init_code_cost	0	part	1/2	repos/clients/erigon/execution/protocol/mdgas/intrinsic_gas.go:311-316	toWordSize
-vm.gas.max_message_call_gas	0	inlined	2/2	repos/clients/erigon/execution/vm/gas.go:40-56	callGas
-vm.gas.max_message_call_gas	0	inlined	2/2	repos/clients/erigon/execution/vm/instructions.go:1070-1168	execCreate
-vm.gas.repay_state_gas_spill	0,1,2	entry	2/2	repos/clients/erigon/execution/vm/interpreter.go:268-284	CallContext.mergeChildStateGas
-vm.gas.repay_state_gas_spill	1,2	part	2/2	repos/clients/erigon/execution/protocol/mdgas/md_gas.go:118-132	Refill
-vm.gas.repay_state_gas_spill	1,2	part	2/2	repos/clients/erigon/execution/vm/interpreter.go:286-301	CallContext.refillStateGas
+vm.gas.credit_state_gas_refund	0,1	entry	2/2	xref/cache/repos/erigon/execution/vm/interpreter.go:286-301	CallContext.refillStateGas
+vm.gas.credit_state_gas_refund	0,1	part	2/2	xref/cache/repos/erigon/execution/protocol/mdgas/md_gas.go:118-132	Refill
+vm.gas.drain_state_gas_reservoir	0	entry	2/2	xref/cache/repos/erigon/execution/vm/interpreter.go:385-396	CallContext.forwardStateGas
+vm.gas.drain_state_gas_reservoir	0	part	2/2	xref/cache/repos/erigon/execution/vm/interpreter.go:400-405	CallContext.callGas
+vm.gas.drain_state_gas_reservoir	0	inlined	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1070-1168	execCreate
+vm.gas.forfeit_remaining_gas	0,1	inlined	2/2	xref/cache/repos/erigon/execution/vm/evm.go:191-218	EVM.handleFrameRevert
+vm.gas.init_code_cost	0	inlined	2/2	xref/cache/repos/erigon/execution/protocol/mdgas/intrinsic_gas.go:69-284	CalcIntrinsicGas
+vm.gas.init_code_cost	0	part	1/2	xref/cache/repos/erigon/execution/protocol/mdgas/intrinsic_gas.go:311-316	toWordSize
+vm.gas.max_message_call_gas	0	inlined	2/2	xref/cache/repos/erigon/execution/vm/gas.go:40-56	callGas
+vm.gas.max_message_call_gas	0	inlined	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1070-1168	execCreate
+vm.gas.repay_state_gas_spill	0,1,2	entry	2/2	xref/cache/repos/erigon/execution/vm/interpreter.go:268-284	CallContext.mergeChildStateGas
+vm.gas.repay_state_gas_spill	1,2	part	2/2	xref/cache/repos/erigon/execution/protocol/mdgas/md_gas.go:118-132	Refill
+vm.gas.repay_state_gas_spill	1,2	part	2/2	xref/cache/repos/erigon/execution/vm/interpreter.go:286-301	CallContext.refillStateGas
 vm.gas.repay_state_gas_spill	3	missing	-	-	-
-vm.gas.restore_child_gas	0,1	entry	2/2	repos/clients/erigon/execution/vm/interpreter.go:369-383	CallContext.restoreChildGas
-vm.gas.restore_state_gas	0,1,2	entry	2/2	repos/clients/erigon/execution/vm/evm.go:191-218	EVM.handleFrameRevert
-vm.gas.restore_state_gas_to_entry	1,2,3	inlined	2/2	repos/clients/erigon/execution/vm/evm.go:191-218	EVM.handleFrameRevert
+vm.gas.restore_child_gas	0,1	entry	2/2	xref/cache/repos/erigon/execution/vm/interpreter.go:369-383	CallContext.restoreChildGas
+vm.gas.restore_state_gas	0,1,2	entry	2/2	xref/cache/repos/erigon/execution/vm/evm.go:191-218	EVM.handleFrameRevert
+vm.gas.restore_state_gas_to_entry	1,2,3	inlined	2/2	xref/cache/repos/erigon/execution/vm/evm.go:191-218	EVM.handleFrameRevert
 vm.gas.restore_state_gas_to_entry	0	missing	-	-	-
-vm.gas.settle_transaction_gas	3	part	2/2	repos/clients/erigon/execution/protocol/mdgas/md_gas.go:83-85	MdGasUsage.StateClamped
-vm.gas.tx_state_gas_used	1	entry	2/2	repos/clients/erigon/execution/protocol/runtime_gas.go:39-45	runtimeGasAccounting.total
+vm.gas.settle_transaction_gas	3	part	2/2	xref/cache/repos/erigon/execution/protocol/mdgas/md_gas.go:83-85	MdGasUsage.StateClamped
+vm.gas.tx_state_gas_used	1	entry	2/2	xref/cache/repos/erigon/execution/protocol/runtime_gas.go:39-45	runtimeGasAccounting.total
 vm.gas.tx_state_gas_used	0	missing	-	-	-
-vm.gas.withhold_create_gas	0,1	inlined	2/2	repos/clients/erigon/execution/vm/instructions.go:1070-1168	execCreate
-vm.incorporate_child	2	entry	2/2	repos/clients/erigon/execution/vm/interpreter.go:369-383	CallContext.restoreChildGas
-vm.incorporate_child	2,3	part	2/2	repos/clients/erigon/execution/vm/interpreter.go:268-284	CallContext.mergeChildStateGas
+vm.gas.withhold_create_gas	0,1	inlined	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1070-1168	execCreate
+vm.incorporate_child	2	entry	2/2	xref/cache/repos/erigon/execution/vm/interpreter.go:369-383	CallContext.restoreChildGas
+vm.incorporate_child	2,3	part	2/2	xref/cache/repos/erigon/execution/vm/interpreter.go:268-284	CallContext.mergeChildStateGas
 vm.incorporate_child	0,1,4	missing	-	-	-
-vm.instructions.arithmetic.add	0,2	entry	2/2	repos/clients/erigon/execution/vm/instructions.go:45-49	opAdd
-vm.instructions.arithmetic.add	1	part	2/2	repos/clients/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
+vm.instructions.arithmetic.add	0,2	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:45-49	opAdd
+vm.instructions.arithmetic.add	1	part	2/2	xref/cache/repos/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
 vm.instructions.arithmetic.add	-	delegated	2/2	-> vm.stack.pop	Stack.pop1Peek1
 vm.instructions.arithmetic.add	3	missing	-	-	-
-vm.instructions.arithmetic.addmod	0,2	entry	2/2	repos/clients/erigon/execution/vm/instructions.go:363-367	opAddmod
-vm.instructions.arithmetic.addmod	1	inlined	2/2	repos/clients/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
+vm.instructions.arithmetic.addmod	0,2	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:363-367	opAddmod
+vm.instructions.arithmetic.addmod	1	inlined	2/2	xref/cache/repos/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
 vm.instructions.arithmetic.addmod	-	delegated	2/2	-> vm.stack.pop	Stack.pop2Peek1
 vm.instructions.arithmetic.addmod	3	missing	-	-	-
-vm.instructions.arithmetic.div	0,2	entry	2/2	repos/clients/erigon/execution/vm/instructions.go:78-88	opDiv
-vm.instructions.arithmetic.div	1	part	2/2	repos/clients/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
+vm.instructions.arithmetic.div	0,2	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:78-88	opDiv
+vm.instructions.arithmetic.div	1	part	2/2	xref/cache/repos/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
 vm.instructions.arithmetic.div	-	delegated	2/2	-> vm.stack.pop	Stack.pop1Peek1
-vm.instructions.arithmetic.exp	0,2	entry	2/2	repos/clients/erigon/execution/vm/instructions.go:142-189	opExp
-vm.instructions.arithmetic.exp	2	part	2/2	repos/clients/erigon/execution/vm/instructions.go:193-215	expOdd
-vm.instructions.arithmetic.exp	1	part	2/2	repos/clients/erigon/execution/vm/gas_table.go:460-471	gasExpEIP160
+vm.instructions.arithmetic.exp	0,2	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:142-189	opExp
+vm.instructions.arithmetic.exp	2	part	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:193-215	expOdd
+vm.instructions.arithmetic.exp	1	part	2/2	xref/cache/repos/erigon/execution/vm/gas_table.go:460-471	gasExpEIP160
 vm.instructions.arithmetic.exp	-	delegated	2/2	-> vm.stack.pop	Stack.pop1Peek1
 vm.instructions.arithmetic.exp	3	missing	-	-	-
-vm.instructions.arithmetic.mod	0,2	entry	2/2	repos/clients/erigon/execution/vm/instructions.go:120-124	opMod
-vm.instructions.arithmetic.mod	1	part	2/2	repos/clients/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
+vm.instructions.arithmetic.mod	0,2	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:120-124	opMod
+vm.instructions.arithmetic.mod	1	part	2/2	xref/cache/repos/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
 vm.instructions.arithmetic.mod	-	delegated	2/2	-> vm.stack.pop	Stack.pop1Peek1
 vm.instructions.arithmetic.mod	3	missing	-	-	-
-vm.instructions.arithmetic.mul	0,2	entry	2/2	repos/clients/erigon/execution/vm/instructions.go:67-71	opMul
-vm.instructions.arithmetic.mul	1	part	2/2	repos/clients/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
+vm.instructions.arithmetic.mul	0,2	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:67-71	opMul
+vm.instructions.arithmetic.mul	1	part	2/2	xref/cache/repos/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
 vm.instructions.arithmetic.mul	-	delegated	2/2	-> vm.stack.pop	Stack.pop1Peek1
 vm.instructions.arithmetic.mul	3	missing	-	-	-
-vm.instructions.arithmetic.mulmod	0,2	entry	2/2	repos/clients/erigon/execution/vm/instructions.go:374-378	opMulmod
-vm.instructions.arithmetic.mulmod	1	inlined	2/2	repos/clients/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
+vm.instructions.arithmetic.mulmod	0,2	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:374-378	opMulmod
+vm.instructions.arithmetic.mulmod	1	inlined	2/2	xref/cache/repos/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
 vm.instructions.arithmetic.mulmod	-	delegated	2/2	-> vm.stack.pop	Stack.pop2Peek1
-vm.instructions.arithmetic.sdiv	0,2,3	entry	2/2	repos/clients/erigon/execution/vm/instructions.go:109-113	opSdiv
-vm.instructions.arithmetic.sdiv	1	part	2/2	repos/clients/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
+vm.instructions.arithmetic.sdiv	0,2,3	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:109-113	opSdiv
+vm.instructions.arithmetic.sdiv	1	part	2/2	xref/cache/repos/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
 vm.instructions.arithmetic.sdiv	-	delegated	2/2	-> vm.stack.pop	Stack.pop1Peek1
 vm.instructions.arithmetic.sdiv	4	missing	-	-	-
-vm.instructions.arithmetic.signextend	0,2,3,4,5	entry	2/2	repos/clients/erigon/execution/vm/instructions.go:217-221	opSignExtend
-vm.instructions.arithmetic.signextend	1	inlined	2/2	repos/clients/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
+vm.instructions.arithmetic.signextend	0,2,3,4,5	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:217-221	opSignExtend
+vm.instructions.arithmetic.signextend	1	inlined	2/2	xref/cache/repos/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
 vm.instructions.arithmetic.signextend	-	delegated	2/2	-> vm.stack.pop	Stack.pop1Peek1
 vm.instructions.arithmetic.signextend	-	delegated	1/2	-> vm.stack.push	Stack.pushRef
 vm.instructions.arithmetic.signextend	-	delegated	1/2	-> vm.stack.pop	Stack.pop
-vm.instructions.arithmetic.smod	0,2,3	entry	2/2	repos/clients/erigon/execution/vm/instructions.go:131-135	opSmod
-vm.instructions.arithmetic.smod	1	part	2/2	repos/clients/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
+vm.instructions.arithmetic.smod	0,2,3	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:131-135	opSmod
+vm.instructions.arithmetic.smod	1	part	2/2	xref/cache/repos/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
 vm.instructions.arithmetic.smod	-	delegated	2/2	-> vm.stack.pop	Stack.pop1Peek1
 vm.instructions.arithmetic.smod	4	missing	-	-	-
-vm.instructions.arithmetic.sub	0,2	entry	2/2	repos/clients/erigon/execution/vm/instructions.go:56-60	opSub
-vm.instructions.arithmetic.sub	1	part	2/2	repos/clients/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
+vm.instructions.arithmetic.sub	0,2	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:56-60	opSub
+vm.instructions.arithmetic.sub	1	part	2/2	xref/cache/repos/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
 vm.instructions.arithmetic.sub	-	delegated	2/2	-> vm.stack.pop	Stack.pop1Peek1
 vm.instructions.arithmetic.sub	3	missing	-	-	-
-vm.instructions.bitwise.bitwise_and	0,2	entry	2/2	repos/clients/erigon/execution/vm/instructions.go:324-328	opAnd
-vm.instructions.bitwise.bitwise_and	1	part	2/2	repos/clients/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
+vm.instructions.bitwise.bitwise_and	0,2	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:324-328	opAnd
+vm.instructions.bitwise.bitwise_and	1	part	2/2	xref/cache/repos/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
 vm.instructions.bitwise.bitwise_and	-	delegated	2/2	-> vm.stack.pop	Stack.pop1Peek1
 vm.instructions.bitwise.bitwise_and	-	delegated	1/2	-> vm.stack.push	Stack.pushRef
 vm.instructions.bitwise.bitwise_and	3	missing	-	-	-
-vm.instructions.bitwise.bitwise_or	0,2	entry	2/2	repos/clients/erigon/execution/vm/instructions.go:335-339	opOr
+vm.instructions.bitwise.bitwise_not	0,2	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:223-227	opNot
+vm.instructions.bitwise.bitwise_not	3	missing	-	-	-
+vm.instructions.bitwise.bitwise_or	0,2	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:335-339	opOr
 vm.instructions.bitwise.bitwise_or	-	delegated	2/2	-> vm.stack.pop	Stack.pop1Peek1
 vm.instructions.bitwise.bitwise_or	-	delegated	1/2	-> vm.stack.push	Stack.pushRef
 vm.instructions.bitwise.bitwise_or	-	delegated	1/2	-> vm.stack.pop	Stack.pop
-vm.instructions.storage.sload	0,2	entry	2/2	repos/clients/erigon/execution/vm/instructions.go:838-859	opSload
-vm.instructions.storage.sload	1	part	2/2	repos/clients/erigon/execution/vm/gas_table.go:50-55	coldStorageAccessCost
-vm.instructions.storage.sload	1	part	2/2	repos/clients/erigon/execution/vm/operations_acl.go:139-153	gasSLoadEIP2929
-vm.instructions.storage.sload	1	part	2/2	repos/clients/erigon/execution/state/intra_block_state.go:3061-3074	IntraBlockState.AddSlotToAccessList
-vm.instructions.storage.sload	1	part	2/2	repos/clients/erigon/execution/state/intra_block_state.go:3088-3090	IntraBlockState.SlotKnownWarm
+vm.instructions.bitwise.bitwise_sar	0,2,3	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:416-430	opSAR
+vm.instructions.bitwise.bitwise_sar	1	part	2/2	xref/cache/repos/erigon/execution/vm/jump_table.go:190-227	newConstantinopleInstructionSet
+vm.instructions.bitwise.bitwise_sar	-	delegated	2/2	-> vm.stack.pop	Stack.pop1Peek1
+vm.instructions.bitwise.bitwise_sar	4	missing	-	-	-
+vm.instructions.bitwise.bitwise_shl	0,2,3	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:388-397	opSHL
+vm.instructions.bitwise.bitwise_shl	1	part	2/2	xref/cache/repos/erigon/execution/vm/jump_table.go:190-227	newConstantinopleInstructionSet
+vm.instructions.bitwise.bitwise_shl	-	delegated	2/2	-> vm.stack.pop	Stack.pop1Peek1
+vm.instructions.bitwise.bitwise_shl	4	missing	-	-	-
+vm.instructions.bitwise.bitwise_shr	0,2	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:402-411	opSHR
+vm.instructions.bitwise.bitwise_shr	1	part	2/2	xref/cache/repos/erigon/execution/vm/jump_table.go:190-227	newConstantinopleInstructionSet
+vm.instructions.bitwise.bitwise_shr	-	delegated	2/2	-> vm.stack.pop	Stack.pop1Peek1
+vm.instructions.bitwise.bitwise_shr	3	missing	-	-	-
+vm.instructions.bitwise.bitwise_xor	0,2	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:346-350	opXor
+vm.instructions.bitwise.bitwise_xor	1	part	2/2	xref/cache/repos/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
+vm.instructions.bitwise.bitwise_xor	-	delegated	2/2	-> vm.stack.pop	Stack.pop1Peek1
+vm.instructions.bitwise.count_leading_zeros	0,2	entry	2/2	xref/cache/repos/erigon/execution/vm/eips.go:280-285	opCLZ
+vm.instructions.bitwise.count_leading_zeros	1	part	2/2	xref/cache/repos/erigon/execution/vm/eips.go:330-337	enable7939
+vm.instructions.bitwise.count_leading_zeros	3	missing	-	-	-
+vm.instructions.bitwise.get_byte	0,2,3	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:357-361	opByte
+vm.instructions.bitwise.get_byte	1	part	1/2	xref/cache/repos/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
+vm.instructions.bitwise.get_byte	-	delegated	2/2	-> vm.stack.pop	Stack.pop1Peek1
+vm.instructions.block.block_hash	0,2,3	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:722-748	opBlockhash
+vm.instructions.block.block_hash	2	part	2/2	xref/cache/repos/erigon/execution/protocol/evm.go:114-192	GetHashFn
+vm.instructions.block.block_hash	4	missing	-	-	-
+vm.instructions.block.chain_id	1	entry	2/2	xref/cache/repos/erigon/execution/vm/eips.go:122-126	opChainID
+vm.instructions.block.chain_id	0	part	2/2	xref/cache/repos/erigon/execution/vm/eips.go:111-119	enable1344
+vm.instructions.block.chain_id	-	delegated	2/2	-> vm.stack.push	Stack.pushRef
+vm.instructions.block.chain_id	2	missing	-	-	-
+vm.instructions.block.coinbase	1	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:755-758	opCoinbase
+vm.instructions.block.coinbase	0	part	2/2	xref/cache/repos/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
+vm.instructions.block.coinbase	-	delegated	2/2	-> vm.stack.push	Stack.pushRef
+vm.instructions.block.coinbase	2	missing	-	-	-
+vm.instructions.block.gas_limit	1	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:785-792	opGasLimit
+vm.instructions.block.gas_limit	-	delegated	2/2	-> vm.stack.push	Stack.pushRef
+vm.instructions.block.number	1	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:765-768	opNumber
+vm.instructions.block.number	-	delegated	2/2	-> vm.stack.push	Stack.pushRef
+vm.instructions.block.number	2	missing	-	-	-
+vm.instructions.block.prev_randao	1	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:775-783	opDifficulty
+vm.instructions.block.prev_randao	-	delegated	2/2	-> vm.stack.push	Stack.pushRef
+vm.instructions.block.prev_randao	0,2	missing	-	-	-
+vm.instructions.block.slot_number	1	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:770-773	opSlotNum
+vm.instructions.block.slot_number	0	part	2/2	xref/cache/repos/erigon/execution/vm/eips.go:362-369	enable7843
+vm.instructions.block.slot_number	-	delegated	2/2	-> vm.stack.push	Stack.pushRef
+vm.instructions.block.slot_number	2	missing	-	-	-
+vm.instructions.block.timestamp	1	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:760-763	opTimestamp
+vm.instructions.block.timestamp	-	delegated	2/2	-> vm.stack.push	Stack.pushRef
+vm.instructions.block.timestamp	2	missing	-	-	-
+vm.instructions.comparison.equal	0,2	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:294-302	opEq
+vm.instructions.comparison.equal	1	part	2/2	xref/cache/repos/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
+vm.instructions.comparison.equal	-	delegated	2/2	-> vm.stack.pop	Stack.pop1Peek1
+vm.instructions.comparison.equal	3	missing	-	-	-
+vm.instructions.comparison.greater_than	0,2	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:249-257	opGt
+vm.instructions.comparison.greater_than	-	delegated	2/2	-> vm.stack.pop	Stack.pop1Peek1
+vm.instructions.comparison.greater_than	-	delegated	1/2	-> vm.stack.push	Stack.pushRef
+vm.instructions.comparison.greater_than	-	delegated	1/2	-> vm.stack.pop	Stack.pop
+vm.instructions.comparison.greater_than	-	delegated	1/2	-> vm.stack.pop	Stack.pop2
+vm.instructions.comparison.is_zero	0,2	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:309-317	opIszero
+vm.instructions.comparison.is_zero	1	part	2/2	xref/cache/repos/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
+vm.instructions.comparison.is_zero	3	missing	-	-	-
+vm.instructions.comparison.less_than	0,2	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:234-242	opLt
+vm.instructions.comparison.less_than	1	part	2/2	xref/cache/repos/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
+vm.instructions.comparison.less_than	-	delegated	2/2	-> vm.stack.pop	Stack.pop1Peek1
+vm.instructions.comparison.less_than	-	delegated	1/2	-> vm.stack.pop	Stack.pop
+vm.instructions.comparison.less_than	3	missing	-	-	-
+vm.instructions.comparison.signed_greater_than	0,2	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:279-287	opSgt
+vm.instructions.comparison.signed_greater_than	1	part	2/2	xref/cache/repos/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
+vm.instructions.comparison.signed_greater_than	-	delegated	2/2	-> vm.stack.pop	Stack.pop1Peek1
+vm.instructions.comparison.signed_greater_than	3	missing	-	-	-
+vm.instructions.comparison.signed_less_than	0,2	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:264-272	opSlt
+vm.instructions.comparison.signed_less_than	1	part	2/2	xref/cache/repos/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
+vm.instructions.comparison.signed_less_than	-	delegated	2/2	-> vm.stack.pop	Stack.pop1Peek1
+vm.instructions.comparison.signed_less_than	3	missing	-	-	-
+vm.instructions.control_flow.gas_left	1	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:943-946	opGas
+vm.instructions.control_flow.gas_left	-	delegated	2/2	-> vm.stack.push	Stack.pushRef
+vm.instructions.control_flow.jump	0,2,3	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:881-895	opJump
+vm.instructions.control_flow.jump	2	part	2/2	xref/cache/repos/erigon/execution/vm/analysis.go:67-69	bitvec.isJumpdest
+vm.instructions.control_flow.jump	2	part	2/2	xref/cache/repos/erigon/execution/vm/contract.go:82-93	Contract.validJumpdest
+vm.instructions.control_flow.jump	2	part	2/2	xref/cache/repos/erigon/execution/vm/contract.go:97-99	Contract.analysedJumpdest
+vm.instructions.control_flow.jump	-	delegated	2/2	-> vm.stack.pop	Stack.pop
+vm.instructions.control_flow.jumpdest	-	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:925-927	opJumpdest
+vm.instructions.control_flow.jumpdest	1	missing	-	-	-
+vm.instructions.control_flow.jumpi	0,2,3	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:902-918	opJumpi
+vm.instructions.control_flow.jumpi	2	part	2/2	xref/cache/repos/erigon/execution/vm/analysis.go:67-69	bitvec.isJumpdest
+vm.instructions.control_flow.jumpi	2	part	2/2	xref/cache/repos/erigon/execution/vm/contract.go:82-93	Contract.validJumpdest
+vm.instructions.control_flow.jumpi	2	part	2/2	xref/cache/repos/erigon/execution/vm/contract.go:97-99	Contract.analysedJumpdest
+vm.instructions.control_flow.jumpi	-	delegated	2/2	-> vm.stack.pop	Stack.pop2
+vm.instructions.control_flow.pc	1	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:929-932	opPc
+vm.instructions.control_flow.pc	0	part	1/2	xref/cache/repos/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
+vm.instructions.control_flow.pc	-	delegated	2/2	-> vm.stack.push	Stack.pushRef
+vm.instructions.control_flow.stop	0	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1414-1416	opStop
+vm.instructions.control_flow.stop	1	missing	-	-	-
+vm.instructions.environment.address	1	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:454-457	opAddress
+vm.instructions.environment.address	1	part	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:441-446	CallContext.addressWord
+vm.instructions.environment.address	-	delegated	2/2	-> vm.stack.push	Stack.pushRef
+vm.instructions.environment.balance	0,2,3	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:459-470	opBalance
+vm.instructions.environment.balance	1	part	2/2	xref/cache/repos/erigon/execution/vm/gas_table.go:43-48	coldAccountAccessCost
+vm.instructions.environment.balance	1	part	2/2	xref/cache/repos/erigon/execution/vm/eips.go:136-170	enable2929
+vm.instructions.environment.balance	1	part	2/2	xref/cache/repos/erigon/execution/vm/operations_acl.go:186-194	gasEip2929AccountCheck
+vm.instructions.environment.balance	1	part	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:3052-3058	IntraBlockState.AddAddressToAccessList
+vm.instructions.environment.balance	-	delegated	1/2	-> utils.address.to_address_masked	CallContext.peekAddress
+vm.instructions.environment.balance	-	delegated	1/2	-> utils.address.to_address_masked	CallContext.memoAddress
+vm.instructions.environment.balance	4	missing	-	-	-
+vm.instructions.environment.base_fee	1	entry	2/2	xref/cache/repos/erigon/execution/vm/eips.go:227-231	opBaseFee
+vm.instructions.environment.base_fee	0	part	2/2	xref/cache/repos/erigon/execution/vm/eips.go:179-187	enable3198
+vm.instructions.environment.base_fee	-	delegated	2/2	-> vm.stack.push	Stack.push
+vm.instructions.environment.base_fee	2	missing	-	-	-
+vm.instructions.environment.blob_base_fee	1	entry	2/2	xref/cache/repos/erigon/execution/vm/eips.go:306-310	opBlobBaseFee
+vm.instructions.environment.blob_base_fee	0	part	2/2	xref/cache/repos/erigon/execution/vm/eips.go:314-321	enable7516
+vm.instructions.environment.blob_base_fee	-	delegated	2/2	-> vm.stack.push	Stack.push
+vm.instructions.environment.blob_base_fee	2	missing	-	-	-
+vm.instructions.environment.blob_hash	0,2	entry	2/2	xref/cache/repos/erigon/execution/vm/eips.go:269-278	opBlobHash
+vm.instructions.environment.blob_hash	1	part	2/2	xref/cache/repos/erigon/execution/vm/eips.go:259-266	enable4844
+vm.instructions.environment.blob_hash	3	missing	-	-	-
+vm.instructions.environment.calldatacopy	0,2	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:522-533	opCallDataCopy
+vm.instructions.environment.calldatacopy	1	part	2/2	xref/cache/repos/erigon/execution/vm/memory_table.go:26-28	memoryCallDataCopy
+vm.instructions.environment.calldatacopy	2	part	2/2	xref/cache/repos/erigon/execution/vm/memory.go:64-85	Memory.SetFromData
+vm.instructions.environment.calldatacopy	1	part	2/2	xref/cache/repos/erigon/execution/vm/gas_table.go:96-118	memoryCopierGas
+vm.instructions.environment.calldatacopy	2	part	2/2	xref/cache/repos/erigon/execution/vm/memory.go:106-122	Memory.Resize
+vm.instructions.environment.calldatacopy	-	delegated	2/2	-> vm.stack.pop	Stack.pop3
+vm.instructions.environment.calldatacopy	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	memoryGasCost
+vm.instructions.environment.calldatacopy	3	missing	-	-	-
+vm.instructions.environment.calldataload	0,2	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:492-501	opCallDataLoad
+vm.instructions.environment.calldataload	-	delegated	2/2	-> vm.memory.buffer_read	getData
+vm.instructions.environment.calldataload	3	missing	-	-	-
+vm.instructions.environment.calldatasize	1	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:513-516	opCallDataSize
+vm.instructions.environment.calldatasize	-	delegated	2/2	-> vm.stack.push	Stack.pushRef
+vm.instructions.environment.caller	1	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:477-480	opCaller
+vm.instructions.environment.caller	-	delegated	2/2	-> vm.stack.push	Stack.pushRef
+vm.instructions.environment.caller	2	missing	-	-	-
+vm.instructions.environment.callvalue	1	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:487-490	opCallValue
+vm.instructions.environment.callvalue	0,2	inlined	1/2	xref/cache/repos/erigon/execution/vm/vm_run_gen.go:16-957	EVM.run
+vm.instructions.environment.callvalue	0,2	inlined	1/2	xref/cache/repos/erigon/execution/vm/interpreter.go:507-721	EVM.runTraced
+vm.instructions.environment.callvalue	-	delegated	2/2	-> vm.stack.push	Stack.push
+vm.instructions.environment.codecopy	0,3	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:620-628	opCodeCopy
+vm.instructions.environment.codecopy	1,2	part	2/2	xref/cache/repos/erigon/execution/vm/memory_table.go:34-36	memoryCodeCopy
+vm.instructions.environment.codecopy	3	part	2/2	xref/cache/repos/erigon/execution/vm/memory.go:64-85	Memory.SetFromData
+vm.instructions.environment.codecopy	1	part	2/2	xref/cache/repos/erigon/execution/vm/gas_table.go:96-118	memoryCopierGas
+vm.instructions.environment.codecopy	2	part	2/2	xref/cache/repos/erigon/execution/vm/memory.go:106-122	Memory.Resize
+vm.instructions.environment.codecopy	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	memoryGasCost
+vm.instructions.environment.codecopy	-	delegated	2/2	-> vm.stack.pop	Stack.pop3
+vm.instructions.environment.codecopy	4	missing	-	-	-
+vm.instructions.environment.codesize	1	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:615-618	opCodeSize
+vm.instructions.environment.codesize	-	delegated	2/2	-> vm.stack.push	Stack.pushRef
+vm.instructions.environment.extcodecopy	0,4	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:630-650	opExtCodeCopy
+vm.instructions.environment.extcodecopy	1	part	2/2	xref/cache/repos/erigon/execution/vm/memory_table.go:38-40	memoryExtCodeCopy
+vm.instructions.environment.extcodecopy	1	part	2/2	xref/cache/repos/erigon/execution/vm/gas_table.go:96-118	memoryCopierGas
+vm.instructions.environment.extcodecopy	2	part	2/2	xref/cache/repos/erigon/execution/vm/operations_acl.go:160-177	gasExtCodeCopyEIP2929
+vm.instructions.environment.extcodecopy	2	part	2/2	xref/cache/repos/erigon/execution/vm/eips.go:378-383	enable8038
+vm.instructions.environment.extcodecopy	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	memoryGasCost
+vm.instructions.environment.extcodecopy	-	delegated	2/2	-> utils.address.to_address_masked	CallContext.peekAddress
+vm.instructions.environment.extcodecopy	-	delegated	2/2	-> vm.stack.pop	Stack.drop
+vm.instructions.environment.extcodecopy	-	delegated	2/2	-> vm.stack.pop	Stack.pop3
+vm.instructions.environment.extcodecopy	-	delegated	2/2	-> vm.memory.memory_write	Memory.SetFromData
+vm.instructions.environment.extcodecopy	3,5	missing	-	-	-
+vm.instructions.environment.extcodehash	0,2,3	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:689-714	opExtCodeHash
+vm.instructions.environment.extcodehash	1	part	2/2	xref/cache/repos/erigon/execution/vm/operations_acl.go:186-194	gasEip2929AccountCheck
+vm.instructions.environment.extcodehash	2	part	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:647-701	IntraBlockState.Empty
+vm.instructions.environment.extcodehash	1	part	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:3052-3058	IntraBlockState.AddAddressToAccessList
+vm.instructions.environment.extcodehash	-	delegated	1/2	-> utils.address.to_address_masked	CallContext.peekAddress
+vm.instructions.environment.extcodesize	0,3,4	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:602-613	opExtCodeSize
+vm.instructions.environment.extcodesize	1	part	1/2	xref/cache/repos/erigon/execution/vm/gas_table.go:43-48	coldAccountAccessCost
+vm.instructions.environment.extcodesize	1	part	2/2	xref/cache/repos/erigon/execution/vm/operations_acl.go:186-194	gasEip2929AccountCheck
+vm.instructions.environment.extcodesize	2	part	2/2	xref/cache/repos/erigon/execution/vm/eips.go:378-383	enable8038
+vm.instructions.environment.extcodesize	-	delegated	1/2	-> utils.address.to_address_masked	CallContext.peekAddress
+vm.instructions.environment.extcodesize	5	missing	-	-	-
+vm.instructions.environment.gasprice	1	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:716-719	opGasprice
+vm.instructions.environment.gasprice	-	delegated	2/2	-> vm.stack.push	Stack.push
+vm.instructions.environment.gasprice	2	missing	-	-	-
+vm.instructions.environment.origin	1	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:472-475	opOrigin
+vm.instructions.environment.origin	0	part	2/2	xref/cache/repos/erigon/execution/vm/jump_table.go:309-1220	newFrontierInstructionSet
+vm.instructions.environment.origin	-	delegated	2/2	-> vm.stack.push	Stack.pushRef
+vm.instructions.environment.returndatacopy	0,2,3	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:553-573	opReturnDataCopy
+vm.instructions.environment.returndatacopy	1	part	2/2	xref/cache/repos/erigon/execution/vm/memory_table.go:30-32	memoryReturnDataCopy
+vm.instructions.environment.returndatacopy	1	part	2/2	xref/cache/repos/erigon/execution/vm/gas_table.go:96-118	memoryCopierGas
+vm.instructions.environment.returndatacopy	3	part	2/2	xref/cache/repos/erigon/execution/vm/memory.go:106-122	Memory.Resize
+vm.instructions.environment.returndatacopy	-	delegated	2/2	-> vm.memory.memory_write	Memory.Set
+vm.instructions.environment.returndatacopy	-	delegated	2/2	-> vm.stack.pop	Stack.pop3
+vm.instructions.environment.returndatacopy	-	delegated	1/2	-> vm.gas.calculate_gas_extend_memory	calcMemSize64
+vm.instructions.environment.returndatacopy	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	memoryGasCost
+vm.instructions.environment.returndatasize	1	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:548-551	opReturnDataSize
+vm.instructions.environment.returndatasize	0	part	2/2	xref/cache/repos/erigon/execution/vm/jump_table.go:231-266	newByzantiumInstructionSet
+vm.instructions.environment.returndatasize	-	delegated	2/2	-> vm.stack.push	Stack.pushRef
+vm.instructions.environment.returndatasize	2	missing	-	-	-
+vm.instructions.environment.self_balance	1	entry	2/2	xref/cache/repos/erigon/execution/vm/eips.go:96-107	opSelfBalance
+vm.instructions.environment.self_balance	0	part	2/2	xref/cache/repos/erigon/execution/vm/eips.go:81-94	enable1884
+vm.instructions.environment.self_balance	-	delegated	2/2	-> vm.stack.push	Stack.push
+vm.instructions.environment.self_balance	2	missing	-	-	-
+vm.instructions.keccak.keccak	0,2,3	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:432-439	opKeccak256
+vm.instructions.keccak.keccak	2	part	2/2	xref/cache/repos/erigon/execution/vm/memory_table.go:22-24	memoryKeccak256
+vm.instructions.keccak.keccak	1	part	2/2	xref/cache/repos/erigon/execution/vm/gas_table.go:290-306	gasKeccak256
+vm.instructions.keccak.keccak	-	delegated	2/2	-> vm.stack.pop	Stack.pop1Peek1
+vm.instructions.keccak.keccak	-	delegated	2/2	-> vm.memory.memory_read_bytes	Memory.GetPtr
+vm.instructions.keccak.keccak	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	memoryGasCost
+vm.instructions.log.log_n	0,3,4	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1606-1632	makeLog
+vm.instructions.log.log_n	1	part	2/2	xref/cache/repos/erigon/execution/vm/memory_table.go:105-107	memoryLog
+vm.instructions.log.log_n	2	part	2/2	xref/cache/repos/erigon/execution/vm/memory.go:106-122	Memory.Resize
+vm.instructions.log.log_n	1	part	2/2	xref/cache/repos/erigon/execution/vm/gas_table.go:260-288	makeGasLog
+vm.instructions.log.log_n	4	part	1/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:538-540	IntraBlockState.AllocLog
+vm.instructions.log.log_n	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	memoryGasCost
+vm.instructions.log.log_n	-	delegated	2/2	-> vm.memory.memory_read_bytes	Memory.GetPtr
+vm.instructions.log.log_n	-	delegated	2/2	-> vm.stack.pop	Stack.pop2Uint64
+vm.instructions.log.log_n	-	delegated	2/2	-> vm.stack.pop	Stack.pop
+vm.instructions.log.log_n	-	delegated	1/2	-> vm.gas.calculate_gas_extend_memory	calcMemSize64
+vm.instructions.log.log_n	5	missing	-	-	-
+vm.instructions.memory.mcopy	0,3	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:824-830	opMcopy
+vm.instructions.memory.mcopy	1	part	2/2	xref/cache/repos/erigon/execution/vm/memory_table.go:54-61	memoryMcopy
+vm.instructions.memory.mcopy	1,2	part	2/2	xref/cache/repos/erigon/execution/vm/gas_table.go:96-118	memoryCopierGas
+vm.instructions.memory.mcopy	3	part	2/2	xref/cache/repos/erigon/execution/vm/memory.go:106-122	Memory.Resize
+vm.instructions.memory.mcopy	3	part	2/2	xref/cache/repos/erigon/execution/vm/memory.go:183-188	Memory.Copy
+vm.instructions.memory.mcopy	2	part	2/2	xref/cache/repos/erigon/execution/vm/eips.go:289-298	enable5656
+vm.instructions.memory.mcopy	-	delegated	2/2	-> vm.stack.pop	Stack.pop3
+vm.instructions.memory.mcopy	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	memoryGasCost
+vm.instructions.memory.mcopy	4	missing	-	-	-
+vm.instructions.memory.mload	0,3	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:799-804	opMload
+vm.instructions.memory.mload	1	part	2/2	xref/cache/repos/erigon/execution/vm/memory_table.go:42-44	memoryMLoad
+vm.instructions.memory.mload	2	part	1/2	xref/cache/repos/erigon/execution/vm/memory.go:106-122	Memory.Resize
+vm.instructions.memory.mload	-	delegated	2/2	-> vm.memory.memory_read_bytes	Memory.GetPtr
+vm.instructions.memory.msize	1	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:938-941	opMsize
+vm.instructions.memory.msize	-	delegated	2/2	-> vm.stack.push	Stack.pushRef
+vm.instructions.memory.msize	2	missing	-	-	-
+vm.instructions.memory.mstore	0,2	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:812-816	opMstore
+vm.instructions.memory.mstore	1	part	2/2	xref/cache/repos/erigon/execution/vm/memory_table.go:50-52	memoryMStore
+vm.instructions.memory.mstore	2	part	2/2	xref/cache/repos/erigon/execution/vm/memory.go:106-122	Memory.Resize
+vm.instructions.memory.mstore	-	delegated	2/2	-> vm.memory.memory_write	Memory.Set32
+vm.instructions.memory.mstore	-	delegated	2/2	-> vm.stack.pop	Stack.pop2
+vm.instructions.memory.mstore8	0,3	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:832-836	opMstore8
+vm.instructions.memory.mstore8	1	part	2/2	xref/cache/repos/erigon/execution/vm/memory_table.go:46-48	memoryMStore8
+vm.instructions.memory.mstore8	3	part	2/2	xref/cache/repos/erigon/execution/vm/memory.go:106-122	Memory.Resize
+vm.instructions.memory.mstore8	-	delegated	1/2	-> vm.gas.calculate_gas_extend_memory	calcMemSize64WithUint
+vm.instructions.memory.mstore8	-	delegated	1/2	-> vm.gas.calculate_gas_extend_memory	pureMemoryGascost
+vm.instructions.memory.mstore8	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	memoryGasCost
+vm.instructions.memory.mstore8	-	delegated	2/2	-> vm.stack.pop	Stack.pop2Uint64
+vm.instructions.stack.dup_n	2	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1732-1738	makeDup
+vm.instructions.stack.dup_n	2	part	2/2	xref/cache/repos/erigon/execution/vm/stack.go:143-150	Stack.dup
+vm.instructions.stack.dup_n	1	part	1/2	xref/cache/repos/erigon/execution/vm/interpreter.go:464-469	stackBoundsErr
+vm.instructions.stack.dupn	1,2,3,4	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1527-1549	opDupN
+vm.instructions.stack.dupn	0	part	2/2	xref/cache/repos/erigon/execution/vm/eips.go:340-359	enable8024
+vm.instructions.stack.dupn	-	delegated	2/2	-> vm.stack.decode_single	decodeSingle
+vm.instructions.stack.dupn	-	delegated	2/2	-> vm.stack.push	Stack.dup
+vm.instructions.stack.exchange	1,2,4	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1576-1601	opExchange
+vm.instructions.stack.exchange	3	part	2/2	xref/cache/repos/erigon/execution/vm/stack.go:132-138	Stack.exchange
+vm.instructions.stack.exchange	0	part	2/2	xref/cache/repos/erigon/execution/vm/eips.go:340-359	enable8024
+vm.instructions.stack.exchange	-	delegated	2/2	-> vm.stack.decode_pair	decodePair
+vm.instructions.stack.pop	0	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:794-797	opPop
+vm.instructions.stack.pop	-	delegated	2/2	-> vm.stack.pop	Stack.drop
+vm.instructions.stack.pop	1,2	missing	-	-	-
+vm.instructions.stack.push_n	1,2	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1690-1716	makePush
+vm.instructions.stack.push_n	0	part	2/2	xref/cache/repos/erigon/execution/vm/eips.go:234-242	enable3855
+vm.instructions.stack.push_n	1,2	part	2/2	xref/cache/repos/erigon/execution/vm/eips.go:245-248	opPush0
+vm.instructions.stack.push_n	1,2	part	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1635-1644	opPush1
+vm.instructions.stack.push_n	1,2	part	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1660-1673	opPush2
+vm.instructions.stack.push_n	1	part	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1682-1687	setBytes32Masked
+vm.instructions.stack.push_n	-	delegated	2/2	-> vm.stack.push	Stack.pushRef
+vm.instructions.stack.swap_n	2	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:952-955	opSwap1
+vm.instructions.stack.swap_n	2	part	2/2	xref/cache/repos/erigon/execution/vm/stack.go:132-138	Stack.exchange
+vm.instructions.stack.swap_n	2	part	2/2	xref/cache/repos/erigon/execution/vm/stack.go:140-140	Stack.swap
+vm.instructions.stack.swapn	1,2,3,4	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1551-1574	opSwapN
+vm.instructions.stack.swapn	3	part	2/2	xref/cache/repos/erigon/execution/vm/stack.go:132-138	Stack.exchange
+vm.instructions.stack.swapn	3	part	1/2	xref/cache/repos/erigon/execution/vm/stack.go:140-140	Stack.swap
+vm.instructions.stack.swapn	0	part	2/2	xref/cache/repos/erigon/execution/vm/eips.go:340-359	enable8024
+vm.instructions.stack.swapn	-	delegated	2/2	-> vm.stack.decode_single	decodeSingle
+vm.instructions.storage.sload	0,2	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:838-859	opSload
+vm.instructions.storage.sload	1	part	2/2	xref/cache/repos/erigon/execution/vm/gas_table.go:50-55	coldStorageAccessCost
+vm.instructions.storage.sload	1	part	2/2	xref/cache/repos/erigon/execution/vm/operations_acl.go:139-153	gasSLoadEIP2929
+vm.instructions.storage.sload	1	part	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:3061-3074	IntraBlockState.AddSlotToAccessList
+vm.instructions.storage.sload	1	part	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:3088-3090	IntraBlockState.SlotKnownWarm
 vm.instructions.storage.sload	-	delegated	2/2	-> state_tracker.get_storage	IntraBlockState.GetState
 vm.instructions.storage.sload	-	delegated	2/2	-> state_tracker.get_storage	stateObject.GetState
 vm.instructions.storage.sload	3	missing	-	-	-
-vm.instructions.storage.tload	0,2	entry	2/2	repos/clients/erigon/execution/vm/eips.go:209-213	opTload
-vm.instructions.storage.tload	1	part	2/2	repos/clients/erigon/execution/vm/eips.go:192-206	enable1153
+vm.instructions.storage.sstore	0,1,5	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:866-874	opSstore
+vm.instructions.storage.sstore	0,2,3,4	part	2/2	xref/cache/repos/erigon/execution/vm/operations_acl.go:35-132	makeGasSStoreFunc
+vm.instructions.storage.sstore	-	delegated	2/2	-> vm.stack.pop	Stack.drop
+vm.instructions.storage.sstore	-	delegated	2/2	-> vm.stack.pop	Stack.popCopy
+vm.instructions.storage.sstore	-	delegated	2/2	-> state_tracker.set_storage	stateObject.SetState
+vm.instructions.storage.sstore	-	delegated	2/2	-> state_tracker.set_storage	IntraBlockState.setState
+vm.instructions.storage.sstore	-	delegated	1/2	-> state_tracker.set_storage	stateObject.setState
+vm.instructions.storage.tload	0,2	entry	2/2	xref/cache/repos/erigon/execution/vm/eips.go:209-213	opTload
+vm.instructions.storage.tload	1	part	2/2	xref/cache/repos/erigon/execution/vm/eips.go:192-206	enable1153
 vm.instructions.storage.tload	-	delegated	2/2	-> state_tracker.get_transient_storage	IntraBlockState.GetTransientState
 vm.instructions.storage.tload	3	missing	-	-	-
-vm.instructions.system.call	0,4,5	entry	2/2	repos/clients/erigon/execution/vm/instructions.go:1182-1231	opCall
-vm.instructions.system.call	1	part	1/2	repos/clients/erigon/execution/vm/memory_table.go:71-81	memoryCall
-vm.instructions.system.call	0,1,2,3,4	part	2/2	repos/clients/erigon/execution/vm/operations_acl.go:323-425	makeCallVariantGasCallEIP7702
-vm.instructions.system.call	0,1	part	2/2	repos/clients/erigon/execution/vm/gas_table.go:478-534	statelessGasCall
-vm.instructions.system.call	3	part	2/2	repos/clients/erigon/execution/vm/gas_table.go:536-584	statefulGasCall
+vm.instructions.storage.tstore	0,1,3	entry	2/2	xref/cache/repos/erigon/execution/vm/eips.go:216-224	opTstore
+vm.instructions.storage.tstore	2	part	2/2	xref/cache/repos/erigon/execution/vm/eips.go:192-206	enable1153
+vm.instructions.storage.tstore	-	delegated	2/2	-> vm.stack.pop	Stack.pop
+vm.instructions.storage.tstore	-	delegated	2/2	-> state_tracker.set_transient_storage	IntraBlockState.SetTransientState
+vm.instructions.storage.tstore	4	missing	-	-	-
+vm.instructions.system.call	0,4,5	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1182-1231	opCall
+vm.instructions.system.call	1	part	1/2	xref/cache/repos/erigon/execution/vm/memory_table.go:71-81	memoryCall
+vm.instructions.system.call	0,1,2,3,4	part	2/2	xref/cache/repos/erigon/execution/vm/operations_acl.go:323-425	makeCallVariantGasCallEIP7702
+vm.instructions.system.call	0,1	part	2/2	xref/cache/repos/erigon/execution/vm/gas_table.go:478-534	statelessGasCall
+vm.instructions.system.call	3	part	2/2	xref/cache/repos/erigon/execution/vm/gas_table.go:536-584	statefulGasCall
 vm.instructions.system.call	-	delegated	2/2	-> vm.gas.calculate_message_call_gas	calcCallGas
 vm.instructions.system.call	-	delegated	2/2	-> vm.gas.calculate_message_call_gas	callGas
 vm.instructions.system.call	-	delegated	2/2	-> vm.stack.pop	Stack.drop
@@ -451,20 +726,44 @@ vm.instructions.system.call	-	delegated	2/2	-> vm.stack.pop	Stack.pop2Uint64
 vm.instructions.system.call	-	delegated	2/2	-> utils.address.to_address_masked	IntraBlockState.InternAddress
 vm.instructions.system.call	-	delegated	1/2	-> state_tracker.is_account_alive	Account.Empty
 vm.instructions.system.call	-	delegated	2/2	-> state_tracker.is_account_alive	IntraBlockState.Empty
-vm.instructions.system.create	1,5	entry	2/2	repos/clients/erigon/execution/vm/instructions.go:1032-1040	opCreate
-vm.instructions.system.create	2	part	2/2	repos/clients/erigon/execution/vm/memory_table.go:63-65	memoryCreate
-vm.instructions.system.create	3	part	2/2	repos/clients/erigon/execution/vm/common.go:104-118	CheckMaxInitCodeSize
-vm.instructions.system.create	0,2,3	part	2/2	repos/clients/erigon/execution/vm/gas_table.go:356-379	gasCreateEip3860
-vm.instructions.system.create	2	part	2/2	repos/clients/erigon/execution/vm/eips.go:378-383	enable8038
-vm.instructions.system.create	4	part	2/2	repos/clients/erigon/execution/vm/gas_table.go:414-445	gasCreateAccount
-vm.instructions.system.create	4	part	1/2	repos/clients/erigon/execution/vm/instructions.go:1070-1168	execCreate
+vm.instructions.system.callcode	0,3,4	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1243-1280	opCallCode
+vm.instructions.system.callcode	1,2,3	part	2/2	xref/cache/repos/erigon/execution/vm/operations_acl.go:323-425	makeCallVariantGasCallEIP7702
+vm.instructions.system.callcode	1,3	part	2/2	xref/cache/repos/erigon/execution/vm/gas_table.go:604-646	statelessGasCallCode
+vm.instructions.system.callcode	-	delegated	2/2	-> vm.gas.calculate_message_call_gas	calcCallGas
+vm.instructions.system.callcode	-	delegated	2/2	-> vm.gas.drain_state_gas_reservoir	CallContext.forwardStateGas
+vm.instructions.system.callcode	-	delegated	2/2	-> vm.instructions.system.generic_call	EVM.CallCode
+vm.instructions.system.callcode	-	delegated	2/2	-> vm.gas.calculate_message_call_gas	callGas
+vm.instructions.system.callcode	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	memoryGasCost
+vm.instructions.system.callcode	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	memoryCall
+vm.instructions.system.callcode	-	delegated	2/2	-> vm.stack.pop	Stack.drop
+vm.instructions.system.callcode	-	delegated	2/2	-> vm.stack.pop	Stack.pop2
+vm.instructions.system.callcode	-	delegated	2/2	-> vm.stack.pop	Stack.pop2Uint64
+vm.instructions.system.callcode	5	missing	-	-	-
+vm.instructions.system.create	1,5	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1032-1040	opCreate
+vm.instructions.system.create	2	part	2/2	xref/cache/repos/erigon/execution/vm/memory_table.go:63-65	memoryCreate
+vm.instructions.system.create	3	part	2/2	xref/cache/repos/erigon/execution/vm/common.go:104-118	CheckMaxInitCodeSize
+vm.instructions.system.create	0,2,3	part	2/2	xref/cache/repos/erigon/execution/vm/gas_table.go:356-379	gasCreateEip3860
+vm.instructions.system.create	2	part	2/2	xref/cache/repos/erigon/execution/vm/eips.go:378-383	enable8038
+vm.instructions.system.create	4	part	2/2	xref/cache/repos/erigon/execution/vm/gas_table.go:414-445	gasCreateAccount
+vm.instructions.system.create	4	part	1/2	xref/cache/repos/erigon/execution/vm/instructions.go:1070-1168	execCreate
 vm.instructions.system.create	-	delegated	2/2	-> vm.gas.calculate_gas_extend_memory	memoryGasCost
 vm.instructions.system.create	-	delegated	2/2	-> vm.stack.pop	Stack.pop3
 vm.instructions.system.create	-	delegated	2/2	-> utils.address.compute_contract_address	CreateAddress
-vm.instructions.system.delegatecall	0,4,5	entry	2/2	repos/clients/erigon/execution/vm/instructions.go:1282-1315	opDelegateCall
-vm.instructions.system.delegatecall	1	part	2/2	repos/clients/erigon/execution/vm/memory_table.go:83-93	memoryDelegateCall
-vm.instructions.system.delegatecall	1,2,4	part	2/2	repos/clients/erigon/execution/vm/operations_acl.go:323-425	makeCallVariantGasCallEIP7702
-vm.instructions.system.delegatecall	3,5	part	2/2	repos/clients/erigon/execution/vm/evm.go:460-512	EVM.DelegateCall
+vm.instructions.system.create2	1,5	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1054-1067	opCreate2
+vm.instructions.system.create2	2	part	2/2	xref/cache/repos/erigon/execution/vm/memory_table.go:67-69	memoryCreate2
+vm.instructions.system.create2	3	part	2/2	xref/cache/repos/erigon/execution/vm/common.go:104-118	CheckMaxInitCodeSize
+vm.instructions.system.create2	2	part	2/2	xref/cache/repos/erigon/execution/vm/eips.go:372-375	enable8037
+vm.instructions.system.create2	0,2,3	part	2/2	xref/cache/repos/erigon/execution/vm/gas_table.go:381-404	gasCreate2Eip3860
+vm.instructions.system.create2	4	part	2/2	xref/cache/repos/erigon/execution/vm/gas_table.go:414-445	gasCreateAccount
+vm.instructions.system.create2	-	delegated	2/2	-> vm.instructions.system.generic_create	execCreate
+vm.instructions.system.create2	-	delegated	2/2	-> vm.stack.pop	Stack.pop3
+vm.instructions.system.create2	-	delegated	2/2	-> vm.stack.pop	Stack.popCopy
+vm.instructions.system.create2	-	delegated	2/2	-> vm.memory.memory_read_bytes	Memory.GetPtr
+vm.instructions.system.create2	-	delegated	2/2	-> utils.address.compute_create2_contract_address	CreateAddress2
+vm.instructions.system.delegatecall	0,4,5	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1282-1315	opDelegateCall
+vm.instructions.system.delegatecall	1	part	2/2	xref/cache/repos/erigon/execution/vm/memory_table.go:83-93	memoryDelegateCall
+vm.instructions.system.delegatecall	1,2,4	part	2/2	xref/cache/repos/erigon/execution/vm/operations_acl.go:323-425	makeCallVariantGasCallEIP7702
+vm.instructions.system.delegatecall	3,5	part	2/2	xref/cache/repos/erigon/execution/vm/evm.go:460-512	EVM.DelegateCall
 vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.stack.pop	Stack.drop
 vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.calculate_message_call_gas	callGas
 vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.stack.pop	Stack.pop
@@ -473,25 +772,137 @@ vm.instructions.system.delegatecall	-	delegated	2/2	-> utils.address.to_address_
 vm.instructions.system.delegatecall	-	delegated	2/2	-> vm.gas.drain_state_gas_reservoir	CallContext.forwardStateGas
 vm.instructions.system.delegatecall	-	delegated	1/2	-> vm.instructions.system.generic_call	CallContext.restoreChildGas
 vm.instructions.system.delegatecall	-	delegated	1/2	-> vm.instructions.system.generic_call	CallContext.mergeChildStateGas
-vm.instructions.system.generic_create	1,3,4,5	entry	2/2	repos/clients/erigon/execution/vm/instructions.go:1070-1168	execCreate
-vm.instructions.system.generic_create	1,2	part	2/2	repos/clients/erigon/execution/vm/evm.go:608-645	EVM.prepareCreate
-vm.instructions.system.generic_create	3,4	part	2/2	repos/clients/erigon/execution/vm/evm.go:677-827	EVM.createWithPreparation
-vm.instructions.system.generic_create	0	part	2/2	repos/clients/erigon/execution/vm/instructions.go:1032-1040	opCreate
-vm.instructions.system.generic_create	0	part	2/2	repos/clients/erigon/execution/vm/instructions.go:1054-1067	opCreate2
-vm.instructions.system.revert	0,2,3	entry	2/2	repos/clients/erigon/execution/vm/instructions.go:1403-1408	opRevert
-vm.instructions.system.revert	1	part	2/2	repos/clients/erigon/execution/vm/memory_table.go:101-103	memoryRevert
-vm.instructions.system.revert	2	part	2/2	repos/clients/erigon/execution/vm/memory.go:106-122	Memory.Resize
-vm.instructions.system.revert	2	part	2/2	repos/clients/erigon/execution/vm/instructions.go:1371-1377	EVM.output
+vm.instructions.system.generic_call	0,1,2,4,5	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1182-1231	opCall
+vm.instructions.system.generic_call	1,2,3	part	2/2	xref/cache/repos/erigon/execution/vm/evm.go:260-383	EVM.Call
+vm.instructions.system.generic_call	1,2,3	part	2/2	xref/cache/repos/erigon/execution/vm/evm.go:392-453	EVM.CallCode
+vm.instructions.system.generic_call	1,2,3	part	2/2	xref/cache/repos/erigon/execution/vm/evm.go:460-512	EVM.DelegateCall
+vm.instructions.system.generic_call	1,2,3	part	2/2	xref/cache/repos/erigon/execution/vm/evm.go:518-584	EVM.StaticCall
+vm.instructions.system.generic_call	0,2,4,5	part	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1243-1280	opCallCode
+vm.instructions.system.generic_call	0,2,4,5	part	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1282-1315	opDelegateCall
+vm.instructions.system.generic_call	0,2,4,5	part	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1327-1359	opStaticCall
+vm.instructions.system.generic_create	1,3,4,5	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1070-1168	execCreate
+vm.instructions.system.generic_create	1,2	part	2/2	xref/cache/repos/erigon/execution/vm/evm.go:608-645	EVM.prepareCreate
+vm.instructions.system.generic_create	3,4	part	2/2	xref/cache/repos/erigon/execution/vm/evm.go:677-827	EVM.createWithPreparation
+vm.instructions.system.generic_create	0	part	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1032-1040	opCreate
+vm.instructions.system.generic_create	0	part	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1054-1067	opCreate2
+vm.instructions.system.return_	0,2,3	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1398-1401	opReturn
+vm.instructions.system.return_	1	part	2/2	xref/cache/repos/erigon/execution/vm/memory_table.go:97-99	memoryReturn
+vm.instructions.system.return_	-	delegated	2/2	-> vm.stack.pop	Stack.pop2Uint64
+vm.instructions.system.return_	-	delegated	1/2	-> vm.memory.memory_read_bytes	EVM.output
+vm.instructions.system.return_	-	delegated	2/2	-> vm.memory.memory_read_bytes	Memory.GetPtr
+vm.instructions.system.return_	-	delegated	2/2	-> vm.memory.memory_read_bytes	Memory.GetCopy
+vm.instructions.system.revert	0,2,3	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1403-1408	opRevert
+vm.instructions.system.revert	1	part	2/2	xref/cache/repos/erigon/execution/vm/memory_table.go:101-103	memoryRevert
+vm.instructions.system.revert	2	part	2/2	xref/cache/repos/erigon/execution/vm/memory.go:106-122	Memory.Resize
+vm.instructions.system.revert	2	part	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1371-1377	EVM.output
 vm.instructions.system.revert	-	delegated	2/2	-> vm.stack.pop	Stack.pop2Uint64
 vm.instructions.system.revert	-	delegated	1/2	-> vm.gas.calculate_gas_extend_memory	calcMemSize64
 vm.instructions.system.revert	-	delegated	2/2	-> vm.memory.memory_read_bytes	Memory.GetPtr
 vm.instructions.system.revert	-	delegated	2/2	-> vm.memory.memory_read_bytes	Memory.GetCopy
 vm.instructions.system.revert	-	delegated	1/2	-> vm.gas.calculate_gas_extend_memory	calcMemSize64WithUint
-vm.interpreter.charge_value_transfer_to_non_alive_account	0	entry	2/2	repos/clients/erigon/execution/vm/gas_table.go:536-584	statefulGasCall
-vm.interpreter.charge_value_transfer_to_non_alive_account	0	inlined	2/2	repos/clients/erigon/execution/protocol/runtime_gas.go:61-103	HandleRuntimeCall
-vm.interpreter.charge_value_transfer_to_non_alive_account	0	part	2/2	repos/clients/erigon/execution/vm/operations_acl.go:323-425	makeCallVariantGasCallEIP7702
+vm.instructions.system.selfdestruct	0,1,4,5	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1443-1508	opSelfdestruct6780
+vm.instructions.system.selfdestruct	0,2,3	part	2/2	xref/cache/repos/erigon/execution/vm/operations_acl.go:260-314	makeSelfdestructGasFn
+vm.instructions.system.selfdestruct	5	part	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:1868-1906	IntraBlockState.Selfdestruct
+vm.instructions.system.selfdestruct	5	part	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:1982-1999	IntraBlockState.IsNewContract
+vm.instructions.system.selfdestruct	-	delegated	1/2	-> utils.address.to_address_masked	CallContext.peekAddress
+vm.instructions.system.selfdestruct	-	delegated	1/2	-> vm.stack.pop	Stack.drop
+vm.instructions.system.selfdestruct	-	delegated	2/2	-> vm.emit_transfer_log	EthTransferLog
+vm.instructions.system.staticcall	0,4,5	entry	2/2	xref/cache/repos/erigon/execution/vm/instructions.go:1327-1359	opStaticCall
+vm.instructions.system.staticcall	1,2,4	part	2/2	xref/cache/repos/erigon/execution/vm/operations_acl.go:323-425	makeCallVariantGasCallEIP7702
+vm.instructions.system.staticcall	3	part	1/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:947-959	IntraBlockState.ResolveCode
+vm.instructions.system.staticcall	-	delegated	2/2	-> vm.instructions.system.generic_call	EVM.StaticCall
+vm.instructions.system.staticcall	-	delegated	2/2	-> vm.stack.pop	Stack.drop
+vm.instructions.system.staticcall	-	delegated	2/2	-> vm.gas.calculate_message_call_gas	callGas
+vm.instructions.system.staticcall	-	delegated	2/2	-> vm.stack.pop	Stack.pop
+vm.instructions.system.staticcall	-	delegated	2/2	-> vm.stack.pop	Stack.pop2Uint64
+vm.instructions.system.staticcall	-	delegated	2/2	-> utils.address.to_address_masked	IntraBlockState.InternAddress
+vm.instructions.system.staticcall	-	delegated	2/2	-> vm.gas.drain_state_gas_reservoir	CallContext.forwardStateGas
+vm.interpreter.charge_value_transfer_to_non_alive_account	0	entry	2/2	xref/cache/repos/erigon/execution/vm/gas_table.go:536-584	statefulGasCall
+vm.interpreter.charge_value_transfer_to_non_alive_account	0	inlined	2/2	xref/cache/repos/erigon/execution/protocol/runtime_gas.go:61-103	HandleRuntimeCall
+vm.interpreter.charge_value_transfer_to_non_alive_account	0	part	2/2	xref/cache/repos/erigon/execution/vm/operations_acl.go:323-425	makeCallVariantGasCallEIP7702
 vm.interpreter.charge_value_transfer_to_non_alive_account	-	delegated	2/2	-> state_tracker.is_account_alive	IntraBlockState.Empty
-vm.interpreter.process_call	0,1,2,3,4,5	entry	2/2	repos/clients/erigon/execution/vm/evm.go:260-383	EVM.Call
-vm.interpreter.process_call	0,1,3,4,5	part	2/2	repos/clients/erigon/execution/vm/evm.go:392-453	EVM.CallCode
-vm.interpreter.process_call	0,1,3,4,5	part	2/2	repos/clients/erigon/execution/vm/evm.go:460-512	EVM.DelegateCall
-vm.interpreter.process_call	0,1,3,4,5	part	2/2	repos/clients/erigon/execution/vm/evm.go:518-584	EVM.StaticCall
+vm.interpreter.create_evm	4	part	2/2	xref/cache/repos/erigon/execution/protocol/runtime_gas.go:61-103	HandleRuntimeCall
+vm.interpreter.create_evm	3	part	2/2	xref/cache/repos/erigon/execution/protocol/runtime_gas.go:105-120	HandleRuntimeCreate
+vm.interpreter.create_evm	2	inlined	2/2	xref/cache/repos/erigon/execution/vm/evm.go:608-645	EVM.prepareCreate
+vm.interpreter.create_evm	3	inlined	2/2	xref/cache/repos/erigon/execution/vm/evm.go:677-827	EVM.createWithPreparation
+vm.interpreter.create_evm	2	part	2/2	xref/cache/repos/erigon/execution/state/intra_block_state.go:3007-3049	IntraBlockState.Prepare
+vm.interpreter.create_evm	-	delegated	2/2	-> vm.eoa_delegation.set_delegation	TxnExecutor.verifyAuthorities
+vm.interpreter.create_evm	-	delegated	2/2	-> state_tracker.account_deployable	EVM.hasCreateCollision
+vm.interpreter.create_evm	-	delegated	2/2	-> vm.eoa_delegation.resolve_delegated_code_address	IntraBlockState.ResolveCode
+vm.interpreter.create_evm	-	delegated	2/2	-> vm.runtime.get_valid_jump_destinations	Contract.jumpdestAnalysis
+vm.interpreter.create_evm	5	missing	-	-	-
+vm.interpreter.process_call	0,1,2,3,4,5	entry	2/2	xref/cache/repos/erigon/execution/vm/evm.go:260-383	EVM.Call
+vm.interpreter.process_call	0,1,3,4,5	part	2/2	xref/cache/repos/erigon/execution/vm/evm.go:392-453	EVM.CallCode
+vm.interpreter.process_call	0,1,3,4,5	part	2/2	xref/cache/repos/erigon/execution/vm/evm.go:460-512	EVM.DelegateCall
+vm.interpreter.process_call	0,1,3,4,5	part	2/2	xref/cache/repos/erigon/execution/vm/evm.go:518-584	EVM.StaticCall
+vm.interpreter.process_create	0,1,2,3,4,5	entry	2/2	xref/cache/repos/erigon/execution/vm/evm.go:677-827	EVM.createWithPreparation
+vm.interpreter.process_create	3	part	2/2	xref/cache/repos/erigon/execution/vm/common.go:84-101	CheckMaxCodeSize
+vm.interpreter.process_create	-	delegated	2/2	-> state_tracker.copy_tx_state	IntraBlockState.PushSnapshot
+vm.interpreter.process_create	-	delegated	2/2	-> state_tracker.destroy_storage	IntraBlockState.CreateAccount
+vm.interpreter.process_top_level	0,3,5	entry	2/2	xref/cache/repos/erigon/execution/protocol/txn_executor.go:540-820	TxnExecutor.Execute
+vm.interpreter.process_top_level	2	part	2/2	xref/cache/repos/erigon/execution/protocol/runtime_gas.go:158-180	HandleRuntimeFailure
+vm.interpreter.process_top_level	-	delegated	2/2	-> vm.interpreter.create_evm	HandleRuntimeCall
+vm.interpreter.process_top_level	-	delegated	2/2	-> vm.interpreter.create_evm	HandleRuntimeCreate
+vm.interpreter.process_top_level	-	delegated	2/2	-> vm.gas.tx_state_gas_used	runtimeGasAccounting.total
+vm.interpreter.process_top_level	-	delegated	2/2	-> vm.interpreter.create_evm	TxnExecutor.verifyAuthorities
+vm.interpreter.process_top_level	-	delegated	2/2	-> vm.interpreter.process_call	EVM.Call
+vm.interpreter.process_top_level	-	delegated	2/2	-> vm.interpreter.process_create	EVM.Create
+vm.interpreter.process_top_level	1,4	missing	-	-	-
+vm.memory.buffer_read	0,1	entry	2/2	xref/cache/repos/erigon/execution/vm/common.go:62-72	getData
+vm.memory.memory_read_bytes	0	entry	2/2	xref/cache/repos/erigon/execution/vm/memory.go:134-143	Memory.GetCopy
+vm.memory.memory_read_bytes	0	part	2/2	xref/cache/repos/erigon/execution/vm/memory.go:146-153	Memory.GetPtr
+vm.memory.memory_write	0	entry	2/2	xref/cache/repos/erigon/execution/vm/memory.go:48-59	Memory.Set
+vm.memory.memory_write	0	part	2/2	xref/cache/repos/erigon/execution/vm/memory.go:89-97	Memory.Set32
+vm.precompiled_contracts.alt_bn128.alt_bn128_add	1,2,3	entry	2/2	xref/cache/repos/erigon/execution/vm/contracts.go:679-692	runBn254Add
+vm.precompiled_contracts.alt_bn128.alt_bn128_add	0	part	2/2	xref/cache/repos/erigon/execution/vm/contracts.go:699-701	bn254AddIstanbul.RequiredGas
+vm.precompiled_contracts.alt_bn128.alt_bn128_add	-	delegated	2/2	-> vm.memory.buffer_read	getData
+vm.precompiled_contracts.alt_bn128.alt_bn128_mul	1,2,3,4	entry	2/2	xref/cache/repos/erigon/execution/vm/contracts.go:730-740	runBn254ScalarMul
+vm.precompiled_contracts.alt_bn128.alt_bn128_mul	0	part	2/2	xref/cache/repos/erigon/execution/vm/contracts.go:747-749	bn254ScalarMulIstanbul.RequiredGas
+vm.precompiled_contracts.alt_bn128.alt_bn128_mul	-	delegated	2/2	-> vm.memory.buffer_read	getData
+vm.precompiled_contracts.alt_bn128.alt_bn128_pairing_check	1,2,4,5	entry	2/2	xref/cache/repos/erigon/execution/vm/contracts.go:789-826	runBn254Pairing
+vm.precompiled_contracts.alt_bn128.alt_bn128_pairing_check	0	part	2/2	xref/cache/repos/erigon/execution/vm/contracts.go:833-835	bn254PairingIstanbul.RequiredGas
+vm.precompiled_contracts.alt_bn128.alt_bn128_pairing_check	3	missing	-	-	-
+vm.precompiled_contracts.alt_bn128.bytes_to_g1	-	delegated	2/2	-> vm.memory.buffer_read	getData
+vm.precompiled_contracts.alt_bn128.bytes_to_g1	0,1,2,3,4	missing	-	-	-
+vm.precompiled_contracts.alt_bn128.bytes_to_g2	0	inlined	1/2	xref/cache/repos/erigon/execution/vm/contracts.go:789-826	runBn254Pairing
+vm.precompiled_contracts.alt_bn128.bytes_to_g2	1,2,3,4	missing	-	-	-
+vm.precompiled_contracts.blake2f.blake2f	0,1,3,4	entry	2/2	xref/cache/repos/erigon/execution/vm/contracts.go:884-921	blake2F.Run
+vm.precompiled_contracts.blake2f.blake2f	2	part	2/2	xref/cache/repos/erigon/execution/vm/contracts.go:864-871	blake2F.RequiredGas
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_add	0,2,3,4	entry	2/2	xref/cache/repos/erigon/execution/vm/contracts.go:942-965	bls12381G1Add.Run
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_add	1	part	2/2	xref/cache/repos/erigon/execution/vm/contracts.go:938-940	bls12381G1Add.RequiredGas
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_add	-	delegated	2/2	-> vm.precompiled_contracts.bls12_381.unpad_g1	decodePointG1
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_add	-	delegated	2/2	-> vm.precompiled_contracts.bls12_381.pad_g1	encodePointG1
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_add	-	delegated	2/2	-> vm.precompiled_contracts.bls12_381.unpad_g1	decodeBLS12381FieldElement
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_msm	0,2,3,4	entry	2/2	xref/cache/repos/erigon/execution/vm/contracts.go:993-1038	bls12381G1MultiExp.Run
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_msm	1	part	2/2	xref/cache/repos/erigon/execution/vm/contracts.go:975-991	bls12381G1MultiExp.RequiredGas
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_msm	3	part	2/2	xref/cache/repos/erigon/execution/vm/contracts.go:1223-1226	scalarMulG1
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_msm	-	delegated	2/2	-> vm.precompiled_contracts.bls12_381.unpad_g1	decodePointG1
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_msm	-	delegated	2/2	-> vm.precompiled_contracts.bls12_381.unpad_g1	decodeBLS12381FieldElement
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_g1_msm	-	delegated	2/2	-> vm.precompiled_contracts.bls12_381.pad_g1	encodePointG1
+vm.precompiled_contracts.bls12_381.bls12_381_g1.bls12_map_fp_to_g1	-	failed	-	-	-
+vm.precompiled_contracts.bls12_381.bls12_381_g2.bls12_g2_add	-	failed	-	-	-
+vm.precompiled_contracts.bls12_381.bls12_381_g2.bls12_g2_msm	-	failed	-	-	-
+vm.precompiled_contracts.bls12_381.bls12_381_g2.bls12_map_fp2_to_g2	-	failed	-	-	-
+vm.precompiled_contracts.bls12_381.bls12_381_pairing.bls12_pairing	-	failed	-	-	-
+vm.precompiled_contracts.bls12_381.pad_g1	0	entry	2/2	xref/cache/repos/erigon/execution/vm/contracts.go:1304-1309	encodePointG1
+vm.precompiled_contracts.bls12_381.pad_g2	0	entry	2/2	xref/cache/repos/erigon/execution/vm/contracts.go:1312-1321	encodePointG2
+vm.precompiled_contracts.bls12_381.unpad_fp	0,1	entry	2/2	xref/cache/repos/erigon/execution/vm/contracts.go:1287-1301	decodeBLS12381FieldElement
+vm.precompiled_contracts.bls12_381.unpad_g1	0,1,2	entry	2/2	xref/cache/repos/erigon/execution/vm/contracts.go:1234-1254	decodePointG1
+vm.precompiled_contracts.bls12_381.unpad_g1	-	delegated	2/2	-> vm.precompiled_contracts.bls12_381.unpad_fp	decodeBLS12381FieldElement
+vm.precompiled_contracts.bls12_381.unpad_g2	0,1	inlined	2/2	xref/cache/repos/erigon/execution/vm/contracts.go:1257-1283	decodePointG2
+vm.precompiled_contracts.bls12_381.unpad_g2	-	delegated	2/2	-> vm.precompiled_contracts.bls12_381.unpad_fp	decodeBLS12381FieldElement
+vm.precompiled_contracts.ecrecover.ecrecover	-	failed	-	-	-
+vm.precompiled_contracts.identity.identity	-	failed	-	-	-
+vm.precompiled_contracts.modexp.complexity	-	failed	-	-	-
+vm.precompiled_contracts.modexp.gas_cost	-	failed	-	-	-
+vm.precompiled_contracts.modexp.iterations	-	failed	-	-	-
+vm.precompiled_contracts.modexp.modexp	-	failed	-	-	-
+vm.precompiled_contracts.p256verify.p256verify	-	failed	-	-	-
+vm.precompiled_contracts.point_evaluation.point_evaluation	-	failed	-	-	-
+vm.precompiled_contracts.ripemd160.ripemd160	-	failed	-	-	-
+vm.precompiled_contracts.sha256.sha256	-	failed	-	-	-
+vm.runtime.get_valid_jump_destinations	-	failed	-	-	-
+vm.stack.decode_pair	-	failed	-	-	-
+vm.stack.decode_single	-	failed	-	-	-
+vm.stack.pop	-	failed	-	-	-
+vm.stack.push	-	failed	-	-	-

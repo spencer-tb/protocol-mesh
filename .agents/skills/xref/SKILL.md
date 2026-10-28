@@ -21,9 +21,16 @@ Open the listed lines before claiming anything about them.
 
 Free and local:
 
-- `./xref.sh find <spec fn>`: ranks each client's functions by keyword
-  match against the spec function. Needs `./xref.sh sync` and
-  `./xref.sh index` once (about 40 seconds).
+- `./xref.sh find <spec fn>`: reads the latest saved map first. Failed,
+  unbuilt or incomplete mappings trigger a local keyword search only for
+  the affected clients; candidates are unverified. `--clients geth,reth`
+  narrows the clients and `-n 4` limits matches per client.
+- `./xref.sh find <spec fn> --search`: searches current client source even
+  when a mapping exists. `--at REPO=PATH[@REF]` also searches that checkout.
+  Source searches need `./xref.sh sync` and `./xref.sh index` once.
+- `./xref.sh show <spec fn>`: all saved matches, steps, evidence notes and
+  coverage gaps. `./xref.sh where <client fn>` does the reverse lookup.
+  Both read `tree.json` directly; no export or source index is needed.
 - `./xref.sh diff <client> <base> [head]`: functions that changed between
   two refs of a client, `--spec <fn>` to keep only code behind one spec
   function.
@@ -52,4 +59,6 @@ These call Claude and cost money, so ask your user first:
   the logic is absent. evmone is only an EVM, so block-level steps are
   missing there by design.
 - Line numbers are from the commits in `xref/data/tree.json` and drift as
-  clients move until the next `refresh`.
+  clients move until the next `refresh`. CLI paths use an existing local
+  checkout, the cached source, or a pinned upstream link. Use `--search`
+  for current checkout locations.
