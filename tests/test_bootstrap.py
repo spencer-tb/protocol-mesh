@@ -64,6 +64,7 @@ def upstream(tmp_path: Path, git_env: None) -> Path:
 
 
 def test_manifest_skips_comments_and_reads_branches(tmp_path: Path) -> None:
+    """Comments, blank lines, branches and `shallow` parse from repos.txt."""
     manifest = tmp_path / "repos.txt"
     manifest.write_text(
         "# heading\n\n"
@@ -79,6 +80,7 @@ def test_manifest_skips_comments_and_reads_branches(tmp_path: Path) -> None:
 
 
 def test_manifest_rejects_a_line_without_a_url(tmp_path: Path) -> None:
+    """A repos.txt line with no URL stops setup and names the line."""
     manifest = tmp_path / "repos.txt"
     manifest.write_text("specs\n")
     with pytest.raises(SystemExit, match="line 1"):
@@ -96,6 +98,7 @@ def test_manifest_rejects_a_line_without_a_url(tmp_path: Path) -> None:
     ],
 )
 def test_manifest_rejects_untrusted_urls(tmp_path: Path, url: str) -> None:
+    """Only https GitHub URLs from trusted owners are accepted."""
     manifest = tmp_path / "repos.txt"
     manifest.write_text(f"geth {url}\n")
     with pytest.raises(SystemExit, match="trusted owner"):
@@ -103,6 +106,7 @@ def test_manifest_rejects_untrusted_urls(tmp_path: Path, url: str) -> None:
 
 
 def test_repos_txt_has_every_build_source_once() -> None:
+    """Each build source is cloned once, or lives in this repo."""
     dirs = [repo.dir for repo in bootstrap.read_manifest()]
     assert len(dirs) == len(set(dirs))
     for target in bootstrap.TARGETS.values():
@@ -126,6 +130,7 @@ def test_repos_txt_has_every_build_source_once() -> None:
     ],
 )
 def test_parse_version(output: str, version: tuple[int, ...] | None) -> None:
+    """Versions are read from each tool's own output format."""
     assert bootstrap.parse_version(output) == version
 
 
@@ -143,12 +148,14 @@ def test_parse_version(output: str, version: tuple[int, ...] | None) -> None:
 def test_at_least(
     found: tuple[int, ...] | None, minimum: str, expected: bool
 ) -> None:
+    """Versions compare part by part, and a missing tool never passes."""
     assert bootstrap.at_least(found, minimum) is expected
 
 
 def test_sync_clones_then_fast_forwards(
     upstream: Path, tmp_path: Path
 ) -> None:
+    """A new repo is cloned, then fast-forwarded when upstream moves."""
     checkout = tmp_path / "ws" / "repo"
     repo = Repo("repo", upstream.as_uri())
     assert bootstrap.sync_repo(checkout, repo) == "cloned"
@@ -161,6 +168,7 @@ def test_sync_clones_then_fast_forwards(
 def test_sync_leaves_local_changes_alone(
     upstream: Path, tmp_path: Path
 ) -> None:
+    """A checkout with uncommitted edits is fetched but not updated."""
     checkout = tmp_path / "repo"
     repo = Repo("repo", upstream.as_uri())
     bootstrap.sync_repo(checkout, repo)
@@ -175,6 +183,7 @@ def test_sync_leaves_local_changes_alone(
 def test_sync_leaves_a_diverged_branch_alone(
     upstream: Path, tmp_path: Path
 ) -> None:
+    """A checkout with its own commits is fetched but not merged."""
     checkout = tmp_path / "repo"
     repo = Repo("repo", upstream.as_uri())
     bootstrap.sync_repo(checkout, repo)
@@ -187,6 +196,7 @@ def test_sync_leaves_a_diverged_branch_alone(
 def test_sync_checks_out_the_listed_branch(
     upstream: Path, tmp_path: Path
 ) -> None:
+    """The branch repos.txt names is checked out on clone."""
     git(upstream, "checkout", "-q", "-b", "devnet")
     commit(upstream, "devnet-only")
     git(upstream, "checkout", "-q", "main")
@@ -196,6 +206,7 @@ def test_sync_checks_out_the_listed_branch(
 
 
 def test_sync_reports_a_failed_clone(tmp_path: Path, git_env: None) -> None:
+    """A clone that fails is reported instead of raising."""
     missing = Repo("repo", (tmp_path / "missing").as_uri())
     result = bootstrap.sync_repo(tmp_path / "repo", missing)
     assert result.startswith("clone failed")
@@ -204,6 +215,7 @@ def test_sync_reports_a_failed_clone(tmp_path: Path, git_env: None) -> None:
 def test_shallow_sync_keeps_only_the_newest_commit(
     upstream: Path, tmp_path: Path
 ) -> None:
+    """A shallow repo holds one commit and still updates."""
     commit(upstream, "second")
     checkout = tmp_path / "archive"
     repo = Repo("archive", upstream.as_uri(), shallow=True)
@@ -219,6 +231,7 @@ def test_shallow_sync_keeps_only_the_newest_commit(
 def test_shallow_sync_keeps_local_commits(
     upstream: Path, tmp_path: Path
 ) -> None:
+    """A shallow repo with local commits is fetched but not reset."""
     checkout = tmp_path / "archive"
     repo = Repo("archive", upstream.as_uri(), shallow=True)
     bootstrap.sync_repo(checkout, repo)
@@ -232,10 +245,11 @@ def test_shallow_sync_keeps_local_commits(
 def test_installers_leave_new_enough_tools_alone(
     ws: Workspace, monkeypatch: pytest.MonkeyPatch
 ) -> None:
+    """No installer downloads or runs anything when tools are current."""
     calls: list[object] = []
-    monkeypatch.setattr(bootstrap, "have", lambda name: True)
-    monkeypatch.setattr(bootstrap, "tool_version", lambda *args: (999,))
-    monkeypatch.setattr(bootstrap, "run", lambda *a, **k: calls.append(a))
+    monkeypatch.setattr(bootstrap, "have", lambda _name: True)
+    monkeypatch.setattr(bootstrap, "tool_version", lambda *_args: (999,))
+    monkeypatch.setattr(bootstrap, "run", lambda *a, **_k: calls.append(a))
     monkeypatch.setattr(bootstrap, "fetch", lambda *a: calls.append(a))
     for install in bootstrap.INSTALLERS:
         install(ws)
@@ -245,15 +259,16 @@ def test_installers_leave_new_enough_tools_alone(
 def test_go_downloads_the_build_for_this_machine(
     ws: Workspace, monkeypatch: pytest.MonkeyPatch
 ) -> None:
+    """Go is fetched for this machine's system and architecture."""
     urls: list[str] = []
 
     def fetch(url: str, name: str) -> Path:
         urls.append(url)
         return ws.home / name
 
-    monkeypatch.setattr(bootstrap, "tool_version", lambda *args: (1, 24))
+    monkeypatch.setattr(bootstrap, "tool_version", lambda *_args: (1, 24))
     monkeypatch.setattr(bootstrap, "fetch", fetch)
-    monkeypatch.setattr(bootstrap, "unpack", lambda archive, dest: None)
+    monkeypatch.setattr(bootstrap, "unpack", lambda _archive, _dest: None)
     bootstrap.install_go(ws)
     assert urls == [
         f"https://go.dev/dl/go{bootstrap.GO_VERSION}.darwin-arm64.tar.gz"
@@ -263,25 +278,27 @@ def test_go_downloads_the_build_for_this_machine(
 def test_dotnet_follows_nethermind_global_json(
     ws: Workspace, monkeypatch: pytest.MonkeyPatch
 ) -> None:
+    """The dotnet SDK follows nethermind's global.json pin, if older."""
     pinned = ws.root / "clients" / "nethermind" / "global.json"
     pinned.parent.mkdir(parents=True)
     pinned.write_text('{"sdk": {"version": "10.0.300"}}')
     calls: list[list[str]] = []
-    monkeypatch.setattr(bootstrap, "fetch", lambda *a: Path("dotnet.sh"))
+    monkeypatch.setattr(bootstrap, "fetch", lambda *_a: Path("dotnet.sh"))
     monkeypatch.setattr(
-        bootstrap, "run", lambda args, **k: calls.append(list(map(str, args)))
+        bootstrap, "run", lambda args, **_k: calls.append(list(map(str, args)))
     )
 
-    monkeypatch.setattr(bootstrap, "tool_version", lambda *a: (10, 0, 300))
+    monkeypatch.setattr(bootstrap, "tool_version", lambda *_a: (10, 0, 300))
     bootstrap.install_dotnet(ws)
     assert calls == []
 
-    monkeypatch.setattr(bootstrap, "tool_version", lambda *a: (10, 0, 100))
+    monkeypatch.setattr(bootstrap, "tool_version", lambda *_a: (10, 0, 100))
     bootstrap.install_dotnet(ws)
     assert calls[0][-2:] == ["--jsonfile", str(pinned)]
 
 
 def test_env_script_sets_homes_only_once_installed(ws: Workspace) -> None:
+    """JAVA_HOME is exported only after the JDK is installed."""
     assert "JAVA_HOME" not in bootstrap.env_script(ws, "sh")
     java = ws.local / "jdk" / "bin" / "java"
     java.parent.mkdir(parents=True)
@@ -294,6 +311,7 @@ def test_env_script_sets_homes_only_once_installed(ws: Workspace) -> None:
 def test_install_env_adds_one_line_per_shell(
     ws: Workspace, monkeypatch: pytest.MonkeyPatch
 ) -> None:
+    """Each shell's rc file gets one env line, even after two runs."""
     monkeypatch.setenv("SHELL", "/bin/zsh")
     ws.home.mkdir(parents=True)
     (ws.home / ".bashrc").write_text("# mine\n")
@@ -307,6 +325,7 @@ def test_install_env_adds_one_line_per_shell(
 def test_find_clones_matches_forks_by_name(
     upstream: Path, tmp_path: Path
 ) -> None:
+    """Existing clones are found by owner/name and by name alone."""
     mine = tmp_path / "code" / "geth"
     git(upstream, "clone", "-q", str(upstream), str(mine))
     git(mine, "remote", "set-url", "origin", f"{GH}/someone/go-ethereum.git")
@@ -316,6 +335,7 @@ def test_find_clones_matches_forks_by_name(
 
 
 def test_reuse_clones_a_separate_copy(upstream: Path, tmp_path: Path) -> None:
+    """Borrowing objects from a clone leaves no link to it."""
     mine = tmp_path / "mine"
     git(upstream, "clone", "-q", str(upstream), str(mine))
     checkout = tmp_path / "repos" / "repo"
@@ -328,6 +348,7 @@ def test_reuse_clones_a_separate_copy(upstream: Path, tmp_path: Path) -> None:
 def test_reuse_falls_back_when_the_reference_is_unusable(
     upstream: Path, tmp_path: Path
 ) -> None:
+    """A missing reference clone falls back to a plain clone."""
     checkout = tmp_path / "repos" / "repo"
     repo = Repo("repo", upstream.as_uri())
     missing = tmp_path / "missing"
@@ -337,6 +358,7 @@ def test_reuse_falls_back_when_the_reference_is_unusable(
 def test_needs_build_after_a_new_commit_or_local_changes(
     ws: Workspace, upstream: Path
 ) -> None:
+    """A clone rebuilds after a new commit or an uncommitted edit."""
     assert bootstrap.needs_build(ws, "geth", upstream)
     bootstrap.record_build(ws, "geth", upstream)
     assert not bootstrap.needs_build(ws, "geth", upstream)
@@ -350,6 +372,7 @@ def test_needs_build_after_a_new_commit_or_local_changes(
 def test_a_directory_of_this_repo_builds_only_after_it_changes(
     ws: Workspace, upstream: Path
 ) -> None:
+    """A directory of this repo rebuilds only when it changes."""
     src = upstream / "tool"
     src.mkdir()
     commit(src, "main.go")
@@ -367,6 +390,7 @@ def test_a_directory_of_this_repo_builds_only_after_it_changes(
 def test_a_failed_build_does_not_stop_the_others(
     ws: Workspace, upstream: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
+    """One failed build is reported and the rest still build."""
     git(upstream, "clone", "-q", str(upstream), str(ws.root / "src"))
     built: list[str] = []
 
@@ -388,6 +412,7 @@ def test_a_failed_build_does_not_stop_the_others(
 
 
 def test_link_binary_fails_when_nothing_was_built(tmp_path: Path) -> None:
+    """Linking a binary that was never built raises BuildError."""
     with pytest.raises(bootstrap.BuildError):
         bootstrap.link_binary(tmp_path / "missing", tmp_path / "evm")
 
@@ -395,12 +420,14 @@ def test_link_binary_fails_when_nothing_was_built(tmp_path: Path) -> None:
 def test_an_unknown_target_is_rejected(
     capsys: pytest.CaptureFixture[str],
 ) -> None:
+    """An unknown build target is an error, before anything runs."""
     with pytest.raises(SystemExit):
         bootstrap.main(["nope"])
     assert "unknown target nope" in capsys.readouterr().err
 
 
 def test_profile_picks_its_repos_in_manifest_order(tmp_path: Path) -> None:
+    """A profile picks its repos in repos.txt order, not its own."""
     repos = [Repo("a", f"{GH}/ethereum/a"), Repo("b", f"{GH}/ethereum/b")]
     (tmp_path / "small.txt").write_text("# comment\nb\n\na  # note\n")
     picked = bootstrap.read_profile("small", repos, tmp_path)
@@ -408,23 +435,27 @@ def test_profile_picks_its_repos_in_manifest_order(tmp_path: Path) -> None:
 
 
 def test_profile_rejects_repos_the_manifest_lacks(tmp_path: Path) -> None:
+    """A profile naming a repo repos.txt lacks is an error."""
     (tmp_path / "small.txt").write_text("ghost\n")
     with pytest.raises(SystemExit, match="ghost"):
         bootstrap.read_profile("small", [], tmp_path)
 
 
 def test_a_missing_profile_is_rejected(tmp_path: Path) -> None:
+    """Asking for a profile that does not exist is an error."""
     with pytest.raises(SystemExit, match="no profile"):
         bootstrap.read_profile("nope", [], tmp_path)
 
 
 def test_the_review_profile_matches_repos_txt() -> None:
+    """The review profile has the spec and no clients."""
     picked = bootstrap.read_profile("review", bootstrap.read_manifest())
     assert "execution-specs" in [repo.dir for repo in picked]
     assert not any(repo.dir.startswith("clients/") for repo in picked)
 
 
 def test_every_team_names_real_repos_and_targets() -> None:
+    """teams.toml names only repos and targets that exist."""
     manifest = bootstrap.read_manifest()
     for team in bootstrap.read_teams().values():
         repos, builds = bootstrap.team_plan(team, manifest)
@@ -434,6 +465,7 @@ def test_every_team_names_real_repos_and_targets() -> None:
 
 
 def test_a_client_team_gets_its_client_and_only_its_toolchains() -> None:
+    """A client team clones its own client and installs only its tools."""
     team = bootstrap.read_teams()["geth"]
     repos, builds = bootstrap.team_plan(team, bootstrap.read_manifest())
     dirs = [repo.dir for repo in repos]
@@ -442,11 +474,13 @@ def test_a_client_team_gets_its_client_and_only_its_toolchains() -> None:
     assert bootstrap.installers_for(builds) == [
         bootstrap.install_uv,
         bootstrap.install_jq,
+        bootstrap.install_just,
         bootstrap.install_go,
     ]
 
 
 def test_me_round_trips(tmp_path: Path) -> None:
+    """me.toml reads back what was written."""
     path = tmp_path / ".mesh" / "me.toml"
     bootstrap.write_me(path, "someone", "geth", [8141, 7805])
     assert bootstrap.read_me(path) == {
@@ -457,6 +491,7 @@ def test_me_round_trips(tmp_path: Path) -> None:
 
 
 def test_team_answers_by_number_or_name() -> None:
+    """Teams pick by number or name, and EIPs parse from a list."""
     teams = bootstrap.read_teams()
     assert bootstrap.pick_team("1", teams) == next(iter(teams))
     assert bootstrap.pick_team(" Geth ", teams) == "geth"

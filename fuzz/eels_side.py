@@ -1,6 +1,7 @@
 """
-Compute the EELS results for the fuzz cases. Runs inside an
-execution-specs checkout's environment:
+Compute the EELS results for the fuzz cases.
+
+Runs inside an execution-specs checkout's environment:
 
     uv run --project <execution-specs> python eels_side.py IN OUT
 """

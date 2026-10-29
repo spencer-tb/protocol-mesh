@@ -5,9 +5,11 @@ import json
 import subprocess
 import tempfile
 import unittest
+from collections.abc import Callable
 from contextlib import redirect_stdout
 from dataclasses import asdict
 from pathlib import Path
+from typing import Any
 from unittest.mock import patch
 
 from el_xref.build import render_tsv
@@ -89,7 +91,7 @@ class LookupTests(unittest.TestCase):
             "votes": 2,
         }
         self.table = {"matches": [self.row], "missing": [], "pipeline": 3}
-        self.data = {
+        self.data: dict[str, Any] = {
             "entries": {
                 self.sid: {
                     "steps": [{"id": 0, "text": "Compute memory gas"}],
@@ -99,7 +101,7 @@ class LookupTests(unittest.TestCase):
                     },
                 }
             },
-            "repos": {n: "abc123" for n in self.repos},
+            "repos": dict.fromkeys(self.repos, "abc123"),
         }
         self.save()
 
@@ -115,7 +117,9 @@ class LookupTests(unittest.TestCase):
         """Persist fixture changes."""
         (self.config.data / "tree.json").write_text(json.dumps(self.data))
 
-    def capture(self, function, *args, **kwargs) -> str:
+    def capture(
+        self, function: Callable[..., object], *args: Any, **kwargs: Any
+    ) -> str:
         """Capture user-facing command output."""
         output = io.StringIO()
         with redirect_stdout(output):
@@ -139,7 +143,13 @@ class LookupTests(unittest.TestCase):
         """Failed, absent, and empty pairs all fall back to current source."""
         from el_xref.lookup import client_index
 
-        for table in ({"error": "limit"}, {}, {"matches": []}, None):
+        cases: list[dict[str, Any] | None] = [
+            {"error": "limit"},
+            {},
+            {"matches": []},
+            None,
+        ]
+        for table in cases:
             with self.subTest(table=table):
                 tables = self.data["entries"][self.sid]["clients"]
                 tables["pending"] = table
@@ -243,7 +253,7 @@ class LookupTests(unittest.TestCase):
 
     def test_legacy_map_used_only_without_tree(self) -> None:
         """Old checkouts remain queryable without merging obsolete entries."""
-        legacy = {"entries": {"legacy": {}}}
+        legacy: dict[str, Any] = {"entries": {"legacy": {}}}
         (self.config.data / "map.json").write_text(json.dumps(legacy))
         self.assertIn(self.sid, load_map(self.config)["entries"])
         (self.config.data / "tree.json").unlink()
