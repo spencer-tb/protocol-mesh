@@ -43,14 +43,20 @@ For a browser view, `go run ./cmd/hiveview -serve -addr 127.0.0.1:8090`
 
 ## Read CI results
 
-`clive` queries `hapi`, which mirrors https://hive.ethpandaops.io. Start
-`hapi` once in the background, then:
+`clive` queries `hapi`, which mirrors https://hive.ethpandaops.io. Both
+live in `clive/` in this repo and `./setup.sh clive` builds them. Start
+`hapi` once in the background unless `clive groups` already answers, then:
 
 ```
 clive groups
-clive fails <group> --client=reth
-clive detail <group> --client=reth --filter="<test>"
+clive summary <group>
 clive diff <group>
+clive fails <group> --client=reth
+clive tests <group> --client=reth --filter="<regex>"
+clive detail <group> --client=reth --filter="<test>"
 ```
 
-Add `--json` for machine-readable output.
+Add `--json` for machine-readable output. `clive/README.md` lists every
+command, flag and JSON field. Every test has a `hive_url`, its page in the
+hive UI with the description, error and client logs. Give it to the user
+when they want to see more of a test.

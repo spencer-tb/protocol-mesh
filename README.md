@@ -128,13 +128,20 @@ model calls. See `xref/README.md`.
 geth functions xref pairs them with, and reports every difference. See
 `fuzz/README.md`.
 
+## Hive results
+
+`clive/` holds hapi, which caches the CI hive results from
+https://hive.ethpandaops.io, and clive, the CLI that queries it:
+summaries, failing tests, logs, reproduce commands and the diff between
+runs. See `clive/README.md`.
+
 ## Build targets
 
 | Target | Checkout | Output |
 |---|---|---|
 | `eels` | `repos/execution-specs` | `uv sync` |
 | `hive` | `repos/hive` | `repos/hive/hive` |
-| `clive` | `repos/clive` | `~/.local/bin/clive`, `~/.local/bin/hapi` |
+| `clive` | `clive/` | `~/.local/bin/clive`, `~/.local/bin/hapi` |
 | `geth` | `repos/clients/go-ethereum` | `bin/geth/evm` |
 | `erigon` | `repos/clients/erigon` | `bin/erigon/evm` |
 | `besu` | `repos/clients/besu` | `bin/besu/evmtool` |

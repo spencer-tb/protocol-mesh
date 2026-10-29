@@ -27,7 +27,7 @@ owns = [
   "glamsterdam-devnets", "heze-devnets", "bogota-devnets",
 ]
 repos = [
-  "hive", "hive-tests", "hive-ui", "clive", "ethereum-package",
+  "hive", "hive-tests", "hive-ui", "ethereum-package",
   "glamsterdam-devnets", "heze-devnets", "bogota-devnets",
 ]
 build = ["eels", "hive", "clive"]
@@ -35,49 +35,49 @@ build = ["eels", "hive", "clive"]
 [teams.geth]
 title = "go-ethereum"
 owns = ["clients/go-ethereum"]
-repos = ["hive", "hive-tests", "clive", "clients/go-ethereum"]
+repos = ["hive", "hive-tests", "clients/go-ethereum"]
 build = ["eels", "hive", "clive", "geth"]
 
 [teams.reth]
 title = "reth and evm2"
 owns = ["clients/reth", "clients/evm2"]
-repos = ["hive", "hive-tests", "clive", "clients/reth", "clients/evm2"]
+repos = ["hive", "hive-tests", "clients/reth", "clients/evm2"]
 build = ["eels", "hive", "clive"]
 
 [teams.nethermind]
 title = "Nethermind"
 owns = ["clients/nethermind"]
-repos = ["hive", "hive-tests", "clive", "clients/nethermind"]
+repos = ["hive", "hive-tests", "clients/nethermind"]
 build = ["eels", "hive", "clive", "nethermind"]
 
 [teams.besu]
 title = "Besu"
 owns = ["clients/besu"]
-repos = ["hive", "hive-tests", "clive", "clients/besu"]
+repos = ["hive", "hive-tests", "clients/besu"]
 build = ["eels", "hive", "clive", "besu"]
 
 [teams.erigon]
 title = "Erigon"
 owns = ["clients/erigon"]
-repos = ["hive", "hive-tests", "clive", "clients/erigon"]
+repos = ["hive", "hive-tests", "clients/erigon"]
 build = ["eels", "hive", "clive", "erigon"]
 
 [teams.ethrex]
 title = "ethrex"
 owns = ["clients/ethrex"]
-repos = ["hive", "hive-tests", "clive", "clients/ethrex"]
+repos = ["hive", "hive-tests", "clients/ethrex"]
 build = ["eels", "hive", "clive", "ethrex"]
 
 [teams.nimbus]
 title = "Nimbus"
 owns = ["clients/nimbus-eth1"]
-repos = ["hive", "hive-tests", "clive", "clients/nimbus-eth1"]
+repos = ["hive", "hive-tests", "clients/nimbus-eth1"]
 build = ["eels", "hive", "clive", "nimbus"]
 
 [teams.ethereumjs]
 title = "EthereumJS"
 owns = ["clients/ethereumjs-monorepo"]
-repos = ["hive", "hive-tests", "clive", "clients/ethereumjs-monorepo"]
+repos = ["hive", "hive-tests", "clients/ethereumjs-monorepo"]
 build = ["eels", "hive", "clive", "ethereumjs"]
 
 [teams.evmone]
