@@ -588,6 +588,22 @@ func TestHandleDiff(t *testing.T) {
 	}
 }
 
+func TestHandleDiff_CountsOnly(t *testing.T) {
+	_, mux := testAPI(t)
+	code, body := getJSON(t, mux, "/api/v1/groups/tg/diff?counts=true")
+	if code != 200 {
+		t.Fatalf("expected 200, got %d", code)
+	}
+	besu := body["regressions"].(map[string]any)["besu"].(map[string]any)
+	if besu["total_fails"] != float64(1) {
+		t.Errorf("expected 1 besu regression, got %v", besu["total_fails"])
+	}
+	sim := besu["simulators"].(map[string]any)["consume-engine"].(map[string]any)
+	if _, ok := sim["tests"]; ok {
+		t.Error("expected no test list with counts=true")
+	}
+}
+
 func TestHandleDiff_NotFound(t *testing.T) {
 	_, mux := testAPI(t)
 	code, _ := getJSON(t, mux, "/api/v1/groups/nope/diff")

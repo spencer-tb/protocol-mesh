@@ -8,6 +8,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -641,6 +642,10 @@ func (a *API) handleDiff(w http.ResponseWriter, r *http.Request) {
 	currentFails := a.collectBatchFails(group, currentBatch.runs)
 	previousFails := a.collectBatchFails(group, previousBatch.runs)
 
+	// With ?counts=true only the totals come back, not every test, which
+	// can be tens of MB for a group with many failures.
+	countsOnly := r.URL.Query().Get("counts") == "true"
+
 	resp := DiffResponse{
 		Group:          group,
 		FromRun:        previousBatch.time,
@@ -658,10 +663,12 @@ func (a *API) handleDiff(w http.ResponseWriter, r *http.Request) {
 		}
 		sf, ok := cf.Simulators[sim]
 		if !ok {
-			sf = &SimDiffFails{Tests: make([]TestListEntry, 0)}
+			sf = &SimDiffFails{}
 			cf.Simulators[sim] = sf
 		}
-		sf.Tests = append(sf.Tests, a.testEntry(group, entry.run, client, sim, entry.test))
+		if !countsOnly {
+			sf.Tests = append(sf.Tests, a.testEntry(group, entry.run, client, sim, entry.test))
+		}
 		sf.TotalFails++
 		cf.TotalFails++
 	}
@@ -694,7 +701,7 @@ func (a *API) handleIndex(w http.ResponseWriter, r *http.Request) {
 			{"method": "GET", "path": "/api/v1/groups/{group}/tests/{file}/{testID}", "description": "Full detail for a single test: commands, logs, error details. Use ?full_log=true for complete client log"},
 			{"method": "GET", "path": "/api/v1/groups/{group}/suites", "description": "List latest suite runs"},
 			{"method": "GET", "path": "/api/v1/groups/{group}/suites/{file}", "description": "Suite run metadata and tests. Filter: ?status=fail"},
-			{"method": "GET", "path": "/api/v1/groups/{group}/diff", "description": "Diff between two most recent run batches: regressions, fixes, unchanged"},
+			{"method": "GET", "path": "/api/v1/groups/{group}/diff", "description": "Diff between two most recent run batches: regressions, fixes, unchanged. ?counts=true for totals only"},
 			{"method": "GET", "path": "/api/v1/groups/{group}/search", "description": "Search tests by name. Params: ?q= (required), ?client=, ?simulator=, ?status=fail|pass, ?limit="},
 		},
 	})
@@ -777,6 +784,21 @@ type diffEntry struct {
 }
 
 func (a *API) collectBatchFails(group string, runs []TestRun) map[string]diffEntry {
+	// Read the batch's suites in parallel first, since an older batch is
+	// usually not cached yet.
+	var wg sync.WaitGroup
+	for _, run := range runs {
+		if run.Fails == 0 {
+			continue
+		}
+		wg.Add(1)
+		go func(fileName string) {
+			defer wg.Done()
+			a.store.GetSuite(group, fileName, true)
+		}(run.FileName)
+	}
+	wg.Wait()
+
 	fails := make(map[string]diffEntry)
 	for _, run := range runs {
 		if run.Fails == 0 {

@@ -250,7 +250,7 @@ type ClientDiffFails struct {
 
 type SimDiffFails struct {
 	TotalFails int             `json:"total_fails"`
-	Tests      []TestListEntry `json:"tests"`
+	Tests      []TestListEntry `json:"tests,omitempty"`
 }
 
 type SearchResponse struct {
