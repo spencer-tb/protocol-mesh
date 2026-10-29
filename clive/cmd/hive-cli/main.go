@@ -627,7 +627,12 @@ type diffResp struct {
 }
 
 func cmdDiff(group string, args []string, jsonOut bool) error {
-	data, err := apiGet(fmt.Sprintf("/api/v1/groups/%s/diff", group), nil)
+	// The text view prints only totals, so it asks for no test lists.
+	var params url.Values
+	if !jsonOut {
+		params = url.Values{"counts": {"true"}}
+	}
+	data, err := apiGet(fmt.Sprintf("/api/v1/groups/%s/diff", group), params)
 	if err != nil {
 		return err
 	}

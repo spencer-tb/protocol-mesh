@@ -64,7 +64,7 @@ client logs. `detail --json` adds `fill_command`, `consume_command`,
 | `/api/v1/groups/{group}/tests/{file}/{testID}` | one test's detail, `?full_log=true` |
 | `/api/v1/groups/{group}/suites` | the latest suite runs |
 | `/api/v1/groups/{group}/suites/{file}` | one suite's run metadata and tests, `?status=fail` |
-| `/api/v1/groups/{group}/diff` | regressions and fixes between the latest two runs |
+| `/api/v1/groups/{group}/diff` | regressions and fixes between the latest two runs, `?counts=true` for totals only |
 | `/api/v1/groups/{group}/search` | tests matching `?q=` |
 
 ## How it works
