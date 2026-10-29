@@ -89,6 +89,19 @@ updated, and round again. Nothing waits for an EELS release.
 - [ ] Move the repo to an org or GitHub Pro, protect `main`, and require
   review through CODEOWNERS for `setup.sh`, `bootstrap.py`, `repos.txt`,
   `AGENTS.md` and `.agents/`.
-- [ ] Coordination: findings as issues, assigned to the teams that fix them.
+- [ ] **Coordination: findings as issues, assigned to the teams that fix
+  them, built against prompt injection from the start.** The agents read
+  text from many teams, hold write tokens and reach the network, the same
+  mix that 2025 and 2026 attacks on GitHub agents used.
+  - Split the sessions. The agent that reads other teams' issues has no push
+    token and no secrets. The agent that pushes reads only its own team's
+    accepted issues, and its writes go through a separate step.
+  - A structured finding template: spec reference, client, SHAs,
+    reproduction command, expected and actual result.
+  - Labels as in Kubernetes triage: `team/<name>` from `teams.toml`,
+    `needs-triage` and `accepted`. Nothing runs until the owning team
+    accepts the issue.
+  - Security-sensitive findings go to a separate private repo with its own
+    bot token, never this one.
 - [ ] Help fuzzers.
 - [ ] Confirm Codex and other agents load `.agents/skills`.
