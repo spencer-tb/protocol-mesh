@@ -76,7 +76,7 @@ ignore = [
 
 [tool.mypy]
 strict = true
-files = ["bootstrap.py", "tests", "xref/src", "xref/tests", "fuzz"]
+files = ["bootstrap.py", "latest.py", "tests", "xref/src", "xref/tests", "fuzz"]
 
 [[tool.mypy.overrides]]
 # fuzz/eels_side.py runs inside an execution-specs checkout, which provides
