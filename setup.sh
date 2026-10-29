@@ -20,7 +20,8 @@ update() {
   git -C "$here" --no-pager log --format='%h %an %s' 'HEAD..@{u}'
   git -C "$here" --no-pager diff --stat 'HEAD...@{u}'
   git -C "$here" --no-pager diff 'HEAD...@{u}' -- setup.sh bootstrap.py \
-    Justfile pyproject.toml uv.lock repos.txt AGENTS.md .agents
+    Justfile latest.py pyproject.toml uv.lock repos.txt AGENTS.md .agents \
+    .claude
   if [ "${1:-}" != --yes ]; then
     if [ ! -t 0 ]; then
       echo "review the changes above, then run: ./setup.sh --update --yes" >&2

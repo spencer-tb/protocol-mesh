@@ -67,6 +67,11 @@ test-go:
 
 # --- Tools ---
 
+# What changed since your last session: forks, decisions, EELS and hive
+[group('tools')]
+latest *args:
+    uv run --quiet --script latest.py "$@"
+
 # Set up this machine, see ./setup.sh --help
 [group('tools')]
 setup *args:

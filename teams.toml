@@ -4,6 +4,8 @@
 # worktrees on their own fork. A problem anywhere else is written up for the
 # team that owns that repo. `repos` and `build` use the names in repos.txt
 # and the build targets in bootstrap.py, and "*" means all of them.
+# `hive_client` is the client's name in hive results, so tools can start
+# from the team's own client.
 
 # Every team clones these: the spec, the EIPs, the engine API and the calls.
 common = ["execution-specs", "EIPs", "execution-apis", "ethereum-pm", "forkcast"]
@@ -34,48 +36,56 @@ build = ["eels", "hive", "clive"]
 
 [teams.geth]
 title = "go-ethereum"
+hive_client = "go-ethereum"
 owns = ["clients/go-ethereum"]
 repos = ["hive", "hive-tests", "clients/go-ethereum"]
 build = ["eels", "hive", "clive", "geth"]
 
 [teams.reth]
 title = "reth and evm2"
+hive_client = "reth"
 owns = ["clients/reth", "clients/evm2"]
 repos = ["hive", "hive-tests", "clients/reth", "clients/evm2"]
 build = ["eels", "hive", "clive"]
 
 [teams.nethermind]
 title = "Nethermind"
+hive_client = "nethermind"
 owns = ["clients/nethermind"]
 repos = ["hive", "hive-tests", "clients/nethermind"]
 build = ["eels", "hive", "clive", "nethermind"]
 
 [teams.besu]
 title = "Besu"
+hive_client = "besu"
 owns = ["clients/besu"]
 repos = ["hive", "hive-tests", "clients/besu"]
 build = ["eels", "hive", "clive", "besu"]
 
 [teams.erigon]
 title = "Erigon"
+hive_client = "erigon"
 owns = ["clients/erigon"]
 repos = ["hive", "hive-tests", "clients/erigon"]
 build = ["eels", "hive", "clive", "erigon"]
 
 [teams.ethrex]
 title = "ethrex"
+hive_client = "ethrex"
 owns = ["clients/ethrex"]
 repos = ["hive", "hive-tests", "clients/ethrex"]
 build = ["eels", "hive", "clive", "ethrex"]
 
 [teams.nimbus]
 title = "Nimbus"
+hive_client = "nimbus-el"
 owns = ["clients/nimbus-eth1"]
 repos = ["hive", "hive-tests", "clients/nimbus-eth1"]
 build = ["eels", "hive", "clive", "nimbus"]
 
 [teams.ethereumjs]
 title = "EthereumJS"
+hive_client = "ethereumjs"
 owns = ["clients/ethereumjs-monorepo"]
 repos = ["hive", "hive-tests", "clients/ethereumjs-monorepo"]
 build = ["eels", "hive", "clive", "ethereumjs"]

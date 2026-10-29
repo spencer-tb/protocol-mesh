@@ -58,6 +58,7 @@ All of these are cheap.
 
 | To | Do |
 |---|---|
+| See what changed since your last session: forks, ACD decisions, EIP stages, EELS and hive | `just latest` |
 | Read an EIP's text, fork status, changes, PRs and discussion | `eip` skill |
 | Check forks and headliners | the commands under Priorities |
 | Find what a call said or decided | `calls` skill |
