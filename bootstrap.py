@@ -1,6 +1,6 @@
 #!/usr/bin/env -S uv run --script
 # /// script
-# requires-python = ">=3.11"
+# requires-python = ">=3.12"
 # ///
 """
 Set up everything needed to work on EIPs across the spec, the tests and the
@@ -278,7 +278,7 @@ def unpack(archive: Path, dest: Path) -> None:
 # Each installer leaves alone a tool that is already new enough.
 
 
-def install_uv(ws: Workspace) -> None:
+def install_uv(_ws: Workspace) -> None:
     """Install uv when the one on PATH is older than UV_MIN."""
     if at_least(tool_version("uv", "--version"), UV_MIN):
         return
@@ -287,7 +287,7 @@ def install_uv(ws: Workspace) -> None:
     run(["sh", script], env={**os.environ, "UV_NO_MODIFY_PATH": "1"})
 
 
-def install_cmake(ws: Workspace) -> None:
+def install_cmake(_ws: Workspace) -> None:
     """Install cmake with uv when there is none."""
     if have("cmake"):
         return
@@ -295,7 +295,15 @@ def install_cmake(ws: Workspace) -> None:
     run(["uv", "tool", "install", "-q", "cmake"])
 
 
-def install_rust(ws: Workspace) -> None:
+def install_just(_ws: Workspace) -> None:
+    """Install just, which runs this repo's tasks, with uv when missing."""
+    if have("just"):
+        return
+    say("install just")
+    run(["uv", "tool", "install", "-q", "rust-just"])
+
+
+def install_rust(_ws: Workspace) -> None:
     """Install or update Rust when rustc is older than RUST_MIN."""
     if at_least(tool_version("rustc", "--version"), RUST_MIN):
         return
@@ -380,7 +388,7 @@ def install_jq(ws: Workspace) -> None:
     binary.chmod(0o755)
 
 
-def install_ripgrep(ws: Workspace) -> None:
+def install_ripgrep(_ws: Workspace) -> None:
     """Install ripgrep with cargo when there is none."""
     if have("rg"):
         return
@@ -391,7 +399,11 @@ def install_ripgrep(ws: Workspace) -> None:
 Installer = Callable[[Workspace], None]
 
 # Every setup gets these. Build targets add what they need.
-BASE_INSTALLERS: tuple[Installer, ...] = (install_uv, install_jq)
+BASE_INSTALLERS: tuple[Installer, ...] = (
+    install_uv,
+    install_jq,
+    install_just,
+)
 
 INSTALLERS: tuple[Installer, ...] = (
     *BASE_INSTALLERS,
@@ -548,8 +560,10 @@ def read_teams(path: Path = TEAMS_FILE) -> dict[str, Team]:
 
 
 def team_plan(team: Team, repos: list[Repo]) -> tuple[list[Repo], list[str]]:
-    """Return the repos a team clones, including those it owns, and the
-    targets it builds."""
+    """
+    Return the repos a team clones, including those it owns, and the
+    targets it builds.
+    """
     known = {repo.dir for repo in repos}
     unknown = [
         d for d in team.repos + team.owns if d != "*" and d not in known
@@ -780,12 +794,12 @@ def link_binary(built: Path, link: Path) -> None:
 # Each build runs in the target's checkout, `src`.
 
 
-def build_eels(ws: Workspace, src: Path) -> None:
+def build_eels(_ws: Workspace, src: Path) -> None:
     """Create the environment `uv run fill` uses."""
     run(["uv", "sync", "-q"], cwd=src)
 
 
-def build_hive(ws: Workspace, src: Path) -> None:
+def build_hive(_ws: Workspace, src: Path) -> None:
     """Build ./hive in the hive checkout."""
     run(["go", "build", "-o", "hive", "."], cwd=src)
 
@@ -891,7 +905,6 @@ class Target:
         return (HERE if self.here else ws.root) / self.source
 
 
-
 TARGETS = {
     "eels": Target("execution-specs", build_eels),
     "hive": Target("hive", build_hive, (install_go,)),
@@ -980,6 +993,7 @@ STATUS_TOOLS: tuple[tuple[str, tuple[str, ...], str | None], ...] = (
         "gcc",
         "docker",
         "jq",
+        "just",
         "rg",
         "gh",
         "claude",
@@ -1049,8 +1063,14 @@ def check(ws: Workspace, me: dict[str, Any], repos: list[Repo]) -> None:
     else:
         print("you: no team yet, run ./setup.sh --team NAME")
     print("tools")
-    for name, args, minimum in STATUS_TOOLS:
-        print(row(name, tool_version(*args), minimum))
+    # Each probe starts a process and some, like java, are slow, so they run
+    # at once.
+    with ThreadPoolExecutor() as pool:
+        versions = list(pool.map(lambda t: tool_version(*t[1]), STATUS_TOOLS))
+    for (name, _, minimum), version in zip(
+        STATUS_TOOLS, versions, strict=True
+    ):
+        print(row(name, version, minimum))
     if have("docker") and capture(["docker", "info"], timeout=30).returncode:
         print("  docker is installed but not running, hive needs it")
 

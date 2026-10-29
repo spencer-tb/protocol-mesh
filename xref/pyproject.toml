@@ -19,13 +19,4 @@ el-xref = "el_xref.cli:main"
 requires = ["uv_build>=0.13.5,<0.14.0"]
 build-backend = "uv_build"
 
-[tool.ruff]
-line-length = 79
-
-[tool.ruff.lint]
-select = ["E", "F", "I", "B", "UP", "D"]
-ignore = ["D203", "D212"]
-
-[tool.mypy]
-strict = true
-ignore_missing_imports = true
+# ruff, mypy and pytest are set up once, in the workspace root.

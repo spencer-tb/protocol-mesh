@@ -71,6 +71,9 @@ legacy commands for `data/map.json`; the lookup commands prefer the tree.
 
 ## Checks
 
+From the repo root, with the rest of the repo's checks:
+
 ```sh
-uv run --project xref python -m unittest discover -s xref/tests -v
+just test-py xref/tests
+just static
 ```

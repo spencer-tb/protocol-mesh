@@ -101,8 +101,8 @@ Codex or another).
 This checkout never updates itself, because a bad commit would then run on
 every machine. `./setup.sh --update` lists the incoming commits and shows
 the full diff of everything that runs or instructs agents (`setup.sh`,
-`bootstrap.py`, `repos.txt`, `AGENTS.md`, `.agents/`), then asks before
-fast-forwarding. Read it before saying yes.
+`bootstrap.py`, `Justfile`, `repos.txt`, `AGENTS.md`, `.agents/`), then
+asks before fast-forwarding. Read it before saying yes.
 
 `repos.txt` only accepts https GitHub repos from a fixed list of owners in
 `bootstrap.py`.
@@ -160,10 +160,15 @@ in docker.
 - A skill: add `.agents/skills/<name>/SKILL.md`.
 - A build: add a `build_<target>` function and a `TARGETS` entry in
   `bootstrap.py`.
+- A tool: a directory with a README, its recipes in the root `Justfile`
+  and its tests run by `just test`.
 
 `setup.sh` only installs uv and hands over to `bootstrap.py`, which uv runs
-with its own Python. The tests need no network:
+with its own Python. `just` lists every task, and the checks need no
+network:
 
-    uv run pytest
-    uv run ruff check
-    uv run mypy
+    just static    # ruff, formatting, mypy, go vet, uv.lock
+    just test      # pytest and go test
+    just fix       # format and auto-fix
+
+The conventions, the same as execution-specs', are in `AGENTS.md`.
