@@ -18,7 +18,6 @@ eth-rnd-archive              https://github.com/ethereum/eth-rnd-archive.git  sh
 hive                         https://github.com/ethereum/hive.git
 hive-tests                   https://github.com/ethpandaops/hive-tests.git
 hive-ui                      https://github.com/ethpandaops/hive-ui.git
-clive                        https://github.com/spencer-tb/clive.git
 
 # Execution clients and EVMs
 clients/go-ethereum          https://github.com/ethereum/go-ethereum.git

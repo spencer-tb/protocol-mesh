@@ -791,7 +791,10 @@ def build_hive(ws: Workspace, src: Path) -> None:
 
 
 def build_clive(ws: Workspace, src: Path) -> None:
-    """Build clive, the hive results CLI, and hapi, the API it queries."""
+    """
+    Build clive, the hive results CLI, and hapi, the API it queries,
+    from clive/ in this repo.
+    """
     bin_dir = ws.local / "bin"
     run(["go", "build", "-o", bin_dir / "clive", "./cmd/hive-cli"], cwd=src)
     run(["go", "build", "-o", bin_dir / "hapi", "."], cwd=src)
@@ -873,17 +876,26 @@ def build_ethereumjs(ws: Workspace, src: Path) -> None:
 
 @dataclass(frozen=True)
 class Target:
-    """Something to build, from a checkout under the workspace root."""
+    """
+    Something to build, from a checkout under the workspace root, or
+    from a directory of this repo when `here` is set.
+    """
 
     source: str
     build: Callable[[Workspace, Path], None]
     needs: tuple[Installer, ...] = ()
+    here: bool = False
+
+    def src(self, ws: Workspace) -> Path:
+        """Return the directory the build runs in."""
+        return (HERE if self.here else ws.root) / self.source
+
 
 
 TARGETS = {
     "eels": Target("execution-specs", build_eels),
     "hive": Target("hive", build_hive, (install_go,)),
-    "clive": Target("clive", build_clive, (install_go,)),
+    "clive": Target("clive", build_clive, (install_go,), here=True),
     "geth": Target("clients/go-ethereum", build_geth, (install_go,)),
     "erigon": Target("clients/erigon", build_erigon, (install_go,)),
     "besu": Target("clients/besu", build_besu, (install_jdk,)),
@@ -899,21 +911,32 @@ TARGETS = {
 }
 
 
-def needs_build(ws: Workspace, name: str, checkout: Path) -> bool:
+def source_commit(src: Path) -> str:
+    """
+    Return the commit `src` is at: HEAD for a clone, or the last commit
+    that changed it for a directory of this repo.
+    """
+    if (src / ".git").exists():
+        return git(src, "rev-parse", "HEAD").stdout.strip()
+    return git(src, "log", "-1", "--format=%H", "--", ".").stdout.strip()
+
+
+def needs_build(ws: Workspace, name: str, src: Path) -> bool:
     """Return whether `name` has a new commit or local changes."""
     stamp = ws.stamps / name
-    head = git(checkout, "rev-parse", "HEAD").stdout.strip()
-    dirty = git(checkout, "status", "--porcelain", "--untracked-files=no")
+    dirty = git(
+        src, "status", "--porcelain", "--untracked-files=no", "--", "."
+    )
     if dirty.stdout or not stamp.exists():
         return True
-    return stamp.read_text().strip() != head
+    return stamp.read_text().strip() != source_commit(src)
 
 
-def record_build(ws: Workspace, name: str, checkout: Path) -> None:
+def record_build(ws: Workspace, name: str, src: Path) -> None:
     """Remember the commit `name` was just built from."""
     stamp = ws.stamps / name
     stamp.parent.mkdir(parents=True, exist_ok=True)
-    stamp.write_text(git(checkout, "rev-parse", "HEAD").stdout)
+    stamp.write_text(source_commit(src) + "\n")
 
 
 def build_targets(ws: Workspace, names: Sequence[str]) -> list[str]:
@@ -921,22 +944,21 @@ def build_targets(ws: Workspace, names: Sequence[str]) -> list[str]:
     failed = []
     for name in names:
         target = TARGETS[name]
-        checkout = ws.root / target.source
-        if not (checkout / ".git").exists():
+        src = target.src(ws)
+        if not (target.here or (src / ".git").exists()):
             say(f"{name}: {target.source} is not cloned")
             failed.append(name)
             continue
-        if not needs_build(ws, name, checkout):
+        if not needs_build(ws, name, src):
             continue
-        head = git(checkout, "rev-parse", "--short=10", "HEAD").stdout
-        say(f"build {name} at {head.strip()}")
+        say(f"build {name} at {source_commit(src)[:10]}")
         try:
-            target.build(ws, checkout)
+            target.build(ws, src)
         except (subprocess.CalledProcessError, BuildError, OSError) as error:
             say(f"{name}: {error}")
             failed.append(name)
             continue
-        record_build(ws, name, checkout)
+        record_build(ws, name, src)
     return failed
 
 

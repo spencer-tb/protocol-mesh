@@ -1,0 +1,4 @@
+# Binaries from a plain `go build`
+/hapi
+/clive
+/hive-cli

@@ -15,7 +15,7 @@ Where the context for EIP work lives. Repos are cloned by `setup.sh` (see
 | Eth R&D Discord, weekly snapshot | `eth-rnd-archive` | `discord` |
 | Devnet configs | `<fork>-devnets`, `hive-tests` | `devnet` |
 | Local devnets | `ethereum-package` | `kurtosis` |
-| Hive | `hive`, `clive` | `hive` |
+| Hive | `hive`, `clive/` | `hive` |
 | Spec to client map | `xref/data/tree.json`, `xref/map/`, `./xref.sh` | `xref` |
 
 ## Fetched

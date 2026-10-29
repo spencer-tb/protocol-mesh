@@ -106,7 +106,11 @@ def test_repos_txt_has_every_build_source_once() -> None:
     dirs = [repo.dir for repo in bootstrap.read_manifest()]
     assert len(dirs) == len(set(dirs))
     for target in bootstrap.TARGETS.values():
-        assert target.source in dirs
+        if target.here:
+            assert (bootstrap.HERE / target.source).is_dir()
+            assert target.source not in dirs
+        else:
+            assert target.source in dirs
 
 
 @pytest.mark.parametrize(
@@ -341,6 +345,23 @@ def test_needs_build_after_a_new_commit_or_local_changes(
     git(upstream, "checkout", "-q", "first")
     commit(upstream, "second")
     assert bootstrap.needs_build(ws, "geth", upstream)
+
+
+def test_a_directory_of_this_repo_builds_only_after_it_changes(
+    ws: Workspace, upstream: Path
+) -> None:
+    src = upstream / "tool"
+    src.mkdir()
+    commit(src, "main.go")
+    bootstrap.record_build(ws, "tool", src)
+    assert not bootstrap.needs_build(ws, "tool", src)
+    commit(upstream, "elsewhere")
+    (upstream / "first").write_text("edited")
+    assert not bootstrap.needs_build(ws, "tool", src)
+    (src / "main.go").write_text("edited")
+    assert bootstrap.needs_build(ws, "tool", src)
+    git(src, "commit", "-q", "-am", "edit the tool")
+    assert bootstrap.needs_build(ws, "tool", src)
 
 
 def test_a_failed_build_does_not_stop_the_others(
