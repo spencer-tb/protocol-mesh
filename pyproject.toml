@@ -79,7 +79,7 @@ strict = true
 files = ["bootstrap.py", "latest.py", "tests", "xref/src", "xref/tests", "fuzz"]
 
 [[tool.mypy.overrides]]
-# fuzz/eels_side.py runs inside an execution-specs checkout, which provides
-# these.
-module = ["ethereum.*", "ethereum_types.*"]
+# fuzz/eels_side.py and fuzz/fuzz_eip2537.py run inside an execution-specs
+# checkout, which provides these.
+module = ["ethereum.*", "ethereum_types.*", "tests.*"]
 ignore_missing_imports = true
