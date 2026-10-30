@@ -174693,10 +174693,64 @@
      "pipeline": 3
     },
     "nethermind": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":653,\"uuid\":\"90eed8d0-fed1-43d6-a272-eb0a2296bf31\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "nethermind",
+       "path": "src/Nethermind/Nethermind.Evm.Precompiles/Bls12381G1MsmPrecompile.cs",
+       "qualname": "Bls12381G1MsmPrecompile",
+       "line": 15,
+       "end_line": 35,
+       "role": "entry",
+       "confidence": "high",
+       "note": "Nethermind BLS12-381 G1 MSM precompile.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "besu": {
-     "error": "claude failed: :\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":5815,\"uuid\":\"de9a7dd5-6630-4def-b2aa-648e24abf703\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "besu",
+       "path": "evm/src/main/java/org/hyperledger/besu/evm/precompile/BLS12G1MultiExpPrecompiledContract.java",
+       "qualname": "BLS12G1MultiExpPrecompiledContract",
+       "line": 28,
+       "end_line": 51,
+       "role": "entry",
+       "confidence": "high",
+       "note": "Besu BLS12-381 G1 MultiExp precompile implementation.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "erigon": {
      "matches": [
@@ -175064,7 +175118,34 @@
      "pipeline": 3
     },
     "evmone": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":669,\"uuid\":\"6c7f539d-3ae7-41a5-bd64-55ceb3eb22c3\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "evmone",
+       "path": "lib/evmone_precompiles/precompiles.cpp",
+       "qualname": "bls12_g1msm_execute",
+       "line": 668,
+       "end_line": 681,
+       "role": "entry",
+       "confidence": "high",
+       "note": "evmone bls12_g1msm precompile execution.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     }
    }
   },
@@ -175214,16 +175295,124 @@
      "pipeline": 3
     },
     "reth": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":644,\"uuid\":\"9448c1e2-b8c1-495d-9007-95e7fa471e89\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "evm2",
+       "path": "crates/evm2/src/precompiles/bls12_381/map_fp_to_g1.rs",
+       "qualname": "run",
+       "line": 15,
+       "end_line": 30,
+       "role": "entry",
+       "confidence": "high",
+       "note": "Field-to-curve G1 precompile: charges base gas, removes fp padding, executes fp_to_g1, and pads result.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "nethermind": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":703,\"uuid\":\"af1b99d9-0c39-4cc5-af20-698197fe3de4\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "nethermind",
+       "path": "src/Nethermind/Nethermind.Evm.Precompiles/Bls12381FpToG1Precompile.cs",
+       "qualname": "Bls12381FpToG1Precompile",
+       "line": 15,
+       "end_line": 31,
+       "role": "entry",
+       "confidence": "high",
+       "note": "Nethermind BLS12-381 Fp to G1 precompile.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "besu": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":491,\"uuid\":\"da87c7f5-98b7-455d-91e6-f7cf0afe77d8\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "besu",
+       "path": "evm/src/main/java/org/hyperledger/besu/evm/precompile/BLS12MapFpToG1PrecompiledContract.java",
+       "qualname": "BLS12MapFpToG1PrecompiledContract",
+       "line": 27,
+       "end_line": 46,
+       "role": "entry",
+       "confidence": "high",
+       "note": "Besu BLS12-381 map Fp to G1 precompile.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "erigon": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":655,\"uuid\":\"2c11a79c-9069-496e-a0b8-14239e8e34df\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "erigon",
+       "path": "execution/vm/contracts.go",
+       "qualname": "bls12381MapFpToG1.Run",
+       "line": 1334,
+       "end_line": 1353,
+       "role": "entry",
+       "confidence": "high",
+       "note": "Erigon EIP-2537 MapG1 precompile.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "ethrex": {
      "matches": [
@@ -175282,10 +175471,64 @@
      "pipeline": 3
     },
     "nimbus": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":672,\"uuid\":\"19f8f99d-2545-4636-80ba-601b095c3cbb\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "nimbus-eth1",
+       "path": "execution_chain/evm/precompiles.nim",
+       "qualname": "blsMapG1",
+       "line": 514,
+       "end_line": 520,
+       "role": "entry",
+       "confidence": "high",
+       "note": "Nimbus blsMapG1 precompile.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "evmone": {
-     "error": "claude failed: \"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":18755,\"uuid\":\"d5329f8b-8a36-474c-b94f-780305b6e972\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "evmone",
+       "path": "lib/evmone_precompiles/precompiles.cpp",
+       "qualname": "bls12_map_fp_to_g1_execute",
+       "line": 729,
+       "end_line": 741,
+       "role": "entry",
+       "confidence": "high",
+       "note": "evmone bls12_map_fp_to_g1 precompile execution.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     }
    }
   },
@@ -175407,25 +175650,214 @@
      "pipeline": 3
     },
     "reth": {
-     "error": "claude failed: :\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":2706,\"uuid\":\"0ef68f11-d696-42d3-abc6-5f376c8355f9\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "evm2",
+       "path": "crates/evm2/src/precompiles/bls12_381/g2_add.rs",
+       "qualname": "run",
+       "line": 18,
+       "end_line": 38,
+       "role": "entry",
+       "confidence": "high",
+       "note": "BLS12-381 G2 addition precompile: charges gas, decodes and adds unpadded G2 points, pads output.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "nethermind": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":657,\"uuid\":\"08be431a-473d-4334-831b-9456ce252f8e\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "nethermind",
+       "path": "src/Nethermind/Nethermind.Evm.Precompiles/Bls12381G2AddPrecompile.cs",
+       "qualname": "Bls12381G2AddPrecompile",
+       "line": 15,
+       "end_line": 31,
+       "role": "entry",
+       "confidence": "high",
+       "note": "Nethermind BLS12-381 G2Add precompile.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "besu": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":579,\"uuid\":\"3439c224-f0dc-485a-b14b-6e5ad976e162\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "besu",
+       "path": "evm/src/main/java/org/hyperledger/besu/evm/precompile/BLS12G2AddPrecompiledContract.java",
+       "qualname": "BLS12G2AddPrecompiledContract",
+       "line": 27,
+       "end_line": 43,
+       "role": "entry",
+       "confidence": "high",
+       "note": "Besu BLS12-381 G2Add precompile.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "erigon": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":654,\"uuid\":\"f140e91f-0ec2-4900-ac9b-b6ca5a282fb7\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "erigon",
+       "path": "execution/vm/contracts.go",
+       "qualname": "bls12381G2Add.Run",
+       "line": 1055,
+       "end_line": 1079,
+       "role": "entry",
+       "confidence": "high",
+       "note": "Erigon EIP-2537 G2Add precompile.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "ethrex": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":570,\"uuid\":\"313b13f7-ea0f-4af8-8665-c316bee5ef2c\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "ethrex",
+       "path": "crates/vm/levm/src/precompiles.rs",
+       "qualname": "bls12_g2add",
+       "line": 1408,
+       "end_line": 1485,
+       "role": "entry",
+       "confidence": "high",
+       "note": "ethrex levm BLS12-381 G2 point addition precompile.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "nimbus": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":592,\"uuid\":\"473cede0-7612-49e0-b6c1-8790a4a91136\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "nimbus-eth1",
+       "path": "execution_chain/evm/precompiles.nim",
+       "qualname": "blsG2Add",
+       "line": 483,
+       "end_line": 489,
+       "role": "entry",
+       "confidence": "high",
+       "note": "Nimbus blsG2Add precompile.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "evmone": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":550,\"uuid\":\"86993428-338d-49ae-858d-cc575813e492\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "evmone",
+       "path": "lib/evmone_precompiles/precompiles.cpp",
+       "qualname": "bls12_g2add_execute",
+       "line": 683,
+       "end_line": 691,
+       "role": "entry",
+       "confidence": "high",
+       "note": "evmone bls12_g2add precompile execution.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     }
    }
   },
@@ -175557,25 +175989,214 @@
      "pipeline": 3
     },
     "reth": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":541,\"uuid\":\"7dc9a97a-821a-4c13-9441-0e1ca3de42fb\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "evm2",
+       "path": "crates/evm2/src/precompiles/bls12_381/g2_msm.rs",
+       "qualname": "run",
+       "line": 23,
+       "end_line": 49,
+       "role": "entry",
+       "confidence": "high",
+       "note": "BLS12-381 G2 MSM precompile: calculates gas, decodes pairs, performs MSM and returns padded point.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "nethermind": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":659,\"uuid\":\"42452f9c-c411-4f6a-9459-ca1dbd4f779b\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "nethermind",
+       "path": "src/Nethermind/Nethermind.Evm.Precompiles/Bls12381G2MsmPrecompile.cs",
+       "qualname": "Bls12381G2MsmPrecompile",
+       "line": 15,
+       "end_line": 35,
+       "role": "entry",
+       "confidence": "high",
+       "note": "Nethermind BLS12-381 G2 MSM precompile.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "besu": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":550,\"uuid\":\"c25961d5-2c71-43a2-aba0-6b895b2ffaef\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "besu",
+       "path": "evm/src/main/java/org/hyperledger/besu/evm/precompile/BLS12G2MultiExpPrecompiledContract.java",
+       "qualname": "BLS12G2MultiExpPrecompiledContract",
+       "line": 28,
+       "end_line": 51,
+       "role": "entry",
+       "confidence": "high",
+       "note": "Besu BLS12-381 G2MultiExp precompile.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "erigon": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":676,\"uuid\":\"5c92c0a8-046c-43f6-b9f2-98de6738ed96\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "erigon",
+       "path": "execution/vm/contracts.go",
+       "qualname": "bls12381G2MultiExp.Run",
+       "line": 1107,
+       "end_line": 1152,
+       "role": "entry",
+       "confidence": "high",
+       "note": "Erigon EIP-2537 G2MultiExp precompile.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "ethrex": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":607,\"uuid\":\"991c73d3-21fd-454b-a83e-031cbba2808f\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "ethrex",
+       "path": "crates/vm/levm/src/precompiles.rs",
+       "qualname": "bls12_g2msm",
+       "line": 1487,
+       "end_line": 1556,
+       "role": "entry",
+       "confidence": "high",
+       "note": "ethrex levm BLS12-381 G2 MSM multi-scalar multiplication precompile.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "nimbus": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":585,\"uuid\":\"d55a5bf4-b418-427f-a5ce-f62652ed88dc\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "nimbus-eth1",
+       "path": "execution_chain/evm/precompiles.nim",
+       "qualname": "blsG2MultiExp",
+       "line": 490,
+       "end_line": 501,
+       "role": "entry",
+       "confidence": "high",
+       "note": "Nimbus blsG2MultiExp precompile.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "evmone": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":635,\"uuid\":\"df264bb5-dd23-42cd-90ed-ee2fbf3ebbdb\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "evmone",
+       "path": "lib/evmone_precompiles/precompiles.cpp",
+       "qualname": "bls12_g2msm_execute",
+       "line": 693,
+       "end_line": 714,
+       "role": "entry",
+       "confidence": "high",
+       "note": "evmone bls12_g2msm precompile execution.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     }
    }
   },
@@ -175725,25 +176346,214 @@
      "pipeline": 3
     },
     "reth": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":550,\"uuid\":\"5c482c01-e8c6-42c7-b029-5bbe27adb460\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "evm2",
+       "path": "crates/evm2/src/precompiles/bls12_381/map_fp2_to_g2.rs",
+       "qualname": "run",
+       "line": 16,
+       "end_line": 33,
+       "role": "entry",
+       "confidence": "high",
+       "note": "Field-to-curve G2 precompile: charges base gas, removes fp2 padding, maps to G2, pads output.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "nethermind": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":645,\"uuid\":\"0c8e0556-d8f6-40c5-a038-9ef10e4aa4b3\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "nethermind",
+       "path": "src/Nethermind/Nethermind.Evm.Precompiles/Bls12381Fp2ToG2Precompile.cs",
+       "qualname": "Bls12381Fp2ToG2Precompile",
+       "line": 15,
+       "end_line": 31,
+       "role": "entry",
+       "confidence": "high",
+       "note": "Nethermind BLS12-381 Fp2 to G2 precompile.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "besu": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":551,\"uuid\":\"587b652e-38f5-4cb6-97b2-fd7884f7ccf1\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "besu",
+       "path": "evm/src/main/java/org/hyperledger/besu/evm/precompile/BLS12MapFp2ToG2PrecompiledContract.java",
+       "qualname": "BLS12MapFp2ToG2PrecompiledContract",
+       "line": 27,
+       "end_line": 46,
+       "role": "entry",
+       "confidence": "high",
+       "note": "Besu BLS12-381 map Fp2 to G2 precompile.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "erigon": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":675,\"uuid\":\"0064f318-7a4b-446d-a385-d619c319023a\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "erigon",
+       "path": "execution/vm/contracts.go",
+       "qualname": "bls12381MapFp2ToG2.Run",
+       "line": 1367,
+       "end_line": 1390,
+       "role": "entry",
+       "confidence": "high",
+       "note": "Erigon EIP-2537 MapG2 precompile.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "ethrex": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":592,\"uuid\":\"c41d862d-fb8e-424a-bb93-de1cdfa5ecd4\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "ethrex",
+       "path": "crates/vm/levm/src/precompiles.rs",
+       "qualname": "bls12_map_fp2_to_g2",
+       "line": 1676,
+       "end_line": 1720,
+       "role": "entry",
+       "confidence": "high",
+       "note": "ethrex levm BLS12-381 map fp2 to G2 precompile.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "nimbus": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":574,\"uuid\":\"ce0ba03a-dc6d-42fb-929c-04c182ba165f\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "nimbus-eth1",
+       "path": "execution_chain/evm/precompiles.nim",
+       "qualname": "blsMapG2",
+       "line": 521,
+       "end_line": 527,
+       "role": "entry",
+       "confidence": "high",
+       "note": "Nimbus blsMapG2 precompile.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "evmone": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":475,\"uuid\":\"08245224-35bc-4930-b095-27fe96b188e0\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "evmone",
+       "path": "lib/evmone_precompiles/precompiles.cpp",
+       "qualname": "bls12_map_fp2_to_g2_execute",
+       "line": 743,
+       "end_line": 755,
+       "role": "entry",
+       "confidence": "high",
+       "note": "evmone bls12_map_fp2_to_g2 precompile execution.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     }
    }
   },
@@ -175883,25 +176693,214 @@
      "pipeline": 3
     },
     "reth": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":561,\"uuid\":\"8e5bd21b-23d5-4968-b741-8f5c792287d2\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "evm2",
+       "path": "crates/evm2/src/precompiles/bls12_381/pairing.rs",
+       "qualname": "run",
+       "line": 31,
+       "end_line": 54,
+       "role": "entry",
+       "confidence": "high",
+       "note": "BLS12-381 Pairing check precompile: validates pairs with subgroup checks and returns 1 on success or 0.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "nethermind": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":653,\"uuid\":\"1fbb7a71-1626-42f7-996c-1b0ea39dbcb2\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "nethermind",
+       "path": "src/Nethermind/Nethermind.Evm.Precompiles/Bls12381PairingCheckPrecompile.cs",
+       "qualname": "Bls12381PairingCheckPrecompile",
+       "line": 15,
+       "end_line": 31,
+       "role": "entry",
+       "confidence": "high",
+       "note": "Nethermind BLS12-381 pairing check precompile.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "besu": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":469,\"uuid\":\"5ca07b94-c62c-4a56-a3d8-c8906c0f7829\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "besu",
+       "path": "evm/src/main/java/org/hyperledger/besu/evm/precompile/BLS12PairingPrecompiledContract.java",
+       "qualname": "BLS12PairingPrecompiledContract",
+       "line": 28,
+       "end_line": 51,
+       "role": "entry",
+       "confidence": "high",
+       "note": "Besu BLS12-381 pairing check precompile.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "erigon": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":726,\"uuid\":\"716cd077-6b8e-46f6-84cf-ed82b07507e4\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "erigon",
+       "path": "execution/vm/contracts.go",
+       "qualname": "bls12381Pairing.Run",
+       "line": 1166,
+       "end_line": 1217,
+       "role": "entry",
+       "confidence": "high",
+       "note": "Erigon EIP-2537 Pairing precompile.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "ethrex": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":444,\"uuid\":\"79954f1e-78ee-4ca1-b476-868049ecb50e\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "ethrex",
+       "path": "crates/vm/levm/src/precompiles.rs",
+       "qualname": "bls12_pairing_check",
+       "line": 1558,
+       "end_line": 1642,
+       "role": "entry",
+       "confidence": "high",
+       "note": "ethrex levm BLS12-381 pairing check precompile.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "nimbus": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":533,\"uuid\":\"790bd981-cff6-4d08-b9b5-5fbb0da0e792\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "nimbus-eth1",
+       "path": "execution_chain/evm/precompiles.nim",
+       "qualname": "blsPairing",
+       "line": 502,
+       "end_line": 513,
+       "role": "entry",
+       "confidence": "high",
+       "note": "Nimbus blsPairing precompile.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     },
     "evmone": {
-     "error": "claude failed: \":\"success\",\"api_error_status\":429,\"api_error_origin\":\"first_party\",\"api_error\":\"usage_limit_reached\",\"result\":\"You've hit your weekly limit \u00b7 resets Nov 1 at 2am (Europe/London)\",\"type\":\"result\",\"duration_ms\":535,\"uuid\":\"df577cd8-dd47-48c8-a452-32a513d0fdd5\",\"queued_turn_count\":0,\"re"
+     "matches": [
+      {
+       "repo": "evmone",
+       "path": "lib/evmone_precompiles/precompiles.cpp",
+       "qualname": "bls12_pairing_check_execute",
+       "line": 716,
+       "end_line": 727,
+       "role": "entry",
+       "confidence": "high",
+       "note": "evmone bls12_pairing_check precompile execution.",
+       "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "votes": 2
+      }
+     ],
+     "delegated": [],
+     "missing": [],
+     "split": 2,
+     "cost_usd": 0.0,
+     "search_seconds": 0.1,
+     "model": "manual-verified",
+     "built_at": "2026-10-30T03:50:00Z",
+     "pipeline": 3
     }
    }
   },
