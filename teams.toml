@@ -46,7 +46,7 @@ title = "reth and evm2"
 hive_client = "reth"
 owns = ["clients/reth", "clients/evm2"]
 repos = ["hive", "hive-tests", "clients/reth", "clients/evm2"]
-build = ["eels", "hive", "clive"]
+build = ["eels", "hive", "clive", "reth", "evm2"]
 
 [teams.nethermind]
 title = "Nethermind"
