@@ -205,12 +205,12 @@ state_tracker.set_transient_storage	0	-	Write the transient storage slot for (ad
 transactions.calculate_effective_gas_price	0	eip1559	Fee-market tx: check max fee per gas covers the base fee
 transactions.calculate_effective_gas_price	1	eip1559	Fee-market tx: compute priority fee as min of max priority fee and max fee minus base fee, and return base fee plus priority fee
 transactions.calculate_effective_gas_price	2	eip1559	Legacy-priced tx: check gas price covers the base fee and return gas price
-transactions.calculate_intrinsic_cost	0	eip2780,eip2930,eip3860,eip7623,eip7702,eip7976,eip7981,eip8037	Compute calldata token cost
-transactions.calculate_intrinsic_cost	1	eip2780,eip2930,eip3860,eip7623,eip7702,eip7976,eip7981,eip8037	Compute recipient cost (create access plus initcode, or cold account access plus value cost, skipped for self-transfers)
-transactions.calculate_intrinsic_cost	2	eip2780,eip2930,eip3860,eip7623,eip7702,eip7976,eip7981,eip8037	Compute access list entry charges and access list data surcharge
-transactions.calculate_intrinsic_cost	3	eip2780,eip2930,eip3860,eip7623,eip7702,eip7976,eip7981,eip8037	Compute per-authorization base cost for set-code transactions
-transactions.calculate_intrinsic_cost	4	eip2780,eip2930,eip3860,eip7623,eip7702,eip7976,eip7981,eip8037	Compute calldata floor gas anchored on base plus recipient gas, including access list surcharge
-transactions.calculate_intrinsic_cost	5	eip2780,eip2930,eip3860,eip7623,eip7702,eip7976,eip7981,eip8037	Sum intrinsic execution gas and return it with the floor
+transactions.calculate_intrinsic_cost	0	eip2780,eip2930,eip3860,eip7623,eip7702,eip7976,eip7981,eip8037	Charge calldata by standard token count
+transactions.calculate_intrinsic_cost	1	eip2780,eip2930,eip3860,eip7623,eip7702,eip7976,eip7981,eip8037	Charge recipient: create access plus init code, or cold account access plus value cost unless self-transfer
+transactions.calculate_intrinsic_cost	2	eip2780,eip2930,eip3860,eip7623,eip7702,eip7976,eip7981,eip8037	Charge access list entries and accumulate floor tokens for the data surcharge
+transactions.calculate_intrinsic_cost	3	eip2780,eip2930,eip3860,eip7623,eip7702,eip7976,eip7981,eip8037	Charge base cost per authorization for set-code transactions
+transactions.calculate_intrinsic_cost	4	eip2780,eip2930,eip3860,eip7623,eip7702,eip7976,eip7981,eip8037	Compute calldata floor gas from base, uniform calldata floor tokens and access list surcharge
+transactions.calculate_intrinsic_cost	5	eip2780,eip2930,eip3860,eip7623,eip7702,eip7976,eip7981,eip8037	Sum execution intrinsic gas and return it with the floor
 transactions.calculate_max_gas_fee	0	eip1559	Multiply gas_limit by the fee cap: max_fee_per_gas for fee-market transactions, gas_price for legacy ones
 transactions.chain_id	0	eip155	Return no chain ID for a pre-EIP-155 legacy transaction (v is 27 or 28)
 transactions.chain_id	1	eip155	Reject a legacy transaction whose v is below 35

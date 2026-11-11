@@ -65,6 +65,28 @@ paths = [
     "crates/engine/tree/src/tree/payload_processor/bal",
 ]
 exclude = ["**/tests/**"]
+# reth takes transaction and receipt encoding, signing hashes, request
+# hashes, the block access list types and the logs bloom from alloy.
+[[clients.reth.repos]]
+name = "alloy"
+url = "https://github.com/alloy-rs/alloy"
+ref = "main"
+paths = ["crates/consensus/src", "crates/eips/src"]
+exclude = ["**/tests/**"]
+[[clients.reth.repos]]
+name = "alloy-eips"
+url = "https://github.com/alloy-rs/eips"
+ref = "main"
+paths = ["crates/eip7928/src"]
+[[clients.reth.repos]]
+name = "alloy-core"
+url = "https://github.com/alloy-rs/core"
+ref = "main"
+paths = [
+    "crates/primitives/src/bits",
+    "crates/primitives/src/log",
+    "crates/primitives/src/signature",
+]
 
 [clients.nethermind]
 lang = "csharp"
@@ -154,6 +176,7 @@ paths = [
     "execution_chain/block_access_list",
     "execution_chain/common",
     "execution_chain/db",
+    "execution_chain/utils",
 ]
 # The ledger and access list, not the database backends.
 exclude = [
@@ -161,6 +184,13 @@ exclude = [
     "execution_chain/db/kvt*",
     "execution_chain/db/core_db*",
 ]
+# nimbus takes its types, their RLP encoding, signing hashes and the logs
+# bloom from nim-eth.
+[[clients.nimbus.repos]]
+name = "nim-eth"
+url = "https://github.com/status-im/nim-eth"
+ref = "master"
+paths = ["eth/common", "eth/bloom.nim"]
 
 [clients.evmone]
 lang = "cpp"

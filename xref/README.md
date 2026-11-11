@@ -63,6 +63,8 @@ to map the steps. It records evidence, confidence, votes and commits in
 
 Supported clients: geth, reth with evm2, nethermind, besu, erigon, ethrex,
 nimbus and evmone. evmone is an EVM; some block-level steps do not apply.
+reth is indexed with the alloy crates it takes its types, encoding and
+hashes from, and nimbus with nim-eth, see `xref.toml`.
 
 `build`, `refresh` and `tag` call Claude and cost money; obtain approval
 before running them. `--max-usd` stops new pairs once the cap is reached;

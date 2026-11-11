@@ -18,6 +18,7 @@ from tree_sitter import Node
 from tree_sitter_language_pack import get_parser
 
 from .config import Config, Repo
+from .csharp import scan
 from .tokens import eips
 
 EXTENSIONS = {
@@ -357,25 +358,79 @@ def parse_source(
         if lang == "cpp" and "::" in cpp_declared(node):
             # A method defined outside its class, such as `Host::call`.
             owners = owners + tuple(cpp_declared(node).split("::")[:-1])
-        qualname = ".".join(o for o in (*owners, name) if o)
-        body = text_of(node)
-        doc = leading_comments(node)
-        line = node.start_point[0] + 1
-        symbol = Symbol(
-            id=f"{repo}:{rel}:{qualname}:{line}",
-            repo=repo,
-            path=rel,
-            qualname=qualname,
-            name=name,
-            line=line,
-            end_line=node.end_point[0] + 1,
-            lang=lang,
-            hash=digest(body),
-            calls=calls_in(body),
-            eips=sorted(eips(doc + "\n" + body)),
-            doc=doc,
+        out.append(
+            symbol_of(
+                lang,
+                repo,
+                rel,
+                (*owners, name),
+                text_of(node),
+                leading_comments(node),
+                node.start_point[0] + 1,
+            )
         )
-        out.append((symbol, body))
+    if lang == "csharp" and tree.root_node.has_error:
+        scanned = scan_csharp(repo, rel, source.decode(errors="replace"))
+        if len(scanned) > len(out):
+            return scanned
+    return out
+
+
+def symbol_of(
+    lang: str,
+    repo: str,
+    rel: str,
+    names: tuple[str, ...],
+    body: str,
+    doc: str,
+    line: int,
+) -> tuple[Symbol, str]:
+    """Return the symbol for one function, with its body."""
+    qualname = ".".join(name for name in names if name)
+    symbol = Symbol(
+        id=f"{repo}:{rel}:{qualname}:{line}",
+        repo=repo,
+        path=rel,
+        qualname=qualname,
+        name=names[-1],
+        line=line,
+        end_line=line + body.count("\n"),
+        lang=lang,
+        hash=digest(body),
+        calls=calls_in(body),
+        eips=sorted(eips(doc + "\n" + body)),
+        doc=doc,
+    )
+    return symbol, body
+
+
+def scan_csharp(repo: str, rel: str, source: str) -> list[tuple[Symbol, str]]:
+    """
+    Extract the methods of a C# file that tree-sitter could not read.
+
+    The grammar lags the language, and one unknown construct can lose
+    every method in a file. See `csharp.scan`.
+    """
+    lines = source.split("\n")
+    out = []
+    for method in scan(source):
+        line = source.count("\n", 0, method.start) + 1
+        doc = []
+        for above in reversed(lines[: line - 1]):
+            if not above.strip().startswith("//"):
+                break
+            doc.append(above.strip())
+        out.append(
+            symbol_of(
+                "csharp",
+                repo,
+                rel,
+                (*method.owners, method.name),
+                source[method.start : method.end],
+                "\n".join(reversed(doc)),
+                line,
+            )
+        )
     return out
 
 
