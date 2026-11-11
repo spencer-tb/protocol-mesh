@@ -74,12 +74,24 @@ def find_again(client: Client, row: Json) -> Symbol | None:
     if exact is not None:
         return exact
     name = row["qualname"].split(".")[-1]
-    moved = [
+    same = [s for s in client.by_name.get(name, []) if s.repo == row["repo"]]
+    moved = [s for s in same if s.qualname == row["qualname"]]
+    if len(moved) == 1:
+        return moved[0]
+    # The same file may now name the enclosing type where it did not
+    # before, or the reverse. Overloads share a name, so take the nearest.
+    renamed = [
         s
-        for s in client.by_name.get(name, [])
-        if s.repo == row["repo"] and s.qualname == row["qualname"]
+        for s in same
+        if s.path == row["path"]
+        and (
+            s.qualname.endswith("." + row["qualname"])
+            or row["qualname"].endswith("." + s.qualname)
+        )
     ]
-    return moved[0] if len(moved) == 1 else None
+    if renamed:
+        return min(renamed, key=lambda s: abs(s.line - row["line"]))
+    return None
 
 
 def recheck(
@@ -143,6 +155,7 @@ def refresh(config: Config, workers: int, max_usd: float = 0.0) -> None:
                 if now.hash != row["hash"] and "role" in row:
                     checks.append((spec_id, name, row, now))
                 row["hash"] = now.hash
+                row["qualname"] = now.qualname
 
     # A recheck past the cap, or one that fails, rebuilds its pair instead.
     cost = [0.0]
