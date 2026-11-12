@@ -75,9 +75,9 @@ TRUSTED_OWNERS = frozenset(
 GITHUB_REPO = re.compile(r"github\.com[:/]([\w.-]+)/([\w.-]+?)(?:\.git)?/?$")
 
 GO_VERSION = "1.25.7"
-RUST_MIN = "1.93"
+RUST_MIN = "1.96"
 DOTNET_MIN = "10.0"
-JDK_MAJOR = "21"
+JDK_MAJOR = "25"
 UV_MIN = "0.13.4"
 NODE_MAJOR = "22"
 JQ_VERSION = "1.7.1"
@@ -791,6 +791,28 @@ def link_binary(built: Path, link: Path) -> None:
     link.symlink_to(built)
 
 
+def cargo_test_binary(src: Path, args: Sequence[str], name: str) -> Path:
+    """
+    Build a cargo test target without running it and return the binary,
+    which cargo names with a hash, so only its JSON messages say where.
+    """
+    result = subprocess.run(
+        ["cargo", "test", "--no-run", "--message-format=json", *args],
+        cwd=src,
+        check=True,
+        stdin=subprocess.DEVNULL,
+        stdout=subprocess.PIPE,
+        text=True,
+    )
+    for line in result.stdout.splitlines():
+        message = json.loads(line) if line.startswith("{") else {}
+        if message.get("target", {}).get("name") == name and message.get(
+            "executable"
+        ):
+            return Path(message["executable"])
+    raise BuildError(f"cargo built no test binary {name}")
+
+
 # Each build runs in the target's checkout, `src`.
 
 
@@ -846,7 +868,7 @@ def build_nethermind(ws: Workspace, src: Path) -> None:
 
 
 def build_evmone(ws: Workspace, src: Path) -> None:
-    """Build evmone and its state and blockchain test runners."""
+    """Build evmone's CLI, which runs t8n and state and blockchain tests."""
     run(["git", "submodule", "update", "-q", "--init", "--recursive"], cwd=src)
     run(
         ["cmake", "-S", ".", "-B", "build", "-DCMAKE_BUILD_TYPE=Release"]
@@ -854,26 +876,56 @@ def build_evmone(ws: Workspace, src: Path) -> None:
         cwd=src,
     )
     run(["cmake", "--build", "build", "--parallel", JOBS], cwd=src)
-    for tool in ("evmone", "evmone-statetest", "evmone-blockchaintest"):
-        link_binary(src / "build" / "bin" / tool, ws.out("evmone") / tool)
+    link_binary(src / "build" / "bin" / "evmone", ws.out("evmone") / "evmone")
+
+
+def build_reth(ws: Workspace, src: Path) -> None:
+    """Build reth's ef-test-runner, its blockchain test runner."""
+    run(["cargo", "build", "-q", "--release", "-p", "ef-test-runner"], cwd=src)
+    built = src / "target" / "release" / "ef-test-runner"
+    link_binary(built, ws.out("reth") / "ef-test-runner")
+
+
+def build_evm2(ws: Workspace, src: Path) -> None:
+    """
+    Build evm2's CLI, whose replay command runs state tests on the EVM
+    reth uses.
+    """
+    run(["cargo", "build", "-q", "--release", "-p", "evm2-cli"], cwd=src)
+    link_binary(src / "target" / "release" / "evm2", ws.out("evm2") / "evm2")
 
 
 def build_ethrex(ws: Workspace, src: Path) -> None:
-    """Build ethrex's ethrex-evm tool."""
-    run(
-        ["cargo", "build", "-q", "--release"]
-        + ["--manifest-path", "tooling/Cargo.toml", "-p", "ethrex-evm"],
-        cwd=src,
-    )
-    built = src / "tooling" / "target" / "release" / "ethrex-evm"
-    link_binary(built, ws.out("ethrex") / "ethrex-evm")
+    """
+    Build ethrex's ethrex-evm tool and its blockchain and state test
+    runners.
+    """
+    manifest = ["--manifest-path", "tooling/Cargo.toml"]
+    release = src / "tooling" / "target" / "release"
+    for package in ("ethrex-evm", "ef_tests-statev2"):
+        run(
+            ["cargo", "build", "-q", "--release", *manifest, "-p", package],
+            cwd=src,
+        )
+        link_binary(release / package, ws.out("ethrex") / package)
+    # The blockchain tests are the `all` test of ef_tests-blockchain.
+    tests = ["--release", *manifest, "-p", "ef_tests-blockchain"]
+    built = cargo_test_binary(src, [*tests, "--test", "all"], "all")
+    link_binary(built, ws.out("ethrex") / "ef-tests-blockchain")
 
 
 def build_nimbus(ws: Workspace, src: Path) -> None:
-    """Build nimbus's t8n tool, after its own Nim and dependencies."""
+    """
+    Build nimbus's t8n tool, its evmstate state test runner and its
+    eest_blockchain runner, after its own Nim and dependencies.
+    """
     run(["make", f"-j{JOBS}", "update"], cwd=src)
-    run(["make", f"-j{JOBS}", "t8n"], cwd=src)
-    link_binary(src / "tools" / "t8n" / "t8n", ws.out("nimbus") / "t8n")
+    for tool in ("t8n", "evmstate", "eest_blockchain"):
+        run(["make", f"-j{JOBS}", tool], cwd=src)
+    out = ws.out("nimbus")
+    for tool in ("t8n", "evmstate"):
+        link_binary(src / "tools" / tool / tool, out / tool)
+    link_binary(src / "build" / "eest_blockchain", out / "eest_blockchain")
 
 
 def build_ethereumjs(ws: Workspace, src: Path) -> None:
@@ -910,6 +962,8 @@ TARGETS = {
     "hive": Target("hive", build_hive, (install_go,)),
     "clive": Target("clive", build_clive, (install_go,), here=True),
     "geth": Target("clients/go-ethereum", build_geth, (install_go,)),
+    "reth": Target("clients/reth", build_reth, (install_rust,)),
+    "evm2": Target("clients/evm2", build_evm2, (install_rust,)),
     "erigon": Target("clients/erigon", build_erigon, (install_go,)),
     "besu": Target("clients/besu", build_besu, (install_jdk,)),
     "nethermind": Target(

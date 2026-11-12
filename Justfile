@@ -81,3 +81,13 @@ setup *args:
 [group('tools')]
 fuzz *args:
     uv run fuzz/run.py "$@"
+
+# Run blockchain tests through each client's runner, see runners/README.md
+[group('tools')]
+blocktest *args:
+    uv run --quiet --script runners/runners.py blocktest "$@"
+
+# Run state tests through each client's runner, see runners/README.md
+[group('tools')]
+statetest *args:
+    uv run --quiet --script runners/runners.py statetest "$@"

@@ -32,8 +32,8 @@ members = ["xref"]
 el-xref = { workspace = true }
 
 [tool.pytest.ini_options]
-pythonpath = ["."]
-testpaths = ["tests", "xref/tests"]
+pythonpath = [".", "runners"]
+testpaths = ["tests", "xref/tests", "runners/tests"]
 
 [tool.ruff]
 line-length = 79
@@ -73,10 +73,11 @@ ignore = [
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["ARG001"]
 "xref/tests/*" = ["ARG001"]
+"runners/tests/*" = ["ARG001"]
 
 [tool.mypy]
 strict = true
-files = ["bootstrap.py", "latest.py", "tests", "xref/src", "xref/tests", "fuzz"]
+files = ["bootstrap.py", "latest.py", "tests", "xref/src", "xref/tests", "fuzz", "runners"]
 
 [[tool.mypy.overrides]]
 # fuzz/eels_side.py runs inside an execution-specs checkout, which provides

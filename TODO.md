@@ -35,6 +35,9 @@ updated, and round again. Nothing waits for an EELS release.
   | evmone | `evmone-blockchaintest`, `evmone-statetest` |
   | ethereumjs | `packages/vm` `test:blockchain` and `test:state` |
 
+- [ ] **A `system-tests` skill.** Next to `module-tests`, run clients as
+  nodes through the panda CLI (panda hive and the rest, see
+  ethpandaops/panda#397).
 - [ ] **Local fixtures into hive.** Pack the filled fixtures and run
   `consume-engine`, `enginex` and `rlp` with `--sim.buildarg
   fixtures=/fixtures`, with clients built from their worktrees.

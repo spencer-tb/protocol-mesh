@@ -88,36 +88,28 @@ Not yet: queries by EIP or fork. Find the EIP's spec functions with the
 
 ## 4. Test locally
 
-Fill EELS tests with a client's t8n tool, or run fixtures through a client,
-from this directory with `uv` running inside the spec repo. Each takes
-seconds to minutes. Run one at a time, and delete fill output directories
-when you are done, they fill the disk.
+Module tests run fixtures straight through each client's own test
+runners, with no node. The `module-tests` skill has the details: building
+the runners, getting fixtures, reading failures and comparing with CI.
+Run one at a time, and delete fill output when you are done, it fills the
+disk.
 
-    uv run --directory repos/execution-specs fill --fork <Fork> \
-      --evm-bin "$PWD/bin/geth/evm" tests/<path>
-    uv run --directory repos/execution-specs consume direct \
-      --bin "$PWD/bin/nethermind/nethtest" --input <fixtures>
-
-| Client | `fill --evm-bin` | `consume direct --bin` |
+| To | Do | Cost |
 |---|---|---|
-| geth | `geth/evm` | `geth/evm` |
-| besu | `besu/evmtool` | `besu/evmtool` |
-| evmone | `evmone/evmone` | `evmone/evmone-statetest`, `evmone/evmone-blockchaintest` |
-| ethrex | `ethrex/ethrex-evm` | |
-| nimbus | `nimbus/t8n` | |
-| ethereumjs | `ethereumjs/ethereumjs-t8ntool.sh` | |
-| erigon | | `erigon/evm` |
-| nethermind | | `nethermind/nethtest` |
+| Fill tests, with EELS or a client's t8n tool | `uv run --directory repos/execution-specs fill --fork <Fork> [--evm-bin "$PWD/bin/<client>/<t8n>"] tests/<path>` | seconds to minutes |
+| Run blockchain tests through each client's runner | `just blocktest <fixtures> [client ...]` | seconds to minutes |
+| Run state tests through each client's runner | `just statetest <fixtures> [client ...]` | seconds to minutes |
 
-reth, and every client's engine API, run through hive (section 5).
+`blocktest` covers geth, reth, nethermind, besu, erigon, ethrex and
+nimbus, and `statetest` adds evmone, with reth's state tests on evm2.
+Every client's engine API runs through hive (section 5).
 
 To compare EELS and geth on the same inputs, run
 `just fuzz --eels <execution-specs clone> --geth <geth clone>`. It reports
 every difference, see `fuzz/README.md`.
 
-Not yet: one command for branch worktrees, for filling an EIP's tests, or
-for running each client's own test runner. Use the commands above until
-they land, see `TODO.md`.
+Not yet: one command for branch worktrees or for filling an EIP's tests.
+Use the commands above until they land, see `TODO.md`.
 
 ## 5. Test with hive and devnets
 
